@@ -140,9 +140,9 @@ class BenchmarkGenerator(Generator):
         }
         return metadata
     
-class ImpossibleBenchmarkGenerator(Generator):
+class ParallelBenchmarkGenerator(Generator):
     """
-    Data generator for BLiMP and Impossible BLiMP.
+    Data generator for two parallel BLiMP datasets.
     """
     def __init__(self,
                  field: str,
@@ -161,7 +161,7 @@ class ImpossibleBenchmarkGenerator(Generator):
         self.one_prefix_method = one_prefix_method
         self.two_prefix_method = two_prefix_method
         self.lexically_identical = lexically_identical
-        self.data_fields = ["sentence_good", "sentence_bad", "one_prefix_prefix", "two_prefix_prefix_good", "two_prefix_prefix_bad", "impossible_sentence_good", "impossible_sentence_bad"]
+        self.data_fields = ["dataset_A_grammatical", "dataset_A_ungrammatical", "one_prefix_prefix", "two_prefix_prefix_good", "two_prefix_prefix_bad", "dataset_B_grammatical", "dataset_B_ungrammatical"]
 
     def make_metadata_dict(self):
         """

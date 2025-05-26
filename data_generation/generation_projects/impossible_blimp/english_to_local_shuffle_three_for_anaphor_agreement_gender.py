@@ -5,15 +5,14 @@ from utils.conjugate import *
 from utils.randomize import choice
 from functools import reduce
 from utils.vocab_sets import *
-from numpy.random import default_rng
 from utils.impossible_utils import perturb_shuffle_local, gpt2_original_tokenizer
 
-class ImpossibleLocalShuffleAnaphorGenerator(data_generator.ImpossibleBenchmarkGenerator):
+class EnglishToLocalShuffleThreeForAnaphorAgreementGenderGenerator(data_generator.ParallelBenchmarkGenerator):
     def __init__(self):
         super().__init__(
             field="morphology",
             linguistics="anaphor_agreement",
-            uid="impossible_anaphor_gender_agreement",
+            uid="english_to_local_shuffle_three_for_anaphor_agreement_gender",
             simple_lm_method=True,
             one_prefix_method=True,
             two_prefix_method=False,
@@ -45,25 +44,25 @@ class ImpossibleLocalShuffleAnaphorGenerator(data_generator.ImpossibleBenchmarkG
         V1 = conjugate(V1, N1)
 
         data = {
-            "sentence_good": "%s %s %s." % (N1[0], V1[0], refl_match[0]),
-            "sentence_bad": "%s %s %s." % (N1[0], V1[0], refl_mismatch[0]),
+            "dataset_A_grammatical": "%s %s %s." % (N1[0], V1[0], refl_match[0]),
+            "dataset_A_ungrammatical": "%s %s %s." % (N1[0], V1[0], refl_mismatch[0]),
             "one_prefix_prefix": "%s %s" % (N1[0], V1[0]),
             "one_prefix_word_good": refl_match[0],
             "one_prefix_word_bad": refl_mismatch[0],
         }
 
         # Impossible sentences
-        impossible_sentence_good = perturb_shuffle_local(data["sentence_good"], self.seed, window=3)
-        impossible_sentence_bad = perturb_shuffle_local(data["sentence_bad"], self.seed, window=3)
+        impossible_sentence_good = perturb_shuffle_local(data["dataset_A_grammatical"], self.seed, window=3)
+        impossible_sentence_bad = perturb_shuffle_local(data["dataset_A_ungrammatical"], self.seed, window=3)
 
         impossible_sentence_good = "".join(map(lambda x: gpt2_original_tokenizer.decode(x), impossible_sentence_good))
         impossible_sentence_bad = "".join(map(lambda x: gpt2_original_tokenizer.decode(x), impossible_sentence_bad))
 
-        data["sentence_impossible_good"] = impossible_sentence_good
-        data["sentence_impossible_bad"] = impossible_sentence_bad
+        data["dataset_B_grammatical"] = impossible_sentence_good
+        data["dataset_B_ungrammatical"] = impossible_sentence_bad
 
-        return data, data["sentence_good"]
+        return data, data["dataset_A_grammatical"]
 
 
-binding_generator = ImpossibleLocalShuffleAnaphorGenerator()
+binding_generator = EnglishToLocalShuffleThreeForAnaphorAgreementGenderGenerator()
 binding_generator.generate_paradigm(number_to_generate=1000, rel_output_path="outputs/impossible_blimp/%s.jsonl" % binding_generator.uid)
