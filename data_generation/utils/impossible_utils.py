@@ -82,7 +82,6 @@ def get_gpt2_tokenizer_with_markers(marker_list):
 
 gpt2_original_tokenizer = get_gpt2_tokenizer_with_markers([])
 
-
 # GPT-2 hop tokenization
 gpt2_hop_tokenizer = get_gpt2_tokenizer_with_markers(
     [MARKER_HOP_SING, MARKER_HOP_PLUR])
@@ -314,7 +313,7 @@ def __perturb_reverse(sent, rng, reverse, full):
 
 def __perturb_shuffle_deterministic(sent, seed, shuffle):
     # Get sentence text and GPT-2 tokens
-    tokens = gpt2_original_tokenizer.encode(sent["sent_text"])
+    tokens = gpt2_original_tokenizer.encode(sent)
     if shuffle:
         default_rng(seed).shuffle(tokens)
     return tokens
@@ -322,14 +321,14 @@ def __perturb_shuffle_deterministic(sent, seed, shuffle):
 
 def __perturb_shuffle_nondeterministic(sent, rng):
     # Get sentence text and GPT-2 tokens
-    tokens = gpt2_original_tokenizer.encode(sent["sent_text"])
+    tokens = gpt2_original_tokenizer.encode(sent)
     rng.shuffle(tokens)
     return tokens
 
 
 def __perturb_shuffle_local(sent, seed, window=5):
     # Get sentence text and GPT-2 tokens
-    tokens = gpt2_original_tokenizer.encode(sent["sent_text"])
+    tokens = gpt2_original_tokenizer.encode(sent)
 
     # Shuffle tokens in batches of size window
     shuffled_tokens = []

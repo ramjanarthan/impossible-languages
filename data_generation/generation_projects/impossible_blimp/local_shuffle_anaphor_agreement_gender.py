@@ -6,6 +6,7 @@ from utils.randomize import choice
 from functools import reduce
 from utils.vocab_sets import *
 from numpy.random import default_rng
+from utils.impossible_utils import perturb_shuffle_local, gpt2_original_tokenizer
 
 class ImpossibleLocalShuffleAnaphorGenerator(data_generator.ImpossibleBenchmarkGenerator):
     def __init__(self):
@@ -52,28 +53,16 @@ class ImpossibleLocalShuffleAnaphorGenerator(data_generator.ImpossibleBenchmarkG
         }
 
         # Impossible sentences
-        impossible_data = {
-            "impossible_sentence_good": self.__perturb_shuffle_local(data["sentence_good"], self.seed),  
-            "impossible_sentence_bad": self.__perturb_shuffle_local(data["sentence_bad"], self.seed),
-        }
+        impossible_sentence_good = perturb_shuffle_local(data["sentence_good"], self.seed, window=3)
+        impossible_sentence_bad = perturb_shuffle_local(data["sentence_bad"], self.seed, window=3)
 
-        # merge data and impossible_data
-        data = {**data, **impossible_data}
+        impossible_sentence_good = "".join(map(lambda x: gpt2_original_tokenizer.decode(x), impossible_sentence_good))
+        impossible_sentence_bad = "".join(map(lambda x: gpt2_original_tokenizer.decode(x), impossible_sentence_bad))
+
+        data["sentence_impossible_good"] = impossible_sentence_good
+        data["sentence_impossible_bad"] = impossible_sentence_bad
 
         return data, data["sentence_good"]
-    
-    def __perturb_shuffle_local(self, sent, seed, window=3):
-        # Get sentence text 
-        tokens = sent.split(" ")
-
-        # Shuffle tokens in batches of size window
-        shuffled_tokens = []
-        for i in range(0, len(tokens), window):
-            batch = tokens[i:i+window].copy()
-            default_rng(seed).shuffle(batch)
-            shuffled_tokens += batch
-
-        return " ".join(shuffled_tokens)
 
 
 binding_generator = ImpossibleLocalShuffleAnaphorGenerator()
