@@ -139,6 +139,47 @@ class BenchmarkGenerator(Generator):
             "lexically_identical": self.lexically_identical
         }
         return metadata
+    
+class ImpossibleBenchmarkGenerator(Generator):
+    """
+    Data generator for BLiMP and Impossible BLiMP.
+    """
+    def __init__(self,
+                 field: str,
+                 linguistics: str,
+                 uid: str,
+                 simple_lm_method: bool,
+                 one_prefix_method: bool,
+                 two_prefix_method: bool,
+                 lexically_identical: bool,
+                 category: str=None):
+        super().__init__()
+        self.field = field
+        self.linguistics = linguistics
+        self.uid = uid
+        self.simple_lm_method = simple_lm_method
+        self.one_prefix_method = one_prefix_method
+        self.two_prefix_method = two_prefix_method
+        self.lexically_identical = lexically_identical
+        self.data_fields = ["sentence_good", "sentence_bad", "one_prefix_prefix", "two_prefix_prefix_good", "two_prefix_prefix_bad", "impossible_sentence_good", "impossible_sentence_bad"]
+
+    def make_metadata_dict(self):
+        """
+        (non token-specific metadata is in class fields, e.g. self.field=syntax)
+        :param extra_metadata: token-specific metadata, e.g. one_prefix_word_1="the" 
+        :return: join metadata
+        """
+        metadata = {
+            "field": self.field,
+            "linguistics_term": self.linguistics,
+            "UID": self.uid,
+            "simple_LM_method": self.simple_lm_method,
+            "one_prefix_method": self.one_prefix_method,
+            "two_prefix_method": self.two_prefix_method,
+            "lexically_identical": self.lexically_identical,
+        }
+        return metadata
+
 
 
 class ScalarImplicatureGenerator(Generator):
