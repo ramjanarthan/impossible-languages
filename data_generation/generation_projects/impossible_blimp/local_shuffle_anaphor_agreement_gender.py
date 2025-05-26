@@ -5,6 +5,7 @@ from utils.conjugate import *
 from utils.randomize import choice
 from functools import reduce
 from utils.vocab_sets import *
+from numpy.random import default_rng
 
 class ImpossibleLocalShuffleAnaphorGenerator(data_generator.ImpossibleBenchmarkGenerator):
     def __init__(self):
@@ -21,6 +22,7 @@ class ImpossibleLocalShuffleAnaphorGenerator(data_generator.ImpossibleBenchmarkG
         self.all_singular_reflexives = reduce(np.union1d, (get_all("expression", "himself"),
                                                            get_all("expression", "herself"),
                                                            get_all("expression", "itself")))
+        self.seed = 42
 
     def sample(self):
         # John knows himself
@@ -47,23 +49,32 @@ class ImpossibleLocalShuffleAnaphorGenerator(data_generator.ImpossibleBenchmarkG
             "one_prefix_prefix": "%s %s" % (N1[0], V1[0]),
             "one_prefix_word_good": refl_match[0],
             "one_prefix_word_bad": refl_mismatch[0],
-            "impossible_sentence_good": "%s %s %s." % (V1[0], refl_match[0], N1[0]),
-            "impossible_sentence_bad": "%s %s %s." % (V1[0], refl_mismatch[0], N1[0]),
         }
+
+        # Impossible sentences
+        impossible_data = {
+            "impossible_sentence_good": self.__perturb_shuffle_local(data["sentence_good"], self.seed),  
+            "impossible_sentence_bad": self.__perturb_shuffle_local(data["sentence_bad"], self.seed),
+        }
+
+        # merge data and impossible_data
+        data = {**data, **impossible_data}
+
         return data, data["sentence_good"]
+    
+    def __perturb_shuffle_local(self, sent, seed, window=3):
+        # Get sentence text 
+        tokens = sent.split(" ")
+
+        # Shuffle tokens in batches of size window
+        shuffled_tokens = []
+        for i in range(0, len(tokens), window):
+            batch = tokens[i:i+window].copy()
+            default_rng(seed).shuffle(batch)
+            shuffled_tokens += batch
+
+        return " ".join(shuffled_tokens)
 
 
 binding_generator = ImpossibleLocalShuffleAnaphorGenerator()
-binding_generator.generate_paradigm(rel_output_path="outputs/impossible_blimp/%s.jsonl" % binding_generator.uid)
-
-
-
-
-
-
-
-
-
-
-
-
+binding_generator.generate_paradigm(number_to_generate=1000, rel_output_path="outputs/impossible_blimp/%s.jsonl" % binding_generator.uid)
