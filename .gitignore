@@ -1,0 +1,243 @@
+data_generation/DS_Store
+data_generation/outputs/inductive_biases
+data_generation/.idea/
+data_generation/View_Vocab.xlsx
+data_generation/*.pyc
+data_generation/vocabulary_my_edits.csv
+data_generation/vocabulary_orig.csv
+data_generation/vocabularyorig.csv
+data_generation/Irregular_Plurals.xlsx
+data_generation/irregular_plurals.csv
+data_generation/slurm/adjunct_island.sbatch
+data_generation/slurm/anaphor_gender_agreement.sbatch
+data_generation/slurm/animate_obj_transitive.sbatch
+data_generation/slurm/causative.sbatch
+data_generation/slurm/complex_NP_island.sbatch
+data_generation/slurm/coordinate_structure_constraint_complex_left_branch.sbatch
+data_generation/slurm/coordinate_structure_constraint_object_extraction.sbatch
+data_generation/slurm/coordinate_structure_constraint_subject_extraction.sbatch
+data_generation/slurm/determiner_noun_agreement_1.sbatch
+data_generation/slurm/determiner_noun_agreement_2.sbatch
+data_generation/slurm/determiner_noun_agreement_irregular_1.sbatch
+data_generation/slurm/determiner_noun_agreement_irregular_2.sbatch
+data_generation/slurm/determiner_noun_agreement_with_adj_1.sbatch
+data_generation/slurm/determiner_noun_agreement_with_adj_2.sbatch
+data_generation/slurm/determiner_noun_agreement_with_adj_irregular_1.sbatch
+data_generation/slurm/determiner_noun_agreement_with_adj_irregular_2.sbatch
+data_generation/slurm/distractor_agreement_rc.sbatch
+data_generation/slurm/distractor_agreement_relational_noun.sbatch
+data_generation/slurm/drop_argument.sbatch
+data_generation/slurm/ellipsis_n_bar_1.sbatch
+data_generation/slurm/ellipsis_n_bar_2.sbatch
+data_generation/slurm/existential_there_object_raising.sbatch
+data_generation/slurm/existential_there_quantifiers_1.sbatch
+data_generation/slurm/existential_there_quantifiers_2.sbatch
+data_generation/slurm/existential_there_subject_raising.sbatch
+data_generation/slurm/expletive_it_object_raising.sbatch
+data_generation/slurm/inchoative.sbatch
+data_generation/slurm/intransitive.sbatch
+data_generation/slurm/irregular_past_participle_adjectives.sbatch
+data_generation/slurm/irregular_past_participle_verbs.sbatch
+data_generation/slurm/irregular_plural_subject_verb_agreement_1.sbatch
+data_generation/slurm/irregular_plural_subject_verb_agreement_2.sbatch
+data_generation/slurm/left_branch_island_echo_question.sbatch
+data_generation/slurm/left_branch_island_simple_question.sbatch
+data_generation/slurm/matrix_question_npi_licensor_present.sbatch
+data_generation/slurm/npi_present_1.sbatch
+data_generation/slurm/npi_present_2.sbatch
+data_generation/slurm/only_npi_licensor_present.sbatch
+data_generation/slurm/only_npi_scope.sbatch
+data_generation/slurm/passive_1.sbatch
+data_generation/slurm/passive_2.sbatch
+data_generation/slurm/principle_A_c_command.sbatch
+data_generation/slurm/principle_A_case_1.sbatch
+data_generation/slurm/principle_A_case_2.sbatch
+data_generation/slurm/principle_A_domain_1.sbatch
+data_generation/slurm/principle_A_domain_2.sbatch
+data_generation/slurm/principle_A_domain_3.sbatch
+data_generation/slurm/principle_A_reconstruction.sbatch
+data_generation/slurm/regular_plural_subject_verb_agreement_1.sbatch
+data_generation/slurm/regular_plural_subject_verb_agreement_2.sbatch
+data_generation/slurm/sentential_negation_npi_licensor_present.sbatch
+data_generation/slurm/sentential_negation_npi_scope.sbatch
+data_generation/slurm/sentential_subject.sbatch
+data_generation/slurm/simple_anaphor_number_agreement.sbatch
+data_generation/slurm/subject_islands.sbatch
+data_generation/slurm/superlative_quantifiers_1.sbatch
+data_generation/slurm/superlative_quantifiers_2.sbatch
+data_generation/slurm/that_trace_embedded.sbatch
+data_generation/slurm/that_trace_matrix.sbatch
+data_generation/slurm/tough_vs_raising_1.sbatch
+data_generation/slurm/tough_vs_raising_2.sbatch
+data_generation/slurm/transitive.sbatch
+data_generation/slurm/wh-questions_subj_gap.sbatch
+data_generation/slurm/wh-questions_subj_gap_long-distance.sbatch
+data_generation/slurm/wh-vs-that_no-gap_long-distance.sbatch
+data_generation/slurm/wh_island.sbatch
+data_generation/slurm/wh_questions_obj_gap.sbatch
+data_generation/slurm/wh_questions_obj_gap_long_distance.sbatch
+data_generation/slurm/wh_vs_that_no_gap.sbatch
+data_generation/slurm/wh_vs_that_with_gap.sbatch
+data_generation/results/blimp/blimp-gpt2-large_oneprefix_peephole.jsonl
+data_generation/results/blimp/blimp-gpt2-large_simplelm_peephole.jsonl
+data_generation/results/blimp/blimp-gpt2-large_twoprefix_peephole.jsonl
+data_generation/results/blimp/blimp-lstm_oneprefix_peephole.jsonl
+data_generation/results/blimp/blimp-lstm_simplelm_peephole.jsonl
+data_generation/results/blimp/blimp-lstm_twoprefix_peephole.jsonl
+data_generation/results/blimp/blimp-txl_oneprefix_peephole.jsonl
+data_generation/results/blimp/blimp-txl_peephole.jsonl
+data_generation/results/blimp/blimp-txl_simpleLM_peephole.jsonl
+data_generation/results/blimp/blimp-txl_twoprefix_peephole.jsonl
+data_generation/results/blimp/blimp_full_results.xlsx
+data_generation/results/blimp/blimp_grover_oneprefix_peephole.jsonl
+data_generation/results/blimp/blimp_grover_simplelm_peephole.jsonl
+data_generation/results/blimp/blimp_grover_twoprefix_peephole.jsonl
+data_generation/results/blimp/blimp_lstm_breakdown.tsv
+data_generation/results/blimp/blimp_lstm_full.tsv
+data_generation/results/blimp/blimp_txl_full.tsv
+data_generation/results/blimp/BLiMP_validation.csv
+data_generation/results/blimp/BLiMP_validation.xlsx
+data_generation/results/blimp/ngram_output1phrase.jsonl
+data_generation/results/blimp/ngram_output2phrase.jsonl
+data_generation/results/blimp/ngram_outputsimpLM.jsonl
+data_generation/slurm/anaphor_number_agreement.sbatch
+data_generation/slurm/animate_subject_passive.sbatch
+data_generation/slurm/animate_subject_transitive.sbatch
+data_generation/slurm/sbatch_generator.sbatch
+data_generation/slurm/wh_questions_object_gap.sbatch
+data_generation/slurm/wh_questions_object_gap_long_distance.sbatch
+data_generation/slurm/wh_questions_subject_gap.sbatch
+data_generation/slurm/wh_questions_subject_gap_long_distance.sbatch
+data_generation/slurm/wh_vs_that_no_gap_long_distance.sbatch
+data_generation/slurm/wh_vs_that_with_gap_long_distance.sbatch
+data_generation/logs/*
+data_generation/outputs/*
+
+
+# Python
+
+# Editors
+.vscode/
+.idea/
+
+# Vagrant
+.vagrant/
+
+# Mac/OSX
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Source for the following rules: https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
