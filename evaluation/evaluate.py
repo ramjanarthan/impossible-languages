@@ -166,7 +166,7 @@ class ModelComparisonEvaluator:
         self.model_name_2 = model_name_2
 
         # Set up device
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("mps" if torch.mps.is_available() else "cpu")
         print(f"Using device: {self.device}")
 
         # Load models and tokenizers
