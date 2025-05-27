@@ -1,8 +1,10 @@
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 from typing import List
-from evaluation.evaluation_dataset import ParallelEvaluationDatasetIterator
+from evaluation.evaluation_dataset import ParallelEvaluationDatasetIterator, ParallelEvaluationDataItem # Re-added ParallelEvaluationDataItem
 import math
+import os # Added for path operations
+from pathlib import Path # Added for path operations
 import pandas as pd
 from tqdm import tqdm
 
@@ -281,31 +283,59 @@ class ModelComparisonEvaluator:
 
         self._present_results(output_filename)
 
-    def _present_results(self, output_filename: str):
+    def _present_results(self, summary_output_path_base: str):
         """
-        Calculates accuracies and presents the results in a tabular form,
-        writing to the specified file.
+        Calculates accuracies, presents results, saves summary to a .txt file,
+        and raw data to a .csv file in a 'raw' subdirectory.
+
+        Args:
+            summary_output_path_base (str): The base path and filename for outputs.
+                                            Example: 'experiments/output/anaphor_eval_TIMESTAMP'
+                                            .txt will be appended for summary, .csv for raw data in 'raw/' subdir.
         """
         if self.total_pairs == 0:
             print("No data pairs processed. Cannot present results.")
             return
 
+        # Define output paths
+        base_path = Path(summary_output_path_base)
+        summary_txt_path = base_path.with_suffix('.txt')
+        raw_csv_dir = base_path.parent / "raw"
+        raw_csv_path = raw_csv_dir / base_path.with_suffix('.csv').name
+
+        # Create 'raw' directory if it doesn't exist
+        os.makedirs(raw_csv_dir, exist_ok=True)
+
         # Calculate overall accuracies
-        accuracy_m1 = (self.model1_correct_count / self.total_pairs) * 100
-        accuracy_m2 = (self.model2_correct_count / self.total_pairs) * 100
+        accuracy_m1 = (self.model1_correct_count / self.total_pairs) * 100 if self.total_pairs > 0 else 0
+        accuracy_m2 = (self.model2_correct_count / self.total_pairs) * 100 if self.total_pairs > 0 else 0
+        both_correct_percent = (self.both_correct_count / self.total_pairs * 100) if self.total_pairs > 0 else 0
+        model1_only_correct_percent = (self.model1_only_correct_count / self.total_pairs * 100) if self.total_pairs > 0 else 0
+        model2_only_correct_percent = (self.model2_only_correct_count / self.total_pairs * 100) if self.total_pairs > 0 else 0
+        neither_correct_percent = (self.neither_correct_count / self.total_pairs * 100) if self.total_pairs > 0 else 0
 
-        print("\n--- Evaluation Summary ---")
-        print(f"Total Parallel Pairs Processed: {self.total_pairs}")
-        print(f"\nAccuracy for Model 1 ({self.model_name_1}) on Dataset A: {accuracy_m1:.2f}%")
-        print(f"Accuracy for Model 2 ({self.model_name_2}) on Dataset B: {accuracy_m2:.2f}%")
+        # Prepare summary content
+        summary_lines = []
+        summary_lines.append("--- Evaluation Summary ---")
+        summary_lines.append(f"Total Parallel Pairs Processed: {self.total_pairs}")
+        summary_lines.append(f"\nAccuracy for Model 1 ({self.model_name_1}) on Dataset A: {accuracy_m1:.2f}%")
+        summary_lines.append(f"Accuracy for Model 2 ({self.model_name_2}) on Dataset B: {accuracy_m2:.2f}%")
+        summary_lines.append("\nComparison Counts:")
+        summary_lines.append(f"  Both Models Correct: {self.both_correct_count} ({both_correct_percent:.2f}%)")
+        summary_lines.append(f"  {self.model_name_1} Only Correct: {self.model1_only_correct_count} ({model1_only_correct_percent:.2f}%)")
+        summary_lines.append(f"  {self.model_name_2} Only Correct: {self.model2_only_correct_count} ({model2_only_correct_percent:.2f}%)")
+        summary_lines.append(f"  Neither Model Correct: {self.neither_correct_count} ({neither_correct_percent:.2f}%)")
+        summary_content = "\n".join(summary_lines)
 
-        print("\nComparison Counts:")
-        print(f"  Both Models Correct: {self.both_correct_count} ({self.both_correct_count / self.total_pairs * 100:.2f}%)")
-        print(f"  {self.model_name_1} Only Correct: {self.model1_only_correct_count} ({self.model1_only_correct_count / self.total_pairs * 100:.2f}%)")
-        print(f"  {self.model_name_2} Only Correct: {self.model2_only_correct_count} ({self.model2_only_correct_count / self.total_pairs * 100:.2f}%)")
-        print(f"  Neither Model Correct: {self.neither_correct_count} ({self.neither_correct_count / self.total_pairs * 100:.2f}%)")
+        # Print summary to console
+        print("\n" + summary_content)
 
-        # Create DataFrame and write to CSV
+        # Save summary to .txt file
+        with open(summary_txt_path, 'w', encoding='utf-8') as f:
+            f.write(summary_content)
+        print(f"\nEvaluation summary saved to {summary_txt_path}")
+
+        # Create DataFrame and write to CSV in 'raw' subdirectory
         results_df = pd.DataFrame(self.results_data)
-        results_df.to_csv(output_filename, index=False)
-        print(f"\nDetailed results saved to {output_filename}")
+        results_df.to_csv(raw_csv_path, index=False)
+        print(f"Detailed raw results saved to {raw_csv_path}")
