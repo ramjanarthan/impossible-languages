@@ -8,39 +8,6 @@ from pathlib import Path # Added for path operations
 import pandas as pd
 from tqdm import tqdm
 
-# Helper function to calculate perplexity (adapted from partial_reverse.py)
-def calculate_single_sentence_perplexity(model, tokenizer, sentence: str, device, max_length=512):
-    """
-    Calculates the perplexity for a single sentence.
-    """
-    model.eval()
-    with torch.no_grad():
-        encodings = tokenizer(
-            [sentence], # Pass as a list for batching
-            return_tensors="pt",
-            padding=True,
-            truncation=True,
-            max_length=max_length
-        )
-        input_ids = encodings.input_ids.to(device)
-        attention_mask = encodings.attention_mask.to(device)
-
-        labels = input_ids.clone()
-        labels[input_ids == tokenizer.pad_token_id] = -100
-
-        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
-        loss = outputs.loss # Already averaged over non-masked tokens for a single sentence
-
-        # Count non-masked tokens for this single sentence to get true average loss for PPL
-        num_tokens = (labels != -100).sum().item()
-        if num_tokens == 0: # Handle cases with empty or only padding tokens
-            return float('inf') # Or 0, depending on desired behavior for empty sentences
-
-        average_loss = loss.item() # outputs.loss is already the mean loss per token
-        perplexity = math.exp(average_loss)
-        return perplexity
-
-
 def calculate_batch_perplexity(model, tokenizer, sentences: List[str], device, max_length=512):
     """
     Calculates perplexity for a batch of sentences efficiently.
