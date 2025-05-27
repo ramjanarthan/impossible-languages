@@ -113,6 +113,8 @@ data_generation/slurm/wh_vs_that_with_gap_long_distance.sbatch
 data_generation/logs/*
 data_generation/outputs/*
 
+# Results
+experiments/output/raw/*
 
 # Python
 
