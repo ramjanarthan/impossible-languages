@@ -14,11 +14,11 @@ from evaluation.evaluate import ModelComparisonEvaluator
 
 def main():
     # Dataset path
-    dataset_path = "data_generation/outputs/impossible_blimp/english_to_local_shuffle_three_for_anaphor_agreement_gender.jsonl"
+    dataset_path = "data_generation/outputs/impossible_blimp/english_to_local_shuffle_three_for_anaphor_agreement_numerical.jsonl"
     
     # Model names
-    model1_name = "mission-impossible-lms/no-shuffle-gpt2"
-    model2_name = "mission-impossible-lms/local-shuffle-w3-gpt2"
+    model1_name = "mission-impossible-lms/local-shuffle-w3-gpt2"
+    model2_name = "mission-impossible-lms/no-shuffle-gpt2"
     
     # Output directory and filename base
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

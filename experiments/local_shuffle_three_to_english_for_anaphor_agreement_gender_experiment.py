@@ -7,13 +7,8 @@ no-shuffle vs. local-shuffle models on anaphor agreement gender task.
 """
 
 import os
-import sys
 from datetime import datetime
 from pathlib import Path
-
-# Add project root to sys.path to allow imports from sibling directories
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-sys.path.append(str(PROJECT_ROOT))
 
 from evaluation.evaluate import ModelComparisonEvaluator
 
@@ -28,7 +23,7 @@ def main():
     # Output directory and filename base
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_dir_path = Path("experiments/output") # Use Path object
-    output_filename_base = output_dir_path / f"local_shuffle_three_to_english_for_anaphor_agreement_gender_experiment_eval_{timestamp}"
+    output_filename_base = output_dir_path / f"{Path(__file__).stem}_eval_{timestamp}"
     
     print(f"Starting evaluation experiment with:")
     print(f"- Dataset: {dataset_path}")
