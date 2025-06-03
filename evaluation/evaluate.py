@@ -1,8 +1,7 @@
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 from typing import List
-from evaluation.evaluation_dataset import ParallelEvaluationDatasetIterator, ParallelEvaluationDataItem # Re-added ParallelEvaluationDataItem
-import math
+from evaluation.evaluation_dataset import ParallelEvaluationDatasetIterator
 import os # Added for path operations
 from pathlib import Path # Added for path operations
 import pandas as pd
