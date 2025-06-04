@@ -1,6 +1,6 @@
-from utils.vocab_table import *
+from data_generation.utils.vocab_table import *
 from random import choice
-from utils.vocab_sets_dynamic import *
+from data_generation.utils.vocab_sets_dynamic import *
 
 def conjugate(verb, subj, allow_negated=True, require_negated=False, change_v_form=False):
     """

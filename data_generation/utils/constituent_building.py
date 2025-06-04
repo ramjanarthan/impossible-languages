@@ -3,12 +3,12 @@
 
 # TODO: document metadata
 
-from utils.conjugate import *
+from data_generation.utils.conjugate import *
 from random import choice
-from utils.string_utils import remove_extra_whitespace
-from utils.vocab_sets_dynamic import *
+from data_generation.utils.string_utils import remove_extra_whitespace
+from data_generation.utils.vocab_sets_dynamic import *
 from nltk.stem import WordNetLemmatizer
-from utils.exceptions import *
+from data_generation.utils.exceptions import *
 
 lemmatizer = WordNetLemmatizer()
 

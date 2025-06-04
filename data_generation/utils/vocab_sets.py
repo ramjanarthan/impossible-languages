@@ -1,5 +1,5 @@
-from utils.vocab_table import *
-from utils.randomize import *
+from data_generation.utils.vocab_table import *
+from data_generation.utils.randomize import *
 from functools import reduce
 import numpy as np
 

@@ -2,7 +2,7 @@
 # Functions for accessing vocab matrices
 
 import numpy as np
-from utils.data_type import data_type
+from data_generation.utils.data_type import data_type
 import re
 import os
 

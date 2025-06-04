@@ -2,7 +2,7 @@
 # Script for parsing the metadata column in generated datasets in the NPI dataset
 
 import numpy as np
-from utils.vocab_table import *
+from data_generation.utils.vocab_table import *
 import os
 import itertools
 import random

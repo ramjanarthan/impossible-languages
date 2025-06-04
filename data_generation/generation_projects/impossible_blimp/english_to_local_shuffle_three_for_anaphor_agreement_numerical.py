@@ -1,10 +1,10 @@
-from utils import data_generator
-from utils.constituent_building import *
-from utils.conjugate import *
-from utils.randomize import choice
+from data_generation.utils import data_generator
+from data_generation.utils.constituent_building import *
+from data_generation.utils.conjugate import *
+from data_generation.utils.randomize import choice
 from functools import reduce
-from utils.vocab_sets import *
-from utils.impossible_utils import perturb_shuffle_local, gpt2_original_tokenizer
+from data_generation.utils.vocab_sets import *
+from data_generation.utils.impossible_utils import perturb_shuffle_local, gpt2_original_tokenizer
 
 class EnglishToLocalShuffleThreeForAnaphorAgreementNumericalGenerator(data_generator.ParallelBenchmarkGenerator):
     def __init__(self):
@@ -24,7 +24,7 @@ class EnglishToLocalShuffleThreeForAnaphorAgreementNumericalGenerator(data_gener
                                                            get_all("expression", "herself"),
                                                            get_all("expression", "itself")))
         self.plural_reflexive = get_all("expression", "themselves")[0]
-        self.seed = 42
+        self.seed = 0
 
     def sample(self):
         # The boy knows himself

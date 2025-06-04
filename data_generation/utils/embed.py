@@ -1,6 +1,6 @@
 from random import choice
-from utils.vocab_sets import *
-from utils.constituent_building import *
+from data_generation.utils.vocab_sets import *
+from data_generation.utils.constituent_building import *
 
 
 def embed_in_question(sentence):
