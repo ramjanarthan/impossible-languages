@@ -342,7 +342,7 @@ def __perturb_shuffle_local(sent, seed, window=5):
 
 def __perturb_shuffle_even_odd(sent):
     # Get sentence text and GPT-2 tokens
-    tokens = gpt2_original_tokenizer.encode(sent["sent_text"])
+    tokens = gpt2_original_tokenizer.encode(sent)
     even = [tok for i, tok in enumerate(tokens) if i % 2 == 0]
     odd = [tok for i, tok in enumerate(tokens) if i % 2 != 0]
     return even + odd

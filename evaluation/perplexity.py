@@ -38,10 +38,9 @@ def calculate_geometric_mean_perplexity(perplexities):
 def get_perplexities(model, tokenizer, sentences: List[str], device="mps", max_length=512):
     """Calculate per-sentence perplexities"""
 
-    perplexities = []
     # Process empty batch case
     if not sentences:
-        return perplexities
+        return []
 
     with torch.no_grad():
         token_lists = tokenizer(sentences, return_tensors="pt", padding=True, truncation=True, max_length=max_length).input_ids
@@ -51,31 +50,27 @@ def get_perplexities(model, tokenizer, sentences: List[str], device="mps", max_l
         labels = input_ids.clone()  # GPT-2 uses input as labels for CLM task
         attention_mask = create_attention_mask(token_lists).to(device)
 
+        # Forward pass
         outputs = model(input_ids=input_ids, labels=labels, attention_mask=attention_mask)
 
-        # Shift for next token prediction
+        # The "shifted" nature of labels in GPT-2 (next token prediction)
+        # Shift logits, labels, and attention mask by one position
         shift_logits = outputs.logits[..., :-1, :].contiguous()
         shift_labels = labels[..., 1:].contiguous()
         shift_attention_mask = attention_mask[..., 1:].contiguous()
 
+        # Instantiate loss function with no reduction
         loss_fct = torch.nn.CrossEntropyLoss(reduction='none')
+
+        # Calculate per-token loss
         loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
+
+        # Reshape back to the original batch size and sequence length
         loss = loss.view(shift_labels.size())
 
-        # Apply attention mask
+        # Apply the attention mask - only calculate loss where mask is 1
         loss = loss * shift_attention_mask
 
-        perplexities = []
-
-        for i in range(len(sentences)):
-            sentence_loss = loss[i]
-            mask = shift_attention_mask[i]
-            valid_token_count = mask.sum().item()
-            if valid_token_count == 0:
-                perplexities.append(float('inf'))
-            else:
-                avg_loss = (sentence_loss.sum() / valid_token_count).item()
-                perplexity = math.exp(avg_loss)
-                perplexities.append(perplexity)
-
-    return perplexities
+        # Sum the loss over the sequence length, get per-example perplexity
+        per_example_loss = loss.sum(dim=1) / shift_attention_mask.sum(dim=1)
+        return torch.exp(per_example_loss).tolist()
