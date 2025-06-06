@@ -18,7 +18,7 @@ pip install torch
 
 The data generation scripts are in the `data_generation/generation_projects/impossible_blimp` directory. The output will be in the `data_generation/outputs/impossible_blimp` directory.
 
-To generate data, run:
+To generate data, run the following command in the root project directory:
 
 ```bash
 python -m data_generation.generation_projects.impossible_blimp.<generator name>
@@ -33,7 +33,7 @@ python -m data_generation.generation_projects.impossible_blimp.english_to_local_
 
 The experiments are in the `experiments` directory. The output will be in the `experiments/output` directory.
 
-To run an experiment, run:
+To run an experiment, run the following command in the root project directory:
 
 ```bash
 python -m experiments.<experiment name>
@@ -43,3 +43,21 @@ For example:
 ```bash
 python -m experiments.local_shuffle_three_to_english_for_anaphor_agreement_numerical_experiment
 ```
+
+## Naming convention
+
+Where applicable, the file and class names will follow this convention:
+
+```
+{First Language Name}_to_{Second Language Name}_for_{Grammatical Phenomenon}
+```
+
+The order is significant because the dataset is split into two parts, and the models are evaluated on the parts in the same order.
+
+For example:
+
+```
+english_to_local_shuffle_three_for_anaphor_agreement_gender_experiment_eval_20250606_173847
+```
+
+refers to an experiment evaluation file comparing an English Model to a Local Shuffle Three Model for Anaphor Agreement Gender (in that order).
