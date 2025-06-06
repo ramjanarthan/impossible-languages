@@ -1,115 +1,90 @@
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
-from typing import List
-from evaluation.evaluation_dataset import ParallelEvaluationDatasetIterator
+from evaluation.evaluation_dataset import ParallelDataBatchLoader, ParallelEvaluationDatasetIterator
 import os # Added for path operations
 from pathlib import Path # Added for path operations
 import pandas as pd
 from tqdm import tqdm
 
-def calculate_batch_perplexity(model, tokenizer, sentences: List[str], device, max_length=512):
-    """
-    Calculates perplexity for a batch of sentences efficiently.
+# def calculate_batch_perplexity(model, tokenizer, sentences: List[str], device, max_length=512):
+#     """
+#     Calculates perplexity for a batch of sentences efficiently.
     
-    Args:
-        model: The language model
-        tokenizer: The tokenizer for the model
-        sentences: List of sentences to process in a batch
-        device: The device to run computation on
-        max_length: Maximum token length for truncation
+#     Args:
+#         model: The language model
+#         tokenizer: The tokenizer for the model
+#         sentences: List of sentences to process in a batch
+#         device: The device to run computation on
+#         max_length: Maximum token length for truncation
         
-    Returns:
-        List of perplexity scores corresponding to each sentence in the batch
-    """
-    model.eval()
-    perplexities = []
+#     Returns:
+#         List of perplexity scores corresponding to each sentence in the batch
+#     """
+#     perplexities = []
     
-    # Process empty batch case
-    if not sentences:
-        return perplexities
+#     # Process empty batch case
+#     if not sentences:
+#         return perplexities
     
-    with torch.no_grad():
-        # Tokenize all sentences in one go
-        encodings = tokenizer(
-            sentences,
-            return_tensors="pt",
-            padding=True,
-            truncation=True,
-            max_length=max_length
-        )
+#     with torch.no_grad():
+#         # Tokenize all sentences in one go
+#         encodings = tokenizer(
+#             sentences,
+#             return_tensors="pt",
+#             padding=True,
+#             truncation=True,
+#             max_length=max_length
+#         )
         
-        input_ids = encodings.input_ids.to(device)
-        attention_mask = encodings.attention_mask.to(device)
+#         input_ids = encodings.input_ids.to(device)
+#         attention_mask = encodings.attention_mask.to(device)
         
-        # Create labels (for computing loss)
-        labels = input_ids.clone()
-        # Mark padding tokens with -100 so they're not included in loss computation
-        labels[input_ids == tokenizer.pad_token_id] = -100
+#         # Create labels (for computing loss)
+#         labels = input_ids.clone()
+#         # Mark padding tokens with -100 so they're not included in loss computation
+#         labels[input_ids == tokenizer.pad_token_id] = -100
         
-        # Get model outputs
-        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+#         # Get model outputs
+#         outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
         
-        # Compute per-sentence loss and perplexity
-        # The loss from outputs is averaged over the entire batch,
-        # so we need to compute per-sentence loss manually
+#         # Compute per-sentence loss and perplexity
+#         # The loss from outputs is averaged over the entire batch,
+#         # so we need to compute per-sentence loss manually
         
-        # Reshape logits to (batch_size, seq_len, vocab_size)
-        shift_logits = outputs.logits[..., :-1, :].contiguous()
-        # Reshape labels to (batch_size, seq_len)
-        shift_labels = labels[..., 1:].contiguous()
+#         # Reshape logits to (batch_size, seq_len, vocab_size)
+#         shift_logits = outputs.logits[..., :-1, :].contiguous()
+#         # Reshape labels to (batch_size, seq_len)
+#         shift_labels = labels[..., 1:].contiguous()
         
-        # Calculate loss for each token position (ignoring padded positions)
-        loss_fct = torch.nn.CrossEntropyLoss(reduction='none')
-        losses = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
+#         # Calculate loss for each token position (ignoring padded positions)
+#         loss_fct = torch.nn.CrossEntropyLoss(reduction='none')
+#         losses = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
         
-        # Reshape losses to match the input shape
-        losses = losses.view(shift_labels.size())
+#         # Reshape losses to match the input shape
+#         losses = losses.view(shift_labels.size())
         
-        # Calculate loss per sentence
-        for i in range(len(sentences)):
-            # Get the relevant parts for this sentence
-            sentence_labels = shift_labels[i]
-            sentence_losses = losses[i]
+#         # Calculate loss per sentence
+#         for i in range(len(sentences)):
+#             # Get the relevant parts for this sentence
+#             sentence_labels = shift_labels[i]
+#             sentence_losses = losses[i]
             
-            # Mask out padding tokens
-            mask = sentence_labels != -100
-            masked_losses = sentence_losses[mask]
+#             # Mask out padding tokens
+#             mask = sentence_labels != -100
+#             masked_losses = sentence_losses[mask]
             
-            if len(masked_losses) == 0:
-                # Handle empty or completely padded sentences
-                perplexities.append(float('inf'))
-            else:
-                # Calculate average loss and perplexity
-                avg_loss = masked_losses.mean().item()
-                perplexity = math.exp(avg_loss)
-                perplexities.append(perplexity)
+#             if len(masked_losses) == 0:
+#                 # Handle empty or completely padded sentences
+#                 perplexities.append(float('inf'))
+#             else:
+#                 # Calculate average loss and perplexity
+#                 avg_loss = masked_losses.mean().item()
+#                 perplexity = math.exp(avg_loss)
+#                 perplexities.append(perplexity)
     
-    return perplexities
+#     return perplexities
 
 
-class ParallelDataLoader:
-    """
-    A utility class to efficiently load and batch parallel evaluation data.
-    """
-    def __init__(self, filepath: str, batch_size: int = 16):
-        self.filepath = filepath
-        self.batch_size = batch_size
-    
-    def __iter__(self):
-        """
-        Yields batches of ParallelEvaluationDataItem objects
-        """
-        items_batch = []
-        for item in ParallelEvaluationDatasetIterator(self.filepath):
-            items_batch.append(item)
-            
-            if len(items_batch) >= self.batch_size:
-                yield items_batch
-                items_batch = []
-        
-        # Yield any remaining items
-        if items_batch:
-            yield items_batch
 
 class ModelComparisonEvaluator:
     """
@@ -173,31 +148,29 @@ class ModelComparisonEvaluator:
             output_filename (str): Name of the CSV file to write results to.
             batch_size (int): Number of sentence pairs to process in a single batch.
         """
-        data_loader = ParallelDataLoader(self.dataset_filepath, batch_size=batch_size)
+        data_loader = ParallelDataBatchLoader(self.dataset_filepath, batch_size=batch_size)
         print(f"Starting evaluation on {self.dataset_filepath} with batch size {batch_size}...")
 
         for batch_items in tqdm(data_loader, desc="Processing dataset batches"):
             self.total_pairs += len(batch_items)
             
             # Extract sentences for batch processing
-            sentences_A_good = []
-            sentences_A_bad = []
-            sentences_B_good = []
-            sentences_B_bad = []
-            item_indices = []
-            
-            for item in batch_items:
-                sentences_A_good.append(item.dataset_A_grammatical)
-                sentences_A_bad.append(item.dataset_A_ungrammatical)
-                sentences_B_good.append(item.dataset_B_grammatical)
-                sentences_B_bad.append(item.dataset_B_ungrammatical)
-                item_indices.append(getattr(item, "pairID", len(self.results_data) + len(item_indices)))
-            
+            sentences_A_good = [item.dataset_A_grammatical for item in batch_items]
+            sentences_A_bad = [item.dataset_A_ungrammatical for item in batch_items]
+            sentences_B_good = [item.dataset_B_grammatical for item in batch_items]
+            sentences_B_bad = [item.dataset_B_ungrammatical for item in batch_items]
+            item_indices = [getattr(item, "pairID", len(self.results_data) + len(item_indices)) for item in batch_items]
+
+            sentences_A_good_tokens = self.tokenizer1(sentences_A_good)
+            sentences_A_bad_tokens = self.tokenizer1(sentences_A_bad)
+            sentences_B_good_tokens = self.tokenizer2(sentences_B_good)
+            sentences_B_bad_tokens = self.tokenizer2(sentences_B_bad)
+                        
             # Calculate perplexities in batches for efficiency
-            ppls_A_good_m1 = calculate_batch_perplexity(self.model1, self.tokenizer1, sentences_A_good, self.device)
-            ppls_A_bad_m1 = calculate_batch_perplexity(self.model1, self.tokenizer1, sentences_A_bad, self.device)
-            ppls_B_good_m2 = calculate_batch_perplexity(self.model2, self.tokenizer2, sentences_B_good, self.device)
-            ppls_B_bad_m2 = calculate_batch_perplexity(self.model2, self.tokenizer2, sentences_B_bad, self.device)
+            ppls_A_good_m1 = get_perplexities(self.model1, sentences_A_good_tokens, self.tokenizer1.pad_token_id)
+            ppls_A_bad_m1 = get_perplexities(self.model1, sentences_A_bad_tokens, self.tokenizer1.pad_token_id)
+            ppls_B_good_m2 = get_perplexities(self.model2, sentences_B_good_tokens, self.tokenizer2.pad_token_id)
+            ppls_B_bad_m2 = get_perplexities(self.model2, sentences_B_bad_tokens, self.tokenizer2.pad_token_id)
             
             # Process results for each item in the batch
             for i, item in enumerate(batch_items):

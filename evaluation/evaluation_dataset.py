@@ -49,6 +49,31 @@ class ParallelEvaluationDatasetIterator:
         return self # This line is implicitly handled by the end of the generator function.
 
 
+class ParallelDataBatchLoader:
+    """
+    A utility class to efficiently load and batch parallel evaluation data.
+    """
+    def __init__(self, filepath: str, batch_size: int = 16):
+        self.filepath = filepath
+        self.batch_size = batch_size
+    
+    def __iter__(self):
+        """
+        Yields batches of ParallelEvaluationDataItem objects
+        """
+        items_batch = []
+        for item in ParallelEvaluationDatasetIterator(self.filepath):
+            items_batch.append(item)
+            
+            if len(items_batch) >= self.batch_size:
+                yield items_batch
+                items_batch = []
+        
+        # Yield any remaining items
+        if items_batch:
+            yield items_batch
+
+
 if __name__ == "__main__":
     data_filepath = "data_generation/outputs/impossible_blimp/english_to_local_shuffle_three_for_anaphor_agreement_gender.jsonl"
   
