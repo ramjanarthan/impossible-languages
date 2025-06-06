@@ -1,90 +1,11 @@
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
-from evaluation.evaluation_dataset import ParallelDataBatchLoader, ParallelEvaluationDatasetIterator
+from evaluation.evaluation_dataset import ParallelDataBatchLoader
+from evaluation.perplexity import get_perplexities
 import os # Added for path operations
 from pathlib import Path # Added for path operations
 import pandas as pd
 from tqdm import tqdm
-
-# def calculate_batch_perplexity(model, tokenizer, sentences: List[str], device, max_length=512):
-#     """
-#     Calculates perplexity for a batch of sentences efficiently.
-    
-#     Args:
-#         model: The language model
-#         tokenizer: The tokenizer for the model
-#         sentences: List of sentences to process in a batch
-#         device: The device to run computation on
-#         max_length: Maximum token length for truncation
-        
-#     Returns:
-#         List of perplexity scores corresponding to each sentence in the batch
-#     """
-#     perplexities = []
-    
-#     # Process empty batch case
-#     if not sentences:
-#         return perplexities
-    
-#     with torch.no_grad():
-#         # Tokenize all sentences in one go
-#         encodings = tokenizer(
-#             sentences,
-#             return_tensors="pt",
-#             padding=True,
-#             truncation=True,
-#             max_length=max_length
-#         )
-        
-#         input_ids = encodings.input_ids.to(device)
-#         attention_mask = encodings.attention_mask.to(device)
-        
-#         # Create labels (for computing loss)
-#         labels = input_ids.clone()
-#         # Mark padding tokens with -100 so they're not included in loss computation
-#         labels[input_ids == tokenizer.pad_token_id] = -100
-        
-#         # Get model outputs
-#         outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
-        
-#         # Compute per-sentence loss and perplexity
-#         # The loss from outputs is averaged over the entire batch,
-#         # so we need to compute per-sentence loss manually
-        
-#         # Reshape logits to (batch_size, seq_len, vocab_size)
-#         shift_logits = outputs.logits[..., :-1, :].contiguous()
-#         # Reshape labels to (batch_size, seq_len)
-#         shift_labels = labels[..., 1:].contiguous()
-        
-#         # Calculate loss for each token position (ignoring padded positions)
-#         loss_fct = torch.nn.CrossEntropyLoss(reduction='none')
-#         losses = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
-        
-#         # Reshape losses to match the input shape
-#         losses = losses.view(shift_labels.size())
-        
-#         # Calculate loss per sentence
-#         for i in range(len(sentences)):
-#             # Get the relevant parts for this sentence
-#             sentence_labels = shift_labels[i]
-#             sentence_losses = losses[i]
-            
-#             # Mask out padding tokens
-#             mask = sentence_labels != -100
-#             masked_losses = sentence_losses[mask]
-            
-#             if len(masked_losses) == 0:
-#                 # Handle empty or completely padded sentences
-#                 perplexities.append(float('inf'))
-#             else:
-#                 # Calculate average loss and perplexity
-#                 avg_loss = masked_losses.mean().item()
-#                 perplexity = math.exp(avg_loss)
-#                 perplexities.append(perplexity)
-    
-#     return perplexities
-
-
 
 class ModelComparisonEvaluator:
     """
@@ -159,18 +80,12 @@ class ModelComparisonEvaluator:
             sentences_A_bad = [item.dataset_A_ungrammatical for item in batch_items]
             sentences_B_good = [item.dataset_B_grammatical for item in batch_items]
             sentences_B_bad = [item.dataset_B_ungrammatical for item in batch_items]
-            item_indices = [getattr(item, "pairID", len(self.results_data) + len(item_indices)) for item in batch_items]
-
-            sentences_A_good_tokens = self.tokenizer1(sentences_A_good)
-            sentences_A_bad_tokens = self.tokenizer1(sentences_A_bad)
-            sentences_B_good_tokens = self.tokenizer2(sentences_B_good)
-            sentences_B_bad_tokens = self.tokenizer2(sentences_B_bad)
                         
             # Calculate perplexities in batches for efficiency
-            ppls_A_good_m1 = get_perplexities(self.model1, sentences_A_good_tokens, self.tokenizer1.pad_token_id)
-            ppls_A_bad_m1 = get_perplexities(self.model1, sentences_A_bad_tokens, self.tokenizer1.pad_token_id)
-            ppls_B_good_m2 = get_perplexities(self.model2, sentences_B_good_tokens, self.tokenizer2.pad_token_id)
-            ppls_B_bad_m2 = get_perplexities(self.model2, sentences_B_bad_tokens, self.tokenizer2.pad_token_id)
+            ppls_A_good_m1 = get_perplexities(self.model1, self.tokenizer1, sentences_A_good, self.device)
+            ppls_A_bad_m1 = get_perplexities(self.model1, self.tokenizer1, sentences_A_bad, self.device)
+            ppls_B_good_m2 = get_perplexities(self.model2, self.tokenizer2, sentences_B_good, self.device)
+            ppls_B_bad_m2 = get_perplexities(self.model2, self.tokenizer2, sentences_B_bad, self.device)
             
             # Process results for each item in the batch
             for i, item in enumerate(batch_items):
@@ -201,9 +116,9 @@ class ModelComparisonEvaluator:
                 
                 # Store results for tabular output
                 self.results_data.append({
-                    "pairID": getattr(item, "pairID", len(self.results_data)),
-                    "field": getattr(item, "field", "N/A"),
-                    "linguistics_term": getattr(item, "linguistics_term", "N/A"),
+                    "pairID": item.pairID,
+                    "field": item.field,
+                    "linguistics_term": item.linguistics_term,
                     "dataset_A_grammatical": item.dataset_A_grammatical,
                     "dataset_A_ungrammatical": item.dataset_A_ungrammatical,
                     f"PPL_{self.model_name_1}_A_Good": ppl_A_good_m1,
@@ -219,7 +134,6 @@ class ModelComparisonEvaluator:
                     "Model2_Only_Correct": (not model1_is_correct and model2_is_correct),
                     "Neither_Correct": (not model1_is_correct and not model2_is_correct)
                 })
-
         self._present_results(output_filename)
 
     def _present_results(self, summary_output_path_base: str):

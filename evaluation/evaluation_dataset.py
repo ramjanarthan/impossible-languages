@@ -6,14 +6,27 @@ class ParallelEvaluationDataItem:
     Provides easy access to all fields as attributes.
     """
     def __init__(self, data_dict):
-        for key, value in data_dict.items():
-            setattr(self, key, value)
+        self.dataset_A_grammatical = data_dict["dataset_A_grammatical"]
+        self.dataset_A_ungrammatical = data_dict["dataset_A_ungrammatical"]
+        self.one_prefix_prefix = data_dict["one_prefix_prefix"]
+        self.one_prefix_word_good = data_dict["one_prefix_word_good"]
+        self.one_prefix_word_bad = data_dict["one_prefix_word_bad"]
+        self.dataset_B_grammatical = data_dict["dataset_B_grammatical"]
+        self.dataset_B_ungrammatical = data_dict["dataset_B_ungrammatical"]
+        self.field = data_dict["field"]
+        self.linguistics_term = data_dict["linguistics_term"]
+        self.UID = data_dict["UID"]
+        self.simple_LM_method = data_dict["simple_LM_method"]
+        self.one_prefix_method = data_dict["one_prefix_method"]
+        self.two_prefix_method = data_dict["two_prefix_method"]
+        self.lexically_identical = data_dict["lexically_identical"]
+        self.pairID = data_dict["pairID"]
 
     def __repr__(self):
         # A friendly representation for debugging
-        return (f"ParallelEvaluationDataItem(pairID='{getattr(self, 'pairID', 'N/A')}', "
-                f"field='{getattr(self, 'field', 'N/A')}', "
-                f"linguistics_term='{getattr(self, 'linguistics_term', 'N/A')}')")
+        return (f"ParallelEvaluationDataItem(pairID='{self.pairID}', "
+                f"field='{self.field}', "
+                f"linguistics_term='{self.linguistics_term}')")
 
 class ParallelEvaluationDatasetIterator:
     """

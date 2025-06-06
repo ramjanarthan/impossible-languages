@@ -1,10 +1,10 @@
-from data_generation.utils.conjugate import *
-from data_generation.utils.string_utils import string_beautify
-from data_generation.utils.exceptions import *
+from utils.conjugate import *
+from utils.string_utils import string_beautify
+from utils.exceptions import *
 # from random import choice
 from functools import reduce
 import numpy as np
-from data_generation.utils.randomize import choice
+from utils.randomize import choice
 import jsonlines
 import logging
 import datetime

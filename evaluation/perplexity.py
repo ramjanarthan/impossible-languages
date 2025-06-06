@@ -1,4 +1,7 @@
 from scipy import stats
+from typing import List
+import torch
+import math
 
 def create_attention_mask(token_lists):
     seq_length = max([len(i) for i in token_lists])
@@ -32,16 +35,22 @@ def calculate_geometric_mean_perplexity(perplexities):
     return stats.gmean(valid_perps)
 
 
-def get_perplexities(model, token_lists, pad_token_id, device="mps"):
+def get_perplexities(model, tokenizer, sentences: List[str], device="mps", max_length=512):
     """Calculate per-sentence perplexities"""
 
-    # Prepare data
-    input_ids = create_input_ids(token_lists, pad_token_id).to(device)
-    labels = input_ids.clone()  # GPT-2 uses input as labels for CLM task
-    attention_mask = create_attention_mask(token_lists).to(device)
+    perplexities = []
+    # Process empty batch case
+    if not sentences:
+        return perplexities
 
     with torch.no_grad():
-        labels = input_ids.clone()
+        token_lists = tokenizer(sentences, return_tensors="pt", padding=True, truncation=True, max_length=max_length).input_ids
+
+        # Prepare data
+        input_ids = create_input_ids(token_lists, tokenizer.pad_token_id).to(device)
+        labels = input_ids.clone()  # GPT-2 uses input as labels for CLM task
+        attention_mask = create_attention_mask(token_lists).to(device)
+
         outputs = model(input_ids=input_ids, labels=labels, attention_mask=attention_mask)
 
         # Shift for next token prediction
@@ -56,6 +65,17 @@ def get_perplexities(model, token_lists, pad_token_id, device="mps"):
         # Apply attention mask
         loss = loss * shift_attention_mask
 
-        # Sum the loss over the sequence length, get per-example perplexity
-        per_example_loss = loss.sum(dim=1) / shift_attention_mask.sum(dim=1)
-        return torch.exp(per_example_loss).tolist()
+        perplexities = []
+
+        for i in range(len(sentences)):
+            sentence_loss = loss[i]
+            mask = shift_attention_mask[i]
+            valid_token_count = mask.sum().item()
+            if valid_token_count == 0:
+                perplexities.append(float('inf'))
+            else:
+                avg_loss = (sentence_loss.sum() / valid_token_count).item()
+                perplexity = math.exp(avg_loss)
+                perplexities.append(perplexity)
+
+    return perplexities
