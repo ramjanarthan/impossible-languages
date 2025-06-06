@@ -33,9 +33,9 @@ class ModelComparisonEvaluator:
 
         # Load models and tokenizers
         print(f"Loading Model 1: {self.model_name_1}")
-        self.model1, self.tokenizer1 = self._load_model_and_tokenizer(self.model_name_1)
+        self.model1, self.tokenizer1 = ModelComparisonEvaluator.load_model_and_tokenizer(self.model_name_1, self.device)
         print(f"Loading Model 2: {self.model_name_2}")
-        self.model2, self.tokenizer2 = self._load_model_and_tokenizer(self.model_name_2)
+        self.model2, self.tokenizer2 = ModelComparisonEvaluator.load_model_and_tokenizer(self.model_name_2, self.device)
 
         # Initialize counters
         self.total_pairs = 0
@@ -49,13 +49,14 @@ class ModelComparisonEvaluator:
         # Store detailed results for tabular output
         self.results_data = []
 
-    def _load_model_and_tokenizer(self, model_name):
+    @staticmethod
+    def load_model_and_tokenizer(model_name, device):
         """
         Helper method to load a model and its tokenizer.
         """
         tokenizer = GPT2Tokenizer.from_pretrained(model_name)
         model = GPT2LMHeadModel.from_pretrained(model_name)
-        model.to(self.device)
+        model.to(device)
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
         return model, tokenizer
