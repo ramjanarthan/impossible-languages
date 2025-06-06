@@ -1,0 +1,11 @@
+--- Evaluation Summary ---
+Total Parallel Pairs Processed: 1000
+
+Accuracy for Model 1 (mission-impossible-lms/no-shuffle-gpt2) on Dataset A: 83.80%
+Accuracy for Model 2 (mission-impossible-lms/even-odd-shuffle-gpt2) on Dataset B: 84.30%
+
+Comparison Counts:
+  Both Models Correct: 754 (75.40%)
+  mission-impossible-lms/no-shuffle-gpt2 Only Correct: 84 (8.40%)
+  mission-impossible-lms/even-odd-shuffle-gpt2 Only Correct: 89 (8.90%)
+  Neither Model Correct: 73 (7.30%)
