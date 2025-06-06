@@ -1,7 +1,7 @@
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 from evaluation.evaluation_dataset import ParallelDataBatchLoader
-from evaluation.perplexity import get_perplexities
+from evaluation.perplexity import get_perplexities, calculate_geometric_mean_perplexity
 import os # Added for path operations
 from pathlib import Path # Added for path operations
 import pandas as pd
@@ -71,6 +71,11 @@ class ModelComparisonEvaluator:
         """
         data_loader = ParallelDataBatchLoader(self.dataset_filepath, batch_size=batch_size)
         print(f"Starting evaluation on {self.dataset_filepath} with batch size {batch_size}...")
+        # Initialize lists to store all perplexities across batches
+        self.all_ppls_A_good_m1 = []
+        self.all_ppls_A_bad_m1 = []
+        self.all_ppls_B_good_m2 = []
+        self.all_ppls_B_bad_m2 = []
 
         for batch_items in tqdm(data_loader, desc="Processing dataset batches"):
             self.total_pairs += len(batch_items)
@@ -86,7 +91,13 @@ class ModelComparisonEvaluator:
             ppls_A_bad_m1 = get_perplexities(self.model1, self.tokenizer1, sentences_A_bad, self.device)
             ppls_B_good_m2 = get_perplexities(self.model2, self.tokenizer2, sentences_B_good, self.device)
             ppls_B_bad_m2 = get_perplexities(self.model2, self.tokenizer2, sentences_B_bad, self.device)
-            
+
+            # Extend master lists with perplexities from the current batch
+            self.all_ppls_A_good_m1.extend(ppls_A_good_m1)
+            self.all_ppls_A_bad_m1.extend(ppls_A_bad_m1)
+            self.all_ppls_B_good_m2.extend(ppls_B_good_m2)
+            self.all_ppls_B_bad_m2.extend(ppls_B_bad_m2)
+
             # Process results for each item in the batch
             for i, item in enumerate(batch_items):
                 # Get the perplexity scores for this item
@@ -134,9 +145,31 @@ class ModelComparisonEvaluator:
                     "Model2_Only_Correct": (not model1_is_correct and model2_is_correct),
                     "Neither_Correct": (not model1_is_correct and not model2_is_correct)
                 })
+
+        # Calculate overall geometric mean perplexities after processing all batches
+        gm_A_good_m1 = calculate_geometric_mean_perplexity(self.all_ppls_A_good_m1)
+        gm_A_bad_m1 = calculate_geometric_mean_perplexity(self.all_ppls_A_bad_m1)
+        gm_B_good_m2 = calculate_geometric_mean_perplexity(self.all_ppls_B_good_m2)
+        gm_B_bad_m2 = calculate_geometric_mean_perplexity(self.all_ppls_B_bad_m2)
+
+        self.geometric_means = {
+            'A_good_m1': gm_A_good_m1,
+            'A_bad_m1': gm_A_bad_m1,
+            'B_good_m2': gm_B_good_m2,
+            'B_bad_m2': gm_B_bad_m2
+        }
+
         self._present_results(output_filename)
 
     def _present_results(self, summary_output_path_base: str):
+        # Prepare geometric mean perplexities string for console and file
+        gm_perp_lines = ["\nGeometric Mean Perplexities:"]
+        for key, value in getattr(self, 'geometric_means', {}).items():
+            gm_perp_lines.append(f"  {key}: {value:.4f}")
+        gm_perp_summary = "\n".join(gm_perp_lines)
+
+        print(gm_perp_summary) # Print to console
+
         """
         Calculates accuracies, presents results, saves summary to a .txt file,
         and raw data to a .csv file in a 'raw' subdirectory.
@@ -178,6 +211,7 @@ class ModelComparisonEvaluator:
         summary_lines.append(f"  {self.model_name_1} Only Correct: {self.model1_only_correct_count} ({model1_only_correct_percent:.2f}%)")
         summary_lines.append(f"  {self.model_name_2} Only Correct: {self.model2_only_correct_count} ({model2_only_correct_percent:.2f}%)")
         summary_lines.append(f"  Neither Model Correct: {self.neither_correct_count} ({neither_correct_percent:.2f}%)")
+        summary_lines.append(gm_perp_summary) # Write geometric mean perplexities to summary file
         summary_content = "\n".join(summary_lines)
 
         # Print summary to console
