@@ -1,3 +1,4 @@
+from random import shuffle
 from data_generation.utils.impossible_utils import PERTURBATIONS
 from evaluation.evaluate import ModelComparisonEvaluator
 from evaluation.perplexity import get_perplexities, calculate_geometric_mean_perplexity
@@ -41,7 +42,7 @@ bnc_dataset = load_dataset(bnc_file)
 # switchboard_dataset = load_dataset(switchboard_file)
 # subtitles_dataset = load_dataset(subtitles_file)
 
-datasets = [bnc_dataset]
+datasets = [["That guy flees from himself"]]
 
 local_shuffled_datasets = []
 perturbation = PERTURBATIONS["shuffle_local3"]
@@ -63,10 +64,11 @@ def prepare_local_shuffle_dataset(dataset, perturbation):
     return original_texts, perturbed_texts
 
 for dataset in datasets:
-  _, shuffled = prepare_local_shuffle_dataset(dataset, perturbation)
+  # _, shuffled = prepare_local_shuffle_dataset(dataset, perturbation)
+  shuffled = dataset
   local_shuffled_datasets.append(shuffled)
 
-model, tokenizer = ModelComparisonEvaluator.load_model_and_tokenizer("mission-impossible-lms/local-shuffle-w3-gpt2", "mps")
+model, tokenizer = ModelComparisonEvaluator.load_model_and_tokenizer("mission-impossible-lms/no-shuffle-gpt2", "mps")
 
 def calculate_dataset_perplexity(model, tokenizer, tokens, batch_size=16, max_length=512):
     """Calculate perplexity for entire dataset"""
@@ -85,3 +87,13 @@ for dataset in local_shuffled_datasets:
   local_shuffled_perplexities.append(calculate_dataset_perplexity(model, tokenizer, dataset))
 
 print(f"local_shuffled_perplexities : {local_shuffled_perplexities}")
+
+# OUTPUT:
+# (ipp_new) ➜  impossible-languages git:(main) ✗ python -m compare_original.test_perturbation
+# Sampling from /Users/ramjanarthan/Desktop/UoE/sem_2/ipp/external_code/mission-impossible-language-models/test/bnc_spoken.test...
+# Number of sentences in file: 89904
+# Applying local shuffle perturbation to sentences...
+# 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1000/1000 [00:00<00:00, 9022.41it/s]
+# Computing perplexity:   0%|                                                                                                                                          | 0/63 [00:00<?, ?it/s]`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+# Computing perplexity: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 63/63 [00:23<00:00,  2.67it/s]
+# local_shuffled_perplexities : [np.float64(79.30036002479088)]
