@@ -42,10 +42,10 @@ bnc_dataset = load_dataset(bnc_file)
 # switchboard_dataset = load_dataset(switchboard_file)
 # subtitles_dataset = load_dataset(subtitles_file)
 
-datasets = [["That guy flees from himself"]]
+datasets = [bnc_dataset]
 
 local_shuffled_datasets = []
-perturbation = PERTURBATIONS["shuffle_local3"]
+perturbation = PERTURBATIONS["reverse_partial"]
 
 def prepare_local_shuffle_dataset(dataset, perturbation):
     """Prepare the dataset by applying the perturbation"""
@@ -68,7 +68,7 @@ for dataset in datasets:
   shuffled = dataset
   local_shuffled_datasets.append(shuffled)
 
-model, tokenizer = ModelComparisonEvaluator.load_model_and_tokenizer("mission-impossible-lms/no-shuffle-gpt2", "mps")
+model, tokenizer = ModelComparisonEvaluator.load_model_and_tokenizer("mission-impossible-lms/partial-reverse-gpt2", "mps")
 
 def calculate_dataset_perplexity(model, tokenizer, tokens, batch_size=16, max_length=512):
     """Calculate perplexity for entire dataset"""
@@ -89,6 +89,7 @@ for dataset in local_shuffled_datasets:
 print(f"local_shuffled_perplexities : {local_shuffled_perplexities}")
 
 # OUTPUT:
+# ----------------
 # (ipp_new) ➜  impossible-languages git:(main) ✗ python -m compare_original.test_perturbation
 # Sampling from /Users/ramjanarthan/Desktop/UoE/sem_2/ipp/external_code/mission-impossible-language-models/test/bnc_spoken.test...
 # Number of sentences in file: 89904
@@ -97,3 +98,12 @@ print(f"local_shuffled_perplexities : {local_shuffled_perplexities}")
 # Computing perplexity:   0%|                                                                                                                                          | 0/63 [00:00<?, ?it/s]`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
 # Computing perplexity: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 63/63 [00:23<00:00,  2.67it/s]
 # local_shuffled_perplexities : [np.float64(79.30036002479088)]
+
+# OUTPUT:
+# ----------------
+# (ipp_new) ➜  impossible-languages git:(main) ✗ python -m compare_original.test_perturbation
+# Sampling from /Users/ramjanarthan/Desktop/UoE/sem_2/ipp/external_code/mission-impossible-language-models/test/bnc_spoken.test...
+# Number of sentences in file: 89904
+# Computing perplexity:   0%|                                                                                                                               | 0/63 [00:00<?, ?it/s]`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+# Computing perplexity: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 63/63 [00:10<00:00,  6.13it/s]
+# local_shuffled_perplexities : [np.float64(65.42893417064084)]
