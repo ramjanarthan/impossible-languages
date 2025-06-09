@@ -17,6 +17,7 @@ class ExperimentsApp {
         }
     }
 
+
     async loadExperiments() {
         try {
             const response = await fetch('/api/experiments');
@@ -24,29 +25,36 @@ class ExperimentsApp {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             this.experiments = await response.json();
+            console.log('Experiments loaded from API:', JSON.stringify(this.experiments, null, 2));
         } catch (error) {
             console.error('Error loading experiments:', error);
             throw error;
         }
     }
 
+
     renderExperiments() {
+        console.log('Rendering experiments:', JSON.stringify(this.experiments, null, 2));
         const loading = document.getElementById('loading');
         const container = document.getElementById('experiments-container');
         const noData = document.getElementById('no-data');
 
         loading.style.display = 'none';
 
-        if (Object.keys(this.experiments).length === 0) {
+        if (!this.experiments || Object.keys(this.experiments).length === 0) { // Added check for this.experiments itself
+
             noData.style.display = 'block';
             return;
         }
 
+
         container.style.display = 'block';
         container.innerHTML = '';
 
+
         // Sort phenomena alphabetically
         const sortedPhenomena = Object.keys(this.experiments).sort();
+
 
         sortedPhenomena.forEach(phenomenon => {
             const phenomenonSection = this.createPhenomenonSection(phenomenon, this.experiments[phenomenon]);
@@ -54,38 +62,72 @@ class ExperimentsApp {
         });
     }
 
+
     createPhenomenonSection(phenomenon, experiments) {
         const section = document.createElement('div');
         section.className = 'phenomenon-section';
+
 
         const title = document.createElement('h2');
         title.className = 'phenomenon-title';
         title.textContent = this.formatPhenomenonName(phenomenon);
 
+
         const grid = document.createElement('div');
         grid.className = 'experiments-grid';
 
-        experiments.forEach(experiment => {
-            const card = this.createExperimentCard(experiment);
-            grid.appendChild(card);
+
+        // experiments is a list of objects with a 'type' field (parameter name)
+        experiments.forEach((entry, index) => { // Corrected from experimentEntries, added index
+            if (!entry || typeof entry !== 'object') {
+                console.error(`Invalid entry at index ${index} for phenomenon ${phenomenon}:`, entry);
+                return; // Skip this invalid entry
+            }
+
+
+            const card = this.createExperimentCard(entry);
+            if (card) { // createExperimentCard might return null if entry type is unknown
+                grid.appendChild(card);
+            }
         });
+
 
         section.appendChild(title);
         section.appendChild(grid);
 
+
         return section;
     }
 
-    createExperimentCard(experiment) {
-        const card = document.createElement('div');
-        card.className = 'experiment-card';
+
+    // New helper function to create the display for a single experiment's details
+    createSingleExperimentDisplay(experiment, directionTitle = null, isStandalone = false) {
+        const displayWrapper = document.createElement('div');
+        displayWrapper.className = 'single-experiment-display';
+        if (isStandalone) {
+            displayWrapper.className += ' standalone-card-content';
+        }
+
 
         const header = document.createElement('div');
         header.className = 'experiment-header';
 
-        const languages = document.createElement('div');
-        languages.className = 'experiment-languages';
-        languages.textContent = `${this.formatLanguageName(experiment.language1)} → ${this.formatLanguageName(experiment.language2)}`;
+
+        if (directionTitle && !isStandalone) { // Title for sub-section in a combined card
+            const subTitle = document.createElement('h4');
+            subTitle.className = 'direction-title';
+            subTitle.textContent = directionTitle;
+            header.appendChild(subTitle);
+        }
+
+        
+        if (isStandalone) { // Main language flow for standalone single cards
+            const languages = document.createElement('div');
+            languages.className = 'experiment-languages';
+            languages.textContent = `${this.formatLanguageName(experiment.language1)} → ${this.formatLanguageName(experiment.language2)}`;
+            header.appendChild(languages);
+        }
+
 
         const models = document.createElement('div');
         models.className = 'experiment-models';
@@ -93,19 +135,94 @@ class ExperimentsApp {
             <div><strong>Model 1:</strong> ${this.formatModelName(experiment.model1)}</div>
             <div><strong>Model 2:</strong> ${this.formatModelName(experiment.model2)}</div>
         `;
-
-        header.appendChild(languages);
         header.appendChild(models);
 
+
+        const datasetNameDiv = document.createElement('div');
+        datasetNameDiv.className = 'experiment-dataset'; // Uses brief dataset name from backend
+        datasetNameDiv.innerHTML = `<strong>Dataset:</strong> ${experiment.dataset}`;
+        header.appendChild(datasetNameDiv);
+
+        
+        displayWrapper.appendChild(header);
+
+
         const comparison = this.createModelsComparison(experiment);
+        displayWrapper.appendChild(comparison);
+
+
         const info = this.createExperimentInfo(experiment);
+        displayWrapper.appendChild(info);
 
-        card.appendChild(header);
-        card.appendChild(comparison);
-        card.appendChild(info);
 
-        return card;
+        return displayWrapper;
     }
+
+
+    createExperimentCard(entry) { // entry has 'type' and 'experiment' or 'experiment_A_to_B'/'experiment_B_to_A'
+        if (entry.type === 'combined') {
+            const card = document.createElement('div');
+            card.className = 'experiment-card combined-experiment-card';
+
+
+            const expAtoB = entry.experiment_A_to_B;
+            const expBtoA = entry.experiment_B_to_A;
+
+
+            const combinedHeaderDiv = document.createElement('div');
+            combinedHeaderDiv.className = 'combined-experiment-header';
+            combinedHeaderDiv.innerHTML = `
+                <h2>${this.formatLanguageName(expAtoB.language1)} <span class="arrow">↔</span> ${this.formatLanguageName(expAtoB.language2)}</h2>
+                <div class="combined-details">
+                    <span><strong>Phenomenon:</strong> ${this.formatPhenomenonName(entry.phenomenon)}</span>
+                    <span><strong>Dataset:</strong> ${entry.dataset}</span>
+                </div>
+            `;
+            card.appendChild(combinedHeaderDiv);
+
+
+            const directionsContainer = document.createElement('div');
+            directionsContainer.className = 'directions-container';
+
+
+            const displayAtoB = this.createSingleExperimentDisplay(expAtoB, `${this.formatLanguageName(expAtoB.language1)} → ${this.formatLanguageName(expAtoB.language2)}`);
+            directionsContainer.appendChild(displayAtoB);
+
+
+            const displayBtoA = this.createSingleExperimentDisplay(expBtoA, `${this.formatLanguageName(expBtoA.language1)} → ${this.formatLanguageName(expBtoA.language2)}`);
+            directionsContainer.appendChild(displayBtoA);
+
+
+            card.appendChild(directionsContainer);
+
+
+            const tooltipText = `Two-way comparison: ${this.formatLanguageName(expAtoB.language1)} vs ${this.formatLanguageName(expAtoB.language2)} for phenomenon '${this.formatPhenomenonName(entry.phenomenon)}' on dataset '${entry.dataset}'.`;
+            card.setAttribute('title', tooltipText);
+            return card;
+
+
+        } else if (entry.type === 'single') {
+            const card = document.createElement('div');
+            card.className = 'experiment-card single-experiment-card'; // Add class for single
+            const experiment = entry.experiment;
+
+
+            const singleDisplay = this.createSingleExperimentDisplay(experiment, null, true);
+            card.appendChild(singleDisplay);
+
+            
+            const tooltipText = `Experiment: ${this.formatLanguageName(experiment.language1)} → ${this.formatLanguageName(experiment.language2)} for phenomenon '${this.formatPhenomenonName(experiment.phenomenon)}' on dataset '${experiment.dataset}'. Model 1: ${this.formatModelName(experiment.model1)}, Model 2: ${this.formatModelName(experiment.model2)}.`;
+            card.setAttribute('title', tooltipText);
+            return card;
+
+        } else {
+            console.warn('Unknown experiment entry type:', entry);
+            return null; // Or some error display
+        }
+    } // This is the end of createExperimentCard
+
+    // All subsequent methods like createModelsComparison, etc., should follow here
+
 
     createModelsComparison(experiment) {
         const comparison = document.createElement('div');

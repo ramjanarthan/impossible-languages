@@ -65,7 +65,10 @@ class ExperimentParser:
             dataset_match = re.search(r'Dataset: (.+)', content)
             if not dataset_match:
                 return None
-            dataset = dataset_match.group(1).strip()
+            dataset_full_path = dataset_match.group(1).strip()
+            dataset_filename = os.path.basename(dataset_full_path)
+            dataset_brief_name = os.path.splitext(dataset_filename)[0]
+            dataset = dataset_brief_name  # Use the brief name
             
             # Extract models
             model1_match = re.search(r'Model 1: (.+)', content)
@@ -169,14 +172,61 @@ class ExperimentParser:
             if prefix not in parsed_experiments or filename_data['timestamp'] > parsed_experiments[prefix].timestamp:
                 parsed_experiments[prefix] = experiment
         
-        # Group by phenomenon
-        for experiment in parsed_experiments.values():
-            phenomenon = experiment.phenomenon
-            if phenomenon not in experiments:
-                experiments[phenomenon] = []
-            experiments[phenomenon].append(experiment)
-        
-        return experiments
+        # Convert parsed_experiments dictionary to a list for initial sorting
+        initial_sorted_list = list(parsed_experiments.values())
+
+        # Sort experiments: by phenomenon, then by language pair (normalized), then by language1
+        initial_sorted_list.sort(key=lambda exp: (
+            exp.phenomenon,
+            tuple(sorted((exp.language1, exp.language2))),
+            exp.language1 # Ensures exp1 (e.g., A->B) comes before exp2 (e.g., B->A) if A < B
+        ))
+
+        final_grouped_experiments = {}
+        i = 0
+        while i < len(initial_sorted_list):
+            current_exp = initial_sorted_list[i]
+            phenomenon = current_exp.phenomenon
+
+            if phenomenon not in final_grouped_experiments:
+                final_grouped_experiments[phenomenon] = []
+
+            # Check for a mirror with the next experiment
+            if i + 1 < len(initial_sorted_list):
+                next_exp = initial_sorted_list[i+1]
+                is_mirror = (
+                    current_exp.phenomenon == next_exp.phenomenon and
+                    current_exp.dataset == next_exp.dataset and # Compare brief dataset names
+                    current_exp.language1 == next_exp.language2 and
+                    current_exp.language2 == next_exp.language1
+                )
+
+                if is_mirror:
+                    # Ensure current_exp.language1 is lexicographically smaller for consistent ordering in combined obj
+                    exp1_data = asdict(current_exp) # lang1 -> lang2
+                    exp2_data = asdict(next_exp)   # lang2 -> lang1
+                    
+                    combined_entry = {
+                        "type": "combined",
+                        "phenomenon": phenomenon,
+                        "dataset": current_exp.dataset,
+                        "language_pair_sorted": tuple(sorted((current_exp.language1, current_exp.language2))),
+                        "experiment_A_to_B": exp1_data,
+                        "experiment_B_to_A": exp2_data
+                    }
+                    final_grouped_experiments[phenomenon].append(combined_entry)
+                    i += 2  # Move past both current and next experiment
+                    continue
+            
+            # Not a mirror or it's the last experiment, add as single
+            single_entry = {
+                "type": "single",
+                "experiment": asdict(current_exp)
+            }
+            final_grouped_experiments[phenomenon].append(single_entry)
+            i += 1
+            
+        return final_grouped_experiments
 
 # Initialize parser
 parser = ExperimentParser()
@@ -189,14 +239,9 @@ async def read_root():
 @app.get("/api/experiments")
 async def get_experiments():
     """API endpoint to get experiment data"""
-    experiments = parser.load_experiments()
-    
-    # Convert to JSON-serializable format
-    result = {}
-    for phenomenon, exp_list in experiments.items():
-        result[phenomenon] = [asdict(exp) for exp in exp_list]
-    
-    return result
+    # parser.load_experiments() now returns the final structure ready for JSON serialization
+    experiments_data = parser.load_experiments()
+    return experiments_data
 
 # Mount static files
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")

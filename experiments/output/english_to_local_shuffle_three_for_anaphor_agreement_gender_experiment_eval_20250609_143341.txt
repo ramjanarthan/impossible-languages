@@ -1,3 +1,9 @@
+--- Experiment Summary ---
+
+Dataset: data_generation/outputs/impossible_blimp/english_to_local_shuffle_three_for_anaphor_agreement_gender.jsonl
+Model 1: mission-impossible-lms/no-shuffle-gpt2
+Model 2: mission-impossible-lms/local-shuffle-w3-gpt2
+
 --- Evaluation Summary ---
 Total Parallel Pairs Processed: 1000
 
@@ -9,3 +15,9 @@ Comparison Counts:
   mission-impossible-lms/no-shuffle-gpt2 Only Correct: 101 (10.10%)
   mission-impossible-lms/local-shuffle-w3-gpt2 Only Correct: 140 (14.00%)
   Neither Model Correct: 39 (3.90%)
+
+Geometric Mean Perplexities:
+  A_good_m1: 328.5301
+  A_bad_m1: 494.7834
+  B_good_m2: 2669.3527
+  B_bad_m2: 3765.1441

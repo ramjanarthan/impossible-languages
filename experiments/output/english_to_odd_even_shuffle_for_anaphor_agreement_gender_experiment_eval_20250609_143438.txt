@@ -1,3 +1,9 @@
+--- Experiment Summary ---
+
+Dataset: data_generation/outputs/impossible_blimp/english_to_odd_even_shuffle_for_anaphor_agreement_gender.jsonl
+Model 1: mission-impossible-lms/no-shuffle-gpt2
+Model 2: mission-impossible-lms/even-odd-shuffle-gpt2
+
 --- Evaluation Summary ---
 Total Parallel Pairs Processed: 1000
 
