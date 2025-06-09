@@ -199,9 +199,6 @@ class ExperimentsApp {
 
             card.appendChild(directionsContainer);
 
-
-            const tooltipText = `Two-way comparison: ${this.formatLanguageName(expAtoB.language1)} vs ${this.formatLanguageName(expAtoB.language2)} for phenomenon '${this.formatPhenomenonName(entry.phenomenon)}' on dataset '${entry.dataset}'.`;
-            card.setAttribute('title', tooltipText);
             return card;
 
 
