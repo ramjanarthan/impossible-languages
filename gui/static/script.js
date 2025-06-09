@@ -101,7 +101,8 @@ class ExperimentsApp {
 
 
     // New helper function to create the display for a single experiment's details
-    createSingleExperimentDisplay(experiment, directionTitle = null, isStandalone = false) {
+    createSingleExperimentDisplay(experiment, directionTitle = null, isStandalone = false, visualSwapModelBoxes = false) { // Added visualSwapModelBoxes flag
+
         const displayWrapper = document.createElement('div');
         displayWrapper.className = 'single-experiment-display';
         if (isStandalone) {
@@ -147,7 +148,7 @@ class ExperimentsApp {
         displayWrapper.appendChild(header);
 
 
-        const comparison = this.createModelsComparison(experiment);
+        const comparison = this.createModelsComparison(experiment, visualSwapModelBoxes); // Pass flag
         displayWrapper.appendChild(comparison);
 
 
@@ -166,18 +167,19 @@ class ExperimentsApp {
 
 
             const expAtoB = entry.experiment_A_to_B;
-            const expBtoA = entry.experiment_B_to_A;
+            const originalExpBtoA = entry.experiment_B_to_A; // Use original data for B->A part
 
+            let visualSwapNeededForBtoA = false;
+            if (expAtoB.model1 !== originalExpBtoA.model1) {
+                visualSwapNeededForBtoA = true;
+            }
 
             const combinedHeaderDiv = document.createElement('div');
             combinedHeaderDiv.className = 'combined-experiment-header';
             combinedHeaderDiv.innerHTML = `
                 <h2>${this.formatLanguageName(expAtoB.language1)} <span class="arrow">↔</span> ${this.formatLanguageName(expAtoB.language2)}</h2>
-                <div class="combined-details">
-                    <span><strong>Phenomenon:</strong> ${this.formatPhenomenonName(entry.phenomenon)}</span>
-                    <span><strong>Dataset:</strong> ${entry.dataset}</span>
-                </div>
-            `;
+            `; // Removed combined-details div
+
             card.appendChild(combinedHeaderDiv);
 
 
@@ -185,11 +187,13 @@ class ExperimentsApp {
             directionsContainer.className = 'directions-container';
 
 
-            const displayAtoB = this.createSingleExperimentDisplay(expAtoB, `${this.formatLanguageName(expAtoB.language1)} → ${this.formatLanguageName(expAtoB.language2)}`);
+            const displayAtoB = this.createSingleExperimentDisplay(expAtoB, `${this.formatLanguageName(expAtoB.language1)} → ${this.formatLanguageName(expAtoB.language2)}`, false, false); // No visual swap for A->B part
+
             directionsContainer.appendChild(displayAtoB);
 
 
-            const displayBtoA = this.createSingleExperimentDisplay(expBtoA, `${this.formatLanguageName(expBtoA.language1)} → ${this.formatLanguageName(expBtoA.language2)}`);
+            const displayBtoA = this.createSingleExperimentDisplay(originalExpBtoA, `${this.formatLanguageName(originalExpBtoA.language1)} → ${this.formatLanguageName(originalExpBtoA.language2)}`, false, visualSwapNeededForBtoA);
+
             directionsContainer.appendChild(displayBtoA);
 
 
@@ -224,7 +228,8 @@ class ExperimentsApp {
     // All subsequent methods like createModelsComparison, etc., should follow here
 
 
-    createModelsComparison(experiment) {
+    createModelsComparison(experiment, visualSwapModelBoxes = false) { // Added visualSwapModelBoxes flag
+
         const comparison = document.createElement('div');
         comparison.className = 'models-comparison';
 
@@ -239,13 +244,19 @@ class ExperimentsApp {
         const model2Box = this.createModelBox(
             experiment.model2,
             experiment.accuracy2,
-            experiment.accuracy2 > experiment.accuracy1,
+            experiment.accuracy2 > experiment.accuracy1, // isWinning for model2 (note: strict inequality if accuracies are same)
             experiment,
             'model2'
         );
 
-        comparison.appendChild(model1Box);
-        comparison.appendChild(model2Box);
+        if (visualSwapModelBoxes) {
+            comparison.appendChild(model2Box); // Display model2's box first
+            comparison.appendChild(model1Box); // Then model1's box
+        } else {
+            comparison.appendChild(model1Box);
+            comparison.appendChild(model2Box);
+        }
+
 
         return comparison;
     }
