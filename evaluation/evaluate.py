@@ -202,8 +202,12 @@ class ModelComparisonEvaluator:
         neither_correct_percent = (self.neither_correct_count / self.total_pairs * 100) if self.total_pairs > 0 else 0
 
         # Prepare summary content
-        summary_lines = []
-        summary_lines.append("--- Evaluation Summary ---")
+        summary_lines = []        
+        summary_lines.append("--- Experiment Summary ---")
+        summary_lines.append(f"\nDataset: {self.dataset_filepath}")
+        summary_lines.append(f"Model 1: {self.model_name_1}")
+        summary_lines.append(f"Model 2: {self.model_name_2}")
+        summary_lines.append("\n--- Evaluation Summary ---")
         summary_lines.append(f"Total Parallel Pairs Processed: {self.total_pairs}")
         summary_lines.append(f"\nAccuracy for Model 1 ({self.model_name_1}) on Dataset A: {accuracy_m1:.2f}%")
         summary_lines.append(f"Accuracy for Model 2 ({self.model_name_2}) on Dataset B: {accuracy_m2:.2f}%")

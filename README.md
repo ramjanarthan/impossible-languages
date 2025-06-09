@@ -61,3 +61,15 @@ english_to_local_shuffle_three_for_anaphor_agreement_gender_experiment_eval_2025
 ```
 
 refers to an experiment evaluation file comparing an English Model to a Local Shuffle Three Model for Anaphor Agreement Gender (in that order).
+
+## GUI
+
+To make viewing experiment results easier, a GUI is provided in the `gui` directory.
+
+To run the GUI, run the following command in the 'gui' project directory:
+
+```bash
+python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+The GUI will be available at: http://localhost:8000

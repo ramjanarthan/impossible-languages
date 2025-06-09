@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linguistic Experiments Results</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Linguistic Experiments Results</h1>
+            <p class="subtitle">Comparative Analysis of Language Models on Grammatical Phenomena</p>
+        </header>
+
+        <main id="main-content">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Loading experiments...</p>
+            </div>
+
+            <div id="experiments-container" style="display: none;">
+                <!-- Experiments will be populated here -->
+            </div>
+
+            <div id="no-data" style="display: none;">
+                <div class="no-data-message">
+                    <h2>No Experiments Found</h2>
+                    <p>No experiment files were found in the experiments/output directory.</p>
+                    <p>Please ensure your experiment files are properly formatted and located in the correct directory.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Tooltip for displaying additional metrics -->
+        <div id="tooltip" class="tooltip">
+            <div class="tooltip-content">
+                <h4>Additional Metrics</h4>
+                <div id="tooltip-data"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
