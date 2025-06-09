@@ -8,9 +8,6 @@ class ParallelEvaluationDataItem:
     def __init__(self, data_dict):
         self.dataset_A_grammatical = data_dict["dataset_A_grammatical"]
         self.dataset_A_ungrammatical = data_dict["dataset_A_ungrammatical"]
-        self.one_prefix_prefix = data_dict["one_prefix_prefix"]
-        self.one_prefix_word_good = data_dict["one_prefix_word_good"]
-        self.one_prefix_word_bad = data_dict["one_prefix_word_bad"]
         self.dataset_B_grammatical = data_dict["dataset_B_grammatical"]
         self.dataset_B_ungrammatical = data_dict["dataset_B_ungrammatical"]
         self.field = data_dict["field"]

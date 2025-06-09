@@ -290,9 +290,8 @@ def __perturb_hop_tokens(sent, num_hops):
 
 
 def __perturb_reverse(sent, rng, reverse, full):
-
     # Get sentence text and GPT-2 tokens
-    tokens = gpt2_rev_tokenizer.encode(sent["sent_text"])
+    tokens = gpt2_rev_tokenizer.encode(sent)
 
     # Pick random index to insert REV token
     i = rng.choice(len(tokens)+1)

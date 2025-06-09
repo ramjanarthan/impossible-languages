@@ -1,0 +1,23 @@
+--- Experiment Summary ---
+
+Dataset: data_generation/outputs/impossible_blimp/english_to_partial_reverse_for_ellipsis.jsonl
+Model 1: mission-impossible-lms/no-shuffle-gpt2
+Model 2: mission-impossible-lms/partial-reverse-gpt2
+
+--- Evaluation Summary ---
+Total Parallel Pairs Processed: 1000
+
+Accuracy for Model 1 (mission-impossible-lms/no-shuffle-gpt2) on Dataset A: 68.50%
+Accuracy for Model 2 (mission-impossible-lms/partial-reverse-gpt2) on Dataset B: 59.30%
+
+Comparison Counts:
+  Both Models Correct: 439 (43.90%)
+  mission-impossible-lms/no-shuffle-gpt2 Only Correct: 246 (24.60%)
+  mission-impossible-lms/partial-reverse-gpt2 Only Correct: 154 (15.40%)
+  Neither Model Correct: 161 (16.10%)
+
+Geometric Mean Perplexities:
+  A_good_m1: 797.1723
+  A_bad_m1: 876.3029
+  B_good_m2: 703.7836
+  B_bad_m2: 764.5768
