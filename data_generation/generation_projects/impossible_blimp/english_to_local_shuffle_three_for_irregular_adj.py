@@ -7,11 +7,11 @@ from functools import reduce
 from data_generation.utils.vocab_sets import *
 from data_generation.utils.impossible_utils import PERTURBATIONS
 
-class EnglishToFullReverseForIrregularAdjGenerator(data_generator.ParallelBenchmarkGenerator):
+class EnglishToLocalShuffleThreeForIrregularAdjGenerator(data_generator.ParallelBenchmarkGenerator):
     def __init__(self):
         super().__init__(field="morphology",
                          linguistics="irregular_forms",
-                         uid="english_to_full_reverse_for_irregular_adj",
+                         uid="english_to_local_shuffle_three_for_irregular_adj",
                          simple_lm_method=True,
                          one_prefix_method=False,
                          two_prefix_method=True,
@@ -42,7 +42,7 @@ class EnglishToFullReverseForIrregularAdjGenerator(data_generator.ParallelBenchm
             "two_prefix_word": N1[0]
         }
 
-        perturbation = PERTURBATIONS["reverse_full"]
+        perturbation = PERTURBATIONS["shuffle_local3"]
 
         # Impossible sentences
         impossible_sentence_good = perturbation["perturbation_function"](data["dataset_A_grammatical"])
@@ -57,5 +57,5 @@ class EnglishToFullReverseForIrregularAdjGenerator(data_generator.ParallelBenchm
         return data, data["dataset_A_grammatical"]
 
 
-binding_generator = EnglishToFullReverseForIrregularAdjGenerator()
+binding_generator = EnglishToLocalShuffleThreeForIrregularAdjGenerator()
 binding_generator.generate_paradigm(number_to_generate=1000, rel_output_path="outputs/impossible_blimp/%s.jsonl" % binding_generator.uid)
