@@ -1,0 +1,23 @@
+--- Experiment Summary ---
+
+Dataset: data_generation/outputs/impossible_blimp/english_to_full_reverse_for_anaphor_agreement_numerical.jsonl
+Model 1: mission-impossible-lms/full-reverse-gpt2
+Model 2: mission-impossible-lms/no-shuffle-gpt2
+
+--- Evaluation Summary ---
+Total Parallel Pairs Processed: 1000
+
+Accuracy for Model 1 (mission-impossible-lms/full-reverse-gpt2) on Dataset A: 80.40%
+Accuracy for Model 2 (mission-impossible-lms/no-shuffle-gpt2) on Dataset B: 52.70%
+
+Comparison Counts:
+  Both Models Correct: 431 (43.10%)
+  mission-impossible-lms/full-reverse-gpt2 Only Correct: 373 (37.30%)
+  mission-impossible-lms/no-shuffle-gpt2 Only Correct: 96 (9.60%)
+  Neither Model Correct: 100 (10.00%)
+
+Geometric Mean Perplexities:
+  A_good_m1: 237554.8038
+  A_bad_m1: 298296.9010
+  B_good_m2: 68852.1849
+  B_bad_m2: 71715.3323
