@@ -5,7 +5,10 @@ from data_generation.utils.randomize import choice
 from data_generation.utils.vocab_sets_dynamic import *
 from data_generation.utils.impossible_utils import PERTURBATIONS
 
-class AgreementGenerator(data_generator.BenchmarkGenerator):
+class ImpossibleDistractorAgreementRCGenerator(data_generator.BenchmarkGenerator):
+    PERTURBATION_KEYS_FOR_DATA_GENERATION = ["shuffle_nondeterministic", "shuffle_deterministic21", "shuffle_local3", "shuffle_local5", "shuffle_even_odd", "reverse_control", "reverse_partial", "reverse_full"]
+    PERTURBATION_KEYS_FOR_EVALUATION = ["english"] + PERTURBATION_KEYS_FOR_DATA_GENERATION
+
     def __init__(self):
         super().__init__(field="morphology",
                          linguistics="subject_verb_agreement",
@@ -54,23 +57,12 @@ class AgreementGenerator(data_generator.BenchmarkGenerator):
         Aux_not_agree = Auxs["aux_nonagree"]
         V_mat_args = verb_args_from_verb(V_mat_agree, subj=subj, aux=Aux_agree)
 
-        if V_mat_agree["finite"] == "1":
-            prefix = "%s %s %s %s %s" % (subj[0], rel[0], Aux_emb[0], V_emb[0], obj_emb[0])
-            word_good = V_mat_agree[0]
-            word_bad = V_mat_not_agree[0]
-        else:
-            prefix = "%s %s %s %s %s" % (subj[0], rel[0], Aux_emb[0], V_emb[0], obj_emb[0])
-            word_good = Aux_agree
-            word_bad = Aux_not_agree
-
         data = {
             "sentence_good_english": "%s %s %s %s %s %s %s %s." % (subj[0], rel[0], Aux_emb[0], V_emb[0], obj_emb[0], Aux_agree, V_mat_agree[0], join_args(V_mat_args["args"])),
             "sentence_bad_english": "%s %s %s %s %s %s %s %s." % (subj[0], rel[0], Aux_emb[0], V_emb[0], obj_emb[0], Aux_not_agree, V_mat_not_agree[0], join_args(V_mat_args["args"])),
         }
 
-        PERTURBATION_KEYS_FOR_DATA_GENERATION = ["shuffle_nondeterministic", "shuffle_deterministic21", "shuffle_local3", "shuffle_local5", "shuffle_even_odd", "reverse_control", "reverse_partial", "reverse_full"]
-
-        for perturbation_key in PERTURBATION_KEYS_FOR_DATA_GENERATION:
+        for perturbation_key in ImpossibleDistractorAgreementRCGenerator.PERTURBATION_KEYS_FOR_DATA_GENERATION:
             perturbation = PERTURBATIONS[perturbation_key]
 
             # Impossible sentences
@@ -85,5 +77,5 @@ class AgreementGenerator(data_generator.BenchmarkGenerator):
 
         return data, data["sentence_good_english"]
 
-generator = AgreementGenerator()
-generator.generate_paradigm(number_to_generate=1000, rel_output_path="outputs/impossible_blimp/v2/%s.jsonl" % generator.uid)
+generator = ImpossibleDistractorAgreementRCGenerator()
+generator.generate_paradigm(number_to_generate=50, rel_output_path="outputs/impossible_blimp/v2/%s.jsonl" % generator.uid)
