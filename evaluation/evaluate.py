@@ -1,59 +1,64 @@
+import argparse
+import importlib
+import json
+import os
+from pathlib import Path
+import pandas as pd
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
-from evaluation.evaluation_dataset import ParallelDataBatchLoader
-from evaluation.perplexity import get_perplexities, calculate_geometric_mean_perplexity
-import os # Added for path operations
-from pathlib import Path # Added for path operations
-import pandas as pd
-from tqdm import tqdm
+from evaluation.perplexity import get_sentence_log_probabilities
+from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME
 
-class ModelComparisonEvaluator:
+class PhenomenonEvaluator:
     """
-    Evaluates and compares two language models on a parallel dataset.
-    For each pair in the dataset, it calculates perplexity for dataset A with model 1
-    and dataset B with model 2, and then determines which model correctly
-    identified the grammatical sentence as having lower perplexity.
+    Enhanced evaluator that can dynamically load and evaluate grammatical phenomena.
+    
+    This class provides a clean interface for evaluating any phenomenon class
+    that follows the standard interface (has PERTURBATION_KEYS_FOR_EVALUATION).
     """
-    def __init__(self, dataset_filepath: str, model_name_1: str, model_name_2: str):
+    
+    def __init__(self, dataset_path, phenomenon_class, output_base, batch_size=16):
         """
-        Initializes the evaluator with the dataset path and two model names.
-
+        Initialize the evaluator.
+        
         Args:
-            dataset_filepath (str): Path to the parallel evaluation dataset (JSON Lines).
-            model_name_1 (str): Name of the first model (e.g., "gpt2").
-            model_name_2 (str): Name of the second model (e.g., "mission-impossible-lms/partial-reverse-gpt2").
+            dataset_path: Path to the dataset JSONL file
+            phenomenon_class: Either a class object or tuple of (class_name, module_path)
+            output_base: Base path for output files
+            batch_size: Batch size for model evaluation
         """
-        self.dataset_filepath = dataset_filepath
-        self.model_name_1 = model_name_1
-        self.model_name_2 = model_name_2
-
-        # Set up device
-        self.device = torch.device("mps" if torch.mps.is_available() else "cpu")
+        self.dataset_path = dataset_path
+        self.output_base = output_base
+        self.batch_size = batch_size
+        self.device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
+        
         print(f"Using device: {self.device}")
-
-        # Load models and tokenizers
-        print(f"Loading Model 1: {self.model_name_1}")
-        self.model1, self.tokenizer1 = ModelComparisonEvaluator.load_model_and_tokenizer(self.model_name_1, self.device)
-        print(f"Loading Model 2: {self.model_name_2}")
-        self.model2, self.tokenizer2 = ModelComparisonEvaluator.load_model_and_tokenizer(self.model_name_2, self.device)
-
-        # Initialize counters
-        self.total_pairs = 0
-        self.model1_correct_count = 0
-        self.model2_correct_count = 0
-        self.both_correct_count = 0
-        self.neither_correct_count = 0
-        self.model1_only_correct_count = 0
-        self.model2_only_correct_count = 0
-
-        # Store detailed results for tabular output
-        self.results_data = []
+        
+        # Load data and phenomenon class
+        self.data = self._load_dataset(self.dataset_path)
+        self.phenomenon_class = phenomenon_class
+        
+        # Get perturbation keys from the class
+        self.perturbation_keys = self._get_perturbation_keys()
+        
+        # Storage for results
+        self.summary = []
+        self.all_results = []
+        
+        print(f"Loaded {len(self.data)} examples")
+        print(f"Phenomenon: {self.phenomenon_class.__name__}")
+        print(f"Perturbation keys: {self.perturbation_keys}")
+    
+    def _get_perturbation_keys(self):
+        """Get perturbation keys from the phenomenon class."""
+        if hasattr(self.phenomenon_class, 'PERTURBATION_KEYS_FOR_EVALUATION'):
+            return self.phenomenon_class.PERTURBATION_KEYS_FOR_EVALUATION
+        else:
+            raise AttributeError(f"Class {self.phenomenon_class.__name__} must have PERTURBATION_KEYS_FOR_EVALUATION attribute")
 
     @staticmethod
-    def load_model_and_tokenizer(model_name, device):
-        """
-        Helper method to load a model and its tokenizer.
-        """
+    def _load_model_and_tokenizer(model_name, device):
+        """Helper method to load a model and its tokenizer."""
         tokenizer = GPT2Tokenizer.from_pretrained(model_name)
         model = GPT2LMHeadModel.from_pretrained(model_name)
         model.to(device)
@@ -61,173 +66,165 @@ class ModelComparisonEvaluator:
             tokenizer.pad_token = tokenizer.eos_token
         return model, tokenizer
 
-    def evaluate(self, output_filename: str = "evaluation_results.csv", batch_size: int = 16):
-        """
-        Performs the evaluation by iterating through the dataset in batches, calculating
-        perplexities, comparing results, and generating a summary report.
+    def _load_dataset(self, dataset_path):
+        """Load dataset from JSONL file."""
+        data = []
+        with open(dataset_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                data.append(json.loads(line))
+        return data
 
-        Args:
-            output_filename (str): Name of the CSV file to write results to.
-            batch_size (int): Number of sentence pairs to process in a single batch.
-        """
-        data_loader = ParallelDataBatchLoader(self.dataset_filepath, batch_size=batch_size)
-        print(f"Starting evaluation on {self.dataset_filepath} with batch size {batch_size}...")
-        # Initialize lists to store all perplexities across batches
-        self.all_ppls_A_good_m1 = []
-        self.all_ppls_A_bad_m1 = []
-        self.all_ppls_B_good_m2 = []
-        self.all_ppls_B_bad_m2 = []
+    def _evaluate_perturbation(self, sentences_good, sentences_bad, model_name, batch_size=16):
+        """Evaluate a single perturbation with the specified model."""
+        model, tokenizer = self._load_model_and_tokenizer(model_name, self.device)
+        
+        good_logprobs = []
+        bad_logprobs = []
+        
+        for i in range(0, len(sentences_good), batch_size):
+            batch_good = sentences_good[i:i+batch_size]
+            batch_bad = sentences_bad[i:i+batch_size]
+            good_logprobs.extend(get_sentence_log_probabilities(model, tokenizer, batch_good, device=self.device))
+            bad_logprobs.extend(get_sentence_log_probabilities(model, tokenizer, batch_bad, device=self.device))
+        
+        # Calculate metrics
+        correct = sum(g > b for g, b in zip(good_logprobs, bad_logprobs))
+        accuracy = correct / len(good_logprobs) if good_logprobs else 0
+        
+        # Perplexity for good and bad sentences separately
+        mean_neg_logprob_good = -sum(good_logprobs) / len(good_logprobs) if good_logprobs else 0
+        mean_neg_logprob_bad = -sum(bad_logprobs) / len(bad_logprobs) if bad_logprobs else 0
+        perplexity_good = torch.exp(torch.tensor(mean_neg_logprob_good)).item() if good_logprobs else float('nan')
+        perplexity_bad = torch.exp(torch.tensor(mean_neg_logprob_bad)).item() if bad_logprobs else float('nan')
+        
+        return accuracy, perplexity_good, perplexity_bad, good_logprobs, bad_logprobs
 
-        for batch_items in tqdm(data_loader, desc="Processing dataset batches"):
-            self.total_pairs += len(batch_items)
+    def evaluate(self):
+        """Run evaluation on all perturbations."""
+        for key in self.perturbation_keys:
+            model_name = PERTURBATION_TO_HF_MODEL_NAME.get(key)
+            if model_name is None:
+                print(f"Warning: Skipping unknown perturbation key: {key}")
+                continue
+                
+            print(f"Evaluating perturbation '{key}' with model '{model_name}'")
             
-            # Extract sentences for batch processing
-            sentences_A_good = [item.dataset_A_grammatical for item in batch_items]
-            sentences_A_bad = [item.dataset_A_ungrammatical for item in batch_items]
-            sentences_B_good = [item.dataset_B_grammatical for item in batch_items]
-            sentences_B_bad = [item.dataset_B_ungrammatical for item in batch_items]
-                        
-            # Calculate perplexities in batches for efficiency
-            ppls_A_good_m1 = get_perplexities(self.model1, self.tokenizer1, sentences_A_good, self.device)
-            ppls_A_bad_m1 = get_perplexities(self.model1, self.tokenizer1, sentences_A_bad, self.device)
-            ppls_B_good_m2 = get_perplexities(self.model2, self.tokenizer2, sentences_B_good, self.device)
-            ppls_B_bad_m2 = get_perplexities(self.model2, self.tokenizer2, sentences_B_bad, self.device)
-
-            # Extend master lists with perplexities from the current batch
-            self.all_ppls_A_good_m1.extend(ppls_A_good_m1)
-            self.all_ppls_A_bad_m1.extend(ppls_A_bad_m1)
-            self.all_ppls_B_good_m2.extend(ppls_B_good_m2)
-            self.all_ppls_B_bad_m2.extend(ppls_B_bad_m2)
-
-            # Process results for each item in the batch
-            for i, item in enumerate(batch_items):
-                # Get the perplexity scores for this item
-                ppl_A_good_m1 = ppls_A_good_m1[i]
-                ppl_A_bad_m1 = ppls_A_bad_m1[i]
-                ppl_B_good_m2 = ppls_B_good_m2[i]
-                ppl_B_bad_m2 = ppls_B_bad_m2[i]
+            # Extract sentences for this perturbation
+            sentences_good = []
+            sentences_bad = []
+            
+            for ex in self.data:
+                good = ex.get(f"sentence_good_{key}")
+                bad = ex.get(f"sentence_bad_{key}")
+                if good is not None and bad is not None:
+                    sentences_good.append(good)
+                    sentences_bad.append(bad)
+            
+            if not sentences_good:
+                print(f"Warning: No data found for perturbation '{key}'")
+                continue
                 
-                # Determine if models correctly preferred the grammatical sentence
-                model1_is_correct = (ppl_A_good_m1 < ppl_A_bad_m1)
-                model2_is_correct = (ppl_B_good_m2 < ppl_B_bad_m2)
-                
-                # Update counters
-                if model1_is_correct:
-                    self.model1_correct_count += 1
-                if model2_is_correct:
-                    self.model2_correct_count += 1
-                
-                if model1_is_correct and model2_is_correct:
-                    self.both_correct_count += 1
-                elif not model1_is_correct and not model2_is_correct:
-                    self.neither_correct_count += 1
-                elif model1_is_correct and not model2_is_correct:
-                    self.model1_only_correct_count += 1
-                elif not model1_is_correct and model2_is_correct:
-                    self.model2_only_correct_count += 1
-                
-                # Store results for tabular output
-                self.results_data.append({
-                    "pairID": item.pairID,
-                    "field": item.field,
-                    "linguistics_term": item.linguistics_term,
-                    "dataset_A_grammatical": item.dataset_A_grammatical,
-                    "dataset_A_ungrammatical": item.dataset_A_ungrammatical,
-                    f"PPL_{self.model_name_1}_A_Good": ppl_A_good_m1,
-                    f"PPL_{self.model_name_1}_A_Bad": ppl_A_bad_m1,
-                    f"{self.model_name_1}_Correct": model1_is_correct,
-                    "dataset_B_grammatical": item.dataset_B_grammatical,
-                    "dataset_B_ungrammatical": item.dataset_B_ungrammatical,
-                    f"PPL_{self.model_name_2}_B_Good": ppl_B_good_m2,
-                    f"PPL_{self.model_name_2}_B_Bad": ppl_B_bad_m2,
-                    f"{self.model_name_2}_Correct": model2_is_correct,
-                    "Both_Correct": (model1_is_correct and model2_is_correct),
-                    "Model1_Only_Correct": (model1_is_correct and not model2_is_correct),
-                    "Model2_Only_Correct": (not model1_is_correct and model2_is_correct),
-                    "Neither_Correct": (not model1_is_correct and not model2_is_correct)
+            # Evaluate
+            accuracy, perplexity_good, perplexity_bad, good_logprobs, bad_logprobs = self._evaluate_perturbation(
+                sentences_good, sentences_bad, model_name, batch_size=self.batch_size
+            )
+            
+            # Store summary
+            self.summary.append({
+                "perturbation": key,
+                "model": model_name,
+                "accuracy": accuracy,
+                "perplexity_good": perplexity_good,
+                "perplexity_bad": perplexity_bad,
+                "n": len(sentences_good),
+            })
+            
+            # Store detailed results
+            for i, (g, b, g_lp, b_lp) in enumerate(zip(sentences_good, sentences_bad, good_logprobs, bad_logprobs)):
+                self.all_results.append({
+                    "perturbation": key,
+                    "model": model_name,
+                    "idx": i,
+                    "sentence_good": g,
+                    "sentence_bad": b,
+                    "good_logprob": g_lp,
+                    "bad_logprob": b_lp,
+                    "correct": int(g_lp > b_lp),
+                    "perplexity_good": perplexity_good,
+                    "perplexity_bad": perplexity_bad,
                 })
+        
+        return self.summary
 
-        # Calculate overall geometric mean perplexities after processing all batches
-        gm_A_good_m1 = calculate_geometric_mean_perplexity(self.all_ppls_A_good_m1)
-        gm_A_bad_m1 = calculate_geometric_mean_perplexity(self.all_ppls_A_bad_m1)
-        gm_B_good_m2 = calculate_geometric_mean_perplexity(self.all_ppls_B_good_m2)
-        gm_B_bad_m2 = calculate_geometric_mean_perplexity(self.all_ppls_B_bad_m2)
-
-        self.geometric_means = {
-            'A_good_m1': gm_A_good_m1,
-            'A_bad_m1': gm_A_bad_m1,
-            'B_good_m2': gm_B_good_m2,
-            'B_bad_m2': gm_B_bad_m2
-        }
-
-        self._present_results(output_filename)
-
-    def _present_results(self, summary_output_path_base: str):
-        # Prepare geometric mean perplexities string for console and file
-        gm_perp_lines = ["\nGeometric Mean Perplexities:"]
-        for key, value in getattr(self, 'geometric_means', {}).items():
-            gm_perp_lines.append(f"  {key}: {value:.4f}")
-        gm_perp_summary = "\n".join(gm_perp_lines)
-
-        print(gm_perp_summary) # Print to console
-
-        """
-        Calculates accuracies, presents results, saves summary to a .txt file,
-        and raw data to a .csv file in a 'raw' subdirectory.
-
-        Args:
-            summary_output_path_base (str): The base path and filename for outputs.
-                                            Example: 'experiments/output/anaphor_eval_TIMESTAMP'
-                                            .txt will be appended for summary, .csv for raw data in 'raw/' subdir.
-        """
-        if self.total_pairs == 0:
-            print("No data pairs processed. Cannot present results.")
-            return
-
-        # Define output paths
-        base_path = Path(summary_output_path_base)
+    def write_results(self):
+        """Write evaluation results to files."""
+        base_path = Path(self.output_base)
         summary_txt_path = base_path.with_suffix('.txt')
         raw_csv_dir = base_path.parent / "raw"
         raw_csv_path = raw_csv_dir / base_path.with_suffix('.csv').name
-
-        # Create 'raw' directory if it doesn't exist
         os.makedirs(raw_csv_dir, exist_ok=True)
 
-        # Calculate overall accuracies
-        accuracy_m1 = (self.model1_correct_count / self.total_pairs) * 100 if self.total_pairs > 0 else 0
-        accuracy_m2 = (self.model2_correct_count / self.total_pairs) * 100 if self.total_pairs > 0 else 0
-        both_correct_percent = (self.both_correct_count / self.total_pairs * 100) if self.total_pairs > 0 else 0
-        model1_only_correct_percent = (self.model1_only_correct_count / self.total_pairs * 100) if self.total_pairs > 0 else 0
-        model2_only_correct_percent = (self.model2_only_correct_count / self.total_pairs * 100) if self.total_pairs > 0 else 0
-        neither_correct_percent = (self.neither_correct_count / self.total_pairs * 100) if self.total_pairs > 0 else 0
-
-        # Prepare summary content
-        summary_lines = []        
+        # Write summary
+        summary_lines = []
         summary_lines.append("--- Experiment Summary ---")
-        summary_lines.append(f"\nDataset: {self.dataset_filepath}")
-        summary_lines.append(f"Model 1: {self.model_name_1}")
-        summary_lines.append(f"Model 2: {self.model_name_2}")
+        summary_lines.append(f"\nDataset: {self.dataset_path}")
+        summary_lines.append(f"Phenomenon Class: {self.phenomenon_class.__name__}")
+        
         summary_lines.append("\n--- Evaluation Summary ---")
-        summary_lines.append(f"Total Parallel Pairs Processed: {self.total_pairs}")
-        summary_lines.append(f"\nAccuracy for Model 1 ({self.model_name_1}) on Dataset A: {accuracy_m1:.2f}%")
-        summary_lines.append(f"Accuracy for Model 2 ({self.model_name_2}) on Dataset B: {accuracy_m2:.2f}%")
-        summary_lines.append("\nComparison Counts:")
-        summary_lines.append(f"  Both Models Correct: {self.both_correct_count} ({both_correct_percent:.2f}%)")
-        summary_lines.append(f"  {self.model_name_1} Only Correct: {self.model1_only_correct_count} ({model1_only_correct_percent:.2f}%)")
-        summary_lines.append(f"  {self.model_name_2} Only Correct: {self.model2_only_correct_count} ({model2_only_correct_percent:.2f}%)")
-        summary_lines.append(f"  Neither Model Correct: {self.neither_correct_count} ({neither_correct_percent:.2f}%)")
-        summary_lines.append(gm_perp_summary) # Write geometric mean perplexities to summary file
+        for row in self.summary:
+            summary_lines.append(f"Perturbation: {row['perturbation']}")
+            summary_lines.append(f"  Model: {row['model']}")
+            summary_lines.append(f"  Accuracy: {row['accuracy']*100:.2f}%")
+            summary_lines.append(f"  Perplexity (good): {row['perplexity_good']:.2f}")
+            summary_lines.append(f"  Perplexity (bad): {row['perplexity_bad']:.2f}")
+            summary_lines.append(f"  N: {row['n']}")
+            summary_lines.append("")
+        
         summary_content = "\n".join(summary_lines)
-
-        # Print summary to console
         print("\n" + summary_content)
-
-        # Save summary to .txt file
+        
         with open(summary_txt_path, 'w', encoding='utf-8') as f:
             f.write(summary_content)
         print(f"\nEvaluation summary saved to {summary_txt_path}")
 
-        # Create DataFrame and write to CSV in 'raw' subdirectory
-        results_df = pd.DataFrame(self.results_data)
+        # Write detailed results
+        results_df = pd.DataFrame(self.all_results)
         results_df.to_csv(raw_csv_path, index=False)
         print(f"Detailed raw results saved to {raw_csv_path}")
+
+def run_batch_perturbation_evaluation(dataset, phenomenon_class, output_base, batch_size=16, write_results=True):
+    """
+    Programmatic API for batch perturbation evaluation. Returns summary.
+    If write_results is True, writes summary and CSV as well.
+    """
+    evaluator = PhenomenonEvaluator(
+        dataset_path=dataset,
+        phenomenon_class=phenomenon_class,
+        output_base=output_base,
+        batch_size=batch_size,
+    )
+    summary = evaluator.evaluate()
+    if write_results:
+        evaluator.write_results()
+    return summary
+
+def main():
+    parser = argparse.ArgumentParser(description="Evaluate all perturbation models on a dataset.")
+    parser.add_argument("--dataset", type=str, required=True, help="Path to dataset (JSONL)")
+    parser.add_argument("--class_name", type=str, required=True, help="Class name for grammatical phenomenon")
+    parser.add_argument("--output_base", type=str, required=True, help="Base path for output files")
+    parser.add_argument("--batch_size", type=int, default=16, help="Batch size for evaluation")
+    args = parser.parse_args()
+
+    evaluator = PhenomenonEvaluator(
+        dataset_path=args.dataset,
+        phenomenon_class=args.class_name,
+        output_base=args.output_base,
+        batch_size=args.batch_size,
+    )
+    evaluator.evaluate()
+    evaluator.write_results()
+
+
+if __name__ == "__main__":
+    main()

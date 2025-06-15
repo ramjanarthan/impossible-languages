@@ -115,6 +115,7 @@ data_generation/outputs/*
 
 # Results
 experiments/output/raw/*
+experiments/output/v2/raw/*
 
 # Python
 

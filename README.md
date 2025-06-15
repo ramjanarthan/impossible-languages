@@ -36,12 +36,12 @@ The experiments are in the `experiments` directory. The output will be in the `e
 To run an experiment, run the following command in the root project directory:
 
 ```bash
-python -m experiments.<experiment name>
+python -m experiments.v2.<experiment name>
 ```
 
 For example:
 ```bash
-python -m experiments.local_shuffle_three_to_english_for_anaphor_agreement_numerical_experiment
+python -m experiments.v2.distractor_agreement_rc
 ```
 
 ## Naming convention

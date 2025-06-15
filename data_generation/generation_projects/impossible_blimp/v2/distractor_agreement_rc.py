@@ -77,5 +77,6 @@ class ImpossibleDistractorAgreementRCGenerator(data_generator.BenchmarkGenerator
 
         return data, data["sentence_good_english"]
 
-generator = ImpossibleDistractorAgreementRCGenerator()
-generator.generate_paradigm(number_to_generate=50, rel_output_path="outputs/impossible_blimp/v2/%s.jsonl" % generator.uid)
+if __name__ == "__main__":
+    generator = ImpossibleDistractorAgreementRCGenerator()
+    generator.generate_paradigm(number_to_generate=10, rel_output_path="outputs/impossible_blimp/v2/%s.jsonl" % generator.uid)
