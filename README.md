@@ -21,12 +21,12 @@ The data generation scripts are in the `data_generation/generation_projects/impo
 To generate data, run the following command in the root project directory:
 
 ```bash
-python -m data_generation.generation_projects.impossible_blimp.<generator name>
+python -m data_generation.generation_projects.impossible_blimp.v2.<generator name>
 ```
 
 For example:
 ```bash
-python -m data_generation.generation_projects.impossible_blimp.english_to_local_shuffle_three_for_anaphor_agreement_gender
+python -m data_generation.generation_projects.impossible_blimp.v2.distractor_agreement_rc
 ```
 
 ## Running experiments:
