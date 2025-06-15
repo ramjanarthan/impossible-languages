@@ -99,3 +99,51 @@ def get_perplexities(model, tokenizer, sentences: List[str], device="mps", max_l
         perplexities[valid_token_counts == 0] = float('inf')
 
     return perplexities.tolist()
+
+def get_sentence_log_probabilities(model, tokenizer, sentences: List[str], device="mps", max_length=512):
+    """
+    Calculates the total log-probability of each sentence.
+    Higher (closer to 0) is better.
+    """
+    # Return early if the list of sentences is empty
+    if not sentences:
+        return []
+
+    with torch.no_grad():
+        # Tokenize the batch of sentences
+        inputs = tokenizer(
+            sentences,
+            return_tensors="pt",
+            padding=True,
+            truncation=True,
+            max_length=max_length
+        )
+
+        input_ids = inputs.input_ids.to(device)
+        attention_mask = inputs.attention_mask.to(device)
+        labels = input_ids.clone()
+
+        # Forward pass to get logits
+        outputs = model(input_ids=input_ids, labels=labels, attention_mask=attention_mask)
+
+        # Shift logits and labels for next-token prediction
+        shift_logits = outputs.logits[..., :-1, :].contiguous()
+        shift_labels = labels[..., 1:].contiguous()
+        shift_attention_mask = attention_mask[..., 1:].contiguous()
+
+        # Calculate the per-token loss (which is the negative log-probability)
+        loss_fct = torch.nn.CrossEntropyLoss(reduction='none')
+        loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
+        loss = loss.view(shift_labels.size())
+
+        # Apply the attention mask to ignore padding tokens
+        loss = loss * shift_attention_mask
+
+        # --- Calculate Total Log-Probability ---
+        # The sum of per-token losses for each sentence
+        sentence_losses = loss.sum(dim=1)
+
+        # The total log-probability is the negative of the sum of losses
+        log_probabilities = -sentence_losses
+
+    return log_probabilities.tolist()
