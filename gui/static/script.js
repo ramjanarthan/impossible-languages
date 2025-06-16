@@ -20,7 +20,7 @@ class ExperimentsApp {
 
     async loadExperiments() {
         try {
-            const response = await fetch('/api/experiments');
+            const response = await fetch('/api/experiments/v1');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

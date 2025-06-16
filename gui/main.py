@@ -36,7 +36,7 @@ class ExperimentResult:
 class ExperimentParser:
     """Parser for experiment result files"""
     
-    def __init__(self, experiments_path: str = "../experiments/output"):
+    def __init__(self, experiments_path: str = "../experiments/output/v1"):
         self.experiments_path = experiments_path
     
     def parse_filename(self, filename: str) -> Optional[Dict[str, str]]:
@@ -130,6 +130,7 @@ class ExperimentParser:
         experiments = {}
         
         if not os.path.exists(self.experiments_path):
+            print(f"Experiments directory {self.experiments_path} does not exist.")
             return experiments
         
         files = glob.glob(os.path.join(self.experiments_path, "*.txt"))
@@ -236,8 +237,8 @@ async def read_root():
     """Serve the main HTML page"""
     return FileResponse(INDEX_HTML_PATH)
 
-@app.get("/api/experiments")
-async def get_experiments():
+@app.get("/api/experiments/v1")
+async def get_experiments_v1():
     """API endpoint to get experiment data"""
     # parser.load_experiments() now returns the final structure ready for JSON serialization
     experiments_data = parser.load_experiments()
