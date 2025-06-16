@@ -561,7 +561,6 @@ PERTURBATIONS = {
 
 PERTURBATION_TO_HF_MODEL_NAME = {
     "english": "mission-impossible-lms/no-shuffle-gpt2",
-    "shuffle_control": "mission-impossible-lms/no-shuffle-gpt2",
     "shuffle_nondeterministic": "mission-impossible-lms/nondeterministic-shuffle-gpt2",
     "shuffle_deterministic21": "mission-impossible-lms/deterministic-shuffle-s21-gpt2",
     "shuffle_deterministic57": "mission-impossible-lms/deterministic-shuffle-s57-gpt2",
