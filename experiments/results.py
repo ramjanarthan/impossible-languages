@@ -3,9 +3,9 @@ import csv
 from datetime import datetime
 from typing import List
 
-from impossible_languages.data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME
+from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME
 
-RESULTS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'output', 'v2')
+RESULTS_DIR = 'experiments/output/v2'
 RESULTS_CSV = os.path.join(RESULTS_DIR, 'results.csv')
 
 CSV_COLUMNS = [

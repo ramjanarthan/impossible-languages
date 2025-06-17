@@ -1,0 +1,2 @@
+model name,grammatical phenomenon,dataset language,accuracy,perplexity good,perplexity bad,dataset path,timestamp
+english,distractor_agreement_relative_clause,english,0.43,1102.1322253983994,1067.976185304143,data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250616_174118.jsonl,2025-06-17T11:46:33.095896

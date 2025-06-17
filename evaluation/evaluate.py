@@ -2,13 +2,13 @@ import argparse
 import os
 import re
 import torch
-import numpy as np
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
 # Local imports
 from evaluation.perplexity import get_sentence_log_probabilities, get_perplexities, calculate_geometric_mean_perplexity
 from evaluation.evaluation_dataset import DataBatchLoader
-from experiments.v2.results import append_result
+from experiments.results import append_result
+from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME
 
 class Evaluator:
     """
@@ -30,8 +30,11 @@ class Evaluator:
 
         print(f"Using device: {self.device}")
 
+        # convert model_name into huggingFace model
+        self.hugging_face_model_name = PERTURBATION_TO_HF_MODEL_NAME[self.model_name]
+
         # Load model and tokenizer
-        self.model, self.tokenizer = self._load_model_and_tokenizer(self.model_name, self.device)
+        self.model, self.tokenizer = self._load_model_and_tokenizer(self.hugging_face_model_name, self.device)
 
         # Parse dataset information from filename
         parsed_info = self._parse_dataset_filename(os.path.basename(self.dataset_path))
@@ -47,7 +50,7 @@ class Evaluator:
         print(f"Timestamp: {self.dataset_timestamp}")
         print(f"------------------------")
 
-    def _parse_dataset_filename(filename: str) -> dict:
+    def _parse_dataset_filename(self, filename: str) -> dict:
         """
         Parses a dataset filename to extract metadata.
         Format: phenomenon_YYYYMMDD_HHMMSS%language.jsonl (language is optional)
@@ -67,7 +70,7 @@ class Evaluator:
             'language': match.group('language') or 'english',
         }
     
-    def _load_model_and_tokenizer(model_name: str, device: str):
+    def _load_model_and_tokenizer(self, model_name: str, device: str):
         """Helper method to load a model and its tokenizer."""
         tokenizer = GPT2Tokenizer.from_pretrained(model_name)
         model = GPT2LMHeadModel.from_pretrained(model_name)
