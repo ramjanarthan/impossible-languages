@@ -1,2 +1,5 @@
 model name,grammatical phenomenon,dataset language,accuracy,perplexity good,perplexity bad,dataset path,timestamp
 english,distractor_agreement_relative_clause,english,0.43,1102.1322253983994,1067.976185304143,data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250616_174118.jsonl,2025-06-17T11:46:33.095896
+english,anaphor_number_agreement,english,0.956,356.0358696832159,649.2697797226465,data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_20250617_153306.jsonl,2025-06-17T15:46:24.007426
+shuffle_local3,anaphor_number_agreement,shuffle_local3,0.97,418.60918394052214,734.8414487233101,data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_20250617_153306%shuffle_local3.jsonl,2025-06-17T15:47:12.484031
+reverse_full,anaphor_number_agreement,reverse_full,0.956,522.7437421735794,840.3354349608959,data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_20250617_153306%reverse_full.jsonl,2025-06-17T15:47:49.750258
