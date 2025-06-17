@@ -2,17 +2,37 @@ from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
 import os
+import pandas as pd
 
 # Get the directory of the current script
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 INDEX_HTML_PATH = os.path.join(BASE_DIR, "index.html")
+RESULTS_HTML_PATH = os.path.join(BASE_DIR, "results.html")
+RESULTS_CSV_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "experiments", "output", "v2", "results.csv"))
+
 import re
 import json
 from datetime import datetime
 from typing import Dict, List, Optional
 from dataclasses import dataclass, asdict
 import glob
+
+# This is a simplified version of the model order from impossible_utils.py
+MODEL_ORDER = [
+    "english",
+    "shuffle_nondeterministic",
+    "shuffle_deterministic21",
+    "shuffle_deterministic57",
+    "shuffle_deterministic84",
+    "shuffle_local3",
+    "shuffle_local5",
+    "shuffle_local10",
+    "shuffle_even_odd",
+    "reverse_control",
+    "reverse_partial",
+    "reverse_full",
+]
 
 app = FastAPI(title="Linguistic Experiments Viewer")
 
@@ -243,6 +263,25 @@ async def get_experiments_v1():
     # parser.load_experiments() now returns the final structure ready for JSON serialization
     experiments_data = parser.load_experiments()
     return experiments_data
+
+@app.get("/results", response_class=HTMLResponse)
+async def read_results():
+    """Serve the results HTML page"""
+    return FileResponse(RESULTS_HTML_PATH)
+
+@app.get("/api/results/v2")
+async def get_results_v2():
+    """API endpoint to get v2 experiment data"""
+    try:
+        if not os.path.exists(RESULTS_CSV_PATH):
+            raise HTTPException(status_code=404, detail=f"results.csv not found at {RESULTS_CSV_PATH}")
+        df = pd.read_csv(RESULTS_CSV_PATH)
+        # rename columns to be more JS friendly
+        df.columns = [col.strip().replace(' ', '_') for col in df.columns]
+        results = df.to_dict('records')
+        return {"results": results, "model_order": MODEL_ORDER}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Mount static files
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
