@@ -3,6 +3,7 @@ import os
 import re
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
+import csv
 
 # Local imports
 from evaluation.perplexity import get_sentence_log_probabilities, get_perplexities, calculate_geometric_mean_perplexity
@@ -87,13 +88,24 @@ class Evaluator:
         3. Calculates per-sentence perplexities.
         4. Computes geometric mean perplexity for good/bad sentences.
         5. Writes the final results to results.csv.
+        Additionally, writes raw logprobs and perplexities for each sentence to a debug CSV.
         """
+
         batch_loader = DataBatchLoader(self.dataset_path, batch_size=self.batch_size)
         
         correct_predictions = 0
         total_sentences = 0
         all_perplexities_good = []
         all_perplexities_bad = []
+
+        # Prepare raw output file
+        raw_dir = 'experiments/output/v2/raw'
+        os.makedirs(raw_dir, exist_ok=True)
+        # Clean dataset name for filename
+        dataset_base = os.path.basename(self.dataset_path).replace('.jsonl', '').replace('%', '_')
+        filename = f"{self.model_name}_{dataset_base}_{self.dataset_timestamp}.csv"
+        raw_path = os.path.join(raw_dir, filename)
+        raw_rows = []
 
         print("Starting evaluation...")
         for batch in batch_loader:
@@ -114,6 +126,19 @@ class Evaluator:
             all_perplexities_good.extend(perplexities_good)
             all_perplexities_bad.extend(perplexities_bad)
 
+            # Collect raw data for debugging
+            for s, lp, ppl in zip(sentences_good, logprobs_good, perplexities_good):
+                raw_rows.append(['good', s, lp, ppl])
+            for s, lp, ppl in zip(sentences_bad, logprobs_bad, perplexities_bad):
+                raw_rows.append(['bad', s, lp, ppl])
+
+        # Write raw debug data to CSV
+        with open(raw_path, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(['sentence_type', 'sentence', 'logprob', 'perplexity'])
+            writer.writerows(raw_rows)
+        print(f"Raw logprobs and perplexities saved to {raw_path}")
+
         print(f"Evaluation finished. Processed {total_sentences} sentence pairs.")
 
         # 3. Calculate final metrics
@@ -133,11 +158,6 @@ class Evaluator:
             perplexity_bad=geo_mean_perplexity_bad,
             dataset_path=self.dataset_path,
         )
-
-        print("--- Results ---")
-        print(f"Accuracy: {accuracy:.4f}")
-        print(f"Geometric Mean Perplexity (Good): {geo_mean_perplexity_good:.4f}")
-        print(f"Geometric Mean Perplexity (Bad): {geo_mean_perplexity_bad:.4f}")
         print("Results have been saved to experiments/output/v2/results.csv")
         
         return {

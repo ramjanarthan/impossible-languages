@@ -70,36 +70,18 @@ python -m data_generation.generation_projects.impossible_blimp.modify_dataset da
 
 ## Running experiments:
 
-The experiments are in the `experiments` directory. The output will be in the `experiments/output` directory.
+An experiment is defined as measuring the accuracy of a model when applied to a dataset.
 
 To run an experiment, run the following command in the root project directory:
 
 ```bash
-python -m experiments.v2.<experiment name>
+python -m experiments.experiment --model_name <impossible_language_option> --dataset <path/to/dataset.jsonl>
 ```
 
 For example:
 ```bash
-python -m experiments.v2.distractor_agreement_rc
+python -m experiments.experiment --model_name english --dataset data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250616_174118.jsonl
 ```
-
-## Naming convention
-
-Where applicable, the file and class names will follow this convention:
-
-```
-{First Language Name}_to_{Second Language Name}_for_{Grammatical Phenomenon}
-```
-
-The order is significant because the dataset is split into two parts, and the models are evaluated on the parts in the same order.
-
-For example:
-
-```
-english_to_local_shuffle_three_for_anaphor_agreement_gender_experiment_eval_20250606_173847
-```
-
-refers to an experiment evaluation file comparing an English Model to a Local Shuffle Three Model for Anaphor Agreement Gender (in that order).
 
 ## GUI
 
