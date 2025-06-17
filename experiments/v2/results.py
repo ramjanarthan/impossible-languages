@@ -36,15 +36,12 @@ def append_result(
     perplexity_good: float,
     perplexity_bad: float,
     dataset_path: str,
-    timestamp: str = None,
 ):
     """
-    Appends a result to the results.csv file. Timestamp is set to current local time if not provided.
+    Appends a result to the results.csv file. Timestamp is set to current local time.
     """
     ensure_results_csv_exists()
-    if timestamp is None:
-        # Use the provided current local time (2025-06-17T11:07:56+01:00)
-        timestamp = datetime.now().isoformat()
+    timestamp = datetime.now().isoformat()
     row = {
         'model name': model_name,
         'grammatical phenomenon': grammatical_phenomenon,
