@@ -5,22 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Experiment Results</title>
     <link rel="stylesheet" href="/static/results.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Experiment Results</h1>
+        <h1>Experiment Results Dashboard</h1>
         <div class="controls">
-            <label for="viewModeSelect">View Mode:</label>
-            <select id="viewModeSelect">
-                <option value="phenomenon">Group by Grammatical Phenomenon</option>
-                <option value="model">Group by Model</option>
-            </select>
-            <label for="filterSelect">Filter by:</label>
-            <select id="filterSelect"></select>
+            <div class="control-group">
+                <label for="viewModeSelect">View Mode</label>
+                <select id="viewModeSelect">
+                    <option value="phenomenon">Group by Grammatical Phenomenon</option>
+                    <option value="model">Group by Model</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="filterSelect">Filter</label>
+                <select id="filterSelect"></select>
+            </div>
         </div>
         <div class="chart-container">
-            <canvas id="resultsChart"></canvas>
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                Loading data...
+            </div>
+            <canvas id="resultsChart" style="display: none;"></canvas>
         </div>
     </div>
     <script src="/static/results.js"></script>
