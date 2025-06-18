@@ -71,7 +71,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const filteredData = rawData.filter(item => item[groupBy] === filterValue);
 
         if (xAxisKey === 'model_name') {
+            // Sort by model order in model view
             filteredData.sort((a, b) => modelOrder.indexOf(a[xAxisKey]) - modelOrder.indexOf(b[xAxisKey]));
+        } else {
+            // Sort alphabetically in grammatical phenomenon view
+            filteredData.sort((a, b) => a[xAxisKey].localeCompare(b[xAxisKey]));
         }
 
         const labels = filteredData.map(item => {
@@ -234,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         max: labels.length - 0.5,
                         title: {
                             display: true,
-                            text: isModelView ? 'Grammatical Phenomena' : 'Models (Dataset Language)',
+                            text: isModelView ? 'Grammatical Phenomena (Dataset Language)' : 'Models (Dataset Language)',
                             font: {
                                 size: 14,
                                 weight: 'bold'
