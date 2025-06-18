@@ -1,12 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     const viewModeSelect = document.getElementById('viewModeSelect');
     const filterSelect = document.getElementById('filterSelect');
+    const showTrendLineToggle = document.getElementById('showTrendLine');
     const ctx = document.getElementById('resultsChart').getContext('2d');
     const loadingIndicator = document.getElementById('loadingIndicator');
     const chartCanvas = document.getElementById('resultsChart');
     let chart;
     let rawData = [];
     let modelOrder = [];
+    let trendlineDataset = null;
 
     async function fetchData() {
         try {
@@ -91,7 +93,20 @@ document.addEventListener('DOMContentLoaded', function() {
             fullLabel: `${item[xAxisKey]} (${item['dataset_language']})`
         }));
 
+        // Calculate trendline data but don't add it to the chart yet
         const trendlineData = calculateTrendline(scatterData);
+        trendlineDataset = showTrendLineToggle.checked ? {
+            label: 'Trend Line',
+            data: trendlineData,
+            type: 'line',
+            borderColor: 'rgba(231, 76, 60, 0.8)',
+            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+            borderWidth: 3,
+            pointRadius: 0,
+            pointHoverRadius: 0,
+            fill: false,
+            tension: 0
+        } : null;
 
         if (chart) {
             chart.destroy();
@@ -100,32 +115,24 @@ document.addEventListener('DOMContentLoaded', function() {
         chart = new Chart(ctx, {
             type: 'scatter',
             data: {
-                datasets: [{
-                    label: 'Accuracy',
-                    data: scatterData,
-                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
-                    borderColor: 'rgba(102, 126, 234, 1)',
-                    borderWidth: 2,
-                    pointRadius: 8,
-                    pointHoverRadius: 12,
-                    pointBackgroundColor: 'rgba(102, 126, 234, 0.9)',
-                    pointBorderColor: '#ffffff',
-                    pointBorderWidth: 2,
-                    pointHoverBackgroundColor: 'rgba(102, 126, 234, 1)',
-                    pointHoverBorderColor: '#ffffff',
-                    pointHoverBorderWidth: 3
-                }, {
-                    label: 'Trend Line',
-                    data: trendlineData,
-                    type: 'line',
-                    borderColor: 'rgba(231, 76, 60, 0.8)',
-                    backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                    borderWidth: 3,
-                    pointRadius: 0,
-                    pointHoverRadius: 0,
-                    fill: false,
-                    tension: 0
-                }]
+                datasets: [
+                    {
+                        label: 'Accuracy',
+                        data: scatterData,
+                        backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        borderWidth: 2,
+                        pointRadius: 8,
+                        pointHoverRadius: 12,
+                        pointBackgroundColor: 'rgba(102, 126, 234, 0.9)',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointHoverBackgroundColor: 'rgba(102, 126, 234, 1)',
+                        pointHoverBorderColor: '#ffffff',
+                        pointHoverBorderWidth: 3
+                    },
+                    ...(trendlineDataset ? [trendlineDataset] : [])
+                ]
             },
             options: {
                 responsive: true,
@@ -273,6 +280,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
     viewModeSelect.addEventListener('change', updateView);
     filterSelect.addEventListener('change', renderChart);
+    showTrendLineToggle.addEventListener('change', toggleTrendLine);
 
     fetchData();
+
+    function toggleTrendLine() {
+        if (!chart) return;
+        
+        const show = showTrendLineToggle.checked;
+        
+        if (show && !trendlineDataset) {
+            // Add trend line if it doesn't exist
+            const trendlineData = calculateTrendline(chart.data.datasets[0].data);
+            trendlineDataset = {
+                label: 'Trend Line',
+                data: trendlineData,
+                type: 'line',
+                borderColor: 'rgba(231, 76, 60, 0.8)',
+                backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                borderWidth: 3,
+                pointRadius: 0,
+                pointHoverRadius: 0,
+                fill: false,
+                tension: 0
+            };
+            chart.data.datasets.push(trendlineDataset);
+        } else if (!show && trendlineDataset) {
+            // Remove trend line if it exists
+            const trendlineIndex = chart.data.datasets.findIndex(ds => ds.label === 'Trend Line');
+            if (trendlineIndex !== -1) {
+                chart.data.datasets.splice(trendlineIndex, 1);
+                trendlineDataset = null;
+            }
+        }
+        
+        chart.update();
+    }
 });
