@@ -21,17 +21,17 @@ import glob
 # This is a simplified version of the model order from impossible_utils.py
 MODEL_ORDER = [
     "english",
-    "shuffle_nondeterministic",
-    "shuffle_deterministic21",
-    "shuffle_deterministic57",
-    "shuffle_deterministic84",
+    "reverse_control",
+    "reverse_full",
     "shuffle_local3",
     "shuffle_local5",
     "shuffle_local10",
     "shuffle_even_odd",
-    "reverse_control",
     "reverse_partial",
-    "reverse_full",
+    "shuffle_deterministic21",
+    "shuffle_deterministic57",
+    "shuffle_deterministic84",
+    "shuffle_nondeterministic",
 ]
 
 app = FastAPI(title="Linguistic Experiments Viewer")

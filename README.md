@@ -65,7 +65,7 @@ python -m data_generation.generation_projects.impossible_blimp.modify_dataset <p
 For example:
 
 ```bash
-python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250616_174118.jsonl shuffle_local3
+python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v2/anaphor_gender_agreement_20250618_113511.jsonl shuffle_nondeterministic
 ```
 
 ## Running experiments:
@@ -80,7 +80,7 @@ python -m experiments.experiment --model_name <impossible_language_option> --dat
 
 For example:
 ```bash
-python -m experiments.experiment --model_name english --dataset data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250616_174118.jsonl
+python -m experiments.experiment --model_name shuffle_nondeterministic --dataset data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_20250617_153306%shuffle_deterministic21.jsonl
 ```
 
 ## GUI
