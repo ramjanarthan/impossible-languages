@@ -126,18 +126,29 @@ class Evaluator:
             all_perplexities_good.extend(perplexities_good)
             all_perplexities_bad.extend(perplexities_bad)
 
-            # Collect raw data for debugging
-            for s, lp, ppl in zip(sentences_good, logprobs_good, perplexities_good):
-                raw_rows.append(['good', s, lp, ppl])
-            for s, lp, ppl in zip(sentences_bad, logprobs_bad, perplexities_bad):
-                raw_rows.append(['bad', s, lp, ppl])
+            # Pair good and bad sentences with their metrics
+            for good_s, good_lp, good_ppl, bad_s, bad_lp, bad_ppl in zip(
+                sentences_good, logprobs_good, perplexities_good,
+                sentences_bad, logprobs_bad, perplexities_bad
+            ):
+                # Determine if model got it right (good sentence should have higher logprob)
+                correct = good_lp > bad_lp
+                raw_rows.append([
+                    good_s, good_lp, good_ppl,
+                    bad_s, bad_lp, bad_ppl,
+                    correct
+                ])
 
-        # Write raw debug data to CSV
+        # Write paired data to CSV
         with open(raw_path, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
-            writer.writerow(['sentence_type', 'sentence', 'logprob', 'perplexity'])
+            writer.writerow([
+                'good_sentence', 'good_logprob', 'good_perplexity',
+                'bad_sentence', 'bad_logprob', 'bad_perplexity',
+                'is_correct'
+            ])
             writer.writerows(raw_rows)
-        print(f"Raw logprobs and perplexities saved to {raw_path}")
+        print(f"Paired evaluation results saved to {raw_path}")
 
         print(f"Evaluation finished. Processed {total_sentences} sentence pairs.")
 
