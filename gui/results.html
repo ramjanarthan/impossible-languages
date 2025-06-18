@@ -18,9 +18,12 @@
                     <option value="model">Group by Model</option>
                 </select>
             </div>
-            <div class="control-group">
+            <div class="control-group filter-group">
                 <label for="filterSelect">Filter</label>
-                <select id="filterSelect"></select>
+                <div class="multi-select-container">
+                    <select id="filterSelect" multiple size="4"></select>
+                    <button id="clearFilters" class="clear-button" title="Clear all filters">×</button>
+                </div>
             </div>
             <div class="control-group toggle-group">
                 <label class="toggle">

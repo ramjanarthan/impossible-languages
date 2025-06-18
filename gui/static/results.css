@@ -66,6 +66,29 @@ select {
     min-width: 200px;
 }
 
+select[multiple] {
+    height: auto;
+    min-height: 100px;
+    padding: 8px;
+    overflow-y: auto;
+}
+
+select[multiple] option {
+    padding: 8px 12px;
+    margin: 2px 0;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+select[multiple] option:checked {
+    background-color: #667eea;
+    color: white;
+}
+
+select[multiple] option:hover {
+    background-color: #f0f4ff;
+}
+
 select:hover {
     border-color: #667eea;
     box-shadow: 0 6px 12px rgba(102, 126, 234, 0.15);
@@ -75,6 +98,41 @@ select:hover {
 select:focus {
     border-color: #667eea;
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.multi-select-container {
+    position: relative;
+    display: inline-block;
+    min-width: 200px;
+}
+
+.clear-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    transition: all 0.2s;
+}
+
+.clear-button:hover {
+    background: #ff5252;
+    transform: scale(1.1);
+}
+
+.filter-group {
+    min-width: 250px;
 }
 
 .chart-container {

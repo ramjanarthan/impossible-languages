@@ -1,14 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
     const viewModeSelect = document.getElementById('viewModeSelect');
     const filterSelect = document.getElementById('filterSelect');
+    const clearFiltersBtn = document.getElementById('clearFilters');
     const showTrendLineToggle = document.getElementById('showTrendLine');
     const ctx = document.getElementById('resultsChart').getContext('2d');
     const loadingIndicator = document.getElementById('loadingIndicator');
     const chartCanvas = document.getElementById('resultsChart');
+    
     let chart;
     let rawData = [];
     let modelOrder = [];
     let trendlineDataset = null;
+    
+    // Color palette for different series
+    const colorPalette = [
+        '#4e79a7', '#f28e2b', '#e15759', '#76b7b2', '#59a14f',
+        '#edc948', '#b07aa1', '#ff9da7', '#9c755f', '#bab0ac',
+        '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
+        '#aec7e8', '#ffbb78', '#98df8a', '#ff9896', '#c5b0d5'
+    ];
 
     async function fetchData() {
         try {
@@ -33,15 +43,35 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateView() {
         const isModelView = viewModeSelect.value === 'model';
         const groupBy = isModelView ? 'model_name' : 'grammatical_phenomenon';
-
         const filterKeys = [...new Set(rawData.map(item => item[groupBy]))];
         
+        // Save current selections
+        const currentSelections = Array.from(filterSelect.selectedOptions).map(opt => opt.value);
+        
+        // Clear and repopulate the filter select
+        filterSelect.innerHTML = '';
+        
+        // Sort filter keys appropriately
         if (isModelView) {
             filterKeys.sort((a, b) => modelOrder.indexOf(a) - modelOrder.indexOf(b));
+        } else {
+            filterKeys.sort();
         }
-
-        filterSelect.innerHTML = filterKeys.map(key => `<option value="${key}">${key}</option>`).join('');
-
+        
+        // Add options to the select
+        filterKeys.forEach(key => {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = key;
+            option.selected = currentSelections.includes(key);
+            filterSelect.appendChild(option);
+        });
+        
+        // If no selections and there are options, select the first one
+        if (filterSelect.selectedOptions.length === 0 && filterKeys.length > 0) {
+            filterSelect.options[0].selected = true;
+        }
+        
         renderChart();
     }
 
@@ -64,75 +94,120 @@ document.addEventListener('DOMContentLoaded', function() {
         }));
     }
 
-    function renderChart() {
+    function getGroupedData() {
         const isModelView = viewModeSelect.value === 'model';
-        const filterValue = filterSelect.value;
         const groupBy = isModelView ? 'model_name' : 'grammatical_phenomenon';
         const xAxisKey = isModelView ? 'grammatical_phenomenon' : 'model_name';
-
-        const filteredData = rawData.filter(item => item[groupBy] === filterValue);
-
-        if (xAxisKey === 'model_name') {
-            // Sort by model order in model view
-            filteredData.sort((a, b) => modelOrder.indexOf(a[xAxisKey]) - modelOrder.indexOf(b[xAxisKey]));
+        
+        // Get selected filters
+        const selectedFilters = Array.from(filterSelect.selectedOptions).map(opt => opt.value);
+        if (selectedFilters.length === 0) return { datasets: [], labels: [] };
+        
+        // Filter data based on selected filters
+        const filteredData = rawData.filter(item => selectedFilters.includes(item[groupBy]));
+        
+        // Get all unique x-axis values (phenomena or models) across all selected groups
+        const allXValues = [...new Set(filteredData.map(item => item[xAxisKey]))];
+        
+        // Sort x-axis values
+        if (isModelView) {
+            // In model view, sort phenomena alphabetically
+            allXValues.sort();
         } else {
-            // Sort alphabetically in grammatical phenomenon view
-            filteredData.sort((a, b) => a[xAxisKey].localeCompare(b[xAxisKey]));
+            // In phenomenon view, sort models by model order
+            allXValues.sort((a, b) => modelOrder.indexOf(a) - modelOrder.indexOf(b));
         }
-
-        const labels = filteredData.map(item => {
-            const mainLabel = item[xAxisKey];
-            const language = item['dataset_language'];
-            const shortLabel = mainLabel.length > 15 ? mainLabel.substring(0, 15) + '...' : mainLabel;
+        
+        // Create x-axis labels with language info
+        const labels = allXValues.map(xValue => {
+            const item = filteredData.find(d => d[xAxisKey] === xValue) || {};
+            const language = item.dataset_language || '';
+            const shortLabel = xValue.length > 15 ? xValue.substring(0, 15) + '...' : xValue;
             return `${shortLabel} (${language})`;
         });
-
-        const scatterData = filteredData.map((item, index) => ({
-            x: index,
-            y: item.accuracy,
-            fullLabel: `${item[xAxisKey]} (${item['dataset_language']})`
-        }));
-
-        // Calculate trendline data but don't add it to the chart yet
-        const trendlineData = calculateTrendline(scatterData);
-        trendlineDataset = showTrendLineToggle.checked ? {
-            label: 'Trend Line',
-            data: trendlineData,
-            type: 'line',
-            borderColor: 'rgba(231, 76, 60, 0.8)',
-            backgroundColor: 'rgba(231, 76, 60, 0.1)',
-            borderWidth: 3,
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            fill: false,
-            tension: 0
-        } : null;
+        
+        // Group data by the selected filter groups
+        const groupedData = new Map();
+        
+        selectedFilters.forEach((filter, index) => {
+            const groupData = filteredData.filter(item => item[groupBy] === filter);
+            const color = colorPalette[index % colorPalette.length];
+            
+            // Map each x-value to its corresponding data point
+            const points = allXValues.map(xValue => {
+                const point = groupData.find(item => item[xAxisKey] === xValue);
+                if (!point) return null;
+                
+                return {
+                    x: allXValues.indexOf(xValue),
+                    y: point.accuracy,
+                    fullLabel: `${point[xAxisKey]} (${point.dataset_language})`,
+                    perplexity_good: point.perplexity_good,
+                    perplexity_bad: point.perplexity_bad
+                };
+            }).filter(Boolean);
+            
+            if (points.length > 0) {
+                groupedData.set(filter, {
+                    label: filter,
+                    data: points,
+                    color: color,
+                    borderColor: color,
+                    backgroundColor: color + '80', // Add alpha for fill
+                    borderWidth: 2,
+                    pointRadius: 8,
+                    pointHoverRadius: 12,
+                    pointBackgroundColor: color + 'CC',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointHoverBackgroundColor: color,
+                    pointHoverBorderColor: '#ffffff',
+                    pointHoverBorderWidth: 3,
+                    showLine: true,
+                    tension: 0.1
+                });
+            }
+        });
+        
+        return {
+            datasets: Array.from(groupedData.values()),
+            labels: labels
+        };
+    }
+    
+    function renderChart() {
+        const { datasets, labels } = getGroupedData();
+        const isModelView = viewModeSelect.value === 'model';
 
         if (chart) {
             chart.destroy();
+        }
+        
+        // Calculate trendline for each dataset if enabled
+        const trendlineDatasets = [];
+        if (showTrendLineToggle.checked) {
+            datasets.forEach(dataset => {
+                const trendlineData = calculateTrendline(dataset.data);
+                trendlineDatasets.push({
+                    label: `${dataset.label} - Trend`,
+                    data: trendlineData,
+                    type: 'line',
+                    borderColor: dataset.borderColor,
+                    backgroundColor: dataset.backgroundColor,
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    pointHoverRadius: 0,
+                    fill: false,
+                    tension: 0.1
+                });
+            });
         }
 
         chart = new Chart(ctx, {
             type: 'scatter',
             data: {
-                datasets: [
-                    {
-                        label: 'Accuracy',
-                        data: scatterData,
-                        backgroundColor: 'rgba(102, 126, 234, 0.8)',
-                        borderColor: 'rgba(102, 126, 234, 1)',
-                        borderWidth: 2,
-                        pointRadius: 8,
-                        pointHoverRadius: 12,
-                        pointBackgroundColor: 'rgba(102, 126, 234, 0.9)',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointHoverBackgroundColor: 'rgba(102, 126, 234, 1)',
-                        pointHoverBorderColor: '#ffffff',
-                        pointHoverBorderWidth: 3
-                    },
-                    ...(trendlineDataset ? [trendlineDataset] : [])
-                ]
+                datasets: [...datasets, ...trendlineDatasets]
             },
             options: {
                 responsive: true,
@@ -152,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 plugins: {
                     title: {
                         display: true,
-                        text: `Accuracy Analysis: ${filterValue}`,
+                        text: `Accuracy Analysis: ${viewModeSelect.value === 'model' ? 'Grouped by Model' : 'Grouped by Phenomenon'}`,
                         font: {
                             size: 20,
                             weight: 'bold'
@@ -193,26 +268,42 @@ document.addEventListener('DOMContentLoaded', function() {
                         },
                         callbacks: {
                             title: function(context) {
-                                if (context[0].datasetIndex === 0) {
-                                    const index = context[0].dataIndex;
-                                    return scatterData[index].fullLabel;
+                                const datasetIndex = context[0].datasetIndex;
+                                const dataIndex = context[0].dataIndex;
+                                const dataset = chart.data.datasets[datasetIndex];
+                                
+                                // Skip trend lines in title
+                                if (dataset.label && dataset.label.endsWith('Trend')) {
+                                    return '';
                                 }
-                                return '';
+                                
+                                // Get the data point
+                                const dataPoint = dataset.data[dataIndex];
+                                return dataPoint.fullLabel || '';
                             },
                             label: function(context) {
-                                if (context.datasetIndex === 0) {
-                                    const index = context.dataIndex;
-                                    const dataPoint = filteredData[index];
+                                const datasetIndex = context.datasetIndex;
+                                const dataset = chart.data.datasets[datasetIndex];
+                                const dataPoint = dataset.data[context.dataIndex];
+                                
+                                // Handle trend lines
+                                if (dataset.label && dataset.label.endsWith('Trend')) {
                                     return [
-                                        `Accuracy: ${context.parsed.y.toFixed(4)}`,
-                                        `Perplexity (Good): ${dataPoint['perplexity_good'].toFixed(2)}`,
-                                        `Perplexity (Bad): ${dataPoint['perplexity_bad'].toFixed(2)}`
+                                        `${dataset.label}`,
+                                        `Trend value: ${context.parsed.y.toFixed(4)}`
                                     ];
                                 }
-                                return null;
+                                
+                                // Handle regular data points
+                                return [
+                                    `Accuracy: ${context.parsed.y.toFixed(4)}`,
+                                    `Perplexity (Good): ${dataPoint.perplexity_good ? dataPoint.perplexity_good.toFixed(2) : 'N/A'}`,
+                                    `Perplexity (Bad): ${dataPoint.perplexity_bad ? dataPoint.perplexity_bad.toFixed(2) : 'N/A'}`,
+                                    `Model: ${dataset.label}`
+                                ];
                             }
                         }
-                    }
+                    },
                 },
                 scales: {
                     y: {
@@ -278,42 +369,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Clear all selected filters
+    clearFiltersBtn.addEventListener('click', () => {
+        Array.from(filterSelect.options).forEach(option => {
+            option.selected = false;
+        });
+        renderChart();
+    });
+
+    // Prevent closing the dropdown when clicking inside
+    filterSelect.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+        filterSelect.size = 1;
+    });
+
+    // Toggle dropdown size on focus/blur
+    filterSelect.addEventListener('focus', () => {
+        filterSelect.size = 4;
+    });
+
+    filterSelect.addEventListener('blur', () => {
+        // Small delay to allow for selection
+        setTimeout(() => {
+            filterSelect.size = 1;
+        }, 200);
+    });
+
     viewModeSelect.addEventListener('change', updateView);
     filterSelect.addEventListener('change', renderChart);
-    showTrendLineToggle.addEventListener('change', toggleTrendLine);
+    showTrendLineToggle.addEventListener('change', renderChart);
 
     fetchData();
 
     function toggleTrendLine() {
-        if (!chart) return;
-        
-        const show = showTrendLineToggle.checked;
-        
-        if (show && !trendlineDataset) {
-            // Add trend line if it doesn't exist
-            const trendlineData = calculateTrendline(chart.data.datasets[0].data);
-            trendlineDataset = {
-                label: 'Trend Line',
-                data: trendlineData,
-                type: 'line',
-                borderColor: 'rgba(231, 76, 60, 0.8)',
-                backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                borderWidth: 3,
-                pointRadius: 0,
-                pointHoverRadius: 0,
-                fill: false,
-                tension: 0
-            };
-            chart.data.datasets.push(trendlineDataset);
-        } else if (!show && trendlineDataset) {
-            // Remove trend line if it exists
-            const trendlineIndex = chart.data.datasets.findIndex(ds => ds.label === 'Trend Line');
-            if (trendlineIndex !== -1) {
-                chart.data.datasets.splice(trendlineIndex, 1);
-                trendlineDataset = null;
-            }
-        }
-        
-        chart.update();
+        renderChart();
     }
 });
