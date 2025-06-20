@@ -7,6 +7,10 @@ from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME
 
 RESULTS_DIR = 'experiments/output/v2'
 RESULTS_CSV = os.path.join(RESULTS_DIR, 'results.csv')
+TRAJECTORY_DIR = os.path.join(RESULTS_DIR, 'trajectory')
+def make_trajectory_csv_name(experiment_name: str):
+    filename = os.path.join(TRAJECTORY_DIR, f"{experiment_name}.csv")
+    return filename
 
 CSV_COLUMNS = [
     'model name',
@@ -23,14 +27,16 @@ CSV_COLUMNS = [
 MODEL_AND_LANGUAGE_OPTIONS = list(PERTURBATION_TO_HF_MODEL_NAME.keys())
 DEFAULT_MODEL_CHECKPOINT = IMPOSSIBLE_MODEL_CHECKPOINTS[-1]
 
-def ensure_results_csv_exists():
-    os.makedirs(RESULTS_DIR, exist_ok=True)
-    if not os.path.exists(RESULTS_CSV):
-        with open(RESULTS_CSV, mode='w', newline='') as f:
+def ensure_results_csv_exists(results_csv: str):
+    os.makedirs(TRAJECTORY_DIR, exist_ok=True)
+    if not os.path.exists(results_csv):
+        with open(results_csv, mode='w', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
             writer.writeheader()
 
+
 def append_result(
+    results_csv: str,
     model_name: str,
     checkpoint: str,
     grammatical_phenomenon: str,
@@ -43,7 +49,7 @@ def append_result(
     """
     Appends a result to the results.csv file. Timestamp is set to current local time.
     """
-    ensure_results_csv_exists()
+    ensure_results_csv_exists(results_csv)
     timestamp = datetime.now().isoformat()
     row = {
         'model name': model_name,
@@ -56,7 +62,7 @@ def append_result(
         'dataset path': dataset_path,
         'timestamp': timestamp,
     }
-    with open(RESULTS_CSV, mode='a', newline='') as f:
+    with open(results_csv, mode='a', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
         writer.writerow(row)
 

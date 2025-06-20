@@ -17,17 +17,19 @@ class Evaluator:
     Takes a dataset and a model, calculates accuracy and perplexity,
     and logs the results to a central CSV file.
     """
-    def __init__(self, dataset_path: str, model_name: str, checkpoint: str, batch_size: int = 16):
+    def __init__(self, dataset_path: str, model_name: str, checkpoint: str, results_csv: str, batch_size: int = 16):
         """
         Args:
             dataset_path: Path to the dataset JSONL file.
             model_name: Hugging Face model name.
+            checkpoint: Model checkpoint.
             batch_size: Batch size for model evaluation.
         """
         self.dataset_path = dataset_path
         self.model_name = model_name
         self.checkpoint = checkpoint
         self.batch_size = batch_size
+        self.results_csv = results_csv
         self.device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 
         print(f"Using device: {self.device}")
@@ -46,6 +48,8 @@ class Evaluator:
 
         print(f"--- Evaluation Setup ---")
         print(f"Model: {self.model_name}")
+        print(f"Checkpoint: {self.checkpoint}")
+        print(f"Results CSV: {self.results_csv}")
         print(f"Dataset: {self.dataset_path}")
         print(f"Phenomenon: {self.grammatical_phenomenon}")
         print(f"Language: {self.dataset_language}")
@@ -165,6 +169,7 @@ class Evaluator:
 
         # 5. Log results to CSV
         append_result(
+            results_csv=self.results_csv,
             model_name=self.model_name,
             checkpoint=self.checkpoint,
             grammatical_phenomenon=self.grammatical_phenomenon,
@@ -174,7 +179,7 @@ class Evaluator:
             perplexity_bad=geo_mean_perplexity_bad,
             dataset_path=self.dataset_path,
         )
-        print("Results have been saved to experiments/output/v2/results.csv")
+        print(f"Results have been saved to {self.results_csv}")
         
         return {
             'accuracy': accuracy,
