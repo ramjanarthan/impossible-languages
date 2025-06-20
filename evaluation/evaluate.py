@@ -8,7 +8,7 @@ import csv
 # Local imports
 from evaluation.perplexity import get_sentence_log_probabilities, get_perplexities, calculate_geometric_mean_perplexity
 from evaluation.evaluation_dataset import DataBatchLoader
-from experiments.results import append_result
+from experiments.results import DEFAULT_MODEL_CHECKPOINT, append_result
 from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME
 
 class Evaluator:
@@ -17,7 +17,7 @@ class Evaluator:
     Takes a dataset and a model, calculates accuracy and perplexity,
     and logs the results to a central CSV file.
     """
-    def __init__(self, dataset_path: str, model_name: str, batch_size: int = 16):
+    def __init__(self, dataset_path: str, model_name: str, checkpoint: str, batch_size: int = 16):
         """
         Args:
             dataset_path: Path to the dataset JSONL file.
@@ -26,6 +26,7 @@ class Evaluator:
         """
         self.dataset_path = dataset_path
         self.model_name = model_name
+        self.checkpoint = checkpoint
         self.batch_size = batch_size
         self.device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 
@@ -35,7 +36,7 @@ class Evaluator:
         self.hugging_face_model_name = PERTURBATION_TO_HF_MODEL_NAME[self.model_name]
 
         # Load model and tokenizer
-        self.model, self.tokenizer = self._load_model_and_tokenizer(self.hugging_face_model_name, self.device)
+        self.model, self.tokenizer = self._load_model_and_tokenizer(self.hugging_face_model_name, self.device, self.checkpoint)
 
         # Parse dataset information from filename
         parsed_info = self._parse_dataset_filename(os.path.basename(self.dataset_path))
@@ -71,10 +72,13 @@ class Evaluator:
             'language': match.group('language') or 'english',
         }
     
-    def _load_model_and_tokenizer(self, model_name: str, device: str):
-        """Helper method to load a model and its tokenizer."""
-        tokenizer = GPT2Tokenizer.from_pretrained(model_name)
-        model = GPT2LMHeadModel.from_pretrained(model_name)
+    def _load_model_and_tokenizer(self, model_name: str, device: str, checkpoint: str):
+        if checkpoint == DEFAULT_MODEL_CHECKPOINT:
+            tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+            model = GPT2LMHeadModel.from_pretrained(model_name)
+        else    :
+            tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+            model = GPT2LMHeadModel.from_pretrained(model_name, revision=checkpoint)
         model.to(device)
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
@@ -103,7 +107,7 @@ class Evaluator:
         os.makedirs(raw_dir, exist_ok=True)
         # Clean dataset name for filename
         dataset_base = os.path.basename(self.dataset_path).replace('.jsonl', '').replace('%', '_')
-        filename = f"{self.model_name}_{dataset_base}_{self.dataset_timestamp}.csv"
+        filename = f"{self.model_name}_{self.checkpoint}_{dataset_base}_{self.dataset_timestamp}.csv"
         raw_path = os.path.join(raw_dir, filename)
         raw_rows = []
 
@@ -162,6 +166,7 @@ class Evaluator:
         # 5. Log results to CSV
         append_result(
             model_name=self.model_name,
+            checkpoint=self.checkpoint,
             grammatical_phenomenon=self.grammatical_phenomenon,
             dataset_language=self.dataset_language,
             accuracy=accuracy,

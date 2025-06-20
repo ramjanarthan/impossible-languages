@@ -573,3 +573,12 @@ PERTURBATION_TO_HF_MODEL_NAME = {
     "reverse_partial": "mission-impossible-lms/partial-reverse-gpt2",
     "reverse_full": "mission-impossible-lms/full-reverse-gpt2",
 }
+
+IMPOSSIBLE_MODEL_CHECKPOINTS = [
+    "checkpoint-500", 
+    "checkpoint-1000", 
+    "checkpoint-1500", 
+    "checkpoint-2000", 
+    "checkpoint-2500", 
+    "checkpoint-3000"
+]

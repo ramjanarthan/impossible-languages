@@ -3,13 +3,14 @@ import csv
 from datetime import datetime
 from typing import List
 
-from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME
+from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME, IMPOSSIBLE_MODEL_CHECKPOINTS
 
 RESULTS_DIR = 'experiments/output/v2'
 RESULTS_CSV = os.path.join(RESULTS_DIR, 'results.csv')
 
 CSV_COLUMNS = [
     'model name',
+    'checkpoint',
     'grammatical phenomenon',
     'dataset language',
     'accuracy',
@@ -20,6 +21,7 @@ CSV_COLUMNS = [
 ]
 
 MODEL_AND_LANGUAGE_OPTIONS = list(PERTURBATION_TO_HF_MODEL_NAME.keys())
+DEFAULT_MODEL_CHECKPOINT = IMPOSSIBLE_MODEL_CHECKPOINTS[-1]
 
 def ensure_results_csv_exists():
     os.makedirs(RESULTS_DIR, exist_ok=True)
@@ -30,6 +32,7 @@ def ensure_results_csv_exists():
 
 def append_result(
     model_name: str,
+    checkpoint: str,
     grammatical_phenomenon: str,
     dataset_language: str,
     accuracy: float,
@@ -44,6 +47,7 @@ def append_result(
     timestamp = datetime.now().isoformat()
     row = {
         'model name': model_name,
+        'checkpoint': checkpoint,
         'grammatical phenomenon': grammatical_phenomenon,
         'dataset language': dataset_language,
         'accuracy': accuracy,
