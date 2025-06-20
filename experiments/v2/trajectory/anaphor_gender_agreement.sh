@@ -5,7 +5,7 @@ BASE_CMD="python -m experiments.experiment"
 
 # Model families to test
 MODEL_FAMILIES=(
-    "english"
+    # "english"
     "shuffle_nondeterministic"
     "shuffle_deterministic21"
     "shuffle_local3"
@@ -36,7 +36,7 @@ for model_family in "${MODEL_FAMILIES[@]}"; do
     if [ "$model_family" == "english" ]; then
         dataset_path="${DATASET_BASE_PATH}.jsonl"
     else
-        dataset_path="${DATASET_BASE_PATH}_${model_family}.jsonl"
+        dataset_path="${DATASET_BASE_PATH}%${model_family}.jsonl"
     fi
     
     for checkpoint in "${CHECKPOINTS[@]}"; do
@@ -59,3 +59,17 @@ done
 
 echo -e "\nAll experiments completed at $(date)" >> $LOG_FILE
 
+# Make sure git branch is 'teaching-cluster'
+git checkout teaching-cluster
+
+if [ $? -ne 0 ]; then
+    echo "Failed to switch to 'teaching-cluster' branch. Exiting."
+    exit 1
+fi
+# Git stage all changes
+git add .
+# Commit changes with a message
+git commit -m "Run trajectory experiments for anaphor gender agreement"
+
+# Push changes to the remote repository
+git push origin teaching-cluster
