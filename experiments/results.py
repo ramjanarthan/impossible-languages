@@ -8,9 +8,6 @@ from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME
 RESULTS_DIR = 'experiments/output/v2'
 RESULTS_CSV = os.path.join(RESULTS_DIR, 'results.csv')
 TRAJECTORY_DIR = os.path.join(RESULTS_DIR, 'trajectory')
-def make_trajectory_csv_name(experiment_name: str):
-    filename = os.path.join(TRAJECTORY_DIR, f"{experiment_name}.csv")
-    return filename
 
 CSV_COLUMNS = [
     'model name',

@@ -21,7 +21,7 @@ def main():
         print(f"ERROR: Invalid checkpoint '{args.checkpoint}'.\nValid options are: {', '.join(IMPOSSIBLE_MODEL_CHECKPOINTS)}")
         sys.exit(1)
 
-    ensure_results_csv_exists()
+    ensure_results_csv_exists(args.results_csv)
 
     try:
         evaluator = Evaluator(dataset_path=args.dataset, model_name=args.model_name, checkpoint=args.checkpoint, batch_size=args.batch_size, results_csv=args.results_csv)
