@@ -27,6 +27,12 @@ DATASET_BASE_PATH="data_generation/outputs/impossible_blimp/v2/anaphor_gender_ag
 # Create a log file
 LOG_FILE="experiments/v2/trajectory/anaphor_gender_agreement.log"
 
+# Create a results file
+RESULTS_FILE="experiments/output/v2/trajectory/anaphor_gender_agreement_results.csv"
+
+# Experiment name
+EXPERIMENT_NAME="anaphor_gender_agreement"
+
 echo "Starting experiments at $(date)" > $LOG_FILE
 
 # Run experiments for each model family and checkpoint
@@ -36,7 +42,7 @@ for model_family in "${MODEL_FAMILIES[@]}"; do
     if [ "$model_family" == "english" ]; then
         dataset_path="${DATASET_BASE_PATH}.jsonl"
     else
-        dataset_path="${DATASET_BASE_PATH}_${model_family}.jsonl"
+        dataset_path="${DATASET_BASE_PATH}%${model_family}.jsonl"
     fi
     
     for checkpoint in "${CHECKPOINTS[@]}"; do
@@ -44,6 +50,7 @@ for model_family in "${MODEL_FAMILIES[@]}"; do
         
         # Run the experiment command with the current model family and checkpoint
         $BASE_CMD \
+            --results_csv "$RESULTS_FILE" \
             --model_name "$model_family" \
             --checkpoint "$checkpoint" \
             --dataset "$dataset_path" \
@@ -59,3 +66,19 @@ done
 
 echo -e "\nAll experiments completed at $(date)" >> $LOG_FILE
 
+# Branch name
+BRANCH_NAME="teaching-cluster-${EXPERIMENT_NAME}"
+
+git checkout $BRANCH_NAME
+
+if [ $? -ne 0 ]; then
+    echo "Failed to switch to '$BRANCH_NAME' branch. Exiting."
+    exit 1
+fi
+# Git stage all changes
+git add .
+# Commit changes with a message
+git commit -m "trajectory experiment -${EXPERIMENT_NAME}" -m "Model families: ${MODEL_FAMILIES}" -m "Checkpoints: ${CHECKPOINTS}"
+
+# Push changes to the remote repository
+git push origin $BRANCH_NAME

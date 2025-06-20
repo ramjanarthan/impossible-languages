@@ -6,6 +6,7 @@ from experiments.results import ensure_results_csv_exists, MODEL_AND_LANGUAGE_OP
 
 def main():
     parser = argparse.ArgumentParser(description="Run a model evaluation experiment.")
+    parser.add_argument('--results_csv', type=str, required=True, help="Path to results CSV file")
     parser.add_argument('--model_name', type=str, required=True, help=f"Model name (options: {', '.join(MODEL_AND_LANGUAGE_OPTIONS)})")
     parser.add_argument('--checkpoint', type=str, default=DEFAULT_MODEL_CHECKPOINT, help=f"Checkpoint (options: {', '.join(IMPOSSIBLE_MODEL_CHECKPOINTS)})")
     parser.add_argument('--dataset', type=str, required=True, help="Path to dataset (JSONL)")
@@ -20,10 +21,10 @@ def main():
         print(f"ERROR: Invalid checkpoint '{args.checkpoint}'.\nValid options are: {', '.join(IMPOSSIBLE_MODEL_CHECKPOINTS)}")
         sys.exit(1)
 
-    ensure_results_csv_exists()
+    ensure_results_csv_exists(args.results_csv)
 
     try:
-        evaluator = Evaluator(dataset_path=args.dataset, model_name=args.model_name, checkpoint=args.checkpoint, batch_size=args.batch_size)
+        evaluator = Evaluator(dataset_path=args.dataset, model_name=args.model_name, checkpoint=args.checkpoint, batch_size=args.batch_size, results_csv=args.results_csv)
         results = evaluator.evaluate()
         print("\nExperiment completed successfully.")
         print("--- Summary ---")
