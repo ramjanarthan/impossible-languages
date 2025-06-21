@@ -521,3 +521,28 @@ Accuracy: 0.4300
 Geometric Mean Perplexity (Good): 1280.6570
 Geometric Mean Perplexity (Bad): 1257.6590
 Switched to a new branch 'teaching-cluster-distractor_agreement_relative_clause'
+[teaching-cluster-distractor_agreement_relative_clause d9e0c68] trajectory experiment -distractor_agreement_relative_clause
+ Committer: Ram Sinthalapadi <s2750316@landonia19.inf.ed.ac.uk>
+Your name and e-mail address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 542 insertions(+)
+ create mode 100644 experiments/output/v2/trajectory/distractor_agreement_relative_clause_results.csv
+ create mode 100644 slurm-2037366.out
+Warning: No xauth data; using fake authentication data for X11 forwarding.
+X11 forwarding request failed on channel 0
+remote: 
+remote: Create a pull request for 'teaching-cluster-distractor_agreement_relative_clause' on GitHub by visiting:        
+remote:      https://github.com/ramjanarthan/impossible-languages/pull/new/teaching-cluster-distractor_agreement_relative_clause        
+remote: 
+To github.com:ramjanarthan/impossible-languages.git
+ * [new branch]      teaching-cluster-distractor_agreement_relative_clause -> teaching-cluster-distractor_agreement_relative_clause
