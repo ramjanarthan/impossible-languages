@@ -69,7 +69,7 @@ echo -e "\nAll experiments completed at $(date)" >> $LOG_FILE
 # Branch name
 BRANCH_NAME="teaching-cluster-${EXPERIMENT_NAME}"
 
-git checkout $BRANCH_NAME
+git checkout -b $BRANCH_NAME
 
 if [ $? -ne 0 ]; then
     echo "Failed to switch to '$BRANCH_NAME' branch. Exiting."
