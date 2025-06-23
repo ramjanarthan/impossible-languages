@@ -1051,3 +1051,152 @@ Experiment completed successfully.
 Accuracy: 0.4300
 Geometric Mean Perplexity (Good): 1280.6570
 Geometric Mean Perplexity (Bad): 1257.6590
+[tc-exp 1869839] batch run experiment -distractor_agreement_relative_clause_20250616_174118
+ Committer: Ram Sinthalapadi <s2750316@landonia19.inf.ed.ac.uk>
+Your name and e-mail address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 239 insertions(+)
+To github.com:ramjanarthan/impossible-languages.git
+   4df06fb..1869839  tc-exp -> tc-exp
+Using device: cuda
+--- Evaluation Setup ---
+Model: english
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: english
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_nondeterministic
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_nondeterministic.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: shuffle_nondeterministic
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_nondeterministic.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic21
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_deterministic21.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: shuffle_deterministic21
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_deterministic21.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic57
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_deterministic57.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: shuffle_deterministic57
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_deterministic57.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic84
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_deterministic84.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: shuffle_deterministic84
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_deterministic84.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local3
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_local3.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: shuffle_local3
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_local3.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local5
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_local5.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: shuffle_local5
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_local5.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local10
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_local10.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: shuffle_local10
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_local10.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_even_odd
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_even_odd.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: shuffle_even_odd
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%shuffle_even_odd.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_partial
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%reverse_partial.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: reverse_partial
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%reverse_partial.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_full
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%reverse_full.jsonl
+Phenomenon: ellipsis_n_bar_1
+Language: reverse_full
+Timestamp: 20250616_174118
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%reverse_full.jsonl'
