@@ -34,10 +34,15 @@ MODEL_FAMILIES=(
 # define output csv
 results_csv="experiments/output/v2/results.csv"
 
+# Create a log file
+LOG_FILE="experiments/v2/output/batch_run.log"
+
+echo "Starting experiments at $(date)" > $LOG_FILE
+
 # run experiments   
 for grammatical_phenomenon in "${grammatical_phenomena[@]}"; do
     for model_family in "${MODEL_FAMILIES[@]}"; do
-        echo "Running experiment for grammatical_phenomenon: $grammatical_phenomenon with model family: $model_family"
+        echo -e "\n-- Running experiment for grammatical_phenomenon: $grammatical_phenomenon with model family: $model_family-- " >> $LOG_FILE 
 
         dataset_path=""
         if [ "$model_family" == "english" ]; then
@@ -50,9 +55,9 @@ for grammatical_phenomenon in "${grammatical_phenomena[@]}"; do
 
         # Check if the command was successful
         if [ $? -eq 0 ]; then
-            echo "✓ Completed successfully"
+            echo "✓ Completed successfully" >> $LOG_FILE
         else
-            echo "✗ Failed to run experiment"
+            echo "✗ Failed to run experiment" >> $LOG_FILE
         fi
     done
 
@@ -60,4 +65,11 @@ for grammatical_phenomenon in "${grammatical_phenomena[@]}"; do
     git add .
     git commit -m "batch run experiment -${grammatical_phenomenon}" -m "Model families: ${MODEL_FAMILIES} Dataset: ${dataset_path}"
     git push
+
+    # Check if the command was successful
+    if [ $? -eq 0 ]; then
+        echo "✓ pushed successfully" >> $LOG_FILE
+    else
+        echo "✗ Failed to push results" >> $LOG_FILE
+    fi
 done
