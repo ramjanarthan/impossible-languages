@@ -1200,3 +1200,233 @@ Timestamp: 20250616_174118
 ------------------------
 Starting evaluation...
 Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/ellipsis_n_bar_1_20250616_174118%reverse_full.jsonl'
+[tc-exp f45e646] batch run experiment -ellipsis_n_bar_1_20250616_174118
+ Committer: Ram Sinthalapadi <s2750316@landonia19.inf.ed.ac.uk>
+Your name and e-mail address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 149 insertions(+)
+To github.com:ramjanarthan/impossible-languages.git
+   1869839..f45e646  tc-exp -> tc-exp
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: english
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: english
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/english_checkpoint-3000_irregular_past_participle_adjectives_20250618_141423_20250618_141423.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.9800
+Geometric Mean Perplexity (Good): 712.3525
+Geometric Mean Perplexity (Bad): 1475.8717
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_nondeterministic
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%shuffle_nondeterministic.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: shuffle_nondeterministic
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_nondeterministic_checkpoint-3000_irregular_past_participle_adjectives_20250618_141423_shuffle_nondeterministic_20250618_141423.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.5520
+Geometric Mean Perplexity (Good): 1363.1817
+Geometric Mean Perplexity (Bad): 1532.2571
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic21
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%shuffle_deterministic21.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: shuffle_deterministic21
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_deterministic21_checkpoint-3000_irregular_past_participle_adjectives_20250618_141423_shuffle_deterministic21_20250618_141423.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8040
+Geometric Mean Perplexity (Good): 1405.9621
+Geometric Mean Perplexity (Bad): 1779.2810
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic57
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%shuffle_deterministic57.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: shuffle_deterministic57
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%shuffle_deterministic57.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic84
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%shuffle_deterministic84.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: shuffle_deterministic84
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%shuffle_deterministic84.jsonl'
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local3
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%shuffle_local3.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: shuffle_local3
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local3_checkpoint-3000_irregular_past_participle_adjectives_20250618_141423_shuffle_local3_20250618_141423.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.9280
+Geometric Mean Perplexity (Good): 388.5298
+Geometric Mean Perplexity (Bad): 868.8408
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local5
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%shuffle_local5.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: shuffle_local5
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local5_checkpoint-3000_irregular_past_participle_adjectives_20250618_141423_shuffle_local5_20250618_141423.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.9060
+Geometric Mean Perplexity (Good): 416.0990
+Geometric Mean Perplexity (Bad): 672.3069
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local10
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%shuffle_local10.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: shuffle_local10
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local10_checkpoint-3000_irregular_past_participle_adjectives_20250618_141423_shuffle_local10_20250618_141423.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8950
+Geometric Mean Perplexity (Good): 712.7561
+Geometric Mean Perplexity (Bad): 1117.3582
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_even_odd
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%shuffle_even_odd.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: shuffle_even_odd
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_even_odd_checkpoint-3000_irregular_past_participle_adjectives_20250618_141423_shuffle_even_odd_20250618_141423.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8300
+Geometric Mean Perplexity (Good): 1417.6638
+Geometric Mean Perplexity (Bad): 2626.6828
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_partial
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%reverse_partial.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: reverse_partial
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_partial_checkpoint-3000_irregular_past_participle_adjectives_20250618_141423_reverse_partial_20250618_141423.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.7170
+Geometric Mean Perplexity (Good): 371.7596
+Geometric Mean Perplexity (Bad): 527.1371
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_full
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/irregular_past_participle_adjectives_20250618_141423%reverse_full.jsonl
+Phenomenon: irregular_past_participle_adjectives
+Language: reverse_full
+Timestamp: 20250618_141423
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_full_checkpoint-3000_irregular_past_participle_adjectives_20250618_141423_reverse_full_20250618_141423.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.9860
+Geometric Mean Perplexity (Good): 582.5970
+Geometric Mean Perplexity (Bad): 1358.8345
