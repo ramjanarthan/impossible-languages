@@ -66,19 +66,10 @@ done
 
 echo -e "\nAll experiments completed at $(date)" >> $LOG_FILE
 
-# Branch name
-BRANCH_NAME="teaching-cluster-${EXPERIMENT_NAME}"
 
-git checkout $BRANCH_NAME
-
-if [ $? -ne 0 ]; then
-    echo "Failed to switch to '$BRANCH_NAME' branch. Exiting."
-    exit 1
-fi
 # Git stage all changes
 git add .
 # Commit changes with a message
 git commit -m "trajectory experiment -${EXPERIMENT_NAME}" -m "Model families: ${MODEL_FAMILIES}" -m "Checkpoints: ${CHECKPOINTS}"
 
-# Push changes to the remote repository
-git push origin $BRANCH_NAME
+git push
