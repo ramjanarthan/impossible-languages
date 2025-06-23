@@ -21,8 +21,6 @@ MODEL_FAMILIES=(
     "english"
     "shuffle_nondeterministic"
     "shuffle_deterministic21" 
-    "shuffle_deterministic57"
-    "shuffle_deterministic84"
     "shuffle_local3"
     "shuffle_local5"
     "shuffle_local10"
@@ -35,7 +33,7 @@ MODEL_FAMILIES=(
 results_csv="experiments/output/v2/results.csv"
 
 # Create a log file
-LOG_FILE="experiments/v2/output/batch_run.log"
+LOG_FILE="experiments/output/v2/batch_run.log"
 
 echo "Starting experiments at $(date)" > $LOG_FILE
 

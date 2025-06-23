@@ -1,0 +1,213 @@
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: english
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451.jsonl
+Phenomenon: adjunct_island
+Language: english
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/english_checkpoint-3000_adjunct_island_20250623_165451_20250623_165451.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6250
+Geometric Mean Perplexity (Good): 2331.3467
+Geometric Mean Perplexity (Bad): 2636.8479
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_nondeterministic
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_nondeterministic.jsonl
+Phenomenon: adjunct_island
+Language: shuffle_nondeterministic
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_nondeterministic_checkpoint-3000_adjunct_island_20250623_165451_shuffle_nondeterministic_20250623_165451.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.4730
+Geometric Mean Perplexity (Good): 5623.0985
+Geometric Mean Perplexity (Bad): 5372.9217
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic21
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_deterministic21.jsonl
+Phenomenon: adjunct_island
+Language: shuffle_deterministic21
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_deterministic21_checkpoint-3000_adjunct_island_20250623_165451_shuffle_deterministic21_20250623_165451.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.7290
+Geometric Mean Perplexity (Good): 3396.9193
+Geometric Mean Perplexity (Bad): 4186.0696
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic57
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_deterministic57.jsonl
+Phenomenon: adjunct_island
+Language: shuffle_deterministic57
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_deterministic57.jsonl'
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic84
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_deterministic84.jsonl
+Phenomenon: adjunct_island
+Language: shuffle_deterministic84
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Experiment failed: [Errno 2] No such file or directory: 'data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_deterministic84.jsonl'
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local3
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_local3.jsonl
+Phenomenon: adjunct_island
+Language: shuffle_local3
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local3_checkpoint-3000_adjunct_island_20250623_165451_shuffle_local3_20250623_165451.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6320
+Geometric Mean Perplexity (Good): 1621.1135
+Geometric Mean Perplexity (Bad): 1957.0772
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local5
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_local5.jsonl
+Phenomenon: adjunct_island
+Language: shuffle_local5
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local5_checkpoint-3000_adjunct_island_20250623_165451_shuffle_local5_20250623_165451.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6100
+Geometric Mean Perplexity (Good): 1450.3733
+Geometric Mean Perplexity (Bad): 1631.1030
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local10
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_local10.jsonl
+Phenomenon: adjunct_island
+Language: shuffle_local10
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local10_checkpoint-3000_adjunct_island_20250623_165451_shuffle_local10_20250623_165451.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6970
+Geometric Mean Perplexity (Good): 1976.3848
+Geometric Mean Perplexity (Bad): 2535.9442
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_even_odd
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_even_odd.jsonl
+Phenomenon: adjunct_island
+Language: shuffle_even_odd
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_even_odd_checkpoint-3000_adjunct_island_20250623_165451_shuffle_even_odd_20250623_165451.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.5020
+Geometric Mean Perplexity (Good): 3136.5707
+Geometric Mean Perplexity (Bad): 3200.6722
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_partial
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%reverse_partial.jsonl
+Phenomenon: adjunct_island
+Language: reverse_partial
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_partial_checkpoint-3000_adjunct_island_20250623_165451_reverse_partial_20250623_165451.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.5190
+Geometric Mean Perplexity (Good): 1166.9019
+Geometric Mean Perplexity (Bad): 1209.2174
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_full
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%reverse_full.jsonl
+Phenomenon: adjunct_island
+Language: reverse_full
+Timestamp: 20250623_165451
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_full_checkpoint-3000_adjunct_island_20250623_165451_reverse_full_20250623_165451.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.7080
+Geometric Mean Perplexity (Good): 1334.3099
+Geometric Mean Perplexity (Bad): 1616.8524
