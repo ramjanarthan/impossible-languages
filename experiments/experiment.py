@@ -31,9 +31,10 @@ def main():
         print(f"Accuracy: {results['accuracy']:.4f}")
         print(f"Geometric Mean Perplexity (Good): {results['perplexity_good']:.4f}")
         print(f"Geometric Mean Perplexity (Bad): {results['perplexity_bad']:.4f}")
+        return 0
     except Exception as e:
         print(f"Experiment failed: {e}")
-        sys.exit(1)
+        return 1
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

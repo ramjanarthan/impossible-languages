@@ -47,6 +47,13 @@ for grammatical_phenomenon in "${grammatical_phenomena[@]}"; do
         fi
 
         python -m experiments.experiment --results_csv "$results_csv" --model_name "$model_family" --dataset "$dataset_path"
+
+        # Check if the command was successful
+        if [ $? -eq 0 ]; then
+            echo "✓ Completed successfully"
+        else
+            echo "✗ Failed to run experiment"
+        fi
     done
 
     # git commit changes with message "batch run experiment -${grammatical_phenomenon}"
