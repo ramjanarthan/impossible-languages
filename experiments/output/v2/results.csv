@@ -1,1 +1,10 @@
-model name,grammatical phenomenon,dataset language,accuracy,perplexity good,perplexity bad,dataset path,timestamp
+model name,checkpoint,grammatical phenomenon,dataset language,accuracy,perplexity good,perplexity bad,dataset path,timestamp
+english,checkpoint-3000,adjunct_island,english,0.625,2331.3466837890287,2636.8478922787012,data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451.jsonl,2025-06-23T19:01:50.371109
+shuffle_nondeterministic,checkpoint-3000,adjunct_island,shuffle_nondeterministic,0.473,5623.098546946851,5372.921732146653,data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_nondeterministic.jsonl,2025-06-23T19:03:23.163989
+shuffle_deterministic21,checkpoint-3000,adjunct_island,shuffle_deterministic21,0.729,3396.9192560288425,4186.0696223505865,data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_deterministic21.jsonl,2025-06-23T19:05:00.276667
+shuffle_local3,checkpoint-3000,adjunct_island,shuffle_local3,0.632,1621.113484130124,1957.077247590551,data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_local3.jsonl,2025-06-23T19:09:52.097823
+shuffle_local5,checkpoint-3000,adjunct_island,shuffle_local5,0.61,1450.3733298292793,1631.1029520534476,data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_local5.jsonl,2025-06-23T19:11:03.549641
+shuffle_local10,checkpoint-3000,adjunct_island,shuffle_local10,0.697,1976.38478329331,2535.9442282701543,data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_local10.jsonl,2025-06-23T19:12:16.431721
+shuffle_even_odd,checkpoint-3000,adjunct_island,shuffle_even_odd,0.502,3136.570651207401,3200.672238354109,data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%shuffle_even_odd.jsonl,2025-06-23T19:13:26.760055
+reverse_partial,checkpoint-3000,adjunct_island,reverse_partial,0.519,1166.9018604551318,1209.2173619766083,data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%reverse_partial.jsonl,2025-06-23T19:14:58.184969
+reverse_full,checkpoint-3000,adjunct_island,reverse_full,0.708,1334.309900815283,1616.8524467761767,data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%reverse_full.jsonl,2025-06-23T19:16:15.785394

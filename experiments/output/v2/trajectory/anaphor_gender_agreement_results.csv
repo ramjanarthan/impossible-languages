@@ -1,4 +1,4 @@
-model name,grammatical phenomenon,dataset language,accuracy,perplexity good,perplexity bad,dataset path,timestamp
+model name,checkpoint,grammatical phenomenon,dataset language,accuracy,perplexity good,perplexity bad,dataset path,timestamp
 english,checkpoint-500,anaphor_gender_agreement,english,0.591,512.305693294459,567.8628611092153,data_generation/outputs/impossible_blimp/v2/anaphor_gender_agreement_20250618_113511.jsonl,2025-06-20T11:49:55.315673
 english,checkpoint-500,anaphor_gender_agreement,english,0.591,512.305693294459,567.8628611092153,data_generation/outputs/impossible_blimp/v2/anaphor_gender_agreement_20250618_113511.jsonl,2025-06-20T11:50:50.376160
 english,checkpoint-1000,anaphor_gender_agreement,english,0.801,384.33869779909026,504.4281273220391,data_generation/outputs/impossible_blimp/v2/anaphor_gender_agreement_20250618_113511.jsonl,2025-06-20T11:51:35.205493
