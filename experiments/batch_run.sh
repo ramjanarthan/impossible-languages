@@ -3,32 +3,32 @@
 base_dataset_dir="data_generation/outputs/impossible_blimp/v2"
 
 grammatical_phenomena=(
-    "adjunct_island"
-    # "animate_subject_passive"
-    # "anaphor_gender_agreement"
-    # "anaphor_number_agreement"
-    # "distractor_agreement_relative_clause"
-    # "ellipsis_n_bar_1"
-    # "irregular_past_participle_adjectives"
-    # "principle_A_c_command"
-    # "wh_questions_object_gap"
-    # "wh_questions_object_gap_long_distance"
-    # "wh_questions_subject_gap"
-    # "wh_questions_subject_gap_long_distance"
+    "adjunct_island_20250623_165451"
+    "animate_subject_passive_20250623_165451"
+    "anaphor_gender_agreement_20250618_113511"
+    "anaphor_number_agreement_20250617_153306"
+    "distractor_agreement_relative_clause_20250616_174118"
+    "ellipsis_n_bar_1_20250616_174118"
+    "irregular_past_participle_adjectives_20250618_141423"
+    "principle_A_c_command_20250623_165615"
+    "wh_questions_object_gap_20250623_165615"
+    "wh_questions_object_gap_long_distance_20250623_165615"
+    "wh_questions_subject_gap_20250623_165615"
+    "wh_questions_subject_gap_long_distance_20250623_165615"
 )
 
 MODEL_FAMILIES=(
     "english"
-    # "shuffle_nondeterministic"
-    # "shuffle_deterministic21" 
-    # "shuffle_deterministic57"
-    # "shuffle_deterministic84"
-    # "shuffle_local3"
-    # "shuffle_local5"
-    # "shuffle_local10"
-    # "shuffle_even_odd"
-    # "reverse_partial"
-    # "reverse_full"
+    "shuffle_nondeterministic"
+    "shuffle_deterministic21" 
+    "shuffle_deterministic57"
+    "shuffle_deterministic84"
+    "shuffle_local3"
+    "shuffle_local5"
+    "shuffle_local10"
+    "shuffle_even_odd"
+    "reverse_partial"
+    "reverse_full"
 )
     
 # define output csv
@@ -51,6 +51,6 @@ for grammatical_phenomenon in "${grammatical_phenomena[@]}"; do
 
     # git commit changes with message "batch run experiment -${grammatical_phenomenon}"
     git add .
-    git commit -m "batch run experiment -${grammatical_phenomenon}" -m "Model families: ${MODEL_FAMILIES} \nDataset: ${dataset_path}"
+    git commit -m "batch run experiment -${grammatical_phenomenon}" -m "Model families: ${MODEL_FAMILIES} Dataset: ${dataset_path}"
     git push
 done
