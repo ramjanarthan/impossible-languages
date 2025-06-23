@@ -2,6 +2,7 @@ import argparse
 import os
 import json
 import jsonlines
+import sys
 from tqdm import tqdm
 from data_generation.utils.impossible_utils import PERTURBATIONS, PERTURBATION_TO_HF_MODEL_NAME
 
@@ -60,13 +61,14 @@ def modify_dataset(base_dataset_path, impossible_language_option, output_path=No
                     output_writer.write(item)
             output_writer.close()
         print(f"Successfully wrote impossible dataset to {output_path}")
+        return 0
     except Exception as e:
         print(f"Failed to process dataset: {e}")
-        return
+        return 1
 
 def main():
     args = parse_args()
-    modify_dataset(args.base_dataset_path, args.impossible_language_option, args.output_path)
+    return modify_dataset(args.base_dataset_path, args.impossible_language_option, args.output_path)
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
