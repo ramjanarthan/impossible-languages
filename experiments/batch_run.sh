@@ -3,32 +3,32 @@
 base_dataset_dir="data_generation/outputs/impossible_blimp/v2"
 
 grammatical_phenomena=(
-    "adjunct_island",
-    # "animate_subject_passive",
-    # "anaphor_gender_agreement",
-    # "anaphor_number_agreement",
-    # "distractor_agreement_relative_clause",
-    # "ellipsis_n_bar_1",
-    # "irregular_past_participle_adjectives",
-    # "principle_A_c_command",
-    # "wh_questions_object_gap",
-    # "wh_questions_object_gap_long_distance",
-    # "wh_questions_subject_gap",
-    # "wh_questions_subject_gap_long_distance",
+    "adjunct_island"
+    # "animate_subject_passive"
+    # "anaphor_gender_agreement"
+    # "anaphor_number_agreement"
+    # "distractor_agreement_relative_clause"
+    # "ellipsis_n_bar_1"
+    # "irregular_past_participle_adjectives"
+    # "principle_A_c_command"
+    # "wh_questions_object_gap"
+    # "wh_questions_object_gap_long_distance"
+    # "wh_questions_subject_gap"
+    # "wh_questions_subject_gap_long_distance"
 )
 
 MODEL_FAMILIES=(
-    "english",
-    # "shuffle_nondeterministic",
-    # "shuffle_deterministic21",
-    # "shuffle_deterministic57",
-    # "shuffle_deterministic84",
-    # "shuffle_local3",
-    # "shuffle_local5",
-    # "shuffle_local10",
-    # "shuffle_even_odd",
-    # "reverse_partial",
-    # "reverse_full",
+    "english"
+    # "shuffle_nondeterministic"
+    # "shuffle_deterministic21" 
+    # "shuffle_deterministic57"
+    # "shuffle_deterministic84"
+    # "shuffle_local3"
+    # "shuffle_local5"
+    # "shuffle_local10"
+    # "shuffle_even_odd"
+    # "reverse_partial"
+    # "reverse_full"
 )
     
 # define output csv
