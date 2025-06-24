@@ -3,18 +3,18 @@
 base_dataset_dir="data_generation/outputs/impossible_blimp/v2"
 
 grammatical_phenomena=(
-    "adjunct_island_20250623_165451"
-    "animate_subject_passive_20250623_165451"
-    "anaphor_gender_agreement_20250618_113511"
-    "anaphor_number_agreement_20250617_153306"
-    "distractor_agreement_relative_clause_20250616_174118"
-    "ellipsis_n_bar_1_20250616_174118"
-    "irregular_past_participle_adjectives_20250618_141423"
-    "principle_A_c_command_20250623_165615"
-    "wh_questions_object_gap_20250623_165615"
-    "wh_questions_object_gap_long_distance_20250623_165615"
-    "wh_questions_subject_gap_20250623_165615"
-    "wh_questions_subject_gap_long_distance_20250623_165615"
+    # "adjunct_island_20250623_165451"
+    # "animate_subject_passive_20250623_165451"
+    # "anaphor_gender_agreement_20250618_113511"
+    # "anaphor_number_agreement_20250617_153306"
+    "distractor_agreement_relative_clause_20250618_125716"
+    # "ellipsis_n_bar_1_20250616_174118"
+    # "irregular_past_participle_adjectives_20250618_141423"
+    # "principle_A_c_command_20250623_165615"
+    # "wh_questions_object_gap_20250623_165615"
+    # "wh_questions_object_gap_long_distance_20250623_165615"
+    # "wh_questions_subject_gap_20250623_165615"
+    # "wh_questions_subject_gap_long_distance_20250623_165615"
 )
 
 MODEL_FAMILIES=(
