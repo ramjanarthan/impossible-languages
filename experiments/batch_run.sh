@@ -18,15 +18,15 @@ grammatical_phenomena=(
 )
 
 MODEL_FAMILIES=(
-    "english"
+    # "english"
     "shuffle_nondeterministic"
-    "shuffle_deterministic21" 
-    "shuffle_local3"
-    "shuffle_local5"
-    "shuffle_local10"
-    "shuffle_even_odd"
-    "reverse_partial"
-    "reverse_full"
+    # "shuffle_deterministic21" 
+    # "shuffle_local3"
+    # "shuffle_local5"
+    # "shuffle_local10"
+    # "shuffle_even_odd"
+    # "reverse_partial"
+    # "reverse_full"
 )
     
 # define output csv
