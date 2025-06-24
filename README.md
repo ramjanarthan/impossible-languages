@@ -21,8 +21,6 @@ For this project, I focus on the following impossible language options:
 - english ("shuffle-control" in the original Kallini et al. paper)
 - shuffle_nondeterministic
 - shuffle_deterministic21
-- shuffle_deterministic57
-- shuffle_deterministic84
 - shuffle_local3
 - shuffle_local5
 - shuffle_local10
@@ -68,6 +66,30 @@ For example:
 python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v2/anaphor_gender_agreement_20250618_113511.jsonl shuffle_nondeterministic
 ```
 
+### Analysing dataset:
+
+To analyse the dataset stats related to sentence length, run the following command in the root project directory:
+
+```bash
+python -m data_generation.generation_projects.impossible_blimp.analyse_dataset <path/to/dataset.jsonl>
+```
+
+For example:
+```bash
+python -m data_generation.generation_projects.impossible_blimp.analyse_dataset data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451.jsonl
+```
+
+Sample output:
+
+```bash
+Statistics for 'sentence_good' lengths in data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451.jsonl:
+  Count:  1000
+  Mean:   8.41
+  Median: 8.00
+  Min:    7
+  Max:    14
+```
+
 ## Running experiments:
 
 An experiment is defined as measuring the accuracy of a model when applied to a dataset.
@@ -105,4 +127,6 @@ To run the GUI, run the following command in the 'gui' project directory:
 python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-The GUI will be available at: http://localhost:8000
+The GUI will be available at: http://localhost:8000/results
+
+Note: The V1 version of the GUI is served at http://localhost:8000 and is deprecated.
