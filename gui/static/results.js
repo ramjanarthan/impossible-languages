@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const item = filteredData.find(d => d[xAxisKey] === xValue) || {};
             const language = item.dataset_language || '';
             const shortLabel = xValue.length > 15 ? xValue.substring(0, 15) + '...' : xValue;
-            return `${shortLabel} (${language})`;
+            return `${xValue}`;
         });
         
         // Group data by the selected filter groups
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         max: labels.length - 0.5,
                         title: {
                             display: true,
-                            text: isModelView ? 'Grammatical Phenomena (Dataset Language)' : 'Models (Dataset Language)',
+                            text: isModelView ? 'Grammatical Phenomena' : 'Models',
                             font: {
                                 size: 14,
                                 weight: 'bold'
@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 return labels[value];
                             },
                             font: {
-                                size: 10
+                                size: 16
                             },
                             color: '#34495e',
                             maxRotation: 45,
@@ -384,18 +384,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Close dropdown when clicking outside
     document.addEventListener('click', () => {
-        filterSelect.size = 1;
+        filterSelect.size = 8;
     });
 
     // Toggle dropdown size on focus/blur
     filterSelect.addEventListener('focus', () => {
-        filterSelect.size = 4;
+        filterSelect.size = 8;
     });
 
     filterSelect.addEventListener('blur', () => {
         // Small delay to allow for selection
         setTimeout(() => {
-            filterSelect.size = 1;
+            filterSelect.size = 8;
         }, 200);
     });
 
