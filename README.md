@@ -90,6 +90,67 @@ Statistics for 'sentence_good' lengths in data_generation/outputs/impossible_bli
   Max:    14
 ```
 
+### Sampling dataset:
+
+To view sample sentences from the dataset, run the following command in the root project directory:
+
+```bash
+python -m data_generation.generation_projects.impossible_blimp.sample_dataset <path/to/dataset.jsonl> --samples <N> --seed <SEED>
+```
+
+For example:
+```bash
+python -m data_generation.generation_projects.impossible_blimp.sample_dataset data_generation/outputs/impossible_blimp/v2/anaphor_gender_agreement_20250618_113511.jsonl --samples 1 --seed 42
+```
+
+Sample output:
+
+```bash
+================================================================================
+SAMPLE 1 (Index: 654)
+================================================================================
+
+ENGLISH:
+  Good: All children go to one red school and cashiers go to at least as many.
+  Bad:  All children go to one school and cashiers go to at least as many red.
+
+OTHER VERSIONS:
+
+SHUFFLE_NONDETERMINISTIC:
+  Good: iers one as and school go to. least go many at red children cash toAll
+  Bad:  iers andAll one cash. go many go least as to children to red at school
+
+SHUFFLE_DETERMINISTIC21:
+  Good:  oneiers and to as at schoolAll red children cash. many least go to go
+  Bad:   one go cash at many least andAll school childreniers. red as to to go
+
+SHUFFLE_LOCAL3:
+  Good:  goAll children red to one cash school and toiers go as at least many.
+  Bad:   goAll children school to oneiers and cash at go to many least as red.
+
+SHUFFLE_LOCAL5:
+  Good:  go one toAll children andiers cash red school at as least go to many.
+  Bad:   go one toAll children cash goiers school and least many as to at red.
+
+SHUFFLE_LOCAL10:
+  Good:  one school go and to rediersAll cash children at as least. many go to
+  Bad:   one and go cash to school goAlliers children least many as. red to at
+
+SHUFFLE_EVEN_ODD:
+  Good: All go one school cash go at as. children to red andiers to least many
+  Bad:  All go one andiers to least many. children to school cash go at as red
+
+REVERSE_PARTIAL:
+  Good: All children go to one red school and cashiers go to at least as many.🅁
+  Bad:  All children go to one school and cashiers go to at least as🅁. red many
+
+REVERSE_FULL:
+  Good: 🅁. many as least at to goiers cash and school red one to go childrenAll
+  Bad:  . red many🅁 as least at to goiers cash and school one to go childrenAll
+
+--------------------------------------------------------------------------------
+```
+
 ## Running experiments:
 
 An experiment is defined as measuring the accuracy of a model when applied to a dataset.

@@ -559,6 +559,19 @@ PERTURBATIONS = {
     },
 }
 
+# Perturbations that are in focus
+VALID_PERTURBATION_KEYS = [
+    "english",
+    "shuffle_nondeterministic",
+    "shuffle_deterministic21",
+    "shuffle_local3",
+    "shuffle_local5",
+    "shuffle_local10",
+    "shuffle_even_odd",
+    "reverse_partial",
+    "reverse_full",
+]
+
 PERTURBATION_TO_HF_MODEL_NAME = {
     "english": "mission-impossible-lms/no-shuffle-gpt2",
     "shuffle_nondeterministic": "mission-impossible-lms/nondeterministic-shuffle-gpt2",
@@ -569,7 +582,6 @@ PERTURBATION_TO_HF_MODEL_NAME = {
     "shuffle_local5": "mission-impossible-lms/local-shuffle-w5-gpt2",
     "shuffle_local10": "mission-impossible-lms/local-shuffle-w10-gpt2",
     "shuffle_even_odd": "mission-impossible-lms/even-odd-shuffle-gpt2",
-    "reverse_control": "mission-impossible-lms/no-reverse-gpt2",
     "reverse_partial": "mission-impossible-lms/partial-reverse-gpt2",
     "reverse_full": "mission-impossible-lms/full-reverse-gpt2",
 }
