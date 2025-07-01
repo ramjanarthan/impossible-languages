@@ -357,8 +357,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 size: 16
                             },
                             color: '#34495e',
-                            maxRotation: 45,
-                            minRotation: 45
+                            maxRotation: 30,
+                            minRotation: 30
                         },
                         grid: {
                             color: 'rgba(52, 73, 94, 0.1)',
