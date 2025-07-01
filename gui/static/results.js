@@ -106,25 +106,30 @@ document.addEventListener('DOMContentLoaded', function() {
         // Filter data based on selected filters
         const filteredData = rawData.filter(item => selectedFilters.includes(item[groupBy]));
         
-        // Get all unique x-axis values (phenomena or models) across all selected groups
-        const allXValues = [...new Set(filteredData.map(item => item[xAxisKey]))];
-        
-        // Sort x-axis values
+        // Define the phenomena we want to show in model view
+        const SELECTED_PHENOMENA = new Set([
+            'anaphor_gender_agreement',
+            'anaphor_number_agreement',
+            'distractor_agreement_relative_clause',
+            'animate_subject_passive'
+        ]);
+
+        let allXValues = [...new Set(filteredData.map(item => item[xAxisKey]))];
+
+        const SHOULD_USE_SELECTED_PHENOMENA = true;
+        if (isModelView && SHOULD_USE_SELECTED_PHENOMENA) {
+            allXValues = allXValues.filter(xValue => SELECTED_PHENOMENA.has(xValue));
+        }
+
         if (isModelView) {
-            // In model view, sort phenomena alphabetically
-            allXValues.sort();
+            allXValues.sort(); // Sort alphabetically for model view
         } else {
             // In phenomenon view, sort models by model order
             allXValues.sort((a, b) => modelOrder.indexOf(a) - modelOrder.indexOf(b));
         }
         
         // Create x-axis labels with language info
-        const labels = allXValues.map(xValue => {
-            const item = filteredData.find(d => d[xAxisKey] === xValue) || {};
-            const language = item.dataset_language || '';
-            const shortLabel = xValue.length > 15 ? xValue.substring(0, 15) + '...' : xValue;
-            return `${xValue}`;
-        });
+        const labels = allXValues;
         
         // Group data by the selected filter groups
         const groupedData = new Map();
