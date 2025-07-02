@@ -106,18 +106,22 @@ document.addEventListener('DOMContentLoaded', function() {
         // Filter data based on selected filters
         const filteredData = rawData.filter(item => selectedFilters.includes(item[groupBy]));
         
-        // Define the phenomena we want to show in model view
+        // Define the phenomena we want to show in model view when filtered
         const SELECTED_PHENOMENA = new Set([
             'anaphor_gender_agreement',
             'anaphor_number_agreement',
+            'animate_subject_passive',
+            'irregular_past_participle_adjectives',
             'distractor_agreement_relative_clause',
-            'animate_subject_passive'
+            'wh_questions_subject_gap',
+            'wh_questions_subject_gap_long_distance',
         ]);
 
         let allXValues = [...new Set(filteredData.map(item => item[xAxisKey]))];
 
-        const SHOULD_USE_SELECTED_PHENOMENA = true;
-        if (isModelView && SHOULD_USE_SELECTED_PHENOMENA) {
+        // Check if we should filter to show only selected phenomena
+        const showSelectedPhenomena = document.getElementById('showSelectedPhenomena').checked;
+        if (isModelView && showSelectedPhenomena) {
             allXValues = allXValues.filter(xValue => SELECTED_PHENOMENA.has(xValue));
         }
 
@@ -373,6 +377,27 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Function to toggle visibility of the showSelectedPhenomena control
+    function updatePhenomenaToggleVisibility() {
+        const isModelView = viewModeSelect.value === 'model';
+        const phenomenaToggleGroup = document.querySelector('.toggle-group:has(#showSelectedPhenomena)');
+        if (phenomenaToggleGroup) {
+            phenomenaToggleGroup.style.display = isModelView ? 'flex' : 'none';
+        }
+    }
+
+    // Add event listeners
+    viewModeSelect.addEventListener('change', () => {
+        updatePhenomenaToggleVisibility();
+        updateView();
+    });
+
+    // Add event listener for the showSelectedPhenomena toggle
+    document.getElementById('showSelectedPhenomena').addEventListener('change', updateView);
+
+    // Initialize the toggle visibility
+    updatePhenomenaToggleVisibility();
 
     // Clear all selected filters
     clearFiltersBtn.addEventListener('click', () => {
