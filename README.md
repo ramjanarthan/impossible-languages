@@ -11,7 +11,8 @@ conda activate impossible-languages
 3. Install dependencies:
 ```bash
 conda install transformers nltk jsonlines
-pip install torch
+pip install torch spacy
+python -m spacy download en_core_web_sm
 ```
 
 ## Impossible Language options
