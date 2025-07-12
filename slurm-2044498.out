@@ -902,3 +902,209 @@ Experiment completed successfully.
 Accuracy: 0.7380
 Geometric Mean Perplexity (Good): 301.2300
 Geometric Mean Perplexity (Bad): 389.0366
+[tc-exp-2 149e303] batch run experiment -animate_subject_passive_20250712_171843
+ Committer: Ram Sinthalapadi <s2750316@landonia19.inf.ed.ac.uk>
+Your name and e-mail address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 215 insertions(+)
+To github.com:ramjanarthan/impossible-languages.git
+   913f671..149e303  tc-exp-2 -> tc-exp-2
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: english
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered.jsonl
+Phenomenon: distractor_agreement_relative_clause
+Language: english
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/english_checkpoint-3000_distractor_agreement_relative_clause_20250712_172752_filtered_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.4410
+Geometric Mean Perplexity (Good): 1067.6597
+Geometric Mean Perplexity (Bad): 1037.4254
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_nondeterministic
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered%shuffle_nondeterministic.jsonl
+Phenomenon: distractor_agreement_relative_clause
+Language: shuffle_nondeterministic
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_nondeterministic_checkpoint-3000_distractor_agreement_relative_clause_20250712_172752_filtered_shuffle_nondeterministic_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.5420
+Geometric Mean Perplexity (Good): 4001.4444
+Geometric Mean Perplexity (Bad): 4084.1627
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic21
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered%shuffle_deterministic21.jsonl
+Phenomenon: distractor_agreement_relative_clause
+Language: shuffle_deterministic21
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_deterministic21_checkpoint-3000_distractor_agreement_relative_clause_20250712_172752_filtered_shuffle_deterministic21_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.5480
+Geometric Mean Perplexity (Good): 2787.3738
+Geometric Mean Perplexity (Bad): 2853.3747
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local3
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered%shuffle_local3.jsonl
+Phenomenon: distractor_agreement_relative_clause
+Language: shuffle_local3
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local3_checkpoint-3000_distractor_agreement_relative_clause_20250712_172752_filtered_shuffle_local3_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.4430
+Geometric Mean Perplexity (Good): 1470.3280
+Geometric Mean Perplexity (Bad): 1430.0487
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local5
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered%shuffle_local5.jsonl
+Phenomenon: distractor_agreement_relative_clause
+Language: shuffle_local5
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local5_checkpoint-3000_distractor_agreement_relative_clause_20250712_172752_filtered_shuffle_local5_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.4210
+Geometric Mean Perplexity (Good): 1468.0282
+Geometric Mean Perplexity (Bad): 1437.3292
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local10
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered%shuffle_local10.jsonl
+Phenomenon: distractor_agreement_relative_clause
+Language: shuffle_local10
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local10_checkpoint-3000_distractor_agreement_relative_clause_20250712_172752_filtered_shuffle_local10_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.4540
+Geometric Mean Perplexity (Good): 1833.6140
+Geometric Mean Perplexity (Bad): 1808.2623
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_even_odd
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered%shuffle_even_odd.jsonl
+Phenomenon: distractor_agreement_relative_clause
+Language: shuffle_even_odd
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_even_odd_checkpoint-3000_distractor_agreement_relative_clause_20250712_172752_filtered_shuffle_even_odd_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.3950
+Geometric Mean Perplexity (Good): 1911.9548
+Geometric Mean Perplexity (Bad): 1788.3156
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_partial
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered%reverse_partial.jsonl
+Phenomenon: distractor_agreement_relative_clause
+Language: reverse_partial
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_partial_checkpoint-3000_distractor_agreement_relative_clause_20250712_172752_filtered_reverse_partial_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.4040
+Geometric Mean Perplexity (Good): 693.8536
+Geometric Mean Perplexity (Bad): 667.4110
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_full
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered%reverse_full.jsonl
+Phenomenon: distractor_agreement_relative_clause
+Language: reverse_full
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_full_checkpoint-3000_distractor_agreement_relative_clause_20250712_172752_filtered_reverse_full_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.4400
+Geometric Mean Perplexity (Good): 1240.7893
+Geometric Mean Perplexity (Bad): 1222.8025
