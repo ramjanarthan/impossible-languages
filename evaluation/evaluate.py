@@ -59,13 +59,13 @@ class Evaluator:
     def _parse_dataset_filename(self, filename: str) -> dict:
         """
         Parses a dataset filename to extract metadata.
-        Format: phenomenon_YYYYMMDD_HHMMSS%language.jsonl (language is optional)
+        Format: phenomenon_YYYYMMDD_HHMMSS%filtered%language.jsonl (language is optional)
         """
         # Strip .jsonl if present
         if filename.endswith('.jsonl'):
             filename = filename[:-6]
 
-        pattern = r"^(?P<phenomenon>.+?)_(?P<timestamp>\d{8}_\d{6})(?:%(?P<language>.+))?$"
+        pattern = r"^(?P<phenomenon>.+?)_(?P<timestamp>\d{8}_\d{6})%filtered(?:%(?P<language>.+))?$"
         match = re.match(pattern, filename)
         if not match:
             raise ValueError(f"Could not parse dataset filename: {filename}")
