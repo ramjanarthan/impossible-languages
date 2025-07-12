@@ -696,3 +696,209 @@ Experiment completed successfully.
 Accuracy: 0.9710
 Geometric Mean Perplexity (Good): 524.7947
 Geometric Mean Perplexity (Bad): 840.0177
+[tc-exp-2 913f671] batch run experiment -anaphor_number_agreement_20250617_153306
+ Committer: Ram Sinthalapadi <s2750316@landonia19.inf.ed.ac.uk>
+Your name and e-mail address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 215 insertions(+)
+To github.com:ramjanarthan/impossible-languages.git
+   26d8a3c..913f671  tc-exp-2 -> tc-exp-2
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: english
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/animate_subject_passive_20250712_171843%filtered.jsonl
+Phenomenon: animate_subject_passive
+Language: english
+Timestamp: 20250712_171843
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/english_checkpoint-3000_animate_subject_passive_20250712_171843_filtered_20250712_171843.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6890
+Geometric Mean Perplexity (Good): 279.2573
+Geometric Mean Perplexity (Bad): 352.1729
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_nondeterministic
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/animate_subject_passive_20250712_171843%filtered%shuffle_nondeterministic.jsonl
+Phenomenon: animate_subject_passive
+Language: shuffle_nondeterministic
+Timestamp: 20250712_171843
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_nondeterministic_checkpoint-3000_animate_subject_passive_20250712_171843_filtered_shuffle_nondeterministic_20250712_171843.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.5910
+Geometric Mean Perplexity (Good): 1763.1656
+Geometric Mean Perplexity (Bad): 1936.1170
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic21
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/animate_subject_passive_20250712_171843%filtered%shuffle_deterministic21.jsonl
+Phenomenon: animate_subject_passive
+Language: shuffle_deterministic21
+Timestamp: 20250712_171843
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_deterministic21_checkpoint-3000_animate_subject_passive_20250712_171843_filtered_shuffle_deterministic21_20250712_171843.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6420
+Geometric Mean Perplexity (Good): 773.5583
+Geometric Mean Perplexity (Bad): 894.3866
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local3
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/animate_subject_passive_20250712_171843%filtered%shuffle_local3.jsonl
+Phenomenon: animate_subject_passive
+Language: shuffle_local3
+Timestamp: 20250712_171843
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local3_checkpoint-3000_animate_subject_passive_20250712_171843_filtered_shuffle_local3_20250712_171843.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.7070
+Geometric Mean Perplexity (Good): 290.6166
+Geometric Mean Perplexity (Bad): 364.6477
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local5
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/animate_subject_passive_20250712_171843%filtered%shuffle_local5.jsonl
+Phenomenon: animate_subject_passive
+Language: shuffle_local5
+Timestamp: 20250712_171843
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local5_checkpoint-3000_animate_subject_passive_20250712_171843_filtered_shuffle_local5_20250712_171843.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.7000
+Geometric Mean Perplexity (Good): 322.4590
+Geometric Mean Perplexity (Bad): 410.4485
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local10
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/animate_subject_passive_20250712_171843%filtered%shuffle_local10.jsonl
+Phenomenon: animate_subject_passive
+Language: shuffle_local10
+Timestamp: 20250712_171843
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local10_checkpoint-3000_animate_subject_passive_20250712_171843_filtered_shuffle_local10_20250712_171843.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6200
+Geometric Mean Perplexity (Good): 543.0208
+Geometric Mean Perplexity (Bad): 619.0024
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_even_odd
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/animate_subject_passive_20250712_171843%filtered%shuffle_even_odd.jsonl
+Phenomenon: animate_subject_passive
+Language: shuffle_even_odd
+Timestamp: 20250712_171843
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_even_odd_checkpoint-3000_animate_subject_passive_20250712_171843_filtered_shuffle_even_odd_20250712_171843.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6510
+Geometric Mean Perplexity (Good): 361.1671
+Geometric Mean Perplexity (Bad): 429.0102
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_partial
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/animate_subject_passive_20250712_171843%filtered%reverse_partial.jsonl
+Phenomenon: animate_subject_passive
+Language: reverse_partial
+Timestamp: 20250712_171843
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_partial_checkpoint-3000_animate_subject_passive_20250712_171843_filtered_reverse_partial_20250712_171843.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6720
+Geometric Mean Perplexity (Good): 171.5774
+Geometric Mean Perplexity (Bad): 206.3466
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_full
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/animate_subject_passive_20250712_171843%filtered%reverse_full.jsonl
+Phenomenon: animate_subject_passive
+Language: reverse_full
+Timestamp: 20250712_171843
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_full_checkpoint-3000_animate_subject_passive_20250712_171843_filtered_reverse_full_20250712_171843.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.7380
+Geometric Mean Perplexity (Good): 301.2300
+Geometric Mean Perplexity (Bad): 389.0366
