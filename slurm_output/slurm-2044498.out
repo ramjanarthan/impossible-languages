@@ -2585,3 +2585,20 @@ Experiment completed successfully.
 Accuracy: 0.8480
 Geometric Mean Perplexity (Good): 986.3726
 Geometric Mean Perplexity (Bad): 1310.5974
+[tc-exp-2 ed54ea4] batch run experiment -wh_questions_subject_gap_long_distance_20250623_165615
+ Committer: Ram Sinthalapadi <s2750316@landonia19.inf.ed.ac.uk>
+Your name and e-mail address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 215 insertions(+)
+To github.com:ramjanarthan/impossible-languages.git
+   fc96459..ed54ea4  tc-exp-2 -> tc-exp-2
