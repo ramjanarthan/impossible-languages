@@ -91,6 +91,41 @@ Statistics for 'sentence_good' lengths in data_generation/outputs/impossible_bli
   Max:    14
 ```
 
+To analyse the dataset to check if minimal pairs yield equal token lengths for the impossible language tokenizers, run the following command in the root project directory:
+
+```bash
+python -m data_generation.generation_projects.impossible_blimp.analyse_token_lengths <path/to/dataset.jsonl>
+```
+
+For example:
+```bash
+python -m data_generation.generation_projects.impossible_blimp.analyse_token_lengths data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451.jsonl
+```
+
+Alternatively, you can run the bash script `batch_analyse_token_lengths.sh` to analyse multiple datasets at once.
+
+Sample output:
+
+```bash
+Processing anaphor_number_agreement_20250617_153306
+Processing: 1000sentences [00:00, 23315.55sentences/s]
+Result for shuffle_control : 1000/1000 
+ Average difference: 0.0
+Processing: 1000sentences [00:00, 25123.11sentences/s]
+Result for reverse_full : 1000/1000 
+ Average difference: 0.0
+Successfully processed anaphor_number_agreement_20250617_153306
+----------------------------------------
+Processing animate_subject_passive_20250623_165531
+Processing: 1000sentences [00:00, 20301.27sentences/s]
+Result for shuffle_control : 723/1000 
+ Average difference: 0.333
+Processing: 1000sentences [00:00, 21244.51sentences/s]
+Result for reverse_full : 723/1000 
+ Average difference: 0.333
+Successfully processed animate_subject_passive_20250623_165531
+```
+
 ### Sampling dataset:
 
 To view sample sentences from the dataset, run the following command in the root project directory:
