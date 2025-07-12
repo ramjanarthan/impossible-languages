@@ -51,8 +51,8 @@ For example:
 python -m data_generation.generation_projects.impossible_blimp.v2.distractor_agreement_rc
 ```
 
-#### Ensuring token length parity
-To ensure that the generated minimal pairs will be tokenized to equal lengths by the impossible language tokenizers, run the following command to filter out pairs that do not yield equal token lengths. This will write the filtered dataset to `<path/to/dataset.jsonl>%filtered.jsonl`.
+### Ensuring token length parity
+To ensure that the generated minimal pairs will be tokenized to equal lengths by the impossible language tokenizers, run the following command to filter out pairs that do not yield equal token lengths. This will write the filtered dataset to a new file with the suffix `filtered`, which will be an invariant assumed by other scripts to ensure token length parity.
 
 ```bash
 python -m data_generation.generation_projects.impossible_blimp.filter_dataset <path/to/dataset.jsonl>
@@ -76,7 +76,7 @@ python -m data_generation.generation_projects.impossible_blimp.modify_dataset <p
 For example:
 
 ```bash
-python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v2/anaphor_gender_agreement_20250618_113511.jsonl shuffle_nondeterministic
+python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered.jsonl shuffle_nondeterministic
 ```
 
 ### Analysing dataset:
@@ -89,13 +89,13 @@ python -m data_generation.generation_projects.impossible_blimp.analyse_dataset <
 
 For example:
 ```bash
-python -m data_generation.generation_projects.impossible_blimp.analyse_dataset data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451.jsonl
+python -m data_generation.generation_projects.impossible_blimp.analyse_dataset data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%filtered.jsonl
 ```
 
 Sample output:
 
 ```bash
-Statistics for 'sentence_good' lengths in data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451.jsonl:
+Statistics for 'sentence_good' lengths in data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%filtered.jsonl:
   Count:  1000
   Mean:   8.41
   Median: 8.00
@@ -114,28 +114,18 @@ For example:
 python -m data_generation.generation_projects.impossible_blimp.analyse_token_lengths data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451.jsonl
 ```
 
-Alternatively, you can run the bash script `batch_analyse_token_lengths.sh` to analyse multiple datasets at once.
+This script will help check if minimal pairs yield equal token lengths for the impossible language tokenizers. We expect the portion of unequal pairs to be 0.
+To analyse all datasets (listed for convenience in `data_generation/generation_projects/impossible_blimp/master_dataset_list.txt`), run the bash script `data_generation/generation_projects/impossible_blimp/batch_analyse_token_lengths.sh`.
 
-Sample output:
+Part of sample output:
 
 ```bash
-Processing anaphor_number_agreement_20250617_153306
-Processing: 1000sentences [00:00, 23315.55sentences/s]
-Result for shuffle_control : 1000/1000 
+Analysing token lengths data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%filtered.jsonl
+Processing : 1000 sentences [00:00, 9574.05 sentences/s]
+Portion of unequal pairs: 0/1000 
  Average difference: 0.0
-Processing: 1000sentences [00:00, 25123.11sentences/s]
-Result for reverse_full : 1000/1000 
- Average difference: 0.0
-Successfully processed anaphor_number_agreement_20250617_153306
+Successfully analysed token lengths data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%filtered.jsonl
 ----------------------------------------
-Processing animate_subject_passive_20250623_165531
-Processing: 1000sentences [00:00, 20301.27sentences/s]
-Result for shuffle_control : 723/1000 
- Average difference: 0.333
-Processing: 1000sentences [00:00, 21244.51sentences/s]
-Result for reverse_full : 723/1000 
- Average difference: 0.333
-Successfully processed animate_subject_passive_20250623_165531
 ```
 
 ### Sampling dataset:
