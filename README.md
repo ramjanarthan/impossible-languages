@@ -51,6 +51,18 @@ For example:
 python -m data_generation.generation_projects.impossible_blimp.v2.distractor_agreement_rc
 ```
 
+#### Ensuring token length parity
+To ensure that the generated minimal pairs will be tokenized to equal lengths by the impossible language tokenizers, run the following command to filter out pairs that do not yield equal token lengths. This will write the filtered dataset to `<path/to/dataset.jsonl>%filtered.jsonl`.
+
+```bash
+python -m data_generation.generation_projects.impossible_blimp.filter_dataset <path/to/dataset.jsonl>
+```
+
+For example:
+```bash
+python -m data_generation.generation_projects.impossible_blimp.filter_dataset data_generation/outputs/impossible_blimp/v2/distractor_agreement_rc_20250616_174118.jsonl
+```
+
 ### Generating impossible dataset
 
 The impossible datasets are modified versions of the base dataset, where the perturbation function is applied to the base dataset.
