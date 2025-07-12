@@ -44,8 +44,8 @@ def modify_dataset(base_dataset_path, impossible_language_option, output_path=No
                 impossible_bad = perturb_func(sent_bad)
                 # Decode if necessary (as in v1 batch code)
 
-                impossible_good = "".join(map(lambda x: perturbation["gpt2_tokenizer"].decode(x), impossible_good))
-                impossible_bad = "".join(map(lambda x: perturbation["gpt2_tokenizer"].decode(x), impossible_bad))
+                impossible_good = "".join(map(lambda x: tokenizer.decode(x), impossible_good))
+                impossible_bad = "".join(map(lambda x: tokenizer.decode(x), impossible_bad))
                 
                 # Add new fields
                 data["sentence_good"] = impossible_good
