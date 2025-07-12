@@ -1520,3 +1520,38 @@ Experiment completed successfully.
 Accuracy: 0.9890
 Geometric Mean Perplexity (Good): 586.5257
 Geometric Mean Perplexity (Bad): 1355.4227
+[tc-exp-2 559fbe0] batch run experiment -irregular_past_participle_adjectives_20250618_141423
+ Committer: Ram Sinthalapadi <s2750316@landonia19.inf.ed.ac.uk>
+Your name and e-mail address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 215 insertions(+)
+To github.com:ramjanarthan/impossible-languages.git
+   42ba5f0..559fbe0  tc-exp-2 -> tc-exp-2
+Using device: cuda
+Experiment failed: Could not parse dataset filename: left_branch_island_simple_question%filtered
+Using device: cuda
+Experiment failed: Could not parse dataset filename: left_branch_island_simple_question%filtered%shuffle_nondeterministic
+Using device: cuda
+Experiment failed: Could not parse dataset filename: left_branch_island_simple_question%filtered%shuffle_deterministic21
+Using device: cuda
+Experiment failed: Could not parse dataset filename: left_branch_island_simple_question%filtered%shuffle_local3
+Using device: cuda
+Experiment failed: Could not parse dataset filename: left_branch_island_simple_question%filtered%shuffle_local5
+Using device: cuda
+Experiment failed: Could not parse dataset filename: left_branch_island_simple_question%filtered%shuffle_local10
+Using device: cuda
+Experiment failed: Could not parse dataset filename: left_branch_island_simple_question%filtered%shuffle_even_odd
+Using device: cuda
+Experiment failed: Could not parse dataset filename: left_branch_island_simple_question%filtered%reverse_partial
+Using device: cuda
+Experiment failed: Could not parse dataset filename: left_branch_island_simple_question%filtered%reverse_full
