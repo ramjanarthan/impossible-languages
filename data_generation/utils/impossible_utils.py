@@ -346,6 +346,104 @@ def __perturb_shuffle_even_odd(sent):
     odd = [tok for i, tok in enumerate(tokens) if i % 2 != 0]
     return even + odd
 
+##############################################################################
+# Pair perturbations
+# Assume sent1 and sent2 are minimal pairs with equal lengths when tokenised
+##############################################################################
+
+def __perturb_reverse_pair(sent1, sent2, rng, reverse, full):
+    # Get sentence text and GPT-2 tokens
+    tokens1 = gpt2_rev_tokenizer.encode(sent1)
+    tokens2 = gpt2_rev_tokenizer.encode(sent2)  
+
+    assert len(tokens1) == len(tokens2)
+
+    # Pick random index to insert REV token
+    i = rng.choice(len(tokens1)+1)
+    tokens1.insert(i, marker_rev_token)
+    tokens2.insert(i, marker_rev_token)
+
+    # Extract tokens before/after the marker, and reverse tokens after
+    tokens1_before = tokens1[:i+1]
+    tokens1_after = tokens1[i+1:]
+    tokens2_before = tokens2[:i+1]
+    tokens2_after = tokens2[i+1:]
+
+    if reverse:
+        tokens1_after.reverse()
+        tokens2_after.reverse()
+    new_tokens1 = tokens1_before + tokens1_after
+    new_tokens2 = tokens2_before + tokens2_after
+
+    if full:
+        assert not reverse
+        new_tokens1.reverse()
+        new_tokens2.reverse()
+
+    return new_tokens1, new_tokens2
+
+def __perturb_shuffle_nondeterministic_pair(sent1, sent2, rng):
+    tokens1 = gpt2_original_tokenizer.encode(sent1)
+    tokens2 = gpt2_original_tokenizer.encode(sent2)
+
+    assert len(tokens1) == len(tokens2)
+
+    indices = list(range(len(tokens1)))
+    rng.shuffle(indices)
+
+    # Apply same shuffle to both
+    shuffled_tokens1 = [tokens1[i] for i in indices]
+    shuffled_tokens2 = [tokens2[i] for i in indices]
+    
+    return shuffled_tokens1, shuffled_tokens2
+
+def __perturb_shuffle_deterministic_pair(sent1, sent2, seed, shuffle):
+    # Get sentence text and GPT-2 tokens
+    tokens1 = gpt2_original_tokenizer.encode(sent1)
+    tokens2 = gpt2_original_tokenizer.encode(sent2)
+
+    assert len(tokens1) == len(tokens2)
+
+    if shuffle:
+        default_rng(seed).shuffle(tokens1)
+        default_rng(seed).shuffle(tokens2)
+    return tokens1, tokens2
+
+def __perturb_shuffle_local_pair(sent1, sent2, seed, window=5):
+    # Get sentence text and GPT-2 tokens
+    tokens1 = gpt2_original_tokenizer.encode(sent1)
+    tokens2 = gpt2_original_tokenizer.encode(sent2)
+
+    assert len(tokens1) == len(tokens2)
+
+    # Shuffle tokens in batches of size window
+    shuffled_tokens1 = []   
+    shuffled_tokens2 = []
+    for i in range(0, len(tokens1), window):
+        batch = tokens1[i:i+window].copy()
+        default_rng(seed).shuffle(batch)
+        shuffled_tokens1 += batch
+
+    for i in range(0, len(tokens2), window):
+        batch = tokens2[i:i+window].copy()
+        default_rng(seed).shuffle(batch)
+        shuffled_tokens2 += batch
+
+    return shuffled_tokens1, shuffled_tokens2
+
+
+def __perturb_shuffle_even_odd_pair(sent1, sent2):
+    # Get sentence text and GPT-2 tokens
+    tokens1 = gpt2_original_tokenizer.encode(sent1)
+    tokens2 = gpt2_original_tokenizer.encode(sent2)
+
+    assert len(tokens1) == len(tokens2)
+
+    even1 = [tok for i, tok in enumerate(tokens1) if i % 2 == 0]
+    odd1 = [tok for i, tok in enumerate(tokens1) if i % 2 != 0]
+    even2 = [tok for i, tok in enumerate(tokens2) if i % 2 == 0]
+    odd2 = [tok for i, tok in enumerate(tokens2) if i % 2 != 0]
+    return even1 + odd1, even2 + odd2
 
 ##############################################################################
 # AFFECT FUNCTIONS
@@ -441,6 +539,29 @@ def perturb_shuffle_local(sent, seed, window):
 
 def perturb_shuffle_even_odd(sent):
     return __perturb_shuffle_even_odd(sent)
+
+##############################################################################
+# PERTURBATION PAIR FUNCTIONS
+# These functions define how a perturbation will affect a sentence. They
+# take in a sentence object and an optional marker
+# for verb transformations. They return a string representing the transformed
+# sentence.
+##############################################################################
+
+def perturb_reverse_pair(sent1, sent2, rng, reverse=True, full=False):
+    return __perturb_reverse_pair(sent1, sent2, rng, reverse, full)
+
+def perturb_shuffle_nondeterministic_pair(sent1, sent2, rng):
+    return __perturb_shuffle_nondeterministic_pair(sent1, sent2, rng)
+
+def perturb_shuffle_local_pair(sent1, sent2, seed, window):
+    return __perturb_shuffle_local_pair(sent1, sent2, seed, window)
+
+def perturb_shuffle_even_odd_pair(sent1, sent2):
+    return __perturb_shuffle_even_odd_pair(sent1, sent2)
+
+def perturb_shuffle_deterministic_pair(sent1, sent2, seed=None, shuffle=True):
+    return __perturb_shuffle_deterministic_pair(sent1, sent2, seed, shuffle)
 
 
 ##############################################################################
@@ -556,6 +677,86 @@ PERTURBATIONS = {
         "filter_function": filter_hop,
         "gpt2_tokenizer": gpt2_hop_tokenizer,
         "color": "#03a0ff",
+    },
+}
+
+PERTURBATIONS_PAIR = {
+    "shuffle_nondeterministic": {
+        "perturbation_function": partial(perturb_shuffle_nondeterministic_pair, rng=default_rng(0)),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#E8384F",
+    },
+    "shuffle_deterministic21": {
+        "perturbation_function": partial(perturb_shuffle_deterministic_pair, seed=21, shuffle=True),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#FFB000",
+    },
+    "shuffle_deterministic57": {
+        "perturbation_function": partial(perturb_shuffle_deterministic_pair, seed=57, shuffle=True),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#8db000",
+    },
+    "shuffle_deterministic84": {
+        "perturbation_function": partial(perturb_shuffle_deterministic_pair, seed=84, shuffle=True),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#62BB35",
+    },
+    "shuffle_local3": {
+        "perturbation_function": partial(perturb_shuffle_local_pair, seed=0, window=3),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#208EA3",
+    },
+    "shuffle_local5": {
+        "perturbation_function": partial(perturb_shuffle_local_pair, seed=0, window=5),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#4178BC",
+    },
+    "shuffle_local10": {
+        "perturbation_function": partial(perturb_shuffle_local_pair, seed=0, window=10),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#AA71FF",
+    },
+    "shuffle_even_odd": {
+        "perturbation_function": perturb_shuffle_even_odd_pair,
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#E37CFF",
+    },
+    "reverse_control": {
+        "perturbation_function": partial(perturb_reverse_pair, rng=default_rng(21), reverse=False, full=False),
+        "affect_function": affect_reverse,
+        "filter_function": filter_reverse,
+        "gpt2_tokenizer": gpt2_rev_tokenizer,
+        "color": "#606060",
+    },
+    "reverse_partial": {
+        "perturbation_function": partial(perturb_reverse_pair, rng=default_rng(21), reverse=True, full=False),
+        "affect_function": affect_reverse,
+        "filter_function": filter_reverse,
+        "gpt2_tokenizer": gpt2_rev_tokenizer,
+        "color": "#E5A836",
+    },
+    "reverse_full": {
+        "perturbation_function": partial(perturb_reverse_pair, rng=default_rng(21), reverse=False, full=True),
+        "affect_function": affect_reverse,
+        "filter_function": filter_reverse,
+        "gpt2_tokenizer": gpt2_rev_tokenizer,
+        "color": "#A348A6",
     },
 }
 
