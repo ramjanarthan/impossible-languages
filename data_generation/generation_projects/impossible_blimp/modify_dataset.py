@@ -4,7 +4,7 @@ import json
 import jsonlines
 import sys
 from tqdm import tqdm
-from data_generation.utils.impossible_utils import PERTURBATIONS, PERTURBATION_TO_HF_MODEL_NAME
+from data_generation.utils.impossible_utils import PERTURBATIONS_PAIR, PERTURBATION_TO_HF_MODEL_NAME
 
 BATCH_SIZE = 16
 
@@ -18,7 +18,7 @@ def parse_args():
 def modify_dataset(base_dataset_path, impossible_language_option, output_path=None):
     if impossible_language_option not in PERTURBATION_TO_HF_MODEL_NAME:
         raise ValueError(f"Invalid impossible_language_option '{impossible_language_option}'. Must be one of: {list(PERTURBATION_TO_HF_MODEL_NAME.keys())}")
-    perturbation = PERTURBATIONS[impossible_language_option]
+    perturbation = PERTURBATIONS_PAIR[impossible_language_option]
     perturb_func = perturbation["perturbation_function"]
     tokenizer = perturbation["gpt2_tokenizer"]
 
@@ -39,11 +39,11 @@ def modify_dataset(base_dataset_path, impossible_language_option, output_path=No
                 sent_bad = data.get("sentence_bad")
                 if sent_good is None or sent_bad is None:
                     raise ValueError("Input data must have 'sentence_good'/'sentence_bad' fields.")
-                # Apply perturbation
-                impossible_good = perturb_func(sent_good)
-                impossible_bad = perturb_func(sent_bad)
-                # Decode if necessary (as in v1 batch code)
 
+                # Apply perturbation
+                impossible_good, impossible_bad = perturb_func(sent_good, sent_bad)
+
+                # Decode if necessary (as in v1 batch code)
                 impossible_good = "".join(map(lambda x: tokenizer.decode(x), impossible_good))
                 impossible_bad = "".join(map(lambda x: tokenizer.decode(x), impossible_bad))
                 
