@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to the dataset list
-DATASET_LIST="/Users/ramjanarthan/Desktop/UoE/sem_2/ipp/impossible-languages/data_generation/generation_projects/impossible_blimp/master_dataset_list.txt"
+DATASET_LIST="data_generation/generation_projects/impossible_blimp/master_dataset_list.txt"
 
 # Process each dataset line by line
 while IFS= read -r dataset || [[ -n "$dataset" ]]; do

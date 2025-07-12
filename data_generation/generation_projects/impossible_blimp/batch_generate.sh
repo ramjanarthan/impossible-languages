@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # List of datasets to process
-DATASET_LIST="/Users/ramjanarthan/Desktop/UoE/sem_2/ipp/impossible-languages/data_generation/generation_projects/impossible_blimp/master_dataset_list.txt"
+DATASET_LIST="data_generation/generation_projects/impossible_blimp/master_dataset_list.txt"
 
 # List of perturbations to apply
 PERTURBATIONS=(

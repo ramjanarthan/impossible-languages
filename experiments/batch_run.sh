@@ -1,6 +1,6 @@
 #!/bin/bash
 # Path to the master list of filtered datasets
-MASTER_LIST="data_generation/generation_projects/impossible_blimp/master_dataset_list.txt"
+DATASET_LIST="data_generation/generation_projects/impossible_blimp/master_dataset_list.txt"
 
 MODEL_FAMILIES=(
     "english"
@@ -63,4 +63,4 @@ while IFS= read -r filtered_file || [[ -n "$filtered_file" ]]; do
     else
         echo "✗ Failed to push results" >> $LOG_FILE
     fi
-done < "$MASTER_LIST"
+done < "$DATASET_LIST"
