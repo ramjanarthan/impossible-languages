@@ -187,3 +187,210 @@ Experiment completed successfully.
 Accuracy: 0.5900
 Geometric Mean Perplexity (Good): 1583.6306
 Geometric Mean Perplexity (Bad): 1656.1274
+[tc-exp-2 7bbb897] batch run experiment -anaphor_gender_agreement_distance_20250713_130645
+ Committer: Ram Sinthalapadi <s2750316@landonia19.inf.ed.ac.uk>
+Your name and e-mail address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 198 insertions(+)
+ create mode 100644 slurm-2044743.out
+To github.com:ramjanarthan/impossible-languages.git
+   512e896..7bbb897  tc-exp-2 -> tc-exp-2
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: english
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_distance_20250713_131122%filtered.jsonl
+Phenomenon: anaphor_number_agreement_distance
+Language: english
+Timestamp: 20250713_131122
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/english_checkpoint-3000_anaphor_number_agreement_distance_20250713_131122_filtered_20250713_131122.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.7890
+Geometric Mean Perplexity (Good): 1428.7198
+Geometric Mean Perplexity (Bad): 1710.9705
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_nondeterministic
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_distance_20250713_131122%filtered%shuffle_nondeterministic.jsonl
+Phenomenon: anaphor_number_agreement_distance
+Language: shuffle_nondeterministic
+Timestamp: 20250713_131122
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_nondeterministic_checkpoint-3000_anaphor_number_agreement_distance_20250713_131122_filtered_shuffle_nondeterministic_20250713_131122.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8510
+Geometric Mean Perplexity (Good): 2364.6234
+Geometric Mean Perplexity (Bad): 2656.1399
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic21
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_distance_20250713_131122%filtered%shuffle_deterministic21.jsonl
+Phenomenon: anaphor_number_agreement_distance
+Language: shuffle_deterministic21
+Timestamp: 20250713_131122
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_deterministic21_checkpoint-3000_anaphor_number_agreement_distance_20250713_131122_filtered_shuffle_deterministic21_20250713_131122.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.7800
+Geometric Mean Perplexity (Good): 1740.9784
+Geometric Mean Perplexity (Bad): 1868.1825
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local3
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_distance_20250713_131122%filtered%shuffle_local3.jsonl
+Phenomenon: anaphor_number_agreement_distance
+Language: shuffle_local3
+Timestamp: 20250713_131122
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local3_checkpoint-3000_anaphor_number_agreement_distance_20250713_131122_filtered_shuffle_local3_20250713_131122.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8410
+Geometric Mean Perplexity (Good): 763.7057
+Geometric Mean Perplexity (Bad): 893.3942
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local5
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_distance_20250713_131122%filtered%shuffle_local5.jsonl
+Phenomenon: anaphor_number_agreement_distance
+Language: shuffle_local5
+Timestamp: 20250713_131122
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local5_checkpoint-3000_anaphor_number_agreement_distance_20250713_131122_filtered_shuffle_local5_20250713_131122.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8270
+Geometric Mean Perplexity (Good): 701.6990
+Geometric Mean Perplexity (Bad): 818.0722
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local10
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_distance_20250713_131122%filtered%shuffle_local10.jsonl
+Phenomenon: anaphor_number_agreement_distance
+Language: shuffle_local10
+Timestamp: 20250713_131122
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local10_checkpoint-3000_anaphor_number_agreement_distance_20250713_131122_filtered_shuffle_local10_20250713_131122.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.7710
+Geometric Mean Perplexity (Good): 1969.1253
+Geometric Mean Perplexity (Bad): 2179.7059
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_even_odd
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_distance_20250713_131122%filtered%shuffle_even_odd.jsonl
+Phenomenon: anaphor_number_agreement_distance
+Language: shuffle_even_odd
+Timestamp: 20250713_131122
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_even_odd_checkpoint-3000_anaphor_number_agreement_distance_20250713_131122_filtered_shuffle_even_odd_20250713_131122.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8350
+Geometric Mean Perplexity (Good): 2074.8919
+Geometric Mean Perplexity (Bad): 2497.1661
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_partial
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_distance_20250713_131122%filtered%reverse_partial.jsonl
+Phenomenon: anaphor_number_agreement_distance
+Language: reverse_partial
+Timestamp: 20250713_131122
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_partial_checkpoint-3000_anaphor_number_agreement_distance_20250713_131122_filtered_reverse_partial_20250713_131122.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8700
+Geometric Mean Perplexity (Good): 732.0769
+Geometric Mean Perplexity (Bad): 856.1497
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_full
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_distance_20250713_131122%filtered%reverse_full.jsonl
+Phenomenon: anaphor_number_agreement_distance
+Language: reverse_full
+Timestamp: 20250713_131122
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_full_checkpoint-3000_anaphor_number_agreement_distance_20250713_131122_filtered_reverse_full_20250713_131122.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8900
+Geometric Mean Perplexity (Good): 1132.8274
+Geometric Mean Perplexity (Bad): 1394.5847
