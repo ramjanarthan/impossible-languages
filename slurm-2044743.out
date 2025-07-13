@@ -394,3 +394,209 @@ Experiment completed successfully.
 Accuracy: 0.8900
 Geometric Mean Perplexity (Good): 1132.8274
 Geometric Mean Perplexity (Bad): 1394.5847
+[tc-exp-2 114043a] batch run experiment -anaphor_number_agreement_distance_20250713_131122
+ Committer: Ram Sinthalapadi <s2750316@landonia19.inf.ed.ac.uk>
+Your name and e-mail address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 216 insertions(+)
+To github.com:ramjanarthan/impossible-languages.git
+   7bbb897..114043a  tc-exp-2 -> tc-exp-2
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: english
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/determiner_noun_agreement_with_adj_2_20250713_130645%filtered.jsonl
+Phenomenon: determiner_noun_agreement_with_adj_2
+Language: english
+Timestamp: 20250713_130645
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/english_checkpoint-3000_determiner_noun_agreement_with_adj_2_20250713_130645_filtered_20250713_130645.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.9240
+Geometric Mean Perplexity (Good): 959.9604
+Geometric Mean Perplexity (Bad): 1640.0722
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_nondeterministic
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/determiner_noun_agreement_with_adj_2_20250713_130645%filtered%shuffle_nondeterministic.jsonl
+Phenomenon: determiner_noun_agreement_with_adj_2
+Language: shuffle_nondeterministic
+Timestamp: 20250713_130645
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_nondeterministic_checkpoint-3000_determiner_noun_agreement_with_adj_2_20250713_130645_filtered_shuffle_nondeterministic_20250713_130645.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.5330
+Geometric Mean Perplexity (Good): 4341.5399
+Geometric Mean Perplexity (Bad): 4642.6740
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic21
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/determiner_noun_agreement_with_adj_2_20250713_130645%filtered%shuffle_deterministic21.jsonl
+Phenomenon: determiner_noun_agreement_with_adj_2
+Language: shuffle_deterministic21
+Timestamp: 20250713_130645
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_deterministic21_checkpoint-3000_determiner_noun_agreement_with_adj_2_20250713_130645_filtered_shuffle_deterministic21_20250713_130645.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.5490
+Geometric Mean Perplexity (Good): 2065.4703
+Geometric Mean Perplexity (Bad): 2341.4354
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local3
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/determiner_noun_agreement_with_adj_2_20250713_130645%filtered%shuffle_local3.jsonl
+Phenomenon: determiner_noun_agreement_with_adj_2
+Language: shuffle_local3
+Timestamp: 20250713_130645
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local3_checkpoint-3000_determiner_noun_agreement_with_adj_2_20250713_130645_filtered_shuffle_local3_20250713_130645.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8750
+Geometric Mean Perplexity (Good): 1066.7262
+Geometric Mean Perplexity (Bad): 1600.3571
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local5
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/determiner_noun_agreement_with_adj_2_20250713_130645%filtered%shuffle_local5.jsonl
+Phenomenon: determiner_noun_agreement_with_adj_2
+Language: shuffle_local5
+Timestamp: 20250713_130645
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local5_checkpoint-3000_determiner_noun_agreement_with_adj_2_20250713_130645_filtered_shuffle_local5_20250713_130645.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.7630
+Geometric Mean Perplexity (Good): 1064.3840
+Geometric Mean Perplexity (Bad): 1365.4348
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local10
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/determiner_noun_agreement_with_adj_2_20250713_130645%filtered%shuffle_local10.jsonl
+Phenomenon: determiner_noun_agreement_with_adj_2
+Language: shuffle_local10
+Timestamp: 20250713_130645
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local10_checkpoint-3000_determiner_noun_agreement_with_adj_2_20250713_130645_filtered_shuffle_local10_20250713_130645.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6400
+Geometric Mean Perplexity (Good): 1596.9689
+Geometric Mean Perplexity (Bad): 1888.2581
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_even_odd
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/determiner_noun_agreement_with_adj_2_20250713_130645%filtered%shuffle_even_odd.jsonl
+Phenomenon: determiner_noun_agreement_with_adj_2
+Language: shuffle_even_odd
+Timestamp: 20250713_130645
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_even_odd_checkpoint-3000_determiner_noun_agreement_with_adj_2_20250713_130645_filtered_shuffle_even_odd_20250713_130645.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8090
+Geometric Mean Perplexity (Good): 1482.1622
+Geometric Mean Perplexity (Bad): 2229.2550
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_partial
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/determiner_noun_agreement_with_adj_2_20250713_130645%filtered%reverse_partial.jsonl
+Phenomenon: determiner_noun_agreement_with_adj_2
+Language: reverse_partial
+Timestamp: 20250713_130645
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_partial_checkpoint-3000_determiner_noun_agreement_with_adj_2_20250713_130645_filtered_reverse_partial_20250713_130645.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.8110
+Geometric Mean Perplexity (Good): 528.4362
+Geometric Mean Perplexity (Bad): 714.6266
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_full
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/determiner_noun_agreement_with_adj_2_20250713_130645%filtered%reverse_full.jsonl
+Phenomenon: determiner_noun_agreement_with_adj_2
+Language: reverse_full
+Timestamp: 20250713_130645
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_full_checkpoint-3000_determiner_noun_agreement_with_adj_2_20250713_130645_filtered_reverse_full_20250713_130645.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.9480
+Geometric Mean Perplexity (Good): 1180.5818
+Geometric Mean Perplexity (Bad): 1912.8378
