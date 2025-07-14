@@ -1,0 +1,208 @@
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: english
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/left_branch_island_simple_question_20250712_172752%filtered.jsonl
+Phenomenon: left_branch_island_simple_question
+Language: english
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/english_checkpoint-3000_left_branch_island_simple_question_20250712_172752_filtered_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6690
+Geometric Mean Perplexity (Good): 1922.8750
+Geometric Mean Perplexity (Bad): 2444.1422
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_nondeterministic
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/left_branch_island_simple_question_20250712_172752%filtered%shuffle_nondeterministic.jsonl
+Phenomenon: left_branch_island_simple_question
+Language: shuffle_nondeterministic
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_nondeterministic_checkpoint-3000_left_branch_island_simple_question_20250712_172752_filtered_shuffle_nondeterministic_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.5320
+Geometric Mean Perplexity (Good): 5233.5115
+Geometric Mean Perplexity (Bad): 5314.5869
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_deterministic21
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/left_branch_island_simple_question_20250712_172752%filtered%shuffle_deterministic21.jsonl
+Phenomenon: left_branch_island_simple_question
+Language: shuffle_deterministic21
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_deterministic21_checkpoint-3000_left_branch_island_simple_question_20250712_172752_filtered_shuffle_deterministic21_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.2680
+Geometric Mean Perplexity (Good): 3513.8251
+Geometric Mean Perplexity (Bad): 2498.7550
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local3
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/left_branch_island_simple_question_20250712_172752%filtered%shuffle_local3.jsonl
+Phenomenon: left_branch_island_simple_question
+Language: shuffle_local3
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local3_checkpoint-3000_left_branch_island_simple_question_20250712_172752_filtered_shuffle_local3_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.3750
+Geometric Mean Perplexity (Good): 3566.5232
+Geometric Mean Perplexity (Bad): 2752.3668
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local5
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/left_branch_island_simple_question_20250712_172752%filtered%shuffle_local5.jsonl
+Phenomenon: left_branch_island_simple_question
+Language: shuffle_local5
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local5_checkpoint-3000_left_branch_island_simple_question_20250712_172752_filtered_shuffle_local5_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.2720
+Geometric Mean Perplexity (Good): 3274.6877
+Geometric Mean Perplexity (Bad): 1807.7494
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_local10
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/left_branch_island_simple_question_20250712_172752%filtered%shuffle_local10.jsonl
+Phenomenon: left_branch_island_simple_question
+Language: shuffle_local10
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_local10_checkpoint-3000_left_branch_island_simple_question_20250712_172752_filtered_shuffle_local10_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.3680
+Geometric Mean Perplexity (Good): 2625.5371
+Geometric Mean Perplexity (Bad): 1945.0315
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: shuffle_even_odd
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/left_branch_island_simple_question_20250712_172752%filtered%shuffle_even_odd.jsonl
+Phenomenon: left_branch_island_simple_question
+Language: shuffle_even_odd
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/shuffle_even_odd_checkpoint-3000_left_branch_island_simple_question_20250712_172752_filtered_shuffle_even_odd_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.5190
+Geometric Mean Perplexity (Good): 2952.3321
+Geometric Mean Perplexity (Bad): 3004.6858
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_partial
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/left_branch_island_simple_question_20250712_172752%filtered%reverse_partial.jsonl
+Phenomenon: left_branch_island_simple_question
+Language: reverse_partial
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_partial_checkpoint-3000_left_branch_island_simple_question_20250712_172752_filtered_reverse_partial_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.4410
+Geometric Mean Perplexity (Good): 1137.1834
+Geometric Mean Perplexity (Bad): 1027.3216
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+Using device: cuda
+--- Evaluation Setup ---
+Model: reverse_full
+Checkpoint: checkpoint-3000
+Results CSV: experiments/output/v2/results.csv
+Dataset: data_generation/outputs/impossible_blimp/v2/left_branch_island_simple_question_20250712_172752%filtered%reverse_full.jsonl
+Phenomenon: left_branch_island_simple_question
+Language: reverse_full
+Timestamp: 20250712_172752
+------------------------
+Starting evaluation...
+Paired evaluation results saved to experiments/output/v2/raw/reverse_full_checkpoint-3000_left_branch_island_simple_question_20250712_172752_filtered_reverse_full_20250712_172752.csv
+Evaluation finished. Processed 1000 sentence pairs.
+Results have been saved to experiments/output/v2/results.csv
+
+Experiment completed successfully.
+--- Summary ---
+Accuracy: 0.6080
+Geometric Mean Perplexity (Good): 1807.9494
+Geometric Mean Perplexity (Bad): 2026.7627
+[tc-exp-2 945c287] batch run experiment -left_branch_island_simple_question_20250712_172752
+ Committer: Ram Sinthalapadi <s2750316@landonia19.inf.ed.ac.uk>
+Your name and e-mail address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 4 files changed, 217 insertions(+), 13 deletions(-)
+ create mode 100644 slurm-2044528.out
+ rename slurm-2044498.out => slurm_output/slurm-2044498.out (99%)
+To github.com:ramjanarthan/impossible-languages.git
+   ed54ea4..945c287  tc-exp-2 -> tc-exp-2
