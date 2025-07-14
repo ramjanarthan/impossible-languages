@@ -48,7 +48,7 @@ python -m data_generation.generation_projects.impossible_blimp.v2.<generator nam
 
 For example:
 ```bash
-python -m data_generation.generation_projects.impossible_blimp.v2.distractor_agreement_rc
+python -m data_generation.generation_projects.impossible_blimp.v2.anaphor_gender_agreement_distance
 ```
 
 ### Ensuring token length parity
@@ -91,6 +91,8 @@ For example:
 ```bash
 python -m data_generation.generation_projects.impossible_blimp.analyse_dataset data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%filtered.jsonl
 ```
+
+To analyse all datasets in one go, you can run the `data_generation/generation_projects/impossible_blimp/batch_analyse_dataset.sh` script.
 
 Sample output:
 
@@ -138,7 +140,7 @@ python -m data_generation.generation_projects.impossible_blimp.sample_dataset <p
 
 For example:
 ```bash
-python -m data_generation.generation_projects.impossible_blimp.sample_dataset data_generation/outputs/impossible_blimp/v2/anaphor_gender_agreement_20250618_113511.jsonl --samples 1 --seed 42
+python -m data_generation.generation_projects.impossible_blimp.sample_dataset data_generation/outputs/impossible_blimp/v2/anaphor_gender_agreement_20250618_113511%filtered.jsonl --samples 1 --seed 42
 ```
 
 Sample output:
