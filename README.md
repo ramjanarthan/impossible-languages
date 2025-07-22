@@ -10,7 +10,7 @@ conda activate impossible-languages
 
 3. Install dependencies:
 ```bash
-conda install transformers nltk jsonlines
+conda install transformers nltk jsonlines matplotlib seaborn
 pip install torch spacy
 python -m spacy download en_core_web_sm
 ```
@@ -78,6 +78,35 @@ For example:
 ```bash
 python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered.jsonl shuffle_nondeterministic
 ```
+
+## Running experiments:
+
+An experiment is defined as measuring the accuracy of a model when applied to a dataset.
+
+To run an experiment, run the following command in the root project directory:
+
+```bash
+python -m experiments.experiment --results_csv <path/to/results.csv> --model_name <impossible_language_option> --dataset <path/to/dataset.jsonl>
+```
+
+For example:
+```bash
+python -m experiments.experiment --results_csv experiments/output/v2/results.csv --model_name shuffle_nondeterministic --dataset data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_20250617_153306%shuffle_deterministic21.jsonl
+```
+
+### Running Trajectory experiments:
+
+An experiment to measure the trajectory of a model's performance at different model checkpoints.
+
+The scripts to run these are located in `experiments/v2/trajectory/`. To run these, run the following command in the root project directory:
+
+```bash
+bash experiments/v2/trajectory/anaphor_gender_agreement.sh
+```
+
+The results will be logged to the csv path specified in the script. They were designed this way to be executed on a compute cluster.
+
+## Analysis:
 
 ### Analysing dataset:
 
@@ -191,32 +220,15 @@ REVERSE_FULL:
 --------------------------------------------------------------------------------
 ```
 
-## Running experiments:
+### Analysing Performance and Perplexity:
 
-An experiment is defined as measuring the accuracy of a model when applied to a dataset.
+Run the following command to generate accuracy vs perplexity scatterplot:
 
-To run an experiment, run the following command in the root project directory:
-
-```bash
-python -m experiments.experiment --results_csv <path/to/results.csv> --model_name <impossible_language_option> --dataset <path/to/dataset.jsonl>
+```
+ python -m analysis.perplexity_scatterplot
 ```
 
-For example:
-```bash
-python -m experiments.experiment --results_csv experiments/output/v2/results.csv --model_name shuffle_nondeterministic --dataset data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_20250617_153306%shuffle_deterministic21.jsonl
-```
-
-### Running Trajectory experiments:
-
-An experiment to measure the trajectory of a model's performance as different model checkpoints.
-
-The scripts to run these are located in `experiments/v2/trajectory/`. To run these, run the following command in the root project directory:
-
-```bash
-bash experiments/v2/trajectory/anaphor_gender_agreement.sh
-```
-
-The results will be logged to the csv path specified in the script. They were designed this way to be executed on a compute cluster.
+The output can be found in ```analysis/output/accuracy_vs_perplexity_analysis.png```
 
 ## GUI
 
