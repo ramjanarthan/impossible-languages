@@ -1,6 +1,7 @@
 import spacy, json
 from spacy import displacy
 from typing import Dict, List, Tuple, Any
+from analysis.impossible_dependency_parse import create_perturbed_doc
 
 
 # Load the English language model
@@ -218,19 +219,35 @@ def test_dependency_stats():
     Test function to demonstrate usage with spaCy.
     """
     try:        
-        # Test sentences
-        test_sentences = [
-            "Timothy didn't boast about himself.",
-            "She gave him a book that he had always wanted.",
-            "The cat sat on the mat."
-        ]
+        nlp = spacy.load("en_core_web_sm")
         
-        for sentence in test_sentences:
-            print(f"\nAnalyzing: '{sentence}'")
-            doc = nlp(sentence)
-            stats = get_dependency_stats(doc)
-            print(json.dumps(stats, indent=2))
-            displacy.serve(doc, style='dep', port=5004)
+        # Test with original and perturbed sentences
+        sentence = "Timothy didn't boast about himself."
+        reverse_sentence = ". himself about boast't didnTimothy"
+
+        shuffle_det_sentence = "aboutTim boastothy himself't. didn"
+        shuffle_non_det_sentence = ". himself didn about boastTimothy't"
+        shuffle_local3 = "didnTimothy about't boast himself."
+        shuffle_odd_even = "Tim didn boast himselfothy't about."
+        
+        print(f"Original: '{sentence}'")
+        original_doc = nlp(sentence)
+        original_stats = get_dependency_stats(original_doc)
+        print("Original stats:")
+        print(json.dumps(original_stats, indent=2))
+        
+        print(f"\n Reversed: '{reverse_sentence}'")
+        perturbed_doc = create_perturbed_doc(sentence, original_doc, reverse_sentence)
+        perturbed_stats = get_dependency_stats(perturbed_doc)
+        print("Perturbed stats:")
+        print(json.dumps(perturbed_stats, indent=2))
+
+        print(f"\n Shuffled: '{shuffle_det_sentence}'")
+        perturbed_doc_shuffle = create_perturbed_doc(sentence, original_doc, shuffle_det_sentence)
+        perturbed_stats_shuffle = get_dependency_stats(perturbed_doc_shuffle)
+        print("Perturbed stats:")
+        print(json.dumps(perturbed_stats_shuffle, indent=2))
+
             
     except ImportError:
         print("spaCy not installed. Install with: pip install spacy")
