@@ -1,5 +1,6 @@
 import spacy
 from typing import List, Dict, Any, Optional, Set
+from numpy.random import default_rng
 from data_generation.utils.impossible_utils import PERTURBATIONS
 
 def align_tokens_with_tokenizer(sentence: str, original_doc: spacy.tokens.Doc, tokenizer) -> List[Dict[str, Any]]:
@@ -105,7 +106,8 @@ def align_tokens_with_tokenizer(sentence: str, original_doc: spacy.tokens.Doc, t
             'pos': '',
             'tag': '',
             'lemma': tok_token,
-            'ent_type': ''
+            'ent_type': '',
+            'original_index': new_idx  # Track original position for perturbations
         }
         
         # Copy attributes from aligned spaCy token
@@ -168,13 +170,97 @@ def align_tokens_with_tokenizer(sentence: str, original_doc: spacy.tokens.Doc, t
     return aligned_tokens
 
 
+def apply_windowed_shuffle_perturbation(tokens: List[Dict[str, Any]], window: int, seed: int) -> List[Dict[str, Any]]:
+    """
+    Apply windowed shuffle perturbation while preserving dependency relationships.
+    
+    Args:
+        tokens: List of token dictionaries
+        window: Window size for shuffling
+        seed: Random seed for reproducibility
+    
+    Returns:
+        New list of tokens with updated indices and dependency relationships
+    """
+    
+    # Step 1: Apply the perturbation to get new ordering
+    shuffled_tokens = []
+    for i in range(0, len(tokens), window):
+        batch = tokens[i:i+window].copy()
+        default_rng(seed).shuffle(batch)
+        shuffled_tokens += batch
+    
+    # Step 2: Create mapping from old indices to new indices
+    old_to_new_index = {}
+    for new_idx, token in enumerate(shuffled_tokens):
+        old_idx = token['original_index']
+        old_to_new_index[old_idx] = new_idx
+    
+    # Step 3: Update indices and head relationships
+    updated_tokens = []
+    for new_idx, token in enumerate(shuffled_tokens):
+        # Create new token with updated index
+        updated_token = token.copy()
+        updated_token['index'] = new_idx
+        
+        # Update head_index using the mapping
+        old_head_idx = token['head_index']
+        if old_head_idx in old_to_new_index:
+            updated_token['head_index'] = old_to_new_index[old_head_idx]
+        else:
+            # Fallback: if head not found, point to self (shouldn't happen in normal cases)
+            updated_token['head_index'] = new_idx
+            print(f"Warning: Head index {old_head_idx} not found for token {token['text']}")
+        
+        updated_tokens.append(updated_token)
+    
+    return updated_tokens
+
+
+def apply_reverse_perturbation(tokens: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Apply reverse perturbation while preserving dependency relationships.
+    
+    Args:
+        tokens: List of token dictionaries
+    
+    Returns:
+        New list of tokens with updated indices and dependency relationships
+    """
+    
+    # Step 1: Reverse the token order
+    reversed_tokens = tokens[::-1]
+    
+    # Step 2: Create mapping from old indices to new indices
+    old_to_new_index = {}
+    for new_idx, token in enumerate(reversed_tokens):
+        old_idx = token['original_index']
+        old_to_new_index[old_idx] = new_idx
+    
+    # Step 3: Update indices and head relationships
+    updated_tokens = []
+    for new_idx, token in enumerate(reversed_tokens):
+        # Create new token with updated index
+        updated_token = token.copy()
+        updated_token['index'] = new_idx
+        
+        # Update head_index using the mapping
+        old_head_idx = token['head_index']
+        if old_head_idx in old_to_new_index:
+            updated_token['head_index'] = old_to_new_index[old_head_idx]
+        else:
+            # Fallback: if head not found, point to self
+            updated_token['head_index'] = new_idx
+            print(f"Warning: Head index {old_head_idx} not found for token {token['text']}")
+        
+        updated_tokens.append(updated_token)
+    
+    return updated_tokens
+
+
 def print_aligned_tokens(tokens: List[Dict[str, Any]], title: str = "Aligned Tokens"):
     """
     Print aligned tokens in a nice tabular format.
-    
-    Args:
-        tokens: List of token dictionaries from align_tokens_with_tokenizer
-        title: Title for the output table
     """
     print(f"\n{title}:")
     print("=" * 80)
@@ -217,11 +303,7 @@ def print_aligned_tokens(tokens: List[Dict[str, Any]], title: str = "Aligned Tok
 
 def print_aligned_tokens_simple(tokens: List[Dict[str, Any]], title: str = "Aligned Tokens"):
     """
-    Print aligned tokens in a simpler format, similar to the original example.
-    
-    Args:
-        tokens: List of token dictionaries from align_tokens_with_tokenizer
-        title: Title for the output table
+    Print aligned tokens in a simpler format.
     """
     print(f"\n{title}:")
     
@@ -243,17 +325,21 @@ if __name__ == "__main__":
     
     print("Original sentence:", repr(sentence))
     
-    # Print original spaCy dependencies for comparison
-    print("\nOriginal spaCy Dependencies:")
-    print("=" * 60)
-    for i, token in enumerate(original_doc):
-        head_text = token.head.text if token.head.i != i else token.text
-        print(f"{i:<3} {token.text:<15} {token.dep_:<12} {head_text:<15} {token.head.i}")
-    
     tokenizer = PERTURBATIONS["reverse_full"]["gpt2_tokenizer"]
-    aligned_doc = align_tokens_with_tokenizer(sentence, original_doc, tokenizer)
+    aligned_tokens = align_tokens_with_tokenizer(sentence, original_doc, tokenizer)
     
-    # Print results
-    print_aligned_tokens(aligned_doc, "Detailed Aligned Dependencies")
-    print_aligned_tokens_simple(aligned_doc, "Simple Format - Aligned Dependencies with 'linked' relationships")
-
+    print_aligned_tokens_simple(aligned_tokens, "Original Aligned Tokens")
+    
+    # Apply windowed shuffle perturbation
+    shuffled_tokens = apply_windowed_shuffle_perturbation(aligned_tokens, window=3, seed=42)
+    print_aligned_tokens_simple(shuffled_tokens, "After Windowed Shuffle (window=3, seed=42)")
+    
+    # Apply reverse perturbation
+    reversed_tokens = apply_reverse_perturbation(aligned_tokens)
+    print_aligned_tokens_simple(reversed_tokens, "After Reverse Perturbation")
+    
+    # Demonstrate that dependencies are preserved
+    print("\nDependency Validation:")
+    print("Original ROOT token:", [t['text'] for t in aligned_tokens if t['dep'] == 'ROOT'])
+    print("Shuffled ROOT token:", [t['text'] for t in shuffled_tokens if t['dep'] == 'ROOT'])
+    print("Reversed ROOT token:", [t['text'] for t in reversed_tokens if t['dep'] == 'ROOT'])
