@@ -1,7 +1,8 @@
 import spacy
-from typing import List, Dict, Any, Optional, Set
+from typing import List, Dict, Any, Tuple, Set
 from numpy.random import default_rng
 from data_generation.utils.impossible_utils import PERTURBATIONS
+import statistics
 
 def align_tokens_with_tokenizer(sentence: str, original_doc: spacy.tokens.Doc, tokenizer) -> List[Dict[str, Any]]:
     """
@@ -311,10 +312,274 @@ def print_aligned_tokens_simple(tokens: List[Dict[str, Any]], title: str = "Alig
         head_token = tokens[token['head_index']]
         print(f"{token['index']:<3} {token['text']:<15} {token['dep']:<12} {head_token['text']:<15} {token['head_index']}")
 
+def calculate_dependency_statistics(tokens: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Calculate comprehensive statistics for a dependency parse.
+    
+    Args:
+        tokens: List of token dictionaries with 'index', 'head_index', 'dep', etc.
+    
+    Returns:
+        Dictionary containing all dependency statistics
+    """
+    
+    # Calculate individual statistics
+    is_proj = is_projective(tokens)
+    total_dist = total_dependency_distance(tokens)
+    norm_dist = normalized_dependency_distance(tokens)
+    same_word_dists = same_word_token_distances(tokens)
+    crossing_count = crossing_dependencies_count(tokens)
+    
+    return {
+        'is_projective': is_proj,
+        'total_dependency_distance': total_dist,
+        'normalized_dependency_distance': norm_dist,
+        'same_word_token_distances': same_word_dists,
+        'crossing_dependencies_count': crossing_count,
+        'num_tokens': len(tokens),
+        'average_dependency_distance': total_dist / len(tokens) if tokens else 0
+    }
+
+
+def is_projective(tokens: List[Dict[str, Any]]) -> bool:
+    """
+    Check if the dependency tree is projective.
+    
+    A dependency tree is projective if there are no crossing dependencies.
+    This means that for any dependency arc (h, d), all tokens between h and d
+    must be descendants of h.
+    
+    Args:
+        tokens: List of token dictionaries
+    
+    Returns:
+        True if projective, False otherwise
+    """
+    
+    def get_descendants(head_idx: int, tokens: List[Dict[str, Any]]) -> Set[int]:
+        """Get all descendants (direct and indirect) of a head token."""
+        descendants = set()
+        direct_children = [i for i, token in enumerate(tokens) 
+                          if token['head_index'] == head_idx and i != head_idx]
+        
+        for child in direct_children:
+            descendants.add(child)
+            descendants.update(get_descendants(child, tokens))
+        
+        return descendants
+    
+    # Check each dependency arc
+    for token in tokens:
+        head_idx = token['head_index']
+        dep_idx = token['index']
+        
+        # Skip self-loops (ROOT dependencies)
+        if head_idx == dep_idx:
+            continue
+            
+        # Get the span between head and dependent
+        start_idx = min(head_idx, dep_idx)
+        end_idx = max(head_idx, dep_idx)
+        
+        # Get all descendants of the head
+        descendants = get_descendants(head_idx, tokens)
+        descendants.add(head_idx)  # Include the head itself
+        
+        # Check if all tokens in the span are descendants of head
+        for i in range(start_idx, end_idx + 1):
+            if i not in descendants:
+                return False
+    
+    return True
+
+
+def total_dependency_distance(tokens: List[Dict[str, Any]]) -> int:
+    """
+    Calculate the sum of all head-to-dependent distances.
+    
+    Args:
+        tokens: List of token dictionaries
+    
+    Returns:
+        Sum of linear distances between heads and dependents
+    """
+    total_distance = 0
+    
+    for token in tokens:
+        head_idx = token['head_index']
+        dep_idx = token['index']
+        
+        # Calculate linear distance
+        distance = abs(head_idx - dep_idx)
+        total_distance += distance
+    
+    return total_distance
+
+
+def normalized_dependency_distance(tokens: List[Dict[str, Any]]) -> float:
+    """
+    Calculate token-normalized dependency distance.
+    
+    Args:
+        tokens: List of token dictionaries
+    
+    Returns:
+        Total dependency distance normalized by number of tokens
+    """
+    if not tokens:
+        return 0.0
+    
+    total_dist = total_dependency_distance(tokens)
+    return total_dist / len(tokens)
+
+
+def same_word_token_distances(tokens: List[Dict[str, Any]]) -> List[int]:
+    """
+    Calculate distances between tokens that belong to the same word.
+    Based on 'linked' dependencies which connect sub-word tokens.
+    
+    Args:
+        tokens: List of token dictionaries
+    
+    Returns:
+        List of distances between linked tokens
+    """
+    distances = []
+    
+    # Find all 'linked' dependencies
+    for token in tokens:
+        if token['dep'] == 'linked':
+            head_idx = token['head_index']
+            dep_idx = token['index']
+            distance = abs(head_idx - dep_idx)
+            distances.append(distance)
+    
+    return distances
+
+
+def crossing_dependencies_count(tokens: List[Dict[str, Any]]) -> int:
+    """
+    Count the number of crossing dependencies.
+    
+    Two dependencies (h1, d1) and (h2, d2) cross if:
+    - h1 < h2 < d1 < d2, or
+    - h2 < h1 < d2 < d1
+    
+    Args:
+        tokens: List of token dictionaries
+    
+    Returns:
+        Number of crossing dependency pairs
+    """
+    
+    # Get all dependency arcs (excluding self-loops)
+    arcs = []
+    for token in tokens:
+        head_idx = token['head_index']
+        dep_idx = token['index']
+        
+        if head_idx != dep_idx:  # Skip self-loops (ROOT)
+            # Store arc as (start, end) where start < end
+            start = min(head_idx, dep_idx)
+            end = max(head_idx, dep_idx)
+            arcs.append((start, end))
+    
+    # Count crossing pairs
+    crossing_count = 0
+    for i in range(len(arcs)):
+        for j in range(i + 1, len(arcs)):
+            arc1 = arcs[i]
+            arc2 = arcs[j]
+            
+            # Check if arcs cross
+            if arcs_cross(arc1, arc2):
+                crossing_count += 1
+    
+    return crossing_count
+
+
+def arcs_cross(arc1: Tuple[int, int], arc2: Tuple[int, int]) -> bool:
+    """
+    Check if two dependency arcs cross.
+    
+    Args:
+        arc1: First arc as (start, end) tuple
+        arc2: Second arc as (start, end) tuple
+    
+    Returns:
+        True if arcs cross, False otherwise
+    """
+    start1, end1 = arc1
+    start2, end2 = arc2
+    
+    # Two arcs cross if one starts inside the other but ends outside
+    # Pattern: start1 < start2 < end1 < end2 or start2 < start1 < end2 < end1
+    return (start1 < start2 < end1 < end2) or (start2 < start1 < end2 < end1)
+
+
+def print_dependency_statistics(tokens: List[Dict[str, Any]], title: str = "Dependency Statistics"):
+    """
+    Print comprehensive dependency statistics in a readable format.
+    
+    Args:
+        tokens: List of token dictionaries
+        title: Title for the output
+    """
+    stats = calculate_dependency_statistics(tokens)
+    
+    print(f"\n{title}:")
+    print("=" * 50)
+    print(f"Number of tokens: {stats['num_tokens']}")
+    print(f"Is projective: {stats['is_projective']}")
+    print(f"Total dependency distance: {stats['total_dependency_distance']}")
+    print(f"Normalized dependency distance: {stats['normalized_dependency_distance']:.3f}")
+    print(f"Average dependency distance: {stats['average_dependency_distance']:.3f}")
+    print(f"Crossing dependencies count: {stats['crossing_dependencies_count']}")
+    
+    same_word_dists = stats['same_word_token_distances']
+    if same_word_dists:
+        print(f"Same-word token distances: {same_word_dists}")
+        print(f"Average same-word distance: {statistics.mean(same_word_dists):.3f}")
+        print(f"Max same-word distance: {max(same_word_dists)}")
+    else:
+        print("Same-word token distances: None (no linked tokens)")
+    
+    print()
+
+
+def print_dependency_arcs(tokens: List[Dict[str, Any]], title: str = "Dependency Arcs"):
+    """
+    Print all dependency arcs for visualization and debugging.
+    
+    Args:
+        tokens: List of token dictionaries
+        title: Title for the output
+    """
+    print(f"\n{title}:")
+    print("=" * 60)
+    print(f"{'Arc':<20} {'Distance':<10} {'Relation':<12} {'Direction':<10}")
+    print("-" * 60)
+    
+    for token in tokens:
+        head_idx = token['head_index']
+        dep_idx = token['index']
+        distance = abs(head_idx - dep_idx)
+        
+        if head_idx == dep_idx:
+            arc_str = f"ROOT({dep_idx})"
+            direction = "self"
+        else:
+            head_token = tokens[head_idx]['text']
+            dep_token = token['text']
+            arc_str = f"{head_token}→{dep_token}"
+            direction = "right" if head_idx < dep_idx else "left"
+        
+        print(f"{arc_str:<20} {distance:<10} {token['dep']:<12} {direction:<10}")
+    
+    print()
 
 # Example usage:
 if __name__ == "__main__":
-    import spacy
     
     # Load spaCy model
     nlp = spacy.load("en_core_web_sm")
@@ -343,3 +608,10 @@ if __name__ == "__main__":
     print("Original ROOT token:", [t['text'] for t in aligned_tokens if t['dep'] == 'ROOT'])
     print("Shuffled ROOT token:", [t['text'] for t in shuffled_tokens if t['dep'] == 'ROOT'])
     print("Reversed ROOT token:", [t['text'] for t in reversed_tokens if t['dep'] == 'ROOT'])
+
+    print_dependency_statistics(aligned_tokens, "Original Dependency Statistics")
+    print_dependency_arcs(aligned_tokens, "Original Dependency Arcs")
+    print_dependency_statistics(shuffled_tokens, "Shuffled Dependency Statistics")
+    print_dependency_arcs(shuffled_tokens, "Shuffled Dependency Arcs")
+    print_dependency_statistics(reversed_tokens, "Reversed Dependency Statistics")
+    print_dependency_arcs(reversed_tokens, "Reversed Dependency Arcs")
