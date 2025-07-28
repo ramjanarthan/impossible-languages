@@ -2,7 +2,8 @@ import spacy, json
 from spacy import displacy
 from typing import Dict, List, Tuple, Any
 from analysis.impossible_dependency_parse import create_perturbed_doc
-
+from analysis.utils import create_spacy_perturbation_map
+from data_generation.utils.impossible_utils import PERTURBATIONS_PAIR
 
 # Load the English language model
 nlp = spacy.load('en_core_web_sm')
@@ -230,29 +231,53 @@ def test_dependency_stats():
         shuffle_local3 = "didnTimothy about't boast himself."
         shuffle_odd_even = "Tim didn boast himselfothy't about."
         
-        print(f"Original: '{sentence}'")
+        # print(f"Original: '{sentence}'")
         original_doc = nlp(sentence)
-        original_stats = get_dependency_stats(original_doc)
-        print("Original stats:")
-        print(json.dumps(original_stats, indent=2))
+
+        tokenizer = PERTURBATIONS_PAIR["reverse_full"]["gpt2_tokenizer"]
+        gpt2_tokens = tokenizer.encode(sentence)
+        for token in gpt2_tokens:
+            print(tokenizer.decode(token))
+        # print(gpt2_tokens)
+
+        # print(dir(original_doc))
+        # pprint.pprint(original_doc)            
+
+        for token in original_doc:
+            print(token.text, token.dep_, token.head.text, token.head.i)            
+
+        # original_stats = get_dependency_stats(original_doc)
+        # print("Original stats:")
+        # print(json.dumps(original_stats, indent=2))
         
-        print(f"\n Reversed: '{reverse_sentence}'")
-        perturbed_doc = create_perturbed_doc(sentence, original_doc, reverse_sentence)
-        perturbed_stats = get_dependency_stats(perturbed_doc)
-        print("Perturbed stats:")
-        print(json.dumps(perturbed_stats, indent=2))
+        # print(f"\n Reversed: '{reverse_sentence}'")
+                # Generate the perturbation map using the new alignment-based method
+        perturbation_map = create_spacy_perturbation_map(original_doc, tokenizer, "reverse_full")
 
-        print(f"\n Shuffled: '{shuffle_det_sentence}'")
-        perturbed_doc_shuffle = create_perturbed_doc(sentence, original_doc, shuffle_det_sentence)
-        perturbed_stats_shuffle = get_dependency_stats(perturbed_doc_shuffle)
-        print("Perturbed stats:")
-        print(json.dumps(perturbed_stats_shuffle, indent=2))
+        perturbed_doc = create_perturbed_doc(original_doc, perturbation_map)
 
-        print(f"\n Shuffled: '{shuffle_odd_even}'")
-        perturbed_doc_shuffle_odd_e = create_perturbed_doc(sentence, original_doc, shuffle_odd_even)
-        perturbed_stats_shuffle_odd_e = get_dependency_stats(perturbed_doc_shuffle_odd_e)
-        print("Perturbed stats:")
-        print(json.dumps(perturbed_stats_shuffle_odd_e, indent=2))
+        print("-----")
+        for token in perturbed_doc:
+            print(token.text, token.dep_, token.head.text, token.head.i)
+
+        displacy.serve(perturbed_doc, style='dep', port=5004)
+
+
+        # perturbed_stats = get_dependency_stats(perturbed_doc)
+        # print("Perturbed stats:")
+        # print(json.dumps(perturbed_stats, indent=2))
+
+        # print(f"\n Shuffled: '{shuffle_det_sentence}'")
+        # perturbed_doc_shuffle = create_perturbed_doc(sentence, original_doc, shuffle_det_sentence)
+        # perturbed_stats_shuffle = get_dependency_stats(perturbed_doc_shuffle)
+        # print("Perturbed stats:")
+        # print(json.dumps(perturbed_stats_shuffle, indent=2))
+
+        # print(f"\n Shuffled: '{shuffle_odd_even}'")
+        # perturbed_doc_shuffle_odd_e = create_perturbed_doc(sentence, original_doc, shuffle_odd_even)
+        # perturbed_stats_shuffle_odd_e = get_dependency_stats(perturbed_doc_shuffle_odd_e)
+        # print("Perturbed stats:")
+        # print(json.dumps(perturbed_stats_shuffle_odd_e, indent=2))
 
             
     except ImportError:
