@@ -223,8 +223,8 @@ def test_dependency_stats():
         
         # Test with original and perturbed sentences
         sentence = "Timothy didn't boast about himself."
-        reverse_sentence = ". himself about boast't didnTimothy"
-
+        reverse_sentence = ". himself about🅁 boast't didnothyTim"
+        reverse_parial_sentence = "Timothy didn't boast🅁. himself about"
         shuffle_det_sentence = "aboutTim boastothy himself't. didn"
         shuffle_non_det_sentence = ". himself didn about boastTimothy't"
         shuffle_local3 = "didnTimothy about't boast himself."
@@ -247,6 +247,12 @@ def test_dependency_stats():
         perturbed_stats_shuffle = get_dependency_stats(perturbed_doc_shuffle)
         print("Perturbed stats:")
         print(json.dumps(perturbed_stats_shuffle, indent=2))
+
+        print(f"\n Shuffled: '{shuffle_odd_even}'")
+        perturbed_doc_shuffle_odd_e = create_perturbed_doc(sentence, original_doc, shuffle_odd_even)
+        perturbed_stats_shuffle_odd_e = get_dependency_stats(perturbed_doc_shuffle_odd_e)
+        print("Perturbed stats:")
+        print(json.dumps(perturbed_stats_shuffle_odd_e, indent=2))
 
             
     except ImportError:

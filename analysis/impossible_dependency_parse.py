@@ -40,20 +40,34 @@ def create_perturbed_doc(original_sentence: str, original_doc, perturbed_sentenc
 def map_characters(original: str, perturbed: str) -> Dict[int, int]:
     """
     Create a mapping from original character positions to perturbed positions.
+    Handles special tokens like '🅁' that are added in perturbations.
     """
     # Remove spaces for mapping (since perturbations might change spacing)
     orig_chars = [c for c in original if c != ' ']
     pert_chars = [c for c in perturbed if c != ' ']
+    
+    # Filter out special tokens from perturbed chars for mapping
+    pert_chars_filtered = [c for c in pert_chars if c != '🅁']
     
     # Simple character matching - assumes same characters, different order
     char_mapping = {}
     used_positions = set()
     
     for orig_idx, orig_char in enumerate(orig_chars):
-        for pert_idx, pert_char in enumerate(pert_chars):
-            if orig_char == pert_char and pert_idx not in used_positions:
-                char_mapping[orig_idx] = pert_idx
-                used_positions.add(pert_idx)
+        for pert_idx, pert_char in enumerate(pert_chars_filtered):
+            # Find the actual position in the unfiltered perturbed chars
+            actual_pert_idx = 0
+            filtered_count = 0
+            for i, c in enumerate(pert_chars):
+                if c != '🅁':
+                    if filtered_count == pert_idx:
+                        actual_pert_idx = i
+                        break
+                    filtered_count += 1
+            
+            if orig_char == pert_char and actual_pert_idx not in used_positions:
+                char_mapping[orig_idx] = actual_pert_idx
+                used_positions.add(actual_pert_idx)
                 break
     
     return char_mapping
@@ -128,6 +142,7 @@ def identify_head_tokens(token_positions: Dict[int, List[Tuple[int, int, str]]])
 def create_perturbed_tokens(original_doc, token_positions: Dict, head_tokens: Dict, perturbed_sentence: str) -> List[Dict]:
     """
     Create a list of perturbed tokens with original linguistic information.
+    Handles special tokens like '🅁' that are inserted in perturbations.
     """
     perturbed_tokens = []
     
@@ -140,27 +155,61 @@ def create_perturbed_tokens(original_doc, token_positions: Dict, head_tokens: Di
             'start_pos': start_pos,
             'end_pos': end_pos,
             'text': text,
-            'original_token': orig_token
+            'original_token': orig_token,
+            'is_special': False
         })
+    
+    # Find special tokens (like '🅁') in the perturbed sentence
+    pert_no_space = ''.join(c for c in perturbed_sentence if c != ' ')
+    for i, char in enumerate(pert_no_space):
+        if char == '🅁':
+            # Check if this position is already occupied by a head token
+            occupied = any(head['start_pos'] <= i < head['end_pos'] for head in positioned_heads)
+            if not occupied:
+                positioned_heads.append({
+                    'original_idx': -1,  # Special marker for inserted tokens
+                    'start_pos': i,
+                    'end_pos': i + 1,
+                    'text': char,
+                    'original_token': None,
+                    'is_special': True
+                })
     
     # Sort by position in perturbed sentence
     positioned_heads.sort(key=lambda x: x['start_pos'])
     
     # Create new token list
     for new_idx, head_info in enumerate(positioned_heads):
-        orig_token = head_info['original_token']
-        perturbed_tokens.append({
-            'i': new_idx,  # New position
-            'original_i': head_info['original_idx'],  # Original position
-            'text': head_info['text'],
-            'lemma_': orig_token.lemma_,
-            'pos_': orig_token.pos_,
-            'dep_': orig_token.dep_,
-            'is_punct': orig_token.is_punct,
-            'is_space': orig_token.is_space,
-            'start_pos': head_info['start_pos'],
-            'end_pos': head_info['end_pos']
-        })
+        if head_info['is_special']:
+            # Special token (no dependencies)
+            perturbed_tokens.append({
+                'i': new_idx,  # New position
+                'original_i': -1,  # No original position
+                'text': head_info['text'],
+                'lemma_': head_info['text'],  # Use text as lemma
+                'pos_': 'X',  # Unknown POS
+                'dep_': 'special',  # Special dependency label
+                'is_punct': False,
+                'is_space': False,
+                'start_pos': head_info['start_pos'],
+                'end_pos': head_info['end_pos'],
+                'is_special': True
+            })
+        else:
+            orig_token = head_info['original_token']
+            perturbed_tokens.append({
+                'i': new_idx,  # New position
+                'original_i': head_info['original_idx'],  # Original position
+                'text': head_info['text'],
+                'lemma_': orig_token.lemma_,
+                'pos_': orig_token.pos_,
+                'dep_': orig_token.dep_,
+                'is_punct': orig_token.is_punct,
+                'is_space': orig_token.is_space,
+                'start_pos': head_info['start_pos'],
+                'end_pos': head_info['end_pos'],
+                'is_special': False
+            })
     
     return perturbed_tokens
 
@@ -168,32 +217,38 @@ def create_perturbed_tokens(original_doc, token_positions: Dict, head_tokens: Di
 def remap_dependencies(original_doc, head_tokens: Dict, perturbed_tokens: List[Dict]) -> Dict[int, int]:
     """
     Remap dependency relationships based on new token positions.
+    Special tokens (like '🅁') have no dependencies and point to themselves.
     """
     # Create mapping from original index to new index
     orig_to_new = {}
     for new_idx, token_info in enumerate(perturbed_tokens):
-        orig_to_new[token_info['original_i']] = new_idx
+        if not token_info.get('is_special', False):
+            orig_to_new[token_info['original_i']] = new_idx
     
     dependency_mapping = {}
     
     for token_info in perturbed_tokens:
-        orig_idx = token_info['original_i']
         new_idx = token_info['i']
         
-        orig_token = original_doc[orig_idx]
-        
-        if orig_token.head == orig_token:
-            # Root token
+        if token_info.get('is_special', False):
+            # Special tokens have no dependencies - they point to themselves
             dependency_mapping[new_idx] = new_idx
         else:
-            # Find the head in the new arrangement
-            orig_head_idx = orig_token.head.i
-            if orig_head_idx in orig_to_new:
-                new_head_idx = orig_to_new[orig_head_idx]
-                dependency_mapping[new_idx] = new_head_idx
-            else:
-                # Fallback: make it root if head not found
+            orig_idx = token_info['original_i']
+            orig_token = original_doc[orig_idx]
+            
+            if orig_token.head == orig_token:
+                # Root token
                 dependency_mapping[new_idx] = new_idx
+            else:
+                # Find the head in the new arrangement
+                orig_head_idx = orig_token.head.i
+                if orig_head_idx in orig_to_new:
+                    new_head_idx = orig_to_new[orig_head_idx]
+                    dependency_mapping[new_idx] = new_head_idx
+                else:
+                    # Fallback: make it root if head not found
+                    dependency_mapping[new_idx] = new_idx
     
     return dependency_mapping
 
