@@ -265,6 +265,178 @@ def apply_reverse_perturbation(tokens: List[Dict[str, Any]]) -> List[Dict[str, A
     
     return updated_tokens
 
+def apply_partial_reverse_perturbation(tokens: List[Dict[str, Any]], rng) -> List[Dict[str, Any]]:
+    """
+    Apply partial reverse perturbation while preserving dependency relationships.
+    
+    Args:
+        tokens: List of token dictionaries
+        rng: Random number generator
+    
+    Returns:
+        New list of tokens with updated indices and dependency relationships
+    """
+    
+    # Step 1: Pick random index and reverse tokens after it
+    i = rng.choice(len(tokens)+1)
+    reversed_tokens = tokens[:i] + tokens[i:][::-1]
+    
+    # Step 2: Create mapping from old indices to new indices
+    old_to_new_index = {}
+    for new_idx, token in enumerate(reversed_tokens):
+        old_idx = token['original_index']
+        old_to_new_index[old_idx] = new_idx
+    
+    # Step 3: Update indices and head relationships
+    updated_tokens = []
+    for new_idx, token in enumerate(reversed_tokens):
+        # Create new token with updated index
+        updated_token = token.copy()
+        updated_token['index'] = new_idx
+        
+        # Update head_index using the mapping
+        old_head_idx = token['head_index']
+        if old_head_idx in old_to_new_index:
+            updated_token['head_index'] = old_to_new_index[old_head_idx]
+        else:
+            # Fallback: if head not found, point to self
+            updated_token['head_index'] = new_idx
+            print(f"Warning: Head index {old_head_idx} not found for token {token['text']}")
+        
+        updated_tokens.append(updated_token)
+    
+    return updated_tokens
+
+
+def apply_shuffle_deterministic_perturbation(tokens: List[Dict[str, Any]], seed: int, shuffle: bool = True) -> List[Dict[str, Any]]:
+    """
+    Apply deterministic shuffle perturbation while preserving dependency relationships.
+    
+    Args:
+        tokens: List of token dictionaries
+        seed: Random seed for reproducibility
+        shuffle: Whether to actually shuffle (for testing)
+    
+    Returns:
+        New list of tokens with updated indices and dependency relationships
+    """
+    
+    # Step 1: Apply the perturbation to get new ordering
+    shuffled_tokens = tokens.copy()
+    if shuffle:
+        default_rng(seed).shuffle(shuffled_tokens)
+    
+    # Step 2: Create mapping from old indices to new indices
+    old_to_new_index = {}
+    for new_idx, token in enumerate(shuffled_tokens):
+        old_idx = token['original_index']
+        old_to_new_index[old_idx] = new_idx
+    
+    # Step 3: Update indices and head relationships
+    updated_tokens = []
+    for new_idx, token in enumerate(shuffled_tokens):
+        # Create new token with updated index
+        updated_token = token.copy()
+        updated_token['index'] = new_idx
+        
+        # Update head_index using the mapping
+        old_head_idx = token['head_index']
+        if old_head_idx in old_to_new_index:
+            updated_token['head_index'] = old_to_new_index[old_head_idx]
+        else:
+            # Fallback: if head not found, point to self
+            updated_token['head_index'] = new_idx
+            print(f"Warning: Head index {old_head_idx} not found for token {token['text']}")
+        
+        updated_tokens.append(updated_token)
+    
+    return updated_tokens
+
+
+def apply_shuffle_nondeterministic_perturbation(tokens: List[Dict[str, Any]], rng=default_rng(0)) -> List[Dict[str, Any]]:
+    """
+    Apply non-deterministic shuffle perturbation while preserving dependency relationships.
+    
+    Args:
+        tokens: List of token dictionaries
+        rng: Random number generator
+    
+    Returns:
+        New list of tokens with updated indices and dependency relationships
+    """
+    
+    # Step 1: Apply the perturbation to get new ordering
+    shuffled_tokens = tokens.copy()
+    rng.shuffle(shuffled_tokens)
+    
+    # Step 2: Create mapping from old indices to new indices
+    old_to_new_index = {}
+    for new_idx, token in enumerate(shuffled_tokens):
+        old_idx = token['original_index']
+        old_to_new_index[old_idx] = new_idx
+    
+    # Step 3: Update indices and head relationships
+    updated_tokens = []
+    for new_idx, token in enumerate(shuffled_tokens):
+        # Create new token with updated index
+        updated_token = token.copy()
+        updated_token['index'] = new_idx
+        
+        # Update head_index using the mapping
+        old_head_idx = token['head_index']
+        if old_head_idx in old_to_new_index:
+            updated_token['head_index'] = old_to_new_index[old_head_idx]
+        else:
+            # Fallback: if head not found, point to self
+            updated_token['head_index'] = new_idx
+            print(f"Warning: Head index {old_head_idx} not found for token {token['text']}")
+        
+        updated_tokens.append(updated_token)
+    
+    return updated_tokens
+
+
+def apply_shuffle_even_odd_perturbation(tokens: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Apply even-odd shuffle perturbation while preserving dependency relationships.
+    
+    Args:
+        tokens: List of token dictionaries
+    
+    Returns:
+        New list of tokens with updated indices and dependency relationships
+    """
+    
+    # Step 1: Apply the perturbation to get new ordering
+    even_tokens = [tok for i, tok in enumerate(tokens) if i % 2 == 0]
+    odd_tokens = [tok for i, tok in enumerate(tokens) if i % 2 != 0]
+    shuffled_tokens = even_tokens + odd_tokens
+    
+    # Step 2: Create mapping from old indices to new indices
+    old_to_new_index = {}
+    for new_idx, token in enumerate(shuffled_tokens):
+        old_idx = token['original_index']
+        old_to_new_index[old_idx] = new_idx
+    
+    # Step 3: Update indices and head relationships
+    updated_tokens = []
+    for new_idx, token in enumerate(shuffled_tokens):
+        # Create new token with updated index
+        updated_token = token.copy()
+        updated_token['index'] = new_idx
+        
+        # Update head_index using the mapping
+        old_head_idx = token['head_index']
+        if old_head_idx in old_to_new_index:
+            updated_token['head_index'] = old_to_new_index[old_head_idx]
+        else:
+            # Fallback: if head not found, point to self
+            updated_token['head_index'] = new_idx
+            print(f"Warning: Head index {old_head_idx} not found for token {token['text']}")
+        
+        updated_tokens.append(updated_token)
+    
+    return updated_tokens
 
 def print_aligned_tokens(tokens: List[Dict[str, Any]], title: str = "Aligned Tokens"):
     """
@@ -608,7 +780,7 @@ if __name__ == "__main__":
     nlp = spacy.load("en_core_web_sm")
     
     # Example sentence
-    sentence = "Some women weren't understood by some guests."
+    sentence = "There were many bicycles distracting Allison."
     original_doc = nlp(sentence)
     
     print("Original sentence:", repr(sentence))
@@ -622,23 +794,47 @@ if __name__ == "__main__":
     
     print_aligned_tokens_simple(aligned_tokens, "Aligned Tokens")
     
-    # # Apply windowed shuffle perturbation
-    # shuffled_tokens = apply_windowed_shuffle_perturbation(aligned_tokens, window=3, seed=42)
-    # print_aligned_tokens_simple(shuffled_tokens, "After Windowed Shuffle (window=3, seed=42)")
+    # Apply windowed shuffle perturbation
+    shuffled_tokens = apply_windowed_shuffle_perturbation(aligned_tokens, window=3, seed=0)
+    print_aligned_tokens_simple(shuffled_tokens, "After Windowed Shuffle (window=3, seed=42)")
     
-    # # Apply reverse perturbation
-    # reversed_tokens = apply_reverse_perturbation(aligned_tokens)
-    # print_aligned_tokens_simple(reversed_tokens, "After Reverse Perturbation")
-    
-    # # Demonstrate that dependencies are preserved
-    # print("\nDependency Validation:")
-    # print("Original ROOT token:", [t['text'] for t in aligned_tokens if t['dep'] == 'ROOT'])
-    # print("Shuffled ROOT token:", [t['text'] for t in shuffled_tokens if t['dep'] == 'ROOT'])
-    # print("Reversed ROOT token:", [t['text'] for t in reversed_tokens if t['dep'] == 'ROOT'])
+    # Apply reverse perturbation
+    reversed_tokens = apply_reverse_perturbation(aligned_tokens)
+    print_aligned_tokens_simple(reversed_tokens, "After Reverse Perturbation")
 
-    # print_dependency_statistics(aligned_tokens, "Original Dependency Statistics")
-    # print_dependency_arcs(aligned_tokens, "Original Dependency Arcs")
-    # print_dependency_statistics(shuffled_tokens, "Shuffled Dependency Statistics")
-    # print_dependency_arcs(shuffled_tokens, "Shuffled Dependency Arcs")
-    # print_dependency_statistics(reversed_tokens, "Reversed Dependency Statistics")
-    # print_dependency_arcs(reversed_tokens, "Reversed Dependency Arcs")
+    # Apply partial reverse perturbation
+    partial_reversed_tokens = apply_partial_reverse_perturbation(aligned_tokens, default_rng(21))
+    print_aligned_tokens_simple(partial_reversed_tokens, "After Partial Reverse Perturbation")
+
+    # Apply shuffle perturbation
+    shuffled_tokens = apply_shuffle_deterministic_perturbation(aligned_tokens, seed=21)
+    print_aligned_tokens_simple(shuffled_tokens, "After Shuffle Perturbation")
+
+    # Apply nondeterministic shuffle perturbation
+    nondet_shuffled_tokens = apply_shuffle_nondeterministic_perturbation(aligned_tokens)
+    print_aligned_tokens_simple(nondet_shuffled_tokens, "After Nondeterministic Shuffle Perturbation")
+    
+    # Apply even-odd shuffle perturbation
+    even_odd_shuffled_tokens = apply_shuffle_even_odd_perturbation(aligned_tokens)
+    print_aligned_tokens_simple(even_odd_shuffled_tokens, "After Even-Odd Shuffle Perturbation")
+    
+    # Demonstrate that dependencies are preserved
+    print("\nDependency Validation:")
+    print("Original ROOT token:", [t['text'] for t in aligned_tokens if t['dep'] == 'ROOT'])
+    print("Shuffled ROOT token:", [t['text'] for t in shuffled_tokens if t['dep'] == 'ROOT'])
+    print("Reversed ROOT token:", [t['text'] for t in reversed_tokens if t['dep'] == 'ROOT'])
+
+    print_dependency_statistics(aligned_tokens, "Original Dependency Statistics")
+    print_dependency_arcs(aligned_tokens, "Original Dependency Arcs")
+    print_dependency_statistics(shuffled_tokens, "Shuffled Dependency Statistics")
+    print_dependency_arcs(shuffled_tokens, "Shuffled Dependency Arcs")
+    print_dependency_statistics(reversed_tokens, "Reversed Dependency Statistics")
+    print_dependency_arcs(reversed_tokens, "Reversed Dependency Arcs")
+    print_dependency_statistics(partial_reversed_tokens, "Partial Reversed Dependency Statistics")
+    print_dependency_arcs(partial_reversed_tokens, "Partial Reversed Dependency Arcs")
+    print_dependency_statistics(shuffled_tokens, "Shuffled Dependency Statistics")
+    print_dependency_arcs(shuffled_tokens, "Shuffled Dependency Arcs")
+    print_dependency_statistics(nondet_shuffled_tokens, "Nondeterministic Shuffled Dependency Statistics")
+    print_dependency_arcs(nondet_shuffled_tokens, "Nondeterministic Shuffled Dependency Arcs")
+    print_dependency_statistics(even_odd_shuffled_tokens, "Even-Odd Shuffled Dependency Statistics")
+    print_dependency_arcs(even_odd_shuffled_tokens, "Even-Odd Shuffled Dependency Arcs")
