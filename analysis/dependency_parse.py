@@ -20,14 +20,22 @@ def align_tokens_with_tokenizer(sentence: str, original_doc: spacy.tokens.Doc, t
     # Get tokenizer tokens and their text representations
     tokenizer_ids = tokenizer.encode(sentence)
     tokenizer_tokens = [tokenizer.decode([token_id]) for token_id in tokenizer_ids]
+
+    # print(f"Tokenizer tokens: {tokenizer_tokens}")
+    print(f"Spacy tokens: {', '.join(str(token) for token in original_doc)}")
     
     # Create mapping from character positions to spaCy tokens
+    # NOTE: this map skips over indices that map to spaces in the sentence, because they will not be tokenized
     char_to_spacy_token = {}
     for i, token in enumerate(original_doc):
         for char_idx in range(token.idx, token.idx + len(token.text)):
             char_to_spacy_token[char_idx] = i
     
     # Align tokenizer tokens with spaCy tokens
+    # NOTE: Each element in this array is tuple of (primary_spacy_token, set_of_spacy_tokens_covered)
+    #       or None if the tokenizer token could not be aligned with any spaCy token.
+    #       The primary_spacy_token is the index of the first spaCy token that is covered by the tokenizer token.
+    #       The set_of_spacy_tokens_covered is the set of all spaCy tokens that are covered by the tokenizer token.
     tokenizer_to_spacy_mapping = []
     current_char_pos = 0
     
@@ -72,16 +80,14 @@ def align_tokens_with_tokenizer(sentence: str, original_doc: spacy.tokens.Doc, t
         current_char_pos = token_end
     
     # Create mapping from old spaCy token indices to new token indices
+    # NOTE: The previous mapping just analysed the alignment of the tokenizer tokens with the spaCy tokens.
+    #       This mapping is used to update the dependency relationships.
     spacy_to_new_token_mapping = {}
     new_token_groups = {}  # Groups of new tokens that belong to same original token
     
     for new_idx, alignment in enumerate(tokenizer_to_spacy_mapping):
         if alignment is not None:
-            if isinstance(alignment, tuple):
-                primary_spacy_idx, spacy_tokens_covered = alignment
-            else:
-                primary_spacy_idx = alignment
-                spacy_tokens_covered = {alignment}
+            primary_spacy_idx, spacy_tokens_covered = alignment
             
             # Map the primary spaCy token to this new token
             if primary_spacy_idx not in spacy_to_new_token_mapping:
@@ -113,10 +119,9 @@ def align_tokens_with_tokenizer(sentence: str, original_doc: spacy.tokens.Doc, t
         
         # Copy attributes from aligned spaCy token
         if alignment is not None:
-            if isinstance(alignment, tuple):
-                primary_spacy_idx, _ = alignment
-            else:
-                primary_spacy_idx = alignment
+            primary_spacy_idx, _ = alignment
+
+            # print(f"Using primary spacy token {primary_spacy_idx} -- {original_doc[primary_spacy_idx]} -- {original_doc[primary_spacy_idx].dep_} -- {original_doc[primary_spacy_idx].pos_}")
             
             original_token = original_doc[primary_spacy_idx]
             token_dict.update({
@@ -125,6 +130,8 @@ def align_tokens_with_tokenizer(sentence: str, original_doc: spacy.tokens.Doc, t
                 'lemma': original_token.lemma_,
                 'ent_type': original_token.ent_type_
             })
+        # else:
+            # print(f"No alignment found for tokenizer token {new_idx} -- {tok_token}")
         
         aligned_tokens.append(token_dict)
     
@@ -578,6 +585,22 @@ def print_dependency_arcs(tokens: List[Dict[str, Any]], title: str = "Dependency
     
     print()
 
+def spacy_doc_to_token_dicts(doc):
+    return [
+        {
+            'index': token.i,
+            'text': token.text,
+            'head_index': token.head.i,
+            'dep': token.dep_,
+            'pos': token.pos_,
+            'tag': token.tag_,
+            'lemma': token.lemma_,
+            'ent_type': token.ent_type_,
+            'original_index': token.i
+        }
+        for token in doc
+    ]
+
 # Example usage:
 if __name__ == "__main__":
     
@@ -589,29 +612,33 @@ if __name__ == "__main__":
     original_doc = nlp(sentence)
     
     print("Original sentence:", repr(sentence))
+    # Convert spaCy Doc to List[Dict[str, Any]] for compatibility
+
+    original_doc_dicts = spacy_doc_to_token_dicts(original_doc)
+    print_aligned_tokens_simple(original_doc_dicts, "Original Tokens")
     
     tokenizer = PERTURBATIONS["reverse_full"]["gpt2_tokenizer"]
     aligned_tokens = align_tokens_with_tokenizer(sentence, original_doc, tokenizer)
     
-    print_aligned_tokens_simple(aligned_tokens, "Original Aligned Tokens")
+    print_aligned_tokens_simple(aligned_tokens, "Aligned Tokens")
     
-    # Apply windowed shuffle perturbation
-    shuffled_tokens = apply_windowed_shuffle_perturbation(aligned_tokens, window=3, seed=42)
-    print_aligned_tokens_simple(shuffled_tokens, "After Windowed Shuffle (window=3, seed=42)")
+    # # Apply windowed shuffle perturbation
+    # shuffled_tokens = apply_windowed_shuffle_perturbation(aligned_tokens, window=3, seed=42)
+    # print_aligned_tokens_simple(shuffled_tokens, "After Windowed Shuffle (window=3, seed=42)")
     
-    # Apply reverse perturbation
-    reversed_tokens = apply_reverse_perturbation(aligned_tokens)
-    print_aligned_tokens_simple(reversed_tokens, "After Reverse Perturbation")
+    # # Apply reverse perturbation
+    # reversed_tokens = apply_reverse_perturbation(aligned_tokens)
+    # print_aligned_tokens_simple(reversed_tokens, "After Reverse Perturbation")
     
-    # Demonstrate that dependencies are preserved
-    print("\nDependency Validation:")
-    print("Original ROOT token:", [t['text'] for t in aligned_tokens if t['dep'] == 'ROOT'])
-    print("Shuffled ROOT token:", [t['text'] for t in shuffled_tokens if t['dep'] == 'ROOT'])
-    print("Reversed ROOT token:", [t['text'] for t in reversed_tokens if t['dep'] == 'ROOT'])
+    # # Demonstrate that dependencies are preserved
+    # print("\nDependency Validation:")
+    # print("Original ROOT token:", [t['text'] for t in aligned_tokens if t['dep'] == 'ROOT'])
+    # print("Shuffled ROOT token:", [t['text'] for t in shuffled_tokens if t['dep'] == 'ROOT'])
+    # print("Reversed ROOT token:", [t['text'] for t in reversed_tokens if t['dep'] == 'ROOT'])
 
-    print_dependency_statistics(aligned_tokens, "Original Dependency Statistics")
-    print_dependency_arcs(aligned_tokens, "Original Dependency Arcs")
-    print_dependency_statistics(shuffled_tokens, "Shuffled Dependency Statistics")
-    print_dependency_arcs(shuffled_tokens, "Shuffled Dependency Arcs")
-    print_dependency_statistics(reversed_tokens, "Reversed Dependency Statistics")
-    print_dependency_arcs(reversed_tokens, "Reversed Dependency Arcs")
+    # print_dependency_statistics(aligned_tokens, "Original Dependency Statistics")
+    # print_dependency_arcs(aligned_tokens, "Original Dependency Arcs")
+    # print_dependency_statistics(shuffled_tokens, "Shuffled Dependency Statistics")
+    # print_dependency_arcs(shuffled_tokens, "Shuffled Dependency Arcs")
+    # print_dependency_statistics(reversed_tokens, "Reversed Dependency Statistics")
+    # print_dependency_arcs(reversed_tokens, "Reversed Dependency Arcs")
