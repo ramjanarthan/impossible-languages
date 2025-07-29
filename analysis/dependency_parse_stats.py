@@ -102,7 +102,7 @@ def aggregate_stats(filepath):
 
 
 def main():
-    # apply_perturbations()
+    apply_perturbations()
     aggregate_stats('analysis/output/dep_stats.csv')
    
 if __name__ == "__main__":
