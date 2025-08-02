@@ -11,7 +11,7 @@ conda activate impossible-languages
 3. Install dependencies:
 ```bash
 conda install transformers nltk jsonlines matplotlib seaborn
-pip install torch spacy
+pip install torch spacy cairosvg
 python -m spacy download en_core_web_sm
 ```
 
@@ -256,13 +256,14 @@ To generate visualizations of dependency parse statistics, run the following com
 python -m analysis.dependency_parse_image
 ```
 
-The sentence to be parsed can be configured at the top of ```analysis/dependency_parse_image.py```. 
-This script when executed will generate the following images:
-1. ```analysis/output/token_visualization.svg``` -> Token visualization of the original sentence
-2. ```analysis/output/gpt_2_token_visualization.svg``` -> Token visualization of the GPT-2 tokenized sentence
-3. ```analysis/output/gpt_2_token_shuffled_visualization.svg``` -> Token visualization of the shuffled GPT-2 tokenized sentence
-4. ```analysis/output/dependency_parse_original.svg``` -> Dependency parse visualization of the original sentence
-5. ```analysis/output/dependency_parse_shuffled.svg``` -> Dependency parse visualization of the shuffled GPT-2 tokenized sentence
+The sentence to be parsed can be configured at the top of ```analysis/dependency_parse_image.py```. The script can be configured to save the images as SVG or PNG by setting the `SAVE_AS_PNG` variable to `True` or `False`.
+
+When executed, the following images will be generated:
+1. ```analysis/output/token_visualization.png``` -> Token visualization of the original sentence
+2. ```analysis/output/gpt_2_token_visualization.png``` -> Token visualization of the GPT-2 tokenized sentence
+3. ```analysis/output/gpt_2_token_shuffled_visualization.png``` -> Token visualization of the shuffled GPT-2 tokenized sentence
+4. ```analysis/output/dependency_parse_original.png``` -> Dependency parse visualization of the original sentence
+5. ```analysis/output/dependency_parse_shuffled.png``` -> Dependency parse visualization of the shuffled GPT-2 tokenized sentence
 
 ## GUI
 

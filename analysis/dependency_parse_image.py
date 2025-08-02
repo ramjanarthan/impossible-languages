@@ -1,17 +1,16 @@
 import spacy
 import random
 from pathlib import Path
-
 from spacy import displacy
+import cairosvg
 from data_generation.utils.impossible_utils import PERTURBATIONS
 from analysis.dependency_parse import align_tokens_with_tokenizer, apply_windowed_shuffle_perturbation, token_dicts_to_spacy_doc
 
 # --- Configuration ---
 nlp = spacy.load("en_core_web_sm")
-    
 sentence = "Timothy didn't boast about himself."
-
 OUTPUT_DIR = Path(__file__).parent / "output"
+SAVE_AS_PNG = True
 
 # Displacy options for a clean, consistent look (white background, black text)
 DISPLACY_OPTIONS = {
@@ -22,11 +21,18 @@ DISPLACY_OPTIONS = {
 
 # --- Functions ---
 def save_dependency_parse(doc, file_name):
-    """Generates and saves a dependency parse SVG image."""
+    """Generates and saves a dependency parse image."""
     svg = displacy.render(doc, style="dep", options=DISPLACY_OPTIONS)
     file_path = OUTPUT_DIR / file_name
-    file_path.open("w", encoding="utf-8").write(svg)
-    print(f"Saved dependency parse to: {file_path}")
+
+    if SAVE_AS_PNG:
+        png_path = file_path.with_suffix('.png')
+        cairosvg.svg2png(bytestring=svg.encode('utf-8'), write_to=str(png_path))
+        print(f"Saved dependency parse to: {png_path}")
+    else:
+        svg_path = file_path.with_suffix('.svg')
+        svg_path.open("w", encoding="utf-8").write(svg)
+        print(f"Saved dependency parse to: {svg_path}")
 
 def save_token_visualization(tokens, file_name):
     """Generates and saves a simple token visualization SVG image."""
@@ -56,8 +62,15 @@ def save_token_visualization(tokens, file_name):
     )
 
     file_path = OUTPUT_DIR / file_name
-    file_path.open("w", encoding="utf-8").write(full_svg)
-    print(f"Saved token visualization to: {file_path}")
+
+    if SAVE_AS_PNG:
+        png_path = file_path.with_suffix('.png')
+        cairosvg.svg2png(bytestring=full_svg.encode('utf-8'), write_to=str(png_path))
+        print(f"Saved token visualization to: {png_path}")
+    else:
+        svg_path = file_path.with_suffix('.svg')
+        svg_path.open("w", encoding="utf-8").write(full_svg)
+        print(f"Saved token visualization to: {svg_path}")
 
 
 def main():
@@ -69,17 +82,17 @@ def main():
     doc = nlp(sentence)
 
     # -- Save the original dependency parse --
-    save_dependency_parse(doc, "dependency_parse_original.svg")
+    save_dependency_parse(doc, "dependency_parse_original")
 
     # -- Visualize the tokenized sentence --
     tokens = [token.text for token in doc]
-    save_token_visualization(tokens, "token_visualization.svg")
+    save_token_visualization(tokens, "token_visualization")
 
     # -- Visualize the GPT-2 tokenized sentence --
     tokenizer = PERTURBATIONS["shuffle_control"]["gpt2_tokenizer"]
     gpt_2_tokenized = tokenizer.encode(sentence)
     gpt_2_tokens = [tokenizer.decode(token) for token in gpt_2_tokenized]
-    save_token_visualization(gpt_2_tokens, "gpt_2_token_visualization.svg")
+    save_token_visualization(gpt_2_tokens, "gpt_2_token_visualization")
 
     # -- Align the GPT-2 tokens with the original sentence --
     aligned_tokens = align_tokens_with_tokenizer(sentence, doc, tokenizer)
@@ -87,11 +100,11 @@ def main():
 
     # -- Visualize the shuffled tokens --
     shuffled_tokens = [token['text'] for token in shuffled_token_dicts]
-    save_token_visualization(shuffled_tokens, "gpt_2_token_shuffled_visualization.svg")
+    save_token_visualization(shuffled_tokens, "gpt_2_token_shuffled_visualization")
 
     # -- Visualize the shuffled dependency parse --
     shuffled_doc = token_dicts_to_spacy_doc(shuffled_token_dicts, nlp)
-    save_dependency_parse(shuffled_doc, "dependency_parse_shuffled.svg")
+    save_dependency_parse(shuffled_doc, "dependency_parse_shuffled")
 
 if __name__ == "__main__":
     main()
