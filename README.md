@@ -220,7 +220,9 @@ REVERSE_FULL:
 --------------------------------------------------------------------------------
 ```
 
-### Analysing Performance and Perplexity:
+### Analysis:
+
+### Performance vs Perplexity:
 
 Run the following command to generate accuracy vs perplexity scatterplot:
 
@@ -229,6 +231,22 @@ Run the following command to generate accuracy vs perplexity scatterplot:
 ```
 
 The output can be found in ```analysis/output/accuracy_vs_perplexity_analysis.png```
+
+### Dependency parse statistics:
+
+To analyse the dependency parse statistics of a corpus, either replace the contents of ```analysis/sample_sentences.txt``` with the sentences you want to analyse, or run the foolowing command to sample sentences from the impossible BLiMP datasets listed in `data_generation/generation_projects/impossible_blimp/master_dataset_list.txt`:
+
+```
+python -m analysis.sample_sentences 
+```
+
+To generate dependency parse statistics, run the following command:
+
+```
+ python -m analysis.dependency_parse_stats
+```
+
+This script will first sample sentences from the corpus, then generate dependency parse statistics for each sentence, and finally save the results to a csv file in ```analysis/output/dep_stats.csv```. It will then aggregate statistics based on this, and print them out to the console.
 
 ## GUI
 

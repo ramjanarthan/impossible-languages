@@ -4,6 +4,8 @@ import numpy as np
 from numpy.random import default_rng
 import os
 
+from data_generation.utils.impossible_utils import PERTURBATIONS
+
 from analysis.dependency_parse import (
     spacy_doc_to_token_dicts,
     apply_reverse_perturbation,
@@ -12,6 +14,7 @@ from analysis.dependency_parse import (
     apply_shuffle_deterministic_perturbation,
     apply_shuffle_nondeterministic_perturbation,
     apply_shuffle_even_odd_perturbation,
+    align_tokens_with_tokenizer,
     calculate_dependency_statistics
 )
 
@@ -53,9 +56,12 @@ def apply_perturbations():
         doc = nlp(sentence)
         original_tokens = spacy_doc_to_token_dicts(doc)
 
+        tokenizer = PERTURBATIONS["shuffle_control"]["gpt2_tokenizer"]
+        aligned_tokens = align_tokens_with_tokenizer(sentence, doc, tokenizer)
+
         for pert_name, pert_func in perturbations.items():
             # Apply perturbation
-            perturbed_tokens = pert_func(original_tokens, seed + i)
+            perturbed_tokens = pert_func(aligned_tokens, seed + i)
 
             # Calculate statistics
             stats = calculate_dependency_statistics(perturbed_tokens)
