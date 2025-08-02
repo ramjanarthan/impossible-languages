@@ -773,6 +773,31 @@ def spacy_doc_to_token_dicts(doc):
         for token in doc
     ]
 
+def token_dicts_to_spacy_doc(token_dicts, nlp):
+    """Creates a spaCy Doc object from a list of token dictionaries."""
+    words = [t['text'] for t in token_dicts]
+    spaces = [True] * (len(words) - 1) + [False]
+
+    # Create the Doc object from words and spaces
+    doc = spacy.tokens.Doc(nlp.vocab, words=words, spaces=spaces)
+
+    # Get the attributes from the token dictionaries
+    heads = [t.get('head_index', t['index']) for t in token_dicts]
+    deps = [t.get('dep', 'ROOT') for t in token_dicts]
+    pos = [t.get('pos', 'X') for t in token_dicts]
+    tags = [t.get('tag', 'X') for t in token_dicts]
+    lemmas = [t.get('lemma', t['text']) for t in token_dicts]
+
+    # Set the attributes on the Doc object
+    for i, token in enumerate(doc):
+        token.head = doc[heads[i]]
+        token.dep_ = deps[i]
+        token.pos_ = pos[i]
+        token.tag_ = tags[i]
+        token.lemma_ = lemmas[i]
+
+    return doc
+
 # Example usage:
 if __name__ == "__main__":
     
