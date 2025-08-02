@@ -248,6 +248,22 @@ To generate dependency parse statistics, run the following command:
 
 This script will first sample sentences from the corpus, then generate dependency parse statistics for each sentence, and finally save the results to a csv file in ```analysis/output/dep_stats.csv```. It will then aggregate statistics based on this, and print them out to the console.
 
+#### Visualization
+
+To generate visualizations of dependency parse statistics, run the following command:
+
+```
+python -m analysis.dependency_parse_image
+```
+
+The sentence to be parsed can be configured at the top of ```analysis/dependency_parse_image.py```. 
+This script when executed will generate the following images:
+1. ```analysis/output/token_visualization.svg``` -> Token visualization of the original sentence
+2. ```analysis/output/gpt_2_token_visualization.svg``` -> Token visualization of the GPT-2 tokenized sentence
+3. ```analysis/output/gpt_2_token_shuffled_visualization.svg``` -> Token visualization of the shuffled GPT-2 tokenized sentence
+4. ```analysis/output/dependency_parse_original.svg``` -> Dependency parse visualization of the original sentence
+5. ```analysis/output/dependency_parse_shuffled.svg``` -> Dependency parse visualization of the shuffled GPT-2 tokenized sentence
+
 ## GUI
 
 To make viewing experiment results easier, a GUI is provided in the `gui` directory.
