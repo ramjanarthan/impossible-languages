@@ -246,7 +246,7 @@ To generate dependency parse statistics, run the following command:
  python -m analysis.dependency_parse_stats
 ```
 
-This script will first sample sentences from the corpus, then generate dependency parse statistics for each sentence, and finally save the results to a csv file in ```analysis/output/dep_stats.csv```. It will then aggregate statistics based on this, and print them out to the console.
+This script will first sample sentences from the corpus, then generate dependency parse statistics for each sentence, and finally save the results to a csv file in ```analysis/output/dep_stats.csv```. It will then aggregate statistics based on this, print them out to the console, and generate a summary image of the statistics in ```analysis/output/dependency_metrics_summary.png```
 
 #### Visualization
 

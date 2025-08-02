@@ -1,5 +1,7 @@
 import spacy
 import pandas as pd
+import matplotlib.pyplot as plt
+from pathlib import Path
 import numpy as np
 from numpy.random import default_rng
 import os
@@ -107,9 +109,82 @@ def aggregate_stats(filepath):
         print(f"  Proportion of Projective Sentences: {stats['proportion_projective']:.2%}")
 
 
+
+def generate_stats_table_image(filepath):
+    """Generates and saves a PNG image of the aggregated stats table."""
+    df = pd.read_csv(filepath)
+    grouped = df.groupby('perturbation')
+
+    # Calculate aggregations
+    agg_stats = {}
+    for name, group in grouped:
+        agg_stats[name] = {
+            'avg_total_dep_distance': group['total_dependency_distance'].mean(),
+            'avg_norm_dep_distance': group['normalized_dependency_distance'].mean(),
+            'avg_crossing_deps': group['crossing_dependencies_count'].mean(),
+            'proportion_projective': group['is_projective'].mean(),
+            'num_sentences': len(group)
+        }
+
+    # Create a DataFrame from the aggregated stats
+    stats_df = pd.DataFrame.from_dict(agg_stats, orient='index')
+    stats_df = stats_df.sort_values(by='avg_norm_dep_distance', ascending=True)
+
+    # Prepare data for the table
+    stats_df.index.name = 'Perturbation Type'
+    stats_df.reset_index(inplace=True)
+    stats_df['Perturbation Type'] = stats_df['Perturbation Type'].str.replace('_', ' ').str.title()
+
+    # Select and rename columns for the final table
+    table_df = stats_df[[
+        'Perturbation Type',
+        'avg_norm_dep_distance',
+        'avg_total_dep_distance',
+        'avg_crossing_deps',
+        'proportion_projective',
+        'num_sentences'
+    ]].copy()
+
+    table_df.columns = [
+        'Perturbation Type',
+        'Avg Norm Dep Distance',
+        'Avg Total Dep Distance',
+        'Avg Crossing Deps',
+        'Proportion Projective',
+        'Num Sentences'
+    ]
+
+    # Round the float values for better display
+    for col in ['Avg Norm Dep Distance', 'Avg Total Dep Distance', 'Avg Crossing Deps']:
+        table_df[col] = table_df[col].round(2)
+    table_df['Proportion Projective'] = (table_df['Proportion Projective'] * 100).round(2).astype(str) + '%'
+
+    # Create the table image
+    fig, ax = plt.subplots(figsize=(12, 4))
+    ax.axis('tight')
+    ax.axis('off')
+    the_table = ax.table(cellText=table_df.values, colLabels=table_df.columns, loc='center', cellLoc='center')
+    the_table.auto_set_font_size(False)
+    the_table.set_fontsize(10)
+    the_table.scale(1.2, 1.2)
+
+    # Make the header row bold, larger, and with a background color
+    header_cells = the_table._cells
+    for (row, col), cell in header_cells.items():
+        if row == 0:
+            cell.set_text_props(weight='bold')
+            cell.set_facecolor('#e0e0e0')  # light gray
+            cell.set_edgecolor('black')
+
+    # Save the figure
+    output_path = Path(filepath).parent / 'dependency_metrics_summary.png'
+    plt.savefig(output_path, bbox_inches='tight', dpi=300)
+    print(f"\nSaved stats table to: {output_path}")
+
 def main():
-    apply_perturbations()
-    aggregate_stats('analysis/output/dep_stats.csv')
+    # apply_perturbations()
+    # aggregate_stats('analysis/output/dep_stats.csv')
+    generate_stats_table_image('analysis/output/dep_stats.csv')
    
 if __name__ == "__main__":
     main()
