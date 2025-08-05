@@ -47,7 +47,7 @@ PHENOMENA_ABR = {
     "argument_structure": "ARG. STR",
     "subject_verb_agreement": "S-V AGR",
     "ellipsis": "ELLIPSIS",
-    "irregular_forms": "IRREGULAR",
+    "irregular_forms": "IRR",
     "binding": "BINDING",
     "filler_gap_dependency": "FILLER. GAP",
     "determiner_noun_agreement": "D-N AGR",
@@ -66,7 +66,7 @@ PHENOMENA_ORDER = [
     "filler_gap_dependency",
     "irregular_forms",
     "island_effects",
-    "npi"
+    "npi",
     "quantifiers",
     "subject_verb_agreement"
 ]
@@ -82,6 +82,56 @@ MODEL_ORDER = [
     "shuffle_deterministic21",
     "shuffle_nondeterministic",
 ]
+
+def plot_model_group_performance_table(
+    csv_path: str = "experiments/output/v2/results.csv",
+    output_dir: str = "analysis/output",
+    output_filename: str = "model_group_performance_table.png"
+):
+    """
+    Plots a table (heatmap) with models (MODEL_ORDER) as rows, phenomenon groups (PHENOMENA_ORDER) as columns,
+    each cell showing the average accuracy for that model on all phenomena in the group.
+    Always includes all groups in PHENOMENA_ORDER as columns, even if missing from the CSV.
+    Uses PHENOMENA_ABR for x-axis labels. Saves PNG to output_dir.
+    """
+    df = pd.read_csv(csv_path)
+    # Build a mapping: group -> list of phenomena
+    group_to_phenomena = {group: [p for p, g in PHENOMENA_LIST_MAP.items() if g == group] for group in PHENOMENA_ORDER}
+    # Prepare data for the table
+    data = []
+    for model in MODEL_ORDER:
+        row = []
+        for group in PHENOMENA_ORDER:
+            phenomena = group_to_phenomena.get(group, [])
+            # Only use phenomena that are present in the results.csv
+            phenomena_in_csv = [p for p in phenomena if p in set(df["grammatical phenomenon"].unique())]
+            if not phenomena_in_csv:
+                row.append(float('nan'))
+                continue
+            accs = df[(df["model name"] == model) & (df["grammatical phenomenon"].isin(phenomena_in_csv))]["accuracy"]
+            row.append(accs.mean() if not accs.empty else float('nan'))
+        data.append(row)
+    # Build DataFrame with all columns present (even if all NaN)
+    columns = [PHENOMENA_ABR.get(g, g) for g in PHENOMENA_ORDER]
+    df_table = pd.DataFrame(data, index=MODEL_ORDER, columns=columns)
+    # Add 'Overall' column at the start (mean across groups, ignoring NaN)
+    df_table.insert(0, 'Overall', df_table.mean(axis=1, skipna=True))
+    # Plot heatmap
+    plt.figure(figsize=(max(2 + len(columns)+1, 8), max(1 + len(MODEL_ORDER), 8)))
+    ax = sns.heatmap(df_table, annot=True, fmt=".3f", cmap="YlGnBu", cbar=True, linewidths=0.5, linecolor='gray', annot_kws={"size": 10})
+    ax.set_ylabel("Model")
+    # Move x-ticks to top
+    ax.xaxis.set_ticks_position('top')
+    ax.xaxis.set_label_position('top')
+    # Align xticks with columns (including 'Overall')
+    ax.set_xticks([i + 0.5 for i in range(len(df_table.columns))])
+    # ax.set_xticklabels(df_table.columns, rotation=30, ha='right')
+    plt.tight_layout()
+    os.makedirs(output_dir, exist_ok=True)
+    outpath = os.path.join(output_dir, output_filename)
+    plt.savefig(outpath, dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"Model-group performance table saved to {outpath}")
 
 def save_performance_table_image(
     phenomena: List[str] = PHENOMENA_LIST,
@@ -185,6 +235,7 @@ def main():
         "wh_questions_subject_gap",
         "wh_questions_subject_gap_long_distance",
     ], output_filename="performance_table_subject.png")
+    plot_model_group_performance_table()
     # percent_non_english_best_model()
 
 if __name__ == "__main__":
