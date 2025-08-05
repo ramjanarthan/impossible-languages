@@ -23,6 +23,54 @@ PHENOMENA_LIST = [
     "existential_there_quantifiers_1"
 ]
 
+PHENOMENA_LIST_MAP = {
+    "adjunct_island": "island_effects",
+    "anaphor_gender_agreement": "anaphor_agreement",
+    "anaphor_number_agreement": "anaphor_agreement",
+    "animate_subject_passive": "argument_structure",
+    "distractor_agreement_relative_clause": "subject_verb_agreement",
+    "ellipsis_n_bar_1": "ellipsis",
+    "irregular_past_participle_adjectives": "irregular_forms",
+    "principle_A_c_command": "binding", 
+    "wh_questions_object_gap": "filler_gap_dependency", 
+    "wh_questions_object_gap_long_distance": "filler_gap_dependency",
+    "wh_questions_subject_gap": "filler_gap_dependency",
+    "wh_questions_subject_gap_long_distance": "filler_gap_dependency",
+    "left_branch_island_simple_question": "island_effects",
+    "determiner_noun_agreement_with_adj_2": "determiner_noun_agreement",
+    "existential_there_quantifiers_1": "quantifiers"
+}
+
+PHENOMENA_ABR = {
+    "island_effects": "ISLAND",
+    "anaphor_agreement": "ANA. AGR",
+    "argument_structure": "ARG. STR",
+    "subject_verb_agreement": "S-V AGR",
+    "ellipsis": "ELLIPSIS",
+    "irregular_forms": "IRREGULAR",
+    "binding": "BINDING",
+    "filler_gap_dependency": "FILLER. GAP",
+    "determiner_noun_agreement": "D-N AGR",
+    "quantifiers": "QUANTIFIERS",
+    "npi": "NPI",
+    "control_raise": "CTRL. RAIS.",
+}
+
+PHENOMENA_ORDER = [
+    "anaphor_agreement",
+    "argument_structure",
+    "binding",
+    "control_raise",
+    "determiner_noun_agreement",
+    "ellipsis",
+    "filler_gap_dependency",
+    "irregular_forms",
+    "island_effects",
+    "npi"
+    "quantifiers",
+    "subject_verb_agreement"
+]
+
 MODEL_ORDER = [
     "english",
     "reverse_full",
@@ -133,6 +181,10 @@ def main():
         "wh_questions_object_gap",
         "wh_questions_object_gap_long_distance",
     ], output_filename="performance_table_structural.png")
+    save_performance_table_image([
+        "wh_questions_subject_gap",
+        "wh_questions_subject_gap_long_distance",
+    ], output_filename="performance_table_subject.png")
     # percent_non_english_best_model()
 
 if __name__ == "__main__":
