@@ -111,12 +111,13 @@ document.addEventListener('DOMContentLoaded', function() {
             'anaphor_gender_agreement',
             'anaphor_number_agreement',
             'animate_subject_passive',
-            'determiner_noun_agreement_with_adj_2',
-            'irregular_past_participle_adjectives',
+            // 'determiner_noun_agreement_with_adj_2',
+            // 'irregular_past_participle_adjectives',
             // 'distractor_agreement_relative_clause',
+            'determiner_noun_agreement_with_adj_2',
             'existential_there_quantifiers_1',
-            'wh_questions_subject_gap',
-            'wh_questions_subject_gap_long_distance',
+            // 'wh_questions_subject_gap',
+            // 'wh_questions_subject_gap_long_distance',
         ]);
 
         let allXValues = [...new Set(filteredData.map(item => item[xAxisKey]))];

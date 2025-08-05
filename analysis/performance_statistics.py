@@ -132,7 +132,6 @@ def main():
         "principle_A_c_command",
         "wh_questions_object_gap",
         "wh_questions_object_gap_long_distance",
-        "wh_questions_subject_gap_long_distance",
     ], output_filename="performance_table_structural.png")
     # percent_non_english_best_model()
 
