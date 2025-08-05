@@ -1,8 +1,8 @@
 
 Phenomenon,Dependency Type,Cue Reliability,Knowledge Domain
 Adjunct Island,Non-Local,Weak,Syntactic
-Anaphor Gender Agreement,Local,Strong (in this setup),Syntactic/Semantic
-Anaphor Number Agreement,Local,Strong (in this setup),Syntactic
+Anaphor Gender Agreement,Local,Strong,Syntactic/Semantic
+Anaphor Number Agreement,Local,Strong,Syntactic
 Animate Subject Passive,Local,Strong,Semantic
 Determiner Noun Agreement,Local,Strong,Syntactic
 Distractor Agreement RC,Non-Local,Weak/Conflicting,Syntactic
@@ -14,4 +14,4 @@ Principle A C Command,Non-Local,Weak,Syntactic
 WH Question Object Gap,Non-Local,Weak,Syntactic
 WH Question Object Gap Long,Non-Local,Weak,Syntactic
 WH Question Subject Gap,Non-local,Strong,Syntactic
-WH Question Subject Gap Long,Non-Local,Weak,Syntactic
+WH Question Subject Gap Long,Non-Local,Strong,Syntactic
