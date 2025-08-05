@@ -1,7 +1,7 @@
 import unittest
 import spacy
 from typing import List
-from analysis.dependency_parse import *
+from analysis.dependency.dependency_parse import *
 
 # Mock tokenizer for testing
 class MockGPT2Tokenizer:

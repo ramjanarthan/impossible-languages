@@ -234,16 +234,16 @@ The output can be found in ```analysis/output/accuracy_vs_perplexity_analysis.pn
 
 ### Dependency parse statistics:
 
-To analyse the dependency parse statistics of a corpus, either replace the contents of ```analysis/sample_sentences.txt``` with the sentences you want to analyse, or run the foolowing command to sample sentences from the impossible BLiMP datasets listed in `data_generation/generation_projects/impossible_blimp/master_dataset_list.txt`:
+To analyse the dependency parse statistics of a corpus, either replace the contents of ```analysis/dependency/sample_sentences.txt``` with the sentences you want to analyse, or run the foolowing command to sample sentences from the impossible BLiMP datasets listed in `data_generation/generation_projects/impossible_blimp/master_dataset_list.txt`:
 
 ```
-python -m analysis.sample_sentences 
+python -m analysis.dependency.sample_sentences 
 ```
 
 To generate dependency parse statistics, run the following command:
 
 ```
- python -m analysis.dependency_parse_stats
+ python -m analysis.dependency.dependency_parse_stats
 ```
 
 This script will first sample sentences from the corpus, then generate dependency parse statistics for each sentence, and finally save the results to a csv file in ```analysis/output/dep_stats.csv```. It will then aggregate statistics based on this, print them out to the console, and generate a summary image of the statistics in ```analysis/output/dependency_metrics_summary.png```
@@ -253,10 +253,10 @@ This script will first sample sentences from the corpus, then generate dependenc
 To generate visualizations of dependency parse statistics, run the following command:
 
 ```
-python -m analysis.dependency_parse_image
+python -m analysis.dependency.dependency_parse_image
 ```
 
-The sentence to be parsed can be configured at the top of ```analysis/dependency_parse_image.py```. The script can be configured to save the images as SVG or PNG by setting the `SAVE_AS_PNG` variable to `True` or `False`.
+The sentence to be parsed can be configured at the top of ```analysis/dependency/dependency_parse_image.py```. The script can be configured to save the images as SVG or PNG by setting the `SAVE_AS_PNG` variable to `True` or `False`.
 
 When executed, the following images will be generated:
 1. ```analysis/output/token_visualization.png``` -> Token visualization of the original sentence

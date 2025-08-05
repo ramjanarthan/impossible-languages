@@ -8,7 +8,7 @@ import os
 
 from data_generation.utils.impossible_utils import PERTURBATIONS
 
-from analysis.dependency_parse import (
+from analysis.dependency.dependency_parse import (
     spacy_doc_to_token_dicts,
     apply_reverse_perturbation,
     apply_partial_reverse_perturbation,

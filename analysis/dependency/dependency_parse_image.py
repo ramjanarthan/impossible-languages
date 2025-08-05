@@ -4,12 +4,12 @@ from pathlib import Path
 from spacy import displacy
 import cairosvg
 from data_generation.utils.impossible_utils import PERTURBATIONS
-from analysis.dependency_parse import align_tokens_with_tokenizer, apply_windowed_shuffle_perturbation, token_dicts_to_spacy_doc
+from analysis.dependency.dependency_parse import align_tokens_with_tokenizer, apply_windowed_shuffle_perturbation, token_dicts_to_spacy_doc
 
 # --- Configuration ---
 nlp = spacy.load("en_core_web_sm")
 sentence = "Timothy didn't boast about himself."
-OUTPUT_DIR = Path(__file__).parent / "output"
+OUTPUT_DIR = Path(__file__).parent.parent / "output"
 SAVE_AS_PNG = True
 
 # Displacy options for a clean, consistent look (white background, black text)
