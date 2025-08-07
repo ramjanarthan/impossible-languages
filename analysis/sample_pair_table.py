@@ -52,14 +52,14 @@ def generate_table_image(
 
         # Process English first if requested
         if "english" in perturbations_set:
-            pair_text = f"Good: {sample['english']['sentence_good']}\nBad:  {sample['english']['sentence_bad']}"
+            pair_text = f"Grammatical: {sample['english']['sentence_good']}\nUngrammatical:  {sample['english']['sentence_bad']}"
             table_data.append(["English", pair_text])
 
         # Process other versions
         for version, sentences in sample['other_versions'].items():
             if version in perturbations_set:
                 display_version = version.replace('_', ' ').title()
-                pair_text = f"Good: {sentences['sentence_good']}\nBad:  {sentences['sentence_bad']}"
+                pair_text = f"Grammatical: {sentences['sentence_good']}\nUngrammatical:  {sentences['sentence_bad']}"
                 table_data.append([display_version, pair_text])
         
         processed_indices.add(sample['index'])
@@ -104,8 +104,24 @@ def generate_table_image(
     plt.tight_layout(pad=2.0)
 
     # Save the figure
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight', pad_inches=0)
+    plt.close(fig)
     print(f"Table saved to {output_path}")
+
+    # --- Crop the image to remove excess whitespace ---
+    try:
+        from PIL import Image
+        im = Image.open(output_path)
+        width, height = im.size
+        left = int(width * 0.12)
+        upper = int(height * 0.28)
+        right = int(width * 0.88)
+        lower = int(height * 0.72)
+        im_cropped = im.crop((left, upper, right, lower))
+        im_cropped.save(output_path)
+        print(f"Cropped image saved to {output_path}")
+    except Exception as e:
+        print(f"Warning: Could not crop image: {e}")
 
 def main():
     parser = argparse.ArgumentParser(description='Sample sentence pairs and save as a PNG table.')
