@@ -29,7 +29,7 @@ scatter = sns.scatterplot(
     ax=ax
 )
 
-ax.set_title('Model Accuracy vs. Perplexity Difference', fontsize=18, pad=20)
+# ax.set_title('Model Accuracy vs. Perplexity Difference', fontsize=18, pad=20)
 ax.set_xlabel('Perplexity Difference (Bad Sentence - Good Sentence)', fontsize=14)
 ax.set_ylabel('Accuracy', fontsize=14)
 

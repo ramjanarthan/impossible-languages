@@ -83,6 +83,42 @@ MODEL_ORDER = [
     "shuffle_nondeterministic",
 ]
 
+def plot_phenomenon_group_counts(
+    csv_path: str = "experiments/output/v2/results.csv",
+    output_path: str = "analysis/output/phenomenon_group_counts.png"
+):
+    """
+    Plots a PNG image: x-axis is phenomenon groups (PHENOMENA_ORDER, labeled with PHENOMENA_ABR),
+    one row is the count of unique phenomena in each group (from results.csv).
+    """
+    import matplotlib.pyplot as plt
+    import os
+    df = pd.read_csv(csv_path)
+    present_phenomena = set(df["grammatical phenomenon"].unique())
+    group_counts = {g: 0 for g in PHENOMENA_ORDER}
+    for p, g in PHENOMENA_LIST_MAP.items():
+        if p in present_phenomena and g in PHENOMENA_ORDER:
+            group_counts[g] += 1
+    # Prepare data for plotting
+    x_labels = [PHENOMENA_ABR.get(g, g) for g in PHENOMENA_ORDER]
+    counts = [group_counts[g] for g in PHENOMENA_ORDER]
+    # Plot
+    fig, ax = plt.subplots(figsize=(max(8, len(x_labels)), 3))
+    ax.imshow([counts], cmap="Blues", aspect="auto")
+    # Set x-ticks and labels
+    ax.set_xticks(range(len(x_labels)))
+    ax.set_xticklabels(x_labels, rotation=30, ha='right')
+    ax.set_yticks([0])
+    ax.set_yticklabels(["# Phenomena"], rotation=0)
+    # Annotate counts
+    for i, count in enumerate(counts):
+        ax.text(i, 0, str(count), va='center', ha='center', color='black', fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    plt.savefig(output_path, dpi=200, bbox_inches='tight')
+    plt.close()
+    print(f"Phenomenon group counts image saved to {output_path}")
+
 def plot_model_group_performance_table(
     csv_path: str = "experiments/output/v2/results.csv",
     output_dir: str = "analysis/output",
@@ -215,28 +251,29 @@ def percent_non_english_best_model(csv_path="experiments/output/v2/results.csv")
     return percent
 
 def main():
-    save_performance_table_image(PHENOMENA_LIST, output_filename="performance_table_overall.png")
-    save_performance_table_image([
-            "anaphor_gender_agreement",
-            "anaphor_number_agreement",
-            "animate_subject_passive",
-            "determiner_noun_agreement_with_adj_2",
-            "existential_there_quantifiers_1"
-        ], output_filename="performance_table_local.png")
-    save_performance_table_image([
-        "adjunct_island",
-        "distractor_agreement_relative_clause",
-        "ellipsis_n_bar_1",
-        "principle_A_c_command",
-        "wh_questions_object_gap",
-        "wh_questions_object_gap_long_distance",
-    ], output_filename="performance_table_structural.png")
-    save_performance_table_image([
-        "wh_questions_subject_gap",
-        "wh_questions_subject_gap_long_distance",
-    ], output_filename="performance_table_subject.png")
-    plot_model_group_performance_table()
     # percent_non_english_best_model()
+    # save_performance_table_image(PHENOMENA_LIST, output_filename="performance_table_overall.png")
+    # save_performance_table_image([
+    #         "anaphor_gender_agreement",
+    #         "anaphor_number_agreement",
+    #         "animate_subject_passive",
+    #         "determiner_noun_agreement_with_adj_2",
+    #         "existential_there_quantifiers_1"
+    #     ], output_filename="performance_table_local.png")
+    # save_performance_table_image([
+    #     "adjunct_island",
+    #     "distractor_agreement_relative_clause",
+    #     "ellipsis_n_bar_1",
+    #     "principle_A_c_command",
+    #     "wh_questions_object_gap",
+    #     "wh_questions_object_gap_long_distance",
+    # ], output_filename="performance_table_structural.png")
+    # save_performance_table_image([
+    #     "wh_questions_subject_gap",
+    #     "wh_questions_subject_gap_long_distance",
+    # ], output_filename="performance_table_subject.png")
+    # plot_model_group_performance_table()
+    plot_phenomenon_group_counts()
 
 if __name__ == "__main__":
     main()
