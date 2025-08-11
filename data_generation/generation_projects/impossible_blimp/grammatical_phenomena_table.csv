@@ -1,17 +1,17 @@
 
-Phenomenon,Dependency Type,Cue Reliability,Knowledge Domain
-Adjunct Island,Non-Local,Weak,Syntactic
-Anaphor Gender Agreement,Local,Strong,Syntactic/Semantic
-Anaphor Number Agreement,Local,Strong,Syntactic
-Animate Subject Passive,Local,Strong,Semantic
-Determiner Noun Agreement,Local,Strong,Syntactic
-Distractor Agreement RC,Non-Local,Weak/Conflicting,Syntactic
-Ellipsis N Bar,Non-Local,Weak,Syntactic
-Existential there Quantifiers,Local,Strong,Semantic
-Irregular past participle Adj,Lexical,Strong,Lexical
-Left Branch Island,Non-Local,Weak,Syntactic
-Principle A C Command,Non-Local,Weak,Syntactic
-WH Question Object Gap,Non-Local,Weak,Syntactic
-WH Question Object Gap Long,Non-Local,Weak,Syntactic
-WH Question Subject Gap,Non-local,Strong,Syntactic
-WH Question Subject Gap Long,Non-Local,Strong,Syntactic
+Phenomenon,Dependency Type,Cue Reliability,n-gram BLiMP Score,Knowledge Domain
+Adjunct Island,Non-Local,Weak,48,Syntactic
+Anaphor Gender Agreement,Local,Strong,44,Syntactic/Semantic
+Anaphor Number Agreement,Local,Strong,52,Syntactic
+Animate Subject Passive,Local,Strong,70,Semantic
+Determiner Noun Agreement,Local,Strong,50,Syntactic
+Distractor Agreement RC,Non-Local,Weak/Conflicting,22,Syntactic
+Ellipsis N Bar,Non-Local,Weak,23,Syntactic
+Existential there Quantifiers,Local,Strong,91,Semantic
+Irregular past participle Adj,Lexical,Strong,79,Lexical
+Left Branch Island,Non-Local,Weak,57,Syntactic
+Principle A C Command,Non-Local,Weak,58,Syntactic
+WH Question Object Gap,Non-Local,Weak,53,Syntactic
+WH Question Object Gap Long,Non-Local,Weak,Nan,Syntactic
+WH Question Subject Gap,Non-local,Strong,82,Syntactic
+WH Question Subject Gap Long,Non-Local,Strong,86,Syntactic

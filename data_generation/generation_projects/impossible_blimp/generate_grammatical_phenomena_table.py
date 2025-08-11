@@ -17,6 +17,9 @@ def generate_grammatical_phenomena_classification_table():
         return
 
     num_rows = len(table_data)
+    # print number of rows and columsn
+    print(f"Number of rows: {num_rows}")
+    print(f"Number of columns: {len(table_data.columns)}")
 
     # Create figure and axes
     fig, ax = plt.subplots(figsize=(12, 4))  # Adjust size based on content
@@ -28,7 +31,7 @@ def generate_grammatical_phenomena_classification_table():
         colLabels=table_data.columns,
         cellLoc='left',
         loc='center',
-        colWidths=[0.3, 0.2, 0.3, 0.3]
+        colWidths=[0.3, 0.2, 0.3, 0.2, 0.3]
     )
 
     the_table.auto_set_font_size(False)
