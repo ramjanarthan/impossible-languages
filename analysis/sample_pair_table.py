@@ -82,7 +82,7 @@ def generate_table_image(
         colLabels=columns,
         cellLoc='left',
         loc='center',
-        colWidths=[0.2, 0.5]
+        colWidths=[0.2, 0.42]
     )
 
     the_table.auto_set_font_size(False)
@@ -101,7 +101,7 @@ def generate_table_image(
         cell.set_linewidth(0.5)
 
     # ax.set_title(title, weight='bold', size=16, y=1.05)
-    plt.tight_layout(pad=2.0)
+    plt.tight_layout(pad=1.0)
 
     # Save the figure
     plt.savefig(output_path, dpi=300, bbox_inches='tight', pad_inches=0)
@@ -113,9 +113,9 @@ def generate_table_image(
         from PIL import Image
         im = Image.open(output_path)
         width, height = im.size
-        left = int(width * 0.12)
+        left = int(width * 0.15)
         upper = int(height * 0.28)
-        right = int(width * 0.88)
+        right = int(width * 0.85)
         lower = int(height * 0.72)
         im_cropped = im.crop((left, upper, right, lower))
         im_cropped.save(output_path)
