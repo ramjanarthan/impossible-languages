@@ -32,7 +32,7 @@ def modify_dataset(base_dataset_path, impossible_language_option, output_path=No
         with open(base_dataset_path, "r") as infile, open(output_path, "w") as outfile:
             output_writer = jsonlines.Writer(outfile, flush=True)
             batch = []
-            for line in tqdm(infile, desc="Processing", unit="sentences"):
+            for line in tqdm(infile, desc="Processing", unit=" sentences"):
                 data = json.loads(line)
                 # Apply perturbation to both good and bad sentences
                 sent_good = data.get("sentence_good")

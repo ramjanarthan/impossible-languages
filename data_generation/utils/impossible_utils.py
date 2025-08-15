@@ -356,7 +356,8 @@ def __perturb_reverse_pair(sent1, sent2, rng, reverse, full):
     tokens1 = gpt2_rev_tokenizer.encode(sent1)
     tokens2 = gpt2_rev_tokenizer.encode(sent2)  
 
-    assert len(tokens1) == len(tokens2)
+    if len(tokens1) != len(tokens2):
+        raise ValueError("Expected sentence pairs with equal number of tokens")
 
     # Pick random index to insert REV token
     i = rng.choice(len(tokens1)+1)
@@ -386,7 +387,8 @@ def __perturb_shuffle_nondeterministic_pair(sent1, sent2, rng):
     tokens1 = gpt2_original_tokenizer.encode(sent1)
     tokens2 = gpt2_original_tokenizer.encode(sent2)
 
-    assert len(tokens1) == len(tokens2)
+    if len(tokens1) != len(tokens2):
+        raise ValueError("Expected sentence pairs with equal number of tokens")
 
     indices = list(range(len(tokens1)))
     rng.shuffle(indices)
@@ -402,7 +404,8 @@ def __perturb_shuffle_deterministic_pair(sent1, sent2, seed, shuffle):
     tokens1 = gpt2_original_tokenizer.encode(sent1)
     tokens2 = gpt2_original_tokenizer.encode(sent2)
 
-    assert len(tokens1) == len(tokens2)
+    # if len(tokens1) != len(tokens2):
+    #     raise ValueError("Expected sentence pairs with equal number of tokens")
 
     if shuffle:
         default_rng(seed).shuffle(tokens1)
@@ -414,7 +417,8 @@ def __perturb_shuffle_local_pair(sent1, sent2, seed, window=5):
     tokens1 = gpt2_original_tokenizer.encode(sent1)
     tokens2 = gpt2_original_tokenizer.encode(sent2)
 
-    assert len(tokens1) == len(tokens2)
+    if len(tokens1) != len(tokens2):
+        raise ValueError("Expected sentence pairs with equal number of tokens")
 
     # Shuffle tokens in batches of size window
     shuffled_tokens1 = []   
@@ -437,7 +441,8 @@ def __perturb_shuffle_even_odd_pair(sent1, sent2):
     tokens1 = gpt2_original_tokenizer.encode(sent1)
     tokens2 = gpt2_original_tokenizer.encode(sent2)
 
-    assert len(tokens1) == len(tokens2)
+    if len(tokens1) != len(tokens2):
+        raise ValueError("Expected sentence pairs with equal number of tokens")
 
     even1 = [tok for i, tok in enumerate(tokens1) if i % 2 == 0]
     odd1 = [tok for i, tok in enumerate(tokens1) if i % 2 != 0]
