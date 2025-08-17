@@ -1,3 +1,4 @@
+from analysis.dependency.dependency_parse import normalized_dependency_distance
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -465,6 +466,51 @@ def main():
         reverse=False
     )
 
+    print("\n--- Generating plot for structural phenomena ---")
+    # Structural ordering
+    structural_phenomena = [
+        "adjunct_island",
+        "distractor_agreement_relative_clause",
+        "ellipsis_n_bar_1",
+        "principle_A_c_command",
+        "wh_questions_object_gap",
+        "wh_questions_object_gap_long_distance",
+        "left_branch_island_simple_question",
+        "existential_there_quantifiers_1"
+    ]
+
+    plot_model_ordering_from_csv(
+        phenomena=structural_phenomena,
+        output_path="analysis/output/model_ordering_structural.png"
+    )
+
+    custom_labels =  [
+        "english",
+        "reverse_full",
+        "reverse_partial",
+        "shuffle_local3",
+        "shuffle_local5",
+        "shuffle_local10",
+        "shuffle_even_odd",
+        "shuffle_deterministic21",
+        "shuffle_nondeterministic",
+    ]
+    normalized_dependency_distance_values = [2.04, 2.04, 2.61, 2.38, 2.67, 3.31, 3.59, 3.65, 3.65]
+    plot_ordering(
+        labels=custom_labels,
+        values=normalized_dependency_distance_values,
+        output_path="analysis/output/mean_normalised_dep_distance_ranking.png",
+        title="Mean Normalized Dependency Distance Ranking",
+        reverse=False
+    )
+
+    proportion_projective = [92, 92,37, 25, 9, 5, 1, 5, 5]
+    plot_ordering(
+        labels=custom_labels,
+        values=proportion_projective,
+        output_path="analysis/output/projectivity_ranking.png",
+        title="Projectivity Ranking",
+    )
 
 if __name__ == "__main__":
     main()
