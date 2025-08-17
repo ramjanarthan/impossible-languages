@@ -20,7 +20,6 @@ from analysis.dependency.dependency_parse import (
     calculate_dependency_statistics
 )
 
-
 def apply_perturbations():
     """Main function to run the dependency analysis."""
     # Load spaCy model
@@ -41,11 +40,11 @@ def apply_perturbations():
         'shuffled_window_10': lambda tokens, seed: apply_windowed_shuffle_perturbation(tokens, 10, seed),
         'shuffle': lambda tokens, seed: apply_shuffle_deterministic_perturbation(tokens, seed),
         'non_deterministic_shuffle': lambda tokens, seed: apply_shuffle_nondeterministic_perturbation(tokens, default_rng(seed)),
-        'odd_even_shuffle': lambda tokens, seed: apply_shuffle_even_odd_perturbation(tokens)
+        'even_odd_shuffle': lambda tokens, seed: apply_shuffle_even_odd_perturbation(tokens)
     }
 
     # Read sample sentences
-    sentences_file = 'analysis/sample_sentences.txt'
+    sentences_file = 'analysis/dependency/sample_sentences.txt'
     with open(sentences_file, 'r') as f:
         sentences = [line.strip() for line in f if line.strip()]
 
@@ -182,8 +181,8 @@ def generate_stats_table_image(filepath):
     print(f"\nSaved stats table to: {output_path}")
 
 def main():
-    # apply_perturbations()
-    # aggregate_stats('analysis/output/dep_stats.csv')
+    apply_perturbations()
+    aggregate_stats('analysis/output/dep_stats.csv')
     generate_stats_table_image('analysis/output/dep_stats.csv')
    
 if __name__ == "__main__":
