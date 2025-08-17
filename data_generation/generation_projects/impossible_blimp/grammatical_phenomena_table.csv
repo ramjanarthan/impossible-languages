@@ -3,7 +3,7 @@ Dataset Name,Dependency Type,Cue Reliability,n-gram BLiMP Score
 Adjunct Island,Non-Local,Weak,48
 Anaphor Gender Agreement,Local,Strong,44
 Anaphor Number Agreement,Local,Strong,52
-Animate Subject Passive,Local,Strong,70
+Animate Subject Passive,Local,Weak,70
 Determiner Noun Agreement with Adjective 2,Local,Weak,50
 Distractor Agreement Relative Clause,Non-Local,Weak/Conflicting,22
 Ellipsis N Bar 1,Non-Local,Weak,23

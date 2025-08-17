@@ -431,23 +431,35 @@ def plot_ranking_comparison(
     print(f"Ranking comparison plot saved to {output_path}")
     
 def main():
-    """
-    Main function to generate plots.
-    This example demonstrates how to use the new ordering plot functions.
-    """
-    # print("\n--- Generating plot for overall model ordering (skipping some models) ---")
-    # plot_model_ordering_from_csv(
-    #     phenomena=PHENOMENA_LIST,
-    #     skip_models=["reverse_partial", "shuffle_local3"],
-    #     output_path="analysis/output/model_ordering_overall_skipped.png"
-    # )
-
-    print("\n--- Generating plot for local ordering phenomena ---")
+    # save_performance_table_image(PHENOMENA_LIST, output_filename="performance_table_overall.png")
     local_ordering_phenomena = [
         "anaphor_gender_agreement", "anaphor_number_agreement",
-        "animate_subject_passive", "existential_there_quantifiers_1",
+        # "animate_subject_passive",
+         "existential_there_quantifiers_1",
+        "irregular_past_participle_adjectives",
         "wh_questions_subject_gap", "wh_questions_subject_gap_long_distance",
     ]
+    save_performance_table_image(local_ordering_phenomena, output_filename="performance_table_local.png")
+
+    structural_phenomena = [
+        "adjunct_island",
+        "distractor_agreement_relative_clause",
+        "ellipsis_n_bar_1",
+        "principle_A_c_command",
+        "wh_questions_object_gap",
+        "wh_questions_object_gap_long_distance",
+        "left_branch_island_simple_question",
+    ]
+
+    save_performance_table_image(structural_phenomena, output_filename="performance_table_structural.png")
+    # save_performance_table_image([
+    #     "wh_questions_subject_gap",
+    #     "wh_questions_subject_gap_long_distance",
+    # ], output_filename="performance_table_subject.png")
+    # plot_model_group_performance_table()
+
+    print("\n--- Generating plot for local ordering phenomena ---")
+    
     plot_model_ordering_from_csv(
         phenomena=local_ordering_phenomena,
         skip_models=["reverse_partial", "shuffle_nondeterministic"],
@@ -456,7 +468,7 @@ def main():
 
     print("\n--- Generating plot from a custom list of models and scores ---")
     # Example of using the second function directly with custom data
-    custom_labels = ["Base (english)", "Reverse (reverse_full)", "EvenOddShuffle (shuffle_even_odd)", "LocalShuffle(K=3) (shuffle_local3)", "LocalShuffle(K=5) (shuffle_local5)", "LocalShuffle(K=7)", "DeterministicShuffle (shuffle_deterministic21)"]
+    custom_labels = ["Base (english)", "Reverse (reverse_full)", "EvenOddShuffle (shuffle_even_odd)", "LocalShuffle(K=3) (shuffle_local3)", "LocalShuffle(K=5) (shuffle_local5)", "LocalShuffle(K=7) (shuffle_local10)", "DeterministicShuffle (shuffle_deterministic21)"]
     custom_values = [2.92, 2.98, 3.76, 3.68, 3.88, 4.06, 4.60] # Note: The function will sort these automatically
     plot_ordering(
         labels=custom_labels,
@@ -468,16 +480,7 @@ def main():
 
     print("\n--- Generating plot for structural phenomena ---")
     # Structural ordering
-    structural_phenomena = [
-        "adjunct_island",
-        "distractor_agreement_relative_clause",
-        "ellipsis_n_bar_1",
-        "principle_A_c_command",
-        "wh_questions_object_gap",
-        "wh_questions_object_gap_long_distance",
-        "left_branch_island_simple_question",
-        "existential_there_quantifiers_1"
-    ]
+    
 
     plot_model_ordering_from_csv(
         phenomena=structural_phenomena,
