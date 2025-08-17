@@ -3,8 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
-from typing import List, Optional
-import re
+from typing import List, Optional, Dict
 
 # Edit this list to change which phenomena are included in the table
 PHENOMENA_LIST = [
@@ -429,6 +428,109 @@ def plot_ranking_comparison(
     plt.savefig(output_path, dpi=200, bbox_inches='tight')
     plt.close()
     print(f"Ranking comparison plot saved to {output_path}")
+
+# --- NEW FUNCTION ---
+def get_performance_ranking(
+    phenomena: List[str],
+    csv_path: str = "experiments/output/v2/results.csv",
+    skip_models: Optional[List[str]] = None,
+    reverse: bool = True
+) -> List[str]:
+    """
+    Calculates model performance on specific phenomena and returns the ranked list of model names.
+
+    Args:
+        phenomena (List[str]): A list of grammatical phenomena to include.
+        csv_path (str): Path to the input results CSV file.
+        skip_models (Optional[List[str]]): A list of model names to exclude.
+        reverse (bool): If True, sort descending (higher score is better).
+
+    Returns:
+        List[str]: An ordered list of model names from best to worst.
+    """
+    if skip_models is None:
+        skip_models = []
+        
+    df = pd.read_csv(csv_path)
+    df_filtered = df[df["grammatical phenomenon"].isin(phenomena)]
+    if df_filtered.empty:
+        print(f"Warning: No data found for the specified phenomena.")
+        return []
+        
+    df_filtered = df_filtered[~df_filtered["model name"].isin(skip_models)]
+    performance = df_filtered.groupby("model name")["accuracy"].mean()
+    
+    # Sort the performance Series and return the index (model names) as a list
+    sorted_performance = performance.sort_values(ascending=not reverse)
+    return sorted_performance.index.tolist()
+
+# --- NEW FUNCTION ---
+def plot_parallel_rankings(
+    rankings: Dict[str, List[str]],
+    output_path: str,
+    title: str,
+):
+    """
+    Creates a parallel coordinates plot to compare multiple rankings of the same items.
+    This visualization is excellent for showing consistency (parallel lines) or inconsistency
+    (crossed lines) between different ranking criteria.
+
+    Args:
+        rankings (Dict[str, List[str]]): A dictionary where keys are ranking labels
+                                         (e.g., "Accuracy") and values are ordered
+                                         lists of item names (e.g., model names).
+        output_path (str): The path to save the generated plot.
+        title (str): The overall title for the plot.
+    """
+    ranking_labels = list(rankings.keys())
+    num_rankings = len(ranking_labels)
+
+    # 1. Get all unique items (models) and create maps from item to rank for each list
+    all_items = sorted(list(set.union(*[set(r) for r in rankings.values()])))
+    num_items = len(all_items)
+    
+    rank_maps = {label: {item: i for i, item in enumerate(ranking_list)} 
+                 for label, ranking_list in rankings.items()}
+
+    fig, ax = plt.subplots(figsize=(4 * num_rankings, max(6, 0.5 * num_items)))
+    
+    # 2. Assign a unique color to each model for clear tracking
+    # Using 'tab20' which has a good variety of distinct colors
+    colors = plt.cm.get_cmap('tab20', num_items)
+
+    # 3. Plot lines for each item, connecting its rank across the different criteria
+    for i, item in enumerate(all_items):
+        # Ensure the item exists in all rankings to be plotted
+        if all(item in rank_maps[label] for label in ranking_labels):
+            ranks = [rank_maps[label][item] for label in ranking_labels]
+        
+            # Plot the line connecting the ranks
+            ax.plot(range(num_rankings), ranks, color=colors(i), marker='o', 
+                    markersize=8, alpha=0.9, linewidth=2.5, label=item)
+
+            # Add text labels with rank number at the start and end points
+            ax.text(-0.05, ranks[0], f"{item} ({ranks[0]+1})", ha='right', va='center', fontsize=12)
+            ax.text(num_rankings - 1 + 0.05, ranks[-1], f"({ranks[-1]+1}) {item}", ha='left', va='center', fontsize=12)
+
+    # 4. Set column headers (the names of the rankings)
+    for i, label in enumerate(ranking_labels):
+        ax.text(i, -0.5, label, ha='center', va='bottom', fontsize=14, fontweight='bold')
+
+    # 5. Final plot styling for a clean, professional look
+    ax.set_title(title, fontsize=18, fontweight='bold', pad=30)
+    ax.invert_yaxis()  # Puts Rank 1 at the top
+    ax.set_ylim(num_items - 0.5, -1)
+    ax.set_xlim(-0.5, num_rankings - 0.5)
+    ax.set_xticks([]) # Hide x-axis ticks, we have headers
+    ax.set_yticks([]) # Hide y-axis ticks
+    ax.spines[:].set_visible(False) # Remove the plot frame
+
+    plt.tight_layout()
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"Parallel ranking plot saved to {output_path}")
+
     
 def main():
     # save_performance_table_image(PHENOMENA_LIST, output_filename="performance_table_overall.png")
@@ -513,6 +615,79 @@ def main():
         values=proportion_projective,
         output_path="analysis/output/projectivity_ranking.png",
         title="Projectivity Ranking",
+    )
+
+    csv_file = "experiments/output/v2/results.csv"
+
+    # --- LOCAL PHENOMENA: CONSISTENCY COMPARISON ---
+    print("\n--- Generating comparison plot for local phenomena rankings ---")
+    local_phenomena = [
+        "anaphor_gender_agreement", "anaphor_number_agreement",
+        "animate_subject_passive", "existential_there_quantifiers_1",
+        "wh_questions_subject_gap", "wh_questions_subject_gap_long_distance",
+    ]
+    # Models and scores for the "m-local" metric
+    mlocal_labels = ["Base (english)", "Reverse (reverse_full)", "EvenOddShuffle (shuffle_even_odd)", "LocalShuffle(K=3) (shuffle_local3)", "LocalShuffle(K=5) (shuffle_local5)", "LocalShuffle(K=7) (shuffle_local10)", "DeterministicShuffle (shuffle_deterministic21)"]
+    mlocal_values = [2.92, 2.98, 3.76, 3.68, 3.88, 4.06, 4.60]
+
+    # Map the custom labels to the model names used in the CSV file
+    model_name_map = {
+        "Base (english)": "english", "Reverse (reverse_full)": "reverse_full",
+        "EvenOddShuffle (shuffle_even_odd)": "shuffle_even_odd", "LocalShuffle(K=3)": "shuffle_local3",
+        "LocalShuffle(K=5)": "shuffle_local5", "LocalShuffle(K=7) (shuffle_local10)": "shuffle_local10",
+        "DeterministicShuffle (shuffle_deterministic21)": "shuffle_deterministic21"
+    }
+
+    # 1. Get Accuracy Ranking from CSV, restricted to the models in the m-local list
+    accuracy_ranking_local_all = get_performance_ranking(phenomena=local_phenomena, csv_path=csv_file)
+    accuracy_ranking_local = [m for m in accuracy_ranking_local_all if m in model_name_map.values()]
+
+    # 2. Create m-local Ranking (lower score is better)
+    sorted_mlocal = sorted(zip(mlocal_labels, mlocal_values), key=lambda item: item[1])
+    mlocal_ranking = [model_name_map[model] for model, value in sorted_mlocal if model in model_name_map]
+    
+    # 3. Plot the comparison
+    plot_parallel_rankings(
+        rankings={
+            "Accuracy (Local)": accuracy_ranking_local,
+            "m-local Score": mlocal_ranking,
+        },
+        output_path="analysis/output/local_ranking_consistency.png",
+        title="Local Phenomena: Ranking Consistency"
+    )
+
+    # --- STRUCTURAL PHENOMENA: INCONSISTENCY COMPARISON ---
+    print("\n--- Generating comparison plot for structural phenomena rankings ---")
+    structural_phenomena = [
+        "adjunct_island", "distractor_agreement_relative_clause", "ellipsis_n_bar_1",
+        "principle_A_c_command", "wh_questions_object_gap", "wh_questions_object_gap_long_distance",
+        "left_branch_island_simple_question", "existential_there_quantifiers_1"
+    ]
+    # Models and their scores for other structural metrics
+    structural_models = MODEL_ORDER
+    dep_dist_values = [2.04, 2.04, 2.61, 2.38, 2.67, 3.31, 3.59, 3.65, 3.65]
+    projectivity_values = [92, 92, 37, 25, 9, 5, 1, 5, 5]
+
+    # 1. Get Accuracy Ranking from CSV
+    accuracy_ranking_structural = get_performance_ranking(phenomena=structural_phenomena, csv_path=csv_file)
+
+    # 2. Create Dependency Distance Ranking (lower score is better)
+    sorted_dep_dist = sorted(zip(structural_models, dep_dist_values), key=lambda item: item[1])
+    dep_dist_ranking = [model for model, value in sorted_dep_dist]
+
+    # 3. Create Projectivity Ranking (higher score is better)
+    sorted_projectivity = sorted(zip(structural_models, projectivity_values), key=lambda item: item[1], reverse=True)
+    projectivity_ranking = [model for model, value in sorted_projectivity]
+
+    # 4. Plot the comparison
+    plot_parallel_rankings(
+        rankings={
+            "Accuracy (Structural)": accuracy_ranking_structural,
+            "Projectivity": projectivity_ranking,
+            "Norm. Dep. Distance": dep_dist_ranking,
+        },
+        output_path="analysis/output/structural_ranking_inconsistency.png",
+        title="Structural Phenomena: Ranking Inconsistency"
     )
 
 if __name__ == "__main__":
