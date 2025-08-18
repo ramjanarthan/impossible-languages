@@ -38,7 +38,7 @@ def apply_perturbations():
         'shuffled_window_3': lambda tokens, seed: apply_windowed_shuffle_perturbation(tokens, 3, seed),
         'shuffled_window_5': lambda tokens, seed: apply_windowed_shuffle_perturbation(tokens, 5, seed),
         'shuffled_window_10': lambda tokens, seed: apply_windowed_shuffle_perturbation(tokens, 10, seed),
-        'shuffle': lambda tokens, seed: apply_shuffle_deterministic_perturbation(tokens, seed),
+        'deterministic_shuffle': lambda tokens, seed: apply_shuffle_deterministic_perturbation(tokens, 21),
         'non_deterministic_shuffle': lambda tokens, seed: apply_shuffle_nondeterministic_perturbation(tokens, default_rng(seed)),
         'even_odd_shuffle': lambda tokens, seed: apply_shuffle_even_odd_perturbation(tokens)
     }
@@ -127,7 +127,7 @@ def generate_stats_table_image(filepath):
 
     # Create a DataFrame from the aggregated stats
     stats_df = pd.DataFrame.from_dict(agg_stats, orient='index')
-    stats_df = stats_df.sort_values(by='avg_norm_dep_distance', ascending=True)
+    stats_df = stats_df.sort_values(by='proportion_projective', ascending=False)
 
     # Prepare data for the table
     stats_df.index.name = 'Perturbation Type'
@@ -137,19 +137,19 @@ def generate_stats_table_image(filepath):
     # Select and rename columns for the final table
     table_df = stats_df[[
         'Perturbation Type',
+        'proportion_projective',
         'avg_norm_dep_distance',
         # 'avg_total_dep_distance',
         'avg_crossing_deps',
-        'proportion_projective',
         # 'num_sentences'
     ]].copy()
 
     table_df.columns = [
         'Perturbation Type',
+        'Proportion Projective',
         'Avg Norm Dep Distance',
         # 'Avg Total Dep Distance',
         'Avg Crossing Deps',
-        'Proportion Projective',
         # 'Num Sentences'
     ]
 
@@ -181,8 +181,8 @@ def generate_stats_table_image(filepath):
     print(f"\nSaved stats table to: {output_path}")
 
 def main():
-    # apply_perturbations()
-    # aggregate_stats('analysis/output/dep_stats.csv')
+    apply_perturbations()
+    aggregate_stats('analysis/output/dep_stats.csv')
     generate_stats_table_image('analysis/output/dep_stats.csv')
    
 if __name__ == "__main__":
