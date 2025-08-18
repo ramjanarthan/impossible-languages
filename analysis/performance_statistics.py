@@ -89,6 +89,8 @@ def plot_ordering(
     output_path: str = "analysis/output/ordering.png",
     title: str = "Model Performance Ranking",
     reverse: bool = True,
+    col1_title: str = "Item",
+    col2_title: str = "Value",
 ):
     """
     Generates a PNG image showing an ordered list of labels and their values.
@@ -113,11 +115,19 @@ def plot_ordering(
     if sorted_labels:
         max_len = max(len(label) for label in sorted_labels)
         # Base width of 4 inches + 0.12 inches per character for the label
-        fig_width = 4 + max_len * 0.06
+        fig_width = 4 + max_len * 0.04
     else:
         fig_width = 5 # Default width if there are no labels
 
-    fig, ax = plt.subplots(figsize=(fig_width, 0.6 * len(sorted_labels)))
+    # if column titles combined are bigger than fig_width, increase fig_width
+    if len(col1_title) + len(col2_title) > 30:
+        fig_width = fig_width + 2
+
+    fig, ax = plt.subplots(figsize=(fig_width, 0.6 * (len(sorted_labels) + 1)))
+
+    # Add column titles
+    ax.text(-0.5, -1, f"  {col1_title}", va='center', ha='left', color='black', fontsize=14, fontweight='bold')
+    ax.text(0.5, -1, f"{col2_title}  ", va='center', ha='right', color='black', fontsize=14, fontweight='bold')
     
     background = [[1] for _ in sorted_labels]
     ax.imshow(background, cmap="Blues", aspect="auto", vmin=0, vmax=1.5, extent=(-0.5, 0.5, len(sorted_labels)-0.5, -0.5))
@@ -136,7 +146,7 @@ def plot_ordering(
     ax.spines[:].set_visible(False)
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.set_title(title, fontsize=16, fontweight='bold', pad=20)
+    # ax.set_title(title, fontsize=16, fontweight='bold', pad=20)
     
     plt.tight_layout()
     
@@ -187,7 +197,8 @@ def plot_model_ordering_from_csv(
     values = performance.values.tolist()
     
     # Call the plotting function to create and save the image
-    plot_ordering(labels=labels, values=values, output_path=output_path)
+    plot_ordering(labels=labels, values=values, output_path=output_path, col1_title="Model", col2_title="Accuracy")
+
 
 def plot_phenomenon_group_counts(
     csv_path: str = "experiments/output/v2/results.csv",
@@ -516,7 +527,7 @@ def plot_parallel_rankings(
         ax.text(i, -0.5, label, ha='center', va='bottom', fontsize=14, fontweight='bold')
 
     # 5. Final plot styling for a clean, professional look
-    ax.set_title(title, fontsize=18, fontweight='bold', pad=30)
+    # ax.set_title(title, fontsize=18, fontweight='bold', pad=30)
     ax.invert_yaxis()  # Puts Rank 1 at the top
     ax.set_ylim(num_items - 0.5, -1)
     ax.set_xlim(-0.5, num_rankings - 0.5)
@@ -564,7 +575,7 @@ def main():
     
     plot_model_ordering_from_csv(
         phenomena=local_ordering_phenomena,
-        skip_models=["reverse_partial", "shuffle_nondeterministic"],
+        # skip_models=["reverse_partial", "shuffle_nondeterministic"],
         output_path="analysis/output/model_ordering_local.png"
     )
 
@@ -577,6 +588,8 @@ def main():
         values=custom_values,
         output_path="analysis/output/m_local_ranking.png",
         title="m-local Ranking",
+        col1_title="Impossible language",
+        col2_title="m-local entropy",
         reverse=False
     )
 
@@ -606,6 +619,8 @@ def main():
         values=normalized_dependency_distance_values,
         output_path="analysis/output/mean_normalised_dep_distance_ranking.png",
         title="Mean Normalized Dependency Distance Ranking",
+        col1_title="Impossible language model",
+        col2_title="Mean Norm. Dep. Distance",
         reverse=False
     )
 
@@ -615,6 +630,8 @@ def main():
         values=proportion_projective,
         output_path="analysis/output/projectivity_ranking.png",
         title="Projectivity Ranking",
+        col1_title="Impossible language model",
+        col2_title="Proportion Projective",
     )
 
     csv_file = "experiments/output/v2/results.csv"
@@ -644,7 +661,7 @@ def main():
     # 3. Plot the comparison
     plot_parallel_rankings(
         rankings={
-            "Accuracy (Local)": accuracy_ranking_local,
+            "Model Accuracy (Local tasks)": accuracy_ranking_local,
             "m-local Score": mlocal_ranking,
         },
         output_path="analysis/output/local_ranking_consistency.png",
@@ -672,7 +689,7 @@ def main():
     # 4. Plot the comparison
     plot_parallel_rankings(
         rankings={
-            "Accuracy (Structural)": accuracy_ranking_structural,
+            "Model Accuracy (Structural tasks)": accuracy_ranking_structural,
             "Projectivity": projectivity_ranking,
             "Norm. Dep. Distance": dep_dist_ranking,
         },

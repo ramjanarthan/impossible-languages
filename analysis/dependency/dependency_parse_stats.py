@@ -138,23 +138,23 @@ def generate_stats_table_image(filepath):
     table_df = stats_df[[
         'Perturbation Type',
         'avg_norm_dep_distance',
-        'avg_total_dep_distance',
+        # 'avg_total_dep_distance',
         'avg_crossing_deps',
         'proportion_projective',
-        'num_sentences'
+        # 'num_sentences'
     ]].copy()
 
     table_df.columns = [
         'Perturbation Type',
         'Avg Norm Dep Distance',
-        'Avg Total Dep Distance',
+        # 'Avg Total Dep Distance',
         'Avg Crossing Deps',
         'Proportion Projective',
-        'Num Sentences'
+        # 'Num Sentences'
     ]
 
     # Round the float values for better display
-    for col in ['Avg Norm Dep Distance', 'Avg Total Dep Distance', 'Avg Crossing Deps']:
+    for col in ['Avg Norm Dep Distance', 'Avg Crossing Deps']:
         table_df[col] = table_df[col].round(2)
     table_df['Proportion Projective'] = (table_df['Proportion Projective'] * 100).round(2).astype(str) + '%'
 
@@ -181,8 +181,8 @@ def generate_stats_table_image(filepath):
     print(f"\nSaved stats table to: {output_path}")
 
 def main():
-    apply_perturbations()
-    aggregate_stats('analysis/output/dep_stats.csv')
+    # apply_perturbations()
+    # aggregate_stats('analysis/output/dep_stats.csv')
     generate_stats_table_image('analysis/output/dep_stats.csv')
    
 if __name__ == "__main__":
