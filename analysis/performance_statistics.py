@@ -535,8 +535,7 @@ def main():
     # save_performance_table_image(PHENOMENA_LIST, output_filename="performance_table_overall.png")
     local_ordering_phenomena = [
         "anaphor_gender_agreement", "anaphor_number_agreement",
-        # "animate_subject_passive",
-         "existential_there_quantifiers_1",
+        "existential_there_quantifiers_1",
         "irregular_past_participle_adjectives",
         "wh_questions_subject_gap", "wh_questions_subject_gap_long_distance",
     ]
@@ -544,6 +543,8 @@ def main():
 
     structural_phenomena = [
         "adjunct_island",
+        "animate_subject_passive",
+        "determiner_noun_agreement_with_adj_2",
         "distractor_agreement_relative_clause",
         "ellipsis_n_bar_1",
         "principle_A_c_command",
@@ -620,30 +621,25 @@ def main():
 
     # --- LOCAL PHENOMENA: CONSISTENCY COMPARISON ---
     print("\n--- Generating comparison plot for local phenomena rankings ---")
-    local_phenomena = [
-        "anaphor_gender_agreement", "anaphor_number_agreement",
-        "animate_subject_passive", "existential_there_quantifiers_1",
-        "wh_questions_subject_gap", "wh_questions_subject_gap_long_distance",
-    ]
     # Models and scores for the "m-local" metric
-    mlocal_labels = ["Base (english)", "Reverse (reverse_full)", "EvenOddShuffle (shuffle_even_odd)", "LocalShuffle(K=3) (shuffle_local3)", "LocalShuffle(K=5) (shuffle_local5)", "LocalShuffle(K=7) (shuffle_local10)", "DeterministicShuffle (shuffle_deterministic21)"]
+    mlocal_labels = ["Base", "Reverse", "EvenOddShuffle", "LocalShuffle(K=3)", "LocalShuffle(K=5)", "LocalShuffle(K=7)", "DeterministicShuffle"]
     mlocal_values = [2.92, 2.98, 3.76, 3.68, 3.88, 4.06, 4.60]
 
     # Map the custom labels to the model names used in the CSV file
     model_name_map = {
-        "Base (english)": "english", "Reverse (reverse_full)": "reverse_full",
-        "EvenOddShuffle (shuffle_even_odd)": "shuffle_even_odd", "LocalShuffle(K=3)": "shuffle_local3",
-        "LocalShuffle(K=5)": "shuffle_local5", "LocalShuffle(K=7) (shuffle_local10)": "shuffle_local10",
-        "DeterministicShuffle (shuffle_deterministic21)": "shuffle_deterministic21"
+        "Base": "english", "Reverse": "reverse_full",
+        "EvenOddShuffle": "shuffle_even_odd", "LocalShuffle(K=3)": "shuffle_local3",
+        "LocalShuffle(K=5)": "shuffle_local5",
+        "DeterministicShuffle": "shuffle_deterministic21"
     }
 
     # 1. Get Accuracy Ranking from CSV, restricted to the models in the m-local list
-    accuracy_ranking_local_all = get_performance_ranking(phenomena=local_phenomena, csv_path=csv_file)
+    accuracy_ranking_local_all = get_performance_ranking(phenomena=local_ordering_phenomena, csv_path=csv_file)
     accuracy_ranking_local = [m for m in accuracy_ranking_local_all if m in model_name_map.values()]
 
     # 2. Create m-local Ranking (lower score is better)
     sorted_mlocal = sorted(zip(mlocal_labels, mlocal_values), key=lambda item: item[1])
-    mlocal_ranking = [model_name_map[model] for model, value in sorted_mlocal if model in model_name_map]
+    mlocal_ranking = [model_name_map[model] for model, _ in sorted_mlocal if model in model_name_map]
     
     # 3. Plot the comparison
     plot_parallel_rankings(
@@ -657,11 +653,6 @@ def main():
 
     # --- STRUCTURAL PHENOMENA: INCONSISTENCY COMPARISON ---
     print("\n--- Generating comparison plot for structural phenomena rankings ---")
-    structural_phenomena = [
-        "adjunct_island", "distractor_agreement_relative_clause", "ellipsis_n_bar_1",
-        "principle_A_c_command", "wh_questions_object_gap", "wh_questions_object_gap_long_distance",
-        "left_branch_island_simple_question", "existential_there_quantifiers_1"
-    ]
     # Models and their scores for other structural metrics
     structural_models = MODEL_ORDER
     dep_dist_values = [2.04, 2.04, 2.61, 2.38, 2.67, 3.31, 3.59, 3.65, 3.65]
@@ -676,7 +667,7 @@ def main():
 
     # 3. Create Projectivity Ranking (higher score is better)
     sorted_projectivity = sorted(zip(structural_models, projectivity_values), key=lambda item: item[1], reverse=True)
-    projectivity_ranking = [model for model, value in sorted_projectivity]
+    projectivity_ranking = [model for model, _ in sorted_projectivity]
 
     # 4. Plot the comparison
     plot_parallel_rankings(
