@@ -1,3 +1,4 @@
+from analysis.dependency.dependency_parse import crossing_dependencies_count
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -594,49 +595,11 @@ def main():
     )
 
     print("\n--- Generating plot for structural phenomena ---")
-    # Structural ordering
-    
 
-    plot_model_ordering_from_csv(
-        phenomena=structural_phenomena,
-        output_path="analysis/output/model_ordering_structural.png"
-    )
 
-    custom_labels =  [
-        "english",
-        "reverse_full",
-        "reverse_partial",
-        "shuffle_local3",
-        "shuffle_local5",
-        "shuffle_local10",
-        "shuffle_even_odd",
-        "shuffle_deterministic21",
-        "shuffle_nondeterministic",
-    ]
-    normalized_dependency_distance_values = [2.04, 2.04, 2.61, 2.38, 2.67, 3.31, 3.59, 3.65, 3.65]
-    plot_ordering(
-        labels=custom_labels,
-        values=normalized_dependency_distance_values,
-        output_path="analysis/output/mean_normalised_dep_distance_ranking.png",
-        title="Mean Normalized Dependency Distance Ranking",
-        col1_title="Impossible language model",
-        col2_title="Mean Norm. Dep. Distance",
-        reverse=False
-    )
-
-    proportion_projective = [92, 92,37, 25, 9, 5, 1, 5, 5]
-    plot_ordering(
-        labels=custom_labels,
-        values=proportion_projective,
-        output_path="analysis/output/projectivity_ranking.png",
-        title="Projectivity Ranking",
-        col1_title="Impossible language model",
-        col2_title="Proportion Projective",
-    )
-
-    csv_file = "experiments/output/v2/results.csv"
 
     # --- LOCAL PHENOMENA: CONSISTENCY COMPARISON ---
+    csv_file = "experiments/output/v2/results.csv"
     print("\n--- Generating comparison plot for local phenomena rankings ---")
     # Models and scores for the "m-local" metric
     mlocal_labels = ["Base", "Reverse", "EvenOddShuffle", "LocalShuffle(K=3)", "LocalShuffle(K=5)", "LocalShuffle(K=7)", "DeterministicShuffle"]
@@ -672,8 +635,28 @@ def main():
     print("\n--- Generating comparison plot for structural phenomena rankings ---")
     # Models and their scores for other structural metrics
     structural_models = MODEL_ORDER
-    dep_dist_values = [2.04, 2.04, 2.61, 2.38, 2.67, 3.31, 3.59, 3.65, 3.65]
-    projectivity_values = [92, 92, 37, 25, 9, 5, 1, 5, 5]
+
+    dep_stats_filepath = "analysis/output/dep_stats.csv"
+    df = pd.read_csv(dep_stats_filepath)
+    grouped = df.groupby('perturbation')
+
+    # Calculate aggregations
+    agg_stats = {}
+    for name, group in grouped:
+        agg_stats[name] = {
+            'avg_total_dep_distance': group['total_dependency_distance'].mean(),
+            'avg_norm_dep_distance': group['normalized_dependency_distance'].mean(),
+            'avg_crossing_deps': group['crossing_dependencies_count'].mean(),
+            'proportion_projective': group['is_projective'].mean(),
+            'num_sentences': len(group)
+        }
+
+    # Create a DataFrame from the aggregated stats
+    stats_df = pd.DataFrame.from_dict(agg_stats, orient='index')
+
+    dep_dist_values = stats_df['avg_norm_dep_distance'].tolist()
+    projectivity_values = stats_df['proportion_projective'].tolist()
+    crossing_dependencies_values = stats_df['avg_crossing_deps'].tolist()
 
     # 1. Get Accuracy Ranking from CSV
     accuracy_ranking_structural = get_performance_ranking(phenomena=structural_phenomena, csv_path=csv_file)
@@ -686,15 +669,56 @@ def main():
     sorted_projectivity = sorted(zip(structural_models, projectivity_values), key=lambda item: item[1], reverse=True)
     projectivity_ranking = [model for model, _ in sorted_projectivity]
 
+    # 4. Crossing dependency count (lower score is better)
+    sorted_dep_dist = sorted(zip(structural_models, crossing_dependencies_values), key=lambda item: item[1])
+    crossing_dependencies_ranking = [model for model, _ in sorted_dep_dist]
+
     # 4. Plot the comparison
     plot_parallel_rankings(
         rankings={
             "Model Accuracy (Structural tasks)": accuracy_ranking_structural,
             "Projectivity": projectivity_ranking,
             "Norm. Dep. Distance": dep_dist_ranking,
+            "Crossing Dependencies": crossing_dependencies_ranking,
         },
         output_path="analysis/output/structural_ranking_inconsistency.png",
         title="Structural Phenomena: Ranking Inconsistency"
+    )
+
+    # Structural ordering
+    
+    plot_model_ordering_from_csv(
+        phenomena=structural_phenomena,
+        output_path="analysis/output/model_ordering_structural.png"
+    )    
+    
+    plot_ordering(
+        labels=structural_models,
+        values=dep_dist_values,
+        output_path="analysis/output/mean_normalised_dep_distance_ranking.png",
+        title="Mean Normalized Dependency Distance Ranking",
+        col1_title="Impossible language model",
+        col2_title="Mean Norm. Dep. Distance",
+        reverse=False
+    )
+
+    plot_ordering(
+        labels=structural_models,
+        values=projectivity_values,
+        output_path="analysis/output/projectivity_ranking.png",
+        title="Projectivity Ranking",
+        col1_title="Impossible language model",
+        col2_title="Proportion Projective",
+    )
+
+    plot_ordering(
+        labels=structural_models,
+        values=crossing_dependencies_values,
+        output_path="analysis/output/crossing_dependencies_ranking.png",
+        title="Crossing Dependencies Ranking",
+        col1_title="Impossible language model",
+        col2_title="Crossing Dependencies",
+        reverse=False
     )
 
 if __name__ == "__main__":

@@ -32,15 +32,15 @@ def apply_perturbations():
 
     # Define perturbations
     perturbations = {
-        'original': lambda tokens, seed: tokens,
-        'reverse': lambda tokens, seed: apply_reverse_perturbation(tokens),
+        'english': lambda tokens, seed: tokens,
+        'reverse_full': lambda tokens, seed: apply_reverse_perturbation(tokens),
         'partial_reverse': lambda tokens, seed: apply_partial_reverse_perturbation(tokens, default_rng(21)),
-        'shuffled_window_3': lambda tokens, seed: apply_windowed_shuffle_perturbation(tokens, 3, seed),
-        'shuffled_window_5': lambda tokens, seed: apply_windowed_shuffle_perturbation(tokens, 5, seed),
-        'shuffled_window_10': lambda tokens, seed: apply_windowed_shuffle_perturbation(tokens, 10, seed),
-        'deterministic_shuffle': lambda tokens, seed: apply_shuffle_deterministic_perturbation(tokens, 21),
-        'non_deterministic_shuffle': lambda tokens, seed: apply_shuffle_nondeterministic_perturbation(tokens, default_rng(seed)),
-        'even_odd_shuffle': lambda tokens, seed: apply_shuffle_even_odd_perturbation(tokens)
+        'shuffle_local3': lambda tokens, seed: apply_windowed_shuffle_perturbation(tokens, 3, seed),
+        'shuffle_local5': lambda tokens, seed: apply_windowed_shuffle_perturbation(tokens, 5, seed),
+        'shuffle_local10': lambda tokens, seed: apply_windowed_shuffle_perturbation(tokens, 10, seed),
+        'shuffle_deterministic21': lambda tokens, seed: apply_shuffle_deterministic_perturbation(tokens, 21),
+        'shuffle_nondeterministic': lambda tokens, seed: apply_shuffle_nondeterministic_perturbation(tokens, default_rng(seed)),
+        'shuffle_even_odd': lambda tokens, seed: apply_shuffle_even_odd_perturbation(tokens)
     }
 
     # Read sample sentences
