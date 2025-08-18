@@ -1,4 +1,3 @@
-from analysis.dependency.dependency_parse import normalized_dependency_distance
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -570,7 +569,7 @@ def main():
 
     print("\n--- Generating plot from a custom list of models and scores ---")
     # Example of using the second function directly with custom data
-    custom_labels = ["Base (english)", "Reverse (reverse_full)", "EvenOddShuffle (shuffle_even_odd)", "LocalShuffle(K=3) (shuffle_local3)", "LocalShuffle(K=5) (shuffle_local5)", "LocalShuffle(K=7) (shuffle_local10)", "DeterministicShuffle (shuffle_deterministic21)"]
+    custom_labels = ["Base (english)", "Reverse (reverse_full)", "EvenOddShuffle (shuffle_even_odd)", "LocalShuffle(K=3) (shuffle_local3)", "LocalShuffle(K=5) (shuffle_local5)", "LocalShuffle(K=7)", "DeterministicShuffle (shuffle_deterministic21)"]
     custom_values = [2.92, 2.98, 3.76, 3.68, 3.88, 4.06, 4.60] # Note: The function will sort these automatically
     plot_ordering(
         labels=custom_labels,
