@@ -31,7 +31,7 @@ def generate_grammatical_phenomena_classification_table():
         colLabels=table_data.columns,
         cellLoc='left',
         loc='center',
-        colWidths=[0.4, 0.2, 0.3]
+        colWidths=[0.4, 0.2, 0.2]
     )
 
     the_table.auto_set_font_size(False)
