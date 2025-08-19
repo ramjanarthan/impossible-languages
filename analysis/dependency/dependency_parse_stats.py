@@ -1,3 +1,5 @@
+from ast import List
+import string
 import spacy
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -109,7 +111,7 @@ def aggregate_stats(filepath):
 
 
 
-def generate_stats_table_image(filepath):
+def generate_stats_table_image(filepath, column):
     """Generates and saves a PNG image of the aggregated stats table."""
     df = pd.read_csv(filepath)
     grouped = df.groupby('perturbation')
@@ -127,7 +129,8 @@ def generate_stats_table_image(filepath):
 
     # Create a DataFrame from the aggregated stats
     stats_df = pd.DataFrame.from_dict(agg_stats, orient='index')
-    stats_df = stats_df.sort_values(by='proportion_projective', ascending=False)
+    ascending = column == 'avg_norm_dep_distance'
+    stats_df = stats_df.sort_values(by=column, ascending=ascending)
 
     # Prepare data for the table
     stats_df.index.name = 'Perturbation Type'
@@ -137,35 +140,40 @@ def generate_stats_table_image(filepath):
     # Select and rename columns for the final table
     table_df = stats_df[[
         'Perturbation Type',
-        'proportion_projective',
-        'avg_norm_dep_distance',
+        column,
+        # 'avg_norm_dep_distance',
         # 'avg_total_dep_distance',
-        'avg_crossing_deps',
+        # 'avg_crossing_deps',
         # 'num_sentences'
     ]].copy()
 
+    if column == 'avg_norm_dep_distance':
+        title = 'Avg Norm Dep Distance'
+    else:
+        title = 'Proportion Projective'
+
     table_df.columns = [
         'Perturbation Type',
-        'Proportion Projective',
-        'Avg Norm Dep Distance',
+        title,
         # 'Avg Total Dep Distance',
-        'Avg Crossing Deps',
+        # 'Avg Crossing Deps',
         # 'Num Sentences'
     ]
 
     # Round the float values for better display
-    for col in ['Avg Norm Dep Distance', 'Avg Crossing Deps']:
-        table_df[col] = table_df[col].round(2)
-    table_df['Proportion Projective'] = (table_df['Proportion Projective'] * 100).round(2).astype(str) + '%'
+    if column == 'avg_norm_dep_distance':
+        table_df['Avg Norm Dep Distance'] = table_df['Avg Norm Dep Distance'].round(2)
+    else:
+        table_df['Proportion Projective'] = (table_df['Proportion Projective'] * 100).round(2).astype(str) + '%'
 
     # Create the table image
-    fig, ax = plt.subplots(figsize=(12, 4))
+    fig, ax = plt.subplots(figsize=(6, 4))
     ax.axis('tight')
     ax.axis('off')
     the_table = ax.table(cellText=table_df.values, colLabels=table_df.columns, loc='center', cellLoc='center')
     the_table.auto_set_font_size(False)
     the_table.set_fontsize(10)
-    the_table.scale(1.2, 1.2)
+    # the_table.scale(1.2, 1.2)
 
     # Make the header row bold, larger, and with a background color
     header_cells = the_table._cells
@@ -176,14 +184,31 @@ def generate_stats_table_image(filepath):
             cell.set_edgecolor('black')
 
     # Save the figure
-    output_path = Path(filepath).parent / 'dependency_metrics_summary.png'
+    filename = 'dependency_metrics_summary_' + column + '.png'
+    output_path = Path(filepath).parent / filename
     plt.savefig(output_path, bbox_inches='tight', dpi=300)
     print(f"\nSaved stats table to: {output_path}")
 
+     # --- Crop the image to remove excess whitespace ---
+    try:
+        from PIL import Image
+        im = Image.open(output_path)
+        width, height = im.size
+        left = int(width * 0)
+        upper = int(height * 0.2)
+        right = int(width * 1)
+        lower = int(height * 0.8)
+        im_cropped = im.crop((left, upper, right, lower))
+        im_cropped.save(output_path)
+        print(f"Cropped image saved to {output_path}")
+    except Exception as e:
+        print(f"Warning: Could not crop image: {e}")
+
 def main():
-    apply_perturbations()
-    aggregate_stats('analysis/output/dep_stats.csv')
-    generate_stats_table_image('analysis/output/dep_stats.csv')
+    # apply_perturbations()
+    # aggregate_stats('analysis/output/dep_stats.csv')
+    generate_stats_table_image('analysis/output/dep_stats.csv', 'proportion_projective')
+    generate_stats_table_image('analysis/output/dep_stats.csv', 'avg_norm_dep_distance')
    
 if __name__ == "__main__":
     main()

@@ -679,7 +679,6 @@ def main():
             "Model Accuracy (Structural tasks)": accuracy_ranking_structural,
             "Projectivity": projectivity_ranking,
             "Norm. Dep. Distance": dep_dist_ranking,
-            "Crossing Dependencies": crossing_dependencies_ranking,
         },
         output_path="analysis/output/structural_ranking_inconsistency.png",
         title="Structural Phenomena: Ranking Inconsistency"
