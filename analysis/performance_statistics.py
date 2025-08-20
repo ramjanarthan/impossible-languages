@@ -1,3 +1,4 @@
+from math import fabs
 from analysis.dependency.dependency_parse import crossing_dependencies_count
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -515,7 +516,8 @@ def get_performance_ranking(
 def plot_parallel_rankings(
     rankings: Dict[str, List[str]],
     output_path: str,
-    title: str,
+    should_enable_special_labelling_logic: bool = False,
+    ranking_values: dict = None
 ):
     """
     Creates a parallel coordinates plot to compare multiple rankings of the same items.
@@ -541,6 +543,14 @@ def plot_parallel_rankings(
         rank_maps[label] = {item: i for i, item in enumerate(ranking_list)}
     
     fig, ax = plt.subplots(figsize=(4 * num_rankings, max(6, 0.5 * num_items)))
+
+    # Map the custom labels to the model names used in the CSV file
+    model_name_map = {
+        "Base": "english", "Reverse": "reverse_full",
+        "EvenOddShuffle": "shuffle_even_odd", "LocalShuffle(K=3)": "shuffle_local3",
+        "LocalShuffle(K=5)": "shuffle_local5",
+        "DeterministicShuffle": "shuffle_deterministic21"
+    }
     
     # 3. Assign a unique color to each item for clear tracking
     colors = plt.cm.get_cmap('tab20', num_items)
@@ -571,25 +581,40 @@ def plot_parallel_rankings(
                 first_x, first_y = x_positions[0], y_positions[0]
                 last_x, last_y = x_positions[-1], y_positions[-1]
                 
-                ax.text(first_x - 0.05, first_y, f"({first_y+1}) {item}", 
-                       ha='right', va='center', fontsize=12)
-                ax.text(last_x + 0.05, last_y, f"({last_y+1}) {item}", 
-                       ha='left', va='center', fontsize=12)
+                # Append actual value in square brackets to the label if ranking_values is provided
+                value_first = None
+                value_last = None
+                if ranking_values is not None:
+                    # Try to get the value for this item at the first and last ranking
+                    if ranking_labels[first_x] in ranking_values and item in ranking_values[ranking_labels[first_x]]:
+                        value_first = ranking_values[ranking_labels[first_x]][item]
+                    if ranking_labels[last_x] in ranking_values and item in ranking_values[ranking_labels[last_x]]:
+                        value_last = ranking_values[ranking_labels[last_x]][item]
+                label_first = f"({first_y+1}) {MODEL_TO_DISPLAY_NAME[model_name_map[item]] if should_enable_special_labelling_logic else item}"
+                label_last = f"({last_y+1}) {item}"
+                if value_first is not None:
+                    label_first += f" [{value_first:.2f}]"
+                if value_last is not None:
+                    label_last += f" [{value_last:.2f}]"
+                ax.text(first_x - 0.05, first_y, label_first, ha='right', va='center', fontsize=12)
+                ax.text(last_x + 0.05, last_y, label_last, ha='left', va='center', fontsize=12)
+
+
             
             plotted_items.append(item)
     
-    # # 5. Add items that only appear in one ranking as single points
-    # for i, item in enumerate(all_items):
-    #     if item not in plotted_items:
-    #         # Find the single ranking this item appears in
-    #         for j, label in enumerate(ranking_labels):
-    #             if item in rank_maps[label]:
-    #                 rank = rank_maps[label][item]
-    #                 ax.plot(j, rank, color=colors(i), marker='o',
-    #                        markersize=8, alpha=0.6)
-    #                 ax.text(j + 0.05, rank, f"({rank+1}) {item}", 
-    #                        ha='left', va='center', fontsize=12, alpha=0.6)
-    #                 break
+    # 5. Add items that only appear in one ranking as single points
+    for i, item in enumerate(all_items):
+        if item not in plotted_items:
+            # Find the single ranking this item appears in
+            for j, label in enumerate(ranking_labels):
+                if item in rank_maps[label]:
+                    rank = rank_maps[label][item]
+                    ax.plot(j, rank, color=colors(i), marker='o',
+                           markersize=8, alpha=0.6)
+                    ax.text(j + 0.05, rank, f"({rank+1}) {item}", 
+                           ha='left', va='center', fontsize=12, alpha=0.6)
+                    break
     
     # 6. Set column headers (the names of the rankings)
     max_rank = max(len(ranking) for ranking in rankings.values()) if rankings else 1
@@ -686,7 +711,6 @@ def main():
     
     # 1. Get Accuracy Ranking from CSV, convert to display names
     accuracy_ranking_local_models = get_performance_ranking(phenomena=local_ordering_phenomena, csv_path=csv_file)
-    print(f"acurac - {accuracy_ranking_local_models}")
     accuracy_ranking_local = [display_name_map.get(model, MODEL_TO_DISPLAY_NAME.get(model, model)) 
                              for model in accuracy_ranking_local_models 
                              if model in display_name_map or model in MODEL_TO_DISPLAY_NAME]
@@ -694,6 +718,11 @@ def main():
     # 2. Create m-local Ranking (lower score is better)
     sorted_mlocal = sorted(zip(mlocal_labels, mlocal_values), key=lambda item: item[1])
     mlocal_ranking = [model for model, _ in sorted_mlocal]
+
+    ranking_values_local = {
+        "Accuracy Ranking": accuracy_ranking_local_models,
+        "m-local entropy Ranking": sorted_mlocal,
+    }
     
     # 3. Plot the comparison
     plot_parallel_rankings(
@@ -702,7 +731,8 @@ def main():
             "m-local entropy Ranking": mlocal_ranking,
         },
         output_path="analysis/output/local_ranking_consistency.png",
-        title="Local Phenomena: Ranking Consistency"
+        should_enable_special_labelling_logic=True,
+        ranking_values=ranking_values_local
     )
     
     # --- STRUCTURAL PHENOMENA: INCONSISTENCY COMPARISON ---
@@ -749,16 +779,29 @@ def main():
     # 4. Crossing dependency count (lower score is better)
     sorted_crossing = sorted(zip(structural_display_names, crossing_dependencies_values), key=lambda item: item[1])
     crossing_dependencies_ranking = [model for model, _ in sorted_crossing]
-    
+
+    sorted_mlocal = sorted(zip(mlocal_labels, mlocal_values), key=lambda item: item[1])
+    mlocal_ranking = [model for model, _ in sorted_mlocal]
+
+    # Value dictionaries for each ranking
+    # accuracy_structural_values = {MODEL_TO_DISPLAY_NAME.get(model, model): value
+    #                             for model, value in zip(accuracy_ranking_structural_models, [None]*len(accuracy_ranking_structural_models))}  # Replace None with actual values if available
+    # dep_dist_values_dict = dict(sorted_dep_dist)
+    # projectivity_values_dict = dict(sorted_projectivity)
+    ranking_values_structural = {
+        "Model Accuracy (Structural tasks)": accuracy_ranking_structural_models,
+        "Projectivity":  sorted_projectivity,
+        "Norm. Dep. Distance": sorted_dep_dist,
+    }    
     # 5. Plot the comparison
     plot_parallel_rankings(
         rankings={
-            "Model Accuracy (Structural tasks)": accuracy_ranking_structural,
-            "Projectivity": projectivity_ranking,
-            "Norm. Dep. Distance": dep_dist_ranking,
+            "Accuracy Ranking": accuracy_ranking_structural,
+            "Projectivity Ranking": projectivity_ranking,
+            "Dependency Distance Ranking": dep_dist_ranking,
         },
         output_path="analysis/output/structural_ranking_inconsistency.png",
-        title="Structural Phenomena: Ranking Inconsistency"
+        ranking_values=ranking_values_structural,
     )
 
     # Structural ordering
