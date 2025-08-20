@@ -24,6 +24,24 @@ PHENOMENA_LIST = [
     "existential_there_quantifiers_1"
 ]
 
+PHENOMENA_TO_DISPLAY_NAME = {
+    "adjunct_island": "Adjunct Island",
+    "anaphor_gender_agreement": "Anaphor Gender Agreement",
+    "anaphor_number_agreement": "Anaphor Number Agreement",
+    "animate_subject_passive": "Animate Subject Passive",
+    "distractor_agreement_relative_clause": "Distractor Agreement Relative Clause",
+    "ellipsis_n_bar_1": "Ellipsis N-bar 1",
+    "irregular_past_participle_adjectives": "Irregular Past Participle Adjectives",
+    "principle_A_c_command": "Principle A C-command",
+    "wh_questions_object_gap": "WH Questions Object Gap",
+    "wh_questions_object_gap_long_distance": "WH Questions Object Gap Long Distance",
+    "wh_questions_subject_gap": "WH Questions Subject Gap",
+    "wh_questions_subject_gap_long_distance": "WH Questions Subject Gap Long Distance",
+    "left_branch_island_simple_question": "Left Branch Island Simple Question",
+    "determiner_noun_agreement_with_adj_2": "Determiner Noun Agreement With Adj 2",
+    "existential_there_quantifiers_1": "Existential There Quantifiers 1"
+}
+
 PHENOMENA_LIST_MAP = {
     "adjunct_island": "island_effects",
     "anaphor_gender_agreement": "anaphor_agreement",
@@ -83,6 +101,18 @@ MODEL_ORDER = [
     "shuffle_deterministic21",
     "shuffle_nondeterministic",
 ]
+
+MODEL_TO_DISPLAY_NAME = {
+    "english": "English",
+    "reverse_full": "Full Reverse",
+    "reverse_partial": "Partial Reverse",
+    "shuffle_local3": "Local Shuffle3",
+    "shuffle_local5": "Local Shuffle5",
+    "shuffle_local10": "Local Shuffle10",
+    "shuffle_even_odd": "Even-odd Shuffle",
+    "shuffle_deterministic21": "Deterministic Shuffle21",
+    "shuffle_nondeterministic": "Nondeterministic Shuffle",
+}
 
 def plot_ordering(
     labels: List[str],
@@ -306,11 +336,17 @@ def save_performance_table_image(
     all_models = MODEL_ORDER
     # Filter to requested phenomena
     df = df[df["grammatical phenomenon"].isin(phenomena)]
+    
+    # Pivot table: index=phenomenon, columns=model,    # Map to display names for table
+    df["grammatical phenomenon"] = df["grammatical phenomenon"].apply(lambda x: PHENOMENA_TO_DISPLAY_NAME.get(x, x))
+    df["model name"] = df["model name"].apply(lambda x: MODEL_TO_DISPLAY_NAME.get(x, x))
+    phenomena_display = [PHENOMENA_TO_DISPLAY_NAME.get(p, p) for p in phenomena]
+    all_models_display = [MODEL_TO_DISPLAY_NAME.get(m, m) for m in MODEL_ORDER]
 
-    # Pivot table: index=phenomenon, columns=model, values=accuracy
+    # Create pivot table
     table = df.pivot_table(index="grammatical phenomenon", columns="model name", values="accuracy")
     # Ensure all models/phenomena present (fill missing with NaN)
-    table = table.reindex(index=phenomena, columns=all_models)
+    table = table.reindex(index=phenomena_display, columns=all_models_display)
 
     # Add 'Overall' row (average per model)
     table.loc['Overall'] = table.mean(axis=0, skipna=True)
