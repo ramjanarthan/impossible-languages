@@ -521,66 +521,99 @@ def plot_parallel_rankings(
     Creates a parallel coordinates plot to compare multiple rankings of the same items.
     This visualization is excellent for showing consistency (parallel lines) or inconsistency
     (crossed lines) between different ranking criteria.
-
     Args:
         rankings (Dict[str, List[str]]): A dictionary where keys are ranking labels
-                                         (e.g., "Accuracy") and values are ordered
-                                         lists of item names (e.g., model names).
+                                       (e.g., "Accuracy") and values are ordered
+                                       lists of item names (e.g., model names).
         output_path (str): The path to save the generated plot.
         title (str): The overall title for the plot.
     """
     ranking_labels = list(rankings.keys())
     num_rankings = len(ranking_labels)
-
-    # 1. Get all unique items (models) and create maps from item to rank for each list
+    
+    # 1. Get all unique items across all rankings
     all_items = sorted(list(set.union(*[set(r) for r in rankings.values()])))
     num_items = len(all_items)
     
-    rank_maps = {label: {item: i for i, item in enumerate(ranking_list)} 
-                 for label, ranking_list in rankings.items()}
-
+    # 2. Create maps from item to rank for each ranking
+    rank_maps = {}
+    for label, ranking_list in rankings.items():
+        rank_maps[label] = {item: i for i, item in enumerate(ranking_list)}
+    
     fig, ax = plt.subplots(figsize=(4 * num_rankings, max(6, 0.5 * num_items)))
     
-    # 2. Assign a unique color to each model for clear tracking
-    # Using 'tab20' which has a good variety of distinct colors
+    # 3. Assign a unique color to each item for clear tracking
     colors = plt.cm.get_cmap('tab20', num_items)
-
-    # 3. Plot lines for each item, connecting its rank across the different criteria
+    
+    # 4. Plot lines for each item, but only connect items that exist in multiple rankings
+    plotted_items = []
     for i, item in enumerate(all_items):
-        # Ensure the item exists in all rankings to be plotted
-        if all(item in rank_maps[label] for label in ranking_labels):
-            ranks = [rank_maps[label][item] for label in ranking_labels]
+        # Find which rankings contain this item
+        available_rankings = [label for label in ranking_labels if item in rank_maps[label]]
         
+        # Only plot if item exists in at least 2 rankings
+        if len(available_rankings) >= 2:
+            x_positions = []
+            y_positions = []
+            
+            # Get positions for this item across all rankings where it exists
+            for j, label in enumerate(ranking_labels):
+                if item in rank_maps[label]:
+                    x_positions.append(j)
+                    y_positions.append(rank_maps[label][item])
+            
             # Plot the line connecting the ranks
-            ax.plot(range(num_rankings), ranks, color=colors(i), marker='o', 
-                    markersize=8, alpha=0.9, linewidth=2.5, label=item)
-
-            # Add text labels with rank number at the start and end points
-            ax.text(-0.05, ranks[0], f"{item} ({ranks[0]+1})", ha='right', va='center', fontsize=12)
-            ax.text(num_rankings - 1 + 0.05, ranks[-1], f"({ranks[-1]+1}) {item}", ha='left', va='center', fontsize=12)
-
-    # 4. Set column headers (the names of the rankings)
+            ax.plot(x_positions, y_positions, color=colors(i), marker='o',
+                   markersize=8, alpha=0.9, linewidth=2.5, label=item)
+            
+            # Add text labels at the first and last positions where item appears
+            if x_positions:
+                first_x, first_y = x_positions[0], y_positions[0]
+                last_x, last_y = x_positions[-1], y_positions[-1]
+                
+                ax.text(first_x - 0.05, first_y, f"({first_y+1}) {item}", 
+                       ha='right', va='center', fontsize=12)
+                ax.text(last_x + 0.05, last_y, f"({last_y+1}) {item}", 
+                       ha='left', va='center', fontsize=12)
+            
+            plotted_items.append(item)
+    
+    # # 5. Add items that only appear in one ranking as single points
+    # for i, item in enumerate(all_items):
+    #     if item not in plotted_items:
+    #         # Find the single ranking this item appears in
+    #         for j, label in enumerate(ranking_labels):
+    #             if item in rank_maps[label]:
+    #                 rank = rank_maps[label][item]
+    #                 ax.plot(j, rank, color=colors(i), marker='o',
+    #                        markersize=8, alpha=0.6)
+    #                 ax.text(j + 0.05, rank, f"({rank+1}) {item}", 
+    #                        ha='left', va='center', fontsize=12, alpha=0.6)
+    #                 break
+    
+    # 6. Set column headers (the names of the rankings)
+    max_rank = max(len(ranking) for ranking in rankings.values()) if rankings else 1
     for i, label in enumerate(ranking_labels):
         ax.text(i, -0.5, label, ha='center', va='bottom', fontsize=14, fontweight='bold')
-
-    # 5. Final plot styling for a clean, professional look
-    # ax.set_title(title, fontsize=18, fontweight='bold', pad=30)
+    
+    # 7. Final plot styling for a clean, professional look
     ax.invert_yaxis()  # Puts Rank 1 at the top
-    ax.set_ylim(num_items - 0.5, -1)
+    ax.set_ylim(max_rank - 0.5, -1)
     ax.set_xlim(-0.5, num_rankings - 0.5)
-    ax.set_xticks([]) # Hide x-axis ticks, we have headers
-    ax.set_yticks([]) # Hide y-axis ticks
-    ax.spines[:].set_visible(False) # Remove the plot frame
-
+    ax.set_xticks([])  # Hide x-axis ticks, we have headers
+    ax.set_yticks([])  # Hide y-axis ticks
+    ax.spines[:].set_visible(False)  # Remove the plot frame
+    
     plt.tight_layout()
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"Parallel ranking plot saved to {output_path}")
 
+
     
 def main():
-    # save_performance_table_image(PHENOMENA_LIST, output_filename="performance_table_overall.png")
+    save_performance_table_image(PHENOMENA_LIST, output_filename="performance_table_overall.png")
     local_ordering_phenomena = [
         "anaphor_gender_agreement", "anaphor_number_agreement",
         "existential_there_quantifiers_1",
@@ -630,17 +663,14 @@ def main():
         reverse=False
     )
 
-    print("\n--- Generating plot for structural phenomena ---")
-
-
-
     # --- LOCAL PHENOMENA: CONSISTENCY COMPARISON ---
-    csv_file = "experiments/output/v2/results.csv"
     print("\n--- Generating comparison plot for local phenomena rankings ---")
+    csv_file = "experiments/output/v2/results.csv"
+
     # Models and scores for the "m-local" metric
     mlocal_labels = ["Base", "Reverse", "EvenOddShuffle", "LocalShuffle(K=3)", "LocalShuffle(K=5)", "LocalShuffle(K=7)", "DeterministicShuffle"]
     mlocal_values = [2.92, 2.98, 3.76, 3.68, 3.88, 4.06, 4.60]
-
+    
     # Map the custom labels to the model names used in the CSV file
     model_name_map = {
         "Base": "english", "Reverse": "reverse_full",
@@ -649,33 +679,41 @@ def main():
         "DeterministicShuffle": "shuffle_deterministic21"
     }
 
-    # 1. Get Accuracy Ranking from CSV, restricted to the models in the m-local list
-    accuracy_ranking_local_all = get_performance_ranking(phenomena=local_ordering_phenomena, csv_path=csv_file)
-    accuracy_ranking_local = [m for m in accuracy_ranking_local_all if m in model_name_map.values()]
+    skipped_local_models = ["reverse_partial", "shuffle_local10", "shuffle_nondeterministic"]
 
+    # Reverse map for converting model names to display names
+    display_name_map = {v: k for k, v in model_name_map.items()}
+    
+    # 1. Get Accuracy Ranking from CSV, convert to display names
+    accuracy_ranking_local_models = get_performance_ranking(phenomena=local_ordering_phenomena, csv_path=csv_file)
+    print(f"acurac - {accuracy_ranking_local_models}")
+    accuracy_ranking_local = [display_name_map.get(model, MODEL_TO_DISPLAY_NAME.get(model, model)) 
+                             for model in accuracy_ranking_local_models 
+                             if model in display_name_map or model in MODEL_TO_DISPLAY_NAME]
+        
     # 2. Create m-local Ranking (lower score is better)
     sorted_mlocal = sorted(zip(mlocal_labels, mlocal_values), key=lambda item: item[1])
-    mlocal_ranking = [model_name_map[model] for model, _ in sorted_mlocal if model in model_name_map]
+    mlocal_ranking = [model for model, _ in sorted_mlocal]
     
     # 3. Plot the comparison
     plot_parallel_rankings(
         rankings={
-            "Model Accuracy (Local tasks)": accuracy_ranking_local,
-            "m-local Score": mlocal_ranking,
+            "Accuracy Ranking": accuracy_ranking_local,
+            "m-local entropy Ranking": mlocal_ranking,
         },
         output_path="analysis/output/local_ranking_consistency.png",
         title="Local Phenomena: Ranking Consistency"
     )
-
+    
     # --- STRUCTURAL PHENOMENA: INCONSISTENCY COMPARISON ---
     print("\n--- Generating comparison plot for structural phenomena rankings ---")
+    
     # Models and their scores for other structural metrics
     structural_models = MODEL_ORDER
-
     dep_stats_filepath = "analysis/output/dep_stats.csv"
     df = pd.read_csv(dep_stats_filepath)
     grouped = df.groupby('perturbation')
-
+    
     # Calculate aggregations
     agg_stats = {}
     for name, group in grouped:
@@ -686,30 +724,33 @@ def main():
             'proportion_projective': group['is_projective'].mean(),
             'num_sentences': len(group)
         }
-
+    
     # Create a DataFrame from the aggregated stats
     stats_df = pd.DataFrame.from_dict(agg_stats, orient='index')
-
     dep_dist_values = stats_df['avg_norm_dep_distance'].tolist()
     projectivity_values = stats_df['proportion_projective'].tolist()
     crossing_dependencies_values = stats_df['avg_crossing_deps'].tolist()
-
-    # 1. Get Accuracy Ranking from CSV
-    accuracy_ranking_structural = get_performance_ranking(phenomena=structural_phenomena, csv_path=csv_file)
-
+    
+    # Convert structural model names to display names
+    structural_display_names = [MODEL_TO_DISPLAY_NAME.get(model, model) for model in structural_models]
+    
+    # 1. Get Accuracy Ranking from CSV, convert to display names
+    accuracy_ranking_structural_models = get_performance_ranking(phenomena=structural_phenomena, csv_path=csv_file)
+    accuracy_ranking_structural = [MODEL_TO_DISPLAY_NAME.get(model, model) for model in accuracy_ranking_structural_models]
+    
     # 2. Create Dependency Distance Ranking (lower score is better)
-    sorted_dep_dist = sorted(zip(structural_models, dep_dist_values), key=lambda item: item[1])
+    sorted_dep_dist = sorted(zip(structural_display_names, dep_dist_values), key=lambda item: item[1])
     dep_dist_ranking = [model for model, value in sorted_dep_dist]
-
+    
     # 3. Create Projectivity Ranking (higher score is better)
-    sorted_projectivity = sorted(zip(structural_models, projectivity_values), key=lambda item: item[1], reverse=True)
+    sorted_projectivity = sorted(zip(structural_display_names, projectivity_values), key=lambda item: item[1], reverse=True)
     projectivity_ranking = [model for model, _ in sorted_projectivity]
-
+    
     # 4. Crossing dependency count (lower score is better)
-    sorted_dep_dist = sorted(zip(structural_models, crossing_dependencies_values), key=lambda item: item[1])
-    crossing_dependencies_ranking = [model for model, _ in sorted_dep_dist]
-
-    # 4. Plot the comparison
+    sorted_crossing = sorted(zip(structural_display_names, crossing_dependencies_values), key=lambda item: item[1])
+    crossing_dependencies_ranking = [model for model, _ in sorted_crossing]
+    
+    # 5. Plot the comparison
     plot_parallel_rankings(
         rankings={
             "Model Accuracy (Structural tasks)": accuracy_ranking_structural,
