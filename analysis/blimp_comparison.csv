@@ -1,0 +1,15 @@
+Dataset,Kallini,BLiMP
+Adjunct Island, 0.625, 0.89
+Anaphor Gender Agreement, 0.819, 0.99
+Anaphor Number Agreement, 0.956, 0.99
+Animate Subject Passive, 0.689, 0.77
+Determiner Noun Agreement with Adjective 2, 0.924, 0.95
+Distractor Agreement Relative Clause, 0.441, 0.66
+Ellipsis N Bar 1, 0.641, 0.92
+Existential There Quantifiers 1, 0.972, 1
+Irregular past participle Adj, 0.98, 0.98
+Left Branch Island, 0.669, 0.87
+Principle A C Command, 0.592, 0.74
+WH Question Object Gap, 0.643, 0.84
+WH Question Subject Gap, 0.852, 0.96
+WH Question Subject Gap Long, 0.895, 0.87
