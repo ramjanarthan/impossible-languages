@@ -52,9 +52,9 @@ def compare_model_performances():
     x_pos = np.arange(len(datasets))
     
     ax1.plot(x_pos, kallini_scores, 'o-', linewidth=2, markersize=8, 
-             label='Kallini GPT-2', color='#2E8B57', alpha=0.8)
+             label='Kallini GPT-2 model', color='#2E8B57', alpha=0.8)
     ax1.plot(x_pos, blimp_scores, 's-', linewidth=2, markersize=8, 
-             label='BLiMP GPT-2', color='#FF6347', alpha=0.8)
+             label='BLiMP GPT-2 model', color='#FF6347', alpha=0.8)
     
     ax1.set_xlabel('Datasets', fontsize=16, fontweight='bold')
     ax1.set_ylabel('Accuracy', fontsize=16, fontweight='bold')
@@ -183,10 +183,10 @@ def plot_blimp_heatmap(model_results_path='experiments/output/v2/results.csv',
         df_combined = df_combined.drop(columns=columns_to_drop)
     
     # Drop specific model rows
-    models_to_drop = ['Local Shuffle5', 'Local Shuffle10', 'Deterministic Shuffle21', 'Nondeterministic Shuffle']
-    rows_to_drop = [model for model in models_to_drop if model in df_combined.index]
-    if rows_to_drop:
-        df_combined = df_combined.drop(index=rows_to_drop)
+    # models_to_drop = [ 'Local Shuffle5', 'Local Shuffle10'] #'Deterministic Shuffle21', 'Nondeterministic Shuffle']
+    # rows_to_drop = [model for model in models_to_drop if model in df_combined.index]
+    # if rows_to_drop:
+    #     df_combined = df_combined.drop(index=rows_to_drop)
     
     # Plot heatmap
     plt.figure(figsize=(max(2 + len(PHENOMENA_ORDER) + 1, 12), max(1 + len(MODEL_ORDER) + 1, 10)))
