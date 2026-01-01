@@ -9,7 +9,6 @@ anaphor_gender_agreement_20260101_170829                            | 0         
 anaphor_number_agreement_20260101_170829                            | 0                  | 1000            | 0.00%     
 animate_subject_passive_20260101_170829                             | 277                | 1000            | 27.70%    
 animate_subject_trans_20260101_170829                               | 445                | 1000            | 44.50%    
-blimp_20260101_170829                                               | 8674               | 69000           | 12.57%    
 causative_20260101_170829                                           | 419                | 1000            | 41.90%    
 complex_NP_island_20260101_170829                                   | 0                  | 1000            | 0.00%     
 coordinate_structure_constraint_complex_left_branch_20260101_170829 | 0                  | 1000            | 0.00%     
@@ -78,23 +77,23 @@ wh_vs_that_with_gap_long_distance_20260101_170829                   | 0         
 
 ### Aggregate Statistics ###
 
-Total Datasets: 70
-Datasets with ANY filtering: 32 (45.71%)
+Total Datasets: 69
+Datasets with ANY filtering: 31 (44.93%)
 
 ### Filtered Sentences Percentiles ###
 P25: 0.00
 P50 (Median): 0.00
-P75: 228.00
-P90: 445.30
-P99: 3159.52
+P75: 198.00
+P90: 424.20
+P99: 618.08
 
 ### Top 5 Most Filtered Datasets ###
 -------------------------------------------------------------------------
 Dataset                                     | Filtered Count | % Filtered
 -------------------------------------------------------------------------
-blimp_20260101_170829                       | 8674           | 12.57%    
 expletive_it_object_raising_20260101_170829 | 682            | 68.20%    
 drop_argument_20260101_170829               | 588            | 58.80%    
 principle_A_domain_3_20260101_170829        | 562            | 56.20%    
 intransitive_20260101_170829                | 544            | 54.40%    
+transitive_20260101_170829                  | 450            | 45.00%    
 -------------------------------------------------------------------------
