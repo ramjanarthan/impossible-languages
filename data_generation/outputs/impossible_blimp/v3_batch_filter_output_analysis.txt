@@ -1,0 +1,100 @@
+
+### Dataset Filtering Statistics ###
+
+-----------------------------------------------------------------------------------------------------------------------
+Dataset Name                                                        | Filtered Sentences | Total Sentences | % Filtered
+-----------------------------------------------------------------------------------------------------------------------
+adjunct_island_20260101_170829                                      | 0                  | 1000            | 0.00%     
+anaphor_gender_agreement_20260101_170829                            | 0                  | 1000            | 0.00%     
+anaphor_number_agreement_20260101_170829                            | 0                  | 1000            | 0.00%     
+animate_subject_passive_20260101_170829                             | 277                | 1000            | 27.70%    
+animate_subject_trans_20260101_170829                               | 445                | 1000            | 44.50%    
+blimp_20260101_170829                                               | 8674               | 69000           | 12.57%    
+causative_20260101_170829                                           | 419                | 1000            | 41.90%    
+complex_NP_island_20260101_170829                                   | 0                  | 1000            | 0.00%     
+coordinate_structure_constraint_complex_left_branch_20260101_170829 | 0                  | 1000            | 0.00%     
+coordinate_structure_constraint_object_extraction_20260101_170829   | 0                  | 1000            | 0.00%     
+coordinate_structure_constraint_subject_extraction_20260101_170829  | 0                  | 1000            | 0.00%     
+determiner_noun_agreement_1_20260101_170829                         | 73                 | 1000            | 7.30%     
+determiner_noun_agreement_2_20260101_170829                         | 0                  | 1000            | 0.00%     
+determiner_noun_agreement_irregular_1_20260101_170829               | 297                | 1000            | 29.70%    
+determiner_noun_agreement_irregular_2_20260101_170829               | 0                  | 1000            | 0.00%     
+determiner_noun_agreement_with_adj_2_20260101_170829                | 0                  | 1000            | 0.00%     
+determiner_noun_agreement_with_adj_irregular_1_20260101_170829      | 182                | 1000            | 18.20%    
+determiner_noun_agreement_with_adj_irregular_2_20260101_170829      | 0                  | 1000            | 0.00%     
+determiner_noun_agreement_with_adjective_1_20260101_170829          | 86                 | 1000            | 8.60%     
+distractor_agreement_relational_noun_20260101_170829                | 81                 | 1000            | 8.10%     
+distractor_agreement_relative_clause_20260101_170829                | 106                | 1000            | 10.60%    
+drop_argument_20260101_170829                                       | 588                | 1000            | 58.80%    
+ellipsis_n_bar_1_20260101_170829                                    | 0                  | 1000            | 0.00%     
+ellipsis_n_bar_2_20260101_170829                                    | 407                | 1000            | 40.70%    
+existential_there_object_raising_20260101_170829                    | 271                | 1000            | 27.10%    
+existential_there_quantifiers_1_20260101_170829                     | 0                  | 1000            | 0.00%     
+existential_there_quantifiers_2_20260101_170829                     | 0                  | 1000            | 0.00%     
+existential_there_subject_raising_20260101_170829                   | 150                | 1000            | 15.00%    
+expletive_it_object_raising_20260101_170829                         | 682                | 1000            | 68.20%    
+inchoative_20260101_170829                                          | 409                | 1000            | 40.90%    
+intransitive_20260101_170829                                        | 544                | 1000            | 54.40%    
+irregular_past_participle_adjectives_20260101_170829                | 0                  | 1000            | 0.00%     
+irregular_past_participle_verbs_20260101_170829                     | 68                 | 1000            | 6.80%     
+irregular_plural_subject_verb_agreement_1_20260101_170829           | 136                | 1000            | 13.60%    
+irregular_plural_subject_verb_agreement_2_20260101_170829           | 198                | 1000            | 19.80%    
+left_branch_island_echo_question_20260101_170829                    | 448                | 1000            | 44.80%    
+left_branch_island_simple_question_20260101_170829                  | 0                  | 1000            | 0.00%     
+matrix_question_npi_licensor_present_20260101_170829                | 366                | 1000            | 36.60%    
+npi_present_1_20260101_170829                                       | 0                  | 1000            | 0.00%     
+npi_present_2_20260101_170829                                       | 0                  | 1000            | 0.00%     
+only_npi_licensor_present_20260101_170829                           | 0                  | 1000            | 0.00%     
+only_npi_scope_20260101_170829                                      | 238                | 1000            | 23.80%    
+passive_1_20260101_170829                                           | 356                | 1000            | 35.60%    
+passive_2_20260101_170829                                           | 393                | 1000            | 39.30%    
+principle_A_c_command_20260101_170829                               | 0                  | 1000            | 0.00%     
+principle_A_case_1_20260101_170829                                  | 0                  | 1000            | 0.00%     
+principle_A_case_2_20260101_170829                                  | 113                | 1000            | 11.30%    
+principle_A_domain_1_20260101_170829                                | 0                  | 1000            | 0.00%     
+principle_A_domain_2_20260101_170829                                | 0                  | 1000            | 0.00%     
+principle_A_domain_3_20260101_170829                                | 562                | 1000            | 56.20%    
+principle_A_reconstruction_20260101_170829                          | 0                  | 1000            | 0.00%     
+regular_plural_subject_verb_agreement_1_20260101_170829             | 119                | 1000            | 11.90%    
+regular_plural_subject_verb_agreement_2_20260101_170829             | 74                 | 1000            | 7.40%     
+sentential_negation_npi_licensor_present_20260101_170829            | 0                  | 1000            | 0.00%     
+sentential_negation_npi_scope_20260101_170829                       | 0                  | 1000            | 0.00%     
+sentential_subject_island_20260101_170829                           | 0                  | 1000            | 0.00%     
+superlative_quantifiers_1_20260101_170829                           | 0                  | 1000            | 0.00%     
+superlative_quantifiers_2_20260101_170829                           | 0                  | 1000            | 0.00%     
+tough_vs_raising_1_20260101_170829                                  | 67                 | 1000            | 6.70%     
+tough_vs_raising_2_20260101_170829                                  | 69                 | 1000            | 6.90%     
+transitive_20260101_170829                                          | 450                | 1000            | 45.00%    
+wh_island_20260101_170829                                           | 0                  | 1000            | 0.00%     
+wh_questions_object_gap_20260101_170829                             | 0                  | 1000            | 0.00%     
+wh_questions_object_gap_long_distance_20260101_170829               | 0                  | 1000            | 0.00%     
+wh_questions_subject_gap_20260101_170829                            | 0                  | 1000            | 0.00%     
+wh_questions_subject_gap_long_distance_20260101_170829              | 0                  | 1000            | 0.00%     
+wh_vs_that_no_gap_20260101_170829                                   | 0                  | 1000            | 0.00%     
+wh_vs_that_no_gap_long_distance_20260101_170829                     | 0                  | 1000            | 0.00%     
+wh_vs_that_with_gap_20260101_170829                                 | 0                  | 1000            | 0.00%     
+wh_vs_that_with_gap_long_distance_20260101_170829                   | 0                  | 1000            | 0.00%     
+-----------------------------------------------------------------------------------------------------------------------
+
+### Aggregate Statistics ###
+
+Total Datasets: 70
+Datasets with ANY filtering: 32 (45.71%)
+
+### Filtered Sentences Percentiles ###
+P25: 0.00
+P50 (Median): 0.00
+P75: 228.00
+P90: 445.30
+P99: 3159.52
+
+### Top 5 Most Filtered Datasets ###
+-------------------------------------------------------------------------
+Dataset                                     | Filtered Count | % Filtered
+-------------------------------------------------------------------------
+blimp_20260101_170829                       | 8674           | 12.57%    
+expletive_it_object_raising_20260101_170829 | 682            | 68.20%    
+drop_argument_20260101_170829               | 588            | 58.80%    
+principle_A_domain_3_20260101_170829        | 562            | 56.20%    
+intransitive_20260101_170829                | 544            | 54.40%    
+-------------------------------------------------------------------------
