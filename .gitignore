@@ -111,7 +111,9 @@ data_generation/slurm/wh_questions_subject_gap_long_distance.sbatch
 data_generation/slurm/wh_vs_that_no_gap_long_distance.sbatch
 data_generation/slurm/wh_vs_that_with_gap_long_distance.sbatch
 data_generation/logs/*
-data_generation/outputs/impossible_blimp/*
+data_generation/outputs/impossible_blimp/v1/*
+data_generation/outputs/impossible_blimp/v2/*
+data_generation/outputs/impossible_blimp/v3/*
 data_generation/outputs/examples_originals/*
 # Results
 experiments/output/v1/raw/*

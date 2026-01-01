@@ -13,7 +13,7 @@ For detailed instructions on each step, please refer to the README.md file.
 
     1.2 These files can be copied to ```data_generation/outputs/impossible_blimp/v2/``` (this folder is gitignored, so you may create it locally). 
 
-    1.3 The dataset files names should be of the format ```<task_name>_<timestamp>.jsonl``` (to ensure uniqueness). This format is also critcal for scripts to function correctly, so I recommend writing a small utitly to generate the timestamp and append it to the file name.
+    1.3 The dataset files names should be of the format ```<task_name>_<timestamp>.jsonl``` (to ensure uniqueness). This format is also critcal for scripts to function correctly, so I recommend using a small utitly to generate the timestamp and append it to the file name. Refer to ```data_generation/generation_projects/impossible_blimp/batch_rename.sh```.
 
     1.4 By copying the datasets, we can skip running the generation scripts
 
