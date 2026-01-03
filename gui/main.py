@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 INDEX_HTML_PATH = os.path.join(BASE_DIR, "index.html")
 RESULTS_HTML_PATH = os.path.join(BASE_DIR, "results.html")
-RESULTS_CSV_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "experiments", "output", "v3", "results.csv"))
+RESULTS_CSV_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "experiments", "output", "v2", "results.csv"))
 
 import re
 import json
@@ -269,9 +269,9 @@ async def read_results():
     """Serve the results HTML page"""
     return FileResponse(RESULTS_HTML_PATH)
 
-@app.get("/api/results/v3")
-async def get_results_v3():
-    """API endpoint to get v3 experiment data"""
+@app.get("/api/results/v2")
+async def get_results_v2():
+    """API endpoint to get v2 experiment data"""
     try:
         if not os.path.exists(RESULTS_CSV_PATH):
             raise HTTPException(status_code=404, detail=f"results.csv not found at {RESULTS_CSV_PATH}")

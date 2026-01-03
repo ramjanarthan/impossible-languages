@@ -50,3 +50,10 @@ The results of all experiments will be stored in ```experiments/output/v2/result
 
 ### Visualising the results
 By now, you should have all raw data saved in ```experiments/output/v2/results.csv```. Using the information under GUI in the README.md, you can visualise the results
+
+### BLIMP datasets vs V3 results
+The BLiMP datasets reported in the paper contain 67 datasets, while the V3 results contain 69 datasets. There are 2 datasets that appear in the V3 results (based on all the datasets from the BLiMP codebase) that don't appear in the BLiMP paper:
+1. coordinate_structure_constraint_subject_extraction
+2. wh_questions_object_gap_long_distance
+
+The dataset ```determiner_noun_agreement_with_adj_1``` in BLiMP results corresponds to the ```determiner_noun_agreement_with_adjective_1``` dataset in the V3 results
