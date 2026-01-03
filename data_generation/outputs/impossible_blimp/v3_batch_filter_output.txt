@@ -1,0 +1,485 @@
+Datasets:
+data_generation/outputs/impossible_blimp/v3/adjunct_island_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/anaphor_gender_agreement_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/anaphor_number_agreement_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/animate_subject_passive_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/animate_subject_trans_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/causative_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/complex_NP_island_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_complex_left_branch_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_object_extraction_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_subject_extraction_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_irregular_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_irregular_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_irregular_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_irregular_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adjective_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/distractor_agreement_relational_noun_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/distractor_agreement_relative_clause_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/drop_argument_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/ellipsis_n_bar_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/ellipsis_n_bar_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/existential_there_object_raising_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/existential_there_quantifiers_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/existential_there_quantifiers_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/existential_there_subject_raising_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/expletive_it_object_raising_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/inchoative_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/intransitive_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/irregular_past_participle_adjectives_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/irregular_past_participle_verbs_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/irregular_plural_subject_verb_agreement_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/irregular_plural_subject_verb_agreement_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/left_branch_island_echo_question_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/left_branch_island_simple_question_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/matrix_question_npi_licensor_present_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/npi_present_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/npi_present_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/only_npi_licensor_present_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/only_npi_scope_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/passive_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/passive_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/principle_A_c_command_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/principle_A_case_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/principle_A_case_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/principle_A_domain_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/principle_A_domain_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/principle_A_domain_3_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/principle_A_reconstruction_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/regular_plural_subject_verb_agreement_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/regular_plural_subject_verb_agreement_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/sentential_negation_npi_licensor_present_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/sentential_negation_npi_scope_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/sentential_subject_island_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/superlative_quantifiers_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/superlative_quantifiers_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/tough_vs_raising_1_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/tough_vs_raising_2_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/transitive_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/wh_island_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/wh_questions_object_gap_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/wh_questions_object_gap_long_distance_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/wh_questions_subject_gap_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/wh_questions_subject_gap_long_distance_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/wh_vs_that_no_gap_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/wh_vs_that_no_gap_long_distance_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/wh_vs_that_with_gap_20260101_170829.jsonl
+data_generation/outputs/impossible_blimp/v3/wh_vs_that_with_gap_long_distance_20260101_170829.jsonl
+Filtering data_generation/outputs/impossible_blimp/v3/adjunct_island_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8190.13sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/adjunct_island_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/adjunct_island_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/anaphor_gender_agreement_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 11371.89sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/anaphor_gender_agreement_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/anaphor_gender_agreement_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/anaphor_number_agreement_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 11102.00sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/anaphor_number_agreement_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/anaphor_number_agreement_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/animate_subject_passive_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9009.00sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/animate_subject_passive_20260101_170829%filtered.jsonl
+Filtered 277 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/animate_subject_passive_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/animate_subject_trans_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 10760.81sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/animate_subject_trans_20260101_170829%filtered.jsonl
+Filtered 445 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/animate_subject_trans_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/causative_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 11716.88sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/causative_20260101_170829%filtered.jsonl
+Filtered 419 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/causative_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/complex_NP_island_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7140.66sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/complex_NP_island_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/complex_NP_island_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_complex_left_branch_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6587.23sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_complex_left_branch_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_complex_left_branch_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_object_extraction_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8776.24sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_object_extraction_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_object_extraction_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_subject_extraction_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8737.51sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_subject_extraction_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/coordinate_structure_constraint_subject_extraction_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9245.32sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_1_20260101_170829%filtered.jsonl
+Filtered 73 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9670.60sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_2_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_irregular_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 11523.00sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_irregular_1_20260101_170829%filtered.jsonl
+Filtered 297 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_irregular_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_irregular_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8831.02sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_irregular_2_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_irregular_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8786.35sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_2_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_irregular_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8806.85sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_irregular_1_20260101_170829%filtered.jsonl
+Filtered 182 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_irregular_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_irregular_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9638.09sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_irregular_2_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adj_irregular_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adjective_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9420.89sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adjective_1_20260101_170829%filtered.jsonl
+Filtered 86 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_with_adjective_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/distractor_agreement_relational_noun_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8374.77sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/distractor_agreement_relational_noun_20260101_170829%filtered.jsonl
+Filtered 81 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/distractor_agreement_relational_noun_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/distractor_agreement_relative_clause_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7663.07sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/distractor_agreement_relative_clause_20260101_170829%filtered.jsonl
+Filtered 106 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/distractor_agreement_relative_clause_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/drop_argument_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 14856.82sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/drop_argument_20260101_170829%filtered.jsonl
+Filtered 588 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/drop_argument_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/ellipsis_n_bar_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6926.12sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/ellipsis_n_bar_1_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/ellipsis_n_bar_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/ellipsis_n_bar_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7078.65sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/ellipsis_n_bar_2_20260101_170829%filtered.jsonl
+Filtered 407 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/ellipsis_n_bar_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/existential_there_object_raising_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7636.39sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/existential_there_object_raising_20260101_170829%filtered.jsonl
+Filtered 271 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/existential_there_object_raising_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/existential_there_quantifiers_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6297.15sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/existential_there_quantifiers_1_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/existential_there_quantifiers_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/existential_there_quantifiers_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8437.09sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/existential_there_quantifiers_2_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/existential_there_quantifiers_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/existential_there_subject_raising_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7966.48sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/existential_there_subject_raising_20260101_170829%filtered.jsonl
+Filtered 150 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/existential_there_subject_raising_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/expletive_it_object_raising_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9030.81sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/expletive_it_object_raising_20260101_170829%filtered.jsonl
+Filtered 682 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/expletive_it_object_raising_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/inchoative_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 15021.83sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/inchoative_20260101_170829%filtered.jsonl
+Filtered 409 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/inchoative_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/intransitive_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 15077.28sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/intransitive_20260101_170829%filtered.jsonl
+Filtered 544 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/intransitive_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/irregular_past_participle_adjectives_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 10990.01sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/irregular_past_participle_adjectives_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/irregular_past_participle_adjectives_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/irregular_past_participle_verbs_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 11214.78sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/irregular_past_participle_verbs_20260101_170829%filtered.jsonl
+Filtered 68 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/irregular_past_participle_verbs_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/irregular_plural_subject_verb_agreement_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 10505.54sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/irregular_plural_subject_verb_agreement_1_20260101_170829%filtered.jsonl
+Filtered 136 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/irregular_plural_subject_verb_agreement_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/irregular_plural_subject_verb_agreement_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 10650.63sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/irregular_plural_subject_verb_agreement_2_20260101_170829%filtered.jsonl
+Filtered 198 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/irregular_plural_subject_verb_agreement_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/left_branch_island_echo_question_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 11183.83sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/left_branch_island_echo_question_20260101_170829%filtered.jsonl
+Filtered 448 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/left_branch_island_echo_question_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/left_branch_island_simple_question_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9701.49sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/left_branch_island_simple_question_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/left_branch_island_simple_question_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/matrix_question_npi_licensor_present_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9582.42sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/matrix_question_npi_licensor_present_20260101_170829%filtered.jsonl
+Filtered 366 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/matrix_question_npi_licensor_present_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/npi_present_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7434.55sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/npi_present_1_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/npi_present_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/npi_present_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6482.90sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/npi_present_2_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/npi_present_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/only_npi_licensor_present_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9225.75sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/only_npi_licensor_present_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/only_npi_licensor_present_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/only_npi_scope_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7626.71sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/only_npi_scope_20260101_170829%filtered.jsonl
+Filtered 238 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/only_npi_scope_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/passive_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9140.11sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/passive_1_20260101_170829%filtered.jsonl
+Filtered 356 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/passive_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/passive_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 12233.32sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/passive_2_20260101_170829%filtered.jsonl
+Filtered 393 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/passive_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/principle_A_c_command_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7707.84sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/principle_A_c_command_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/principle_A_c_command_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/principle_A_case_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6940.70sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/principle_A_case_1_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/principle_A_case_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/principle_A_case_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8336.74sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/principle_A_case_2_20260101_170829%filtered.jsonl
+Filtered 113 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/principle_A_case_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/principle_A_domain_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8215.36sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/principle_A_domain_1_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/principle_A_domain_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/principle_A_domain_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6283.30sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/principle_A_domain_2_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/principle_A_domain_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/principle_A_domain_3_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 11231.05sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/principle_A_domain_3_20260101_170829%filtered.jsonl
+Filtered 562 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/principle_A_domain_3_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/principle_A_reconstruction_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9410.70sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/principle_A_reconstruction_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/principle_A_reconstruction_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/regular_plural_subject_verb_agreement_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8951.21sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/regular_plural_subject_verb_agreement_1_20260101_170829%filtered.jsonl
+Filtered 119 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/regular_plural_subject_verb_agreement_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/regular_plural_subject_verb_agreement_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9426.95sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/regular_plural_subject_verb_agreement_2_20260101_170829%filtered.jsonl
+Filtered 74 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/regular_plural_subject_verb_agreement_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/sentential_negation_npi_licensor_present_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7704.64sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/sentential_negation_npi_licensor_present_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/sentential_negation_npi_licensor_present_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/sentential_negation_npi_scope_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6053.78sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/sentential_negation_npi_scope_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/sentential_negation_npi_scope_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/sentential_subject_island_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7865.73sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/sentential_subject_island_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/sentential_subject_island_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/superlative_quantifiers_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7827.47sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/superlative_quantifiers_1_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/superlative_quantifiers_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/superlative_quantifiers_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8451.52sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/superlative_quantifiers_2_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/superlative_quantifiers_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/tough_vs_raising_1_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 9605.80sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/tough_vs_raising_1_20260101_170829%filtered.jsonl
+Filtered 67 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/tough_vs_raising_1_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/tough_vs_raising_2_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8640.73sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/tough_vs_raising_2_20260101_170829%filtered.jsonl
+Filtered 69 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/tough_vs_raising_2_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/transitive_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 11479.86sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/transitive_20260101_170829%filtered.jsonl
+Filtered 450 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/transitive_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/wh_island_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8744.62sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/wh_island_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/wh_island_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/wh_questions_object_gap_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8087.03sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/wh_questions_object_gap_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/wh_questions_object_gap_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/wh_questions_object_gap_long_distance_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6364.97sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/wh_questions_object_gap_long_distance_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/wh_questions_object_gap_long_distance_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/wh_questions_subject_gap_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 8307.08sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/wh_questions_subject_gap_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/wh_questions_subject_gap_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/wh_questions_subject_gap_long_distance_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6522.31sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/wh_questions_subject_gap_long_distance_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/wh_questions_subject_gap_long_distance_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/wh_vs_that_no_gap_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7642.33sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/wh_vs_that_no_gap_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/wh_vs_that_no_gap_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/wh_vs_that_no_gap_long_distance_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6072.57sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/wh_vs_that_no_gap_long_distance_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/wh_vs_that_no_gap_long_distance_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/wh_vs_that_with_gap_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 7220.07sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/wh_vs_that_with_gap_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/wh_vs_that_with_gap_20260101_170829.jsonl
+----------------------------------------
+Filtering data_generation/outputs/impossible_blimp/v3/wh_vs_that_with_gap_long_distance_20260101_170829.jsonl
+Processing: 1000sentences [00:00, 6525.59sentences/s]
+Successfully wrote filtered dataset to data_generation/outputs/impossible_blimp/v3/wh_vs_that_with_gap_long_distance_20260101_170829%filtered.jsonl
+Filtered 0 sentences out of 1000
+Successfully filtered data_generation/outputs/impossible_blimp/v3/wh_vs_that_with_gap_long_distance_20260101_170829.jsonl
+----------------------------------------
+Filtering completed successfully! 

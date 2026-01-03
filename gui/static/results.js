@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const viewModeSelect = document.getElementById('viewModeSelect');
     const filterSelect = document.getElementById('filterSelect');
     const clearFiltersBtn = document.getElementById('clearFilters');
@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('resultsChart').getContext('2d');
     const loadingIndicator = document.getElementById('loadingIndicator');
     const chartCanvas = document.getElementById('resultsChart');
-    
+
     let chart;
     let rawData = [];
     let modelOrder = [];
     let trendlineDataset = null;
-    
+
     // Color palette for different series
     const colorPalette = [
         '#4e79a7', '#f28e2b', '#e15759', '#76b7b2', '#59a14f',
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             rawData = data.results;
             modelOrder = data.model_order;
-            
+
             loadingIndicator.style.display = 'none';
             chartCanvas.style.display = 'block';
             updateView();
@@ -44,20 +44,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const isModelView = viewModeSelect.value === 'model';
         const groupBy = isModelView ? 'model_name' : 'grammatical_phenomenon';
         const filterKeys = [...new Set(rawData.map(item => item[groupBy]))];
-        
+
         // Save current selections
         const currentSelections = Array.from(filterSelect.selectedOptions).map(opt => opt.value);
-        
+
         // Clear and repopulate the filter select
         filterSelect.innerHTML = '';
-        
+
         // Sort filter keys appropriately
         if (isModelView) {
             filterKeys.sort((a, b) => modelOrder.indexOf(a) - modelOrder.indexOf(b));
         } else {
             filterKeys.sort();
         }
-        
+
         // Add options to the select
         filterKeys.forEach(key => {
             const option = document.createElement('option');
@@ -66,12 +66,12 @@ document.addEventListener('DOMContentLoaded', function() {
             option.selected = currentSelections.includes(key);
             filterSelect.appendChild(option);
         });
-        
+
         // If no selections and there are options, select the first one
         if (filterSelect.selectedOptions.length === 0 && filterKeys.length > 0) {
             filterSelect.options[0].selected = true;
         }
-        
+
         renderChart();
     }
 
@@ -79,15 +79,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const n = data.length;
         const xValues = data.map((_, index) => index);
         const yValues = data.map(point => point.y);
-        
+
         const sumX = xValues.reduce((sum, x) => sum + x, 0);
         const sumY = yValues.reduce((sum, y) => sum + y, 0);
         const sumXY = xValues.reduce((sum, x, i) => sum + x * yValues[i], 0);
         const sumXX = xValues.reduce((sum, x) => sum + x * x, 0);
-        
+
         const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
         const intercept = (sumY - slope * sumX) / n;
-        
+
         return xValues.map(x => ({
             x: x,
             y: slope * x + intercept
@@ -98,14 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const isModelView = viewModeSelect.value === 'model';
         const groupBy = isModelView ? 'model_name' : 'grammatical_phenomenon';
         const xAxisKey = isModelView ? 'grammatical_phenomenon' : 'model_name';
-        
+
         // Get selected filters
         const selectedFilters = Array.from(filterSelect.selectedOptions).map(opt => opt.value);
         if (selectedFilters.length === 0) return { datasets: [], labels: [] };
-        
+
         // Filter data based on selected filters
         const filteredData = rawData.filter(item => selectedFilters.includes(item[groupBy]));
-        
+
         // Define the phenomena we want to show in model view when filtered
         const SELECTED_PHENOMENA = new Set([
             'anaphor_gender_agreement',
@@ -134,22 +134,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // In phenomenon view, sort models by model order
             allXValues.sort((a, b) => modelOrder.indexOf(a) - modelOrder.indexOf(b));
         }
-        
+
         // Create x-axis labels with language info
         const labels = allXValues;
-        
+
         // Group data by the selected filter groups
         const groupedData = new Map();
-        
+
         selectedFilters.forEach((filter, index) => {
             const groupData = filteredData.filter(item => item[groupBy] === filter);
             const color = colorPalette[index % colorPalette.length];
-            
+
             // Map each x-value to its corresponding data point
             const points = allXValues.map(xValue => {
                 const point = groupData.find(item => item[xAxisKey] === xValue);
                 if (!point) return null;
-                
+
                 return {
                     x: allXValues.indexOf(xValue),
                     y: point.accuracy,
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     perplexity_bad: point.perplexity_bad
                 };
             }).filter(Boolean);
-            
+
             if (points.length > 0) {
                 groupedData.set(filter, {
                     label: filter,
@@ -180,13 +180,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
-        
+
         return {
             datasets: Array.from(groupedData.values()),
             labels: labels
         };
     }
-    
+
     function renderChart() {
         const { datasets, labels } = getGroupedData();
         const isModelView = viewModeSelect.value === 'model';
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (chart) {
             chart.destroy();
         }
-        
+
         // Calculate trendline for each dataset if enabled
         const trendlineDatasets = [];
         if (showTrendLineToggle.checked) {
@@ -279,25 +279,25 @@ document.addEventListener('DOMContentLoaded', function() {
                             size: 11
                         },
                         callbacks: {
-                            title: function(context) {
+                            title: function (context) {
                                 const datasetIndex = context[0].datasetIndex;
                                 const dataIndex = context[0].dataIndex;
                                 const dataset = chart.data.datasets[datasetIndex];
-                                
+
                                 // Skip trend lines in title
                                 if (dataset.label && dataset.label.endsWith('Trend')) {
                                     return '';
                                 }
-                                
+
                                 // Get the data point
                                 const dataPoint = dataset.data[dataIndex];
                                 return dataPoint.fullLabel || '';
                             },
-                            label: function(context) {
+                            label: function (context) {
                                 const datasetIndex = context.datasetIndex;
                                 const dataset = chart.data.datasets[datasetIndex];
                                 const dataPoint = dataset.data[context.dataIndex];
-                                
+
                                 // Handle trend lines
                                 if (dataset.label && dataset.label.endsWith('Trend')) {
                                     return [
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         `Trend value: ${context.parsed.y.toFixed(4)}`
                                     ];
                                 }
-                                
+
                                 // Handle regular data points
                                 return [
                                     `Accuracy: ${context.parsed.y.toFixed(4)}`,
@@ -356,8 +356,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             color: '#34495e'
                         },
                         ticks: {
-                            values: Array.from({length: labels.length}, (_, i) => i),
-                            callback: function(value) {
+                            values: Array.from({ length: labels.length }, (_, i) => i),
+                            callback: function (value) {
                                 return labels[value];
                             },
                             font: {

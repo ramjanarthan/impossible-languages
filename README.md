@@ -32,6 +32,14 @@ For this project, I focus on the following impossible language options:
 
 The mapping from impossible language option to perturbation function is in the `data_generation/utils/impossible_utils.py` file. These are the options permitted where `impossible_language_option` is refered to subsequently.
 
+## V3 Results and Datasets
+
+**Note**: All datasets for the V3 experiments have already been generated and filtered.
+
+- **V3 Results**: The results for the V3 experiments are aggregated in `experiments/output/v3/results.csv`.
+- **V3 Datasets**: The filtered datasets used for these experiments are located in `data_generation/outputs/impossible_blimp/v3`.
+
+
 ## Generating data:
 
 The data generation scripts are in the `data_generation/generation_projects/impossible_blimp` directory. The output will be in the `data_generation/outputs/impossible_blimp` directory. 
@@ -277,4 +285,4 @@ python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 The GUI will be available at: http://localhost:8000/results
 
-Note: The V1 version of the GUI is served at http://localhost:8000 and is deprecated.
+Note: The V1 version of the GUI is served at http://localhost:8000 and is deprecated. The current GUI loads data from the V3 results by default.
