@@ -7,10 +7,8 @@ import matplotlib.pyplot as plt
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
 
-
-# Phenomena that are always classified as Strong regardless of 5-gram score
-EXCEPTIONAL_STRONG_PHENOMENA = set()
-
+EXCEPTIONAL_STRONG_PHENOMENA = set(["anaphor_gender_agreement", "anaphor_number_agreement"])
+EXCEPTIONAL_WEAK_PHENOMENA = set(["left_branch_island_echo_question"])
 
 def classify_phenomena(threshold: int = 75, 
                        raw_scores_path: str = 'analysis/BLiMP/blimp_raw_scores.csv',
@@ -37,6 +35,8 @@ def classify_phenomena(threshold: int = 75,
     def classify_row(row):
         if row['UID'] in EXCEPTIONAL_STRONG_PHENOMENA:
             return 'Strong'
+        elif row['UID'] in EXCEPTIONAL_WEAK_PHENOMENA:
+            return 'Weak'
         return 'Strong' if pd.notna(row['5-gram']) and row['5-gram'] >= threshold else 'Weak'
     
     df['Classification'] = df.apply(classify_row, axis=1)

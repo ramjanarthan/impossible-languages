@@ -1,6 +1,6 @@
 Phenomenon,Dataset Name,5-gram Score,Cue Reliability
-ANAPHOR AGREEMENT,anaphor_gender_agreement,44,Weak
-ANAPHOR AGREEMENT,anaphor_number_agreement,52,Weak
+ANAPHOR AGREEMENT,anaphor_gender_agreement,44,Strong
+ANAPHOR AGREEMENT,anaphor_number_agreement,52,Strong
 ARGUMENT STRUCTURE,animate_subject_passive,70,Weak
 ARGUMENT STRUCTURE,animate_subject_trans,91,Strong
 ARGUMENT STRUCTURE,causative,54,Weak
@@ -45,7 +45,7 @@ ISLAND EFFECTS,adjunct_island,48,Weak
 ISLAND EFFECTS,complex_NP_island,50,Weak
 ISLAND EFFECTS,coordinate_structure_constraint_complex_left_branch,32,Weak
 ISLAND EFFECTS,coordinate_structure_constraint_object_extraction,59,Weak
-ISLAND EFFECTS,left_branch_island_echo_question,96,Strong
+ISLAND EFFECTS,left_branch_island_echo_question,96,Weak
 ISLAND EFFECTS,left_branch_island_simple_question,57,Weak
 ISLAND EFFECTS,sentential_subject_island,61,Weak
 ISLAND EFFECTS,wh_island,56,Weak

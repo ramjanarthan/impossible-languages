@@ -6,23 +6,86 @@ import seaborn as sns
 import os
 from typing import List, Optional, Dict
 
+# =============================================================================
+# CSV PATH CONFIGURATION - Edit these to change data sources
+# =============================================================================
+RESULTS_CSV_PATH = "experiments/output/v3/results.csv"
+GRAMMATICAL_PHENOMENA_TABLE_CSV_PATH = "analysis/BLiMP/grammatical_phenomena_table.csv"
+DEP_STATS_CSV_PATH = "analysis/output/dep_stats.csv"
+OUTPUT_DIR = "analysis/output"
+
 # Edit this list to change which phenomena are included in the table
+# Complete list of all 69 phenomena from the v3 dataset
 PHENOMENA_LIST = [
     "adjunct_island",
     "anaphor_gender_agreement",
     "anaphor_number_agreement",
     "animate_subject_passive",
+    "animate_subject_trans",
+    "causative",
+    "complex_NP_island",
+    "coordinate_structure_constraint_complex_left_branch",
+    "coordinate_structure_constraint_object_extraction",
+    "coordinate_structure_constraint_subject_extraction",
+    "determiner_noun_agreement_1",
+    "determiner_noun_agreement_2",
+    "determiner_noun_agreement_irregular_1",
+    "determiner_noun_agreement_irregular_2",
+    "determiner_noun_agreement_with_adj_2",
+    "determiner_noun_agreement_with_adj_irregular_1",
+    "determiner_noun_agreement_with_adj_irregular_2",
+    "determiner_noun_agreement_with_adjective_1",
+    "distractor_agreement_relational_noun",
     "distractor_agreement_relative_clause",
+    "drop_argument",
     "ellipsis_n_bar_1",
+    "ellipsis_n_bar_2",
+    "existential_there_object_raising",
+    "existential_there_quantifiers_1",
+    "existential_there_quantifiers_2",
+    "existential_there_subject_raising",
+    "expletive_it_object_raising",
+    "inchoative",
+    "intransitive",
     "irregular_past_participle_adjectives",
+    "irregular_past_participle_verbs",
+    "irregular_plural_subject_verb_agreement_1",
+    "irregular_plural_subject_verb_agreement_2",
+    "left_branch_island_echo_question",
+    "left_branch_island_simple_question",
+    "matrix_question_npi_licensor_present",
+    "npi_present_1",
+    "npi_present_2",
+    "only_npi_licensor_present",
+    "only_npi_scope",
+    "passive_1",
+    "passive_2",
     "principle_A_c_command",
+    "principle_A_case_1",
+    "principle_A_case_2",
+    "principle_A_domain_1",
+    "principle_A_domain_2",
+    "principle_A_domain_3",
+    "principle_A_reconstruction",
+    "regular_plural_subject_verb_agreement_1",
+    "regular_plural_subject_verb_agreement_2",
+    "sentential_negation_npi_licensor_present",
+    "sentential_negation_npi_scope",
+    "sentential_subject_island",
+    "superlative_quantifiers_1",
+    "superlative_quantifiers_2",
+    "tough_vs_raising_1",
+    "tough_vs_raising_2",
+    "transitive",
+    "wh_island",
     "wh_questions_object_gap",
     "wh_questions_object_gap_long_distance",
     "wh_questions_subject_gap",
     "wh_questions_subject_gap_long_distance",
-    "left_branch_island_simple_question",
-    "determiner_noun_agreement_with_adj_2",
-    "existential_there_quantifiers_1"
+    "wh_vs_that_no_gap",
+    "wh_vs_that_no_gap_long_distance",
+    "wh_vs_that_with_gap",
+    "wh_vs_that_with_gap_long_distance",
 ]
 
 PHENOMENA_TO_DISPLAY_NAME = {
@@ -44,21 +107,88 @@ PHENOMENA_TO_DISPLAY_NAME = {
 }
 
 PHENOMENA_LIST_MAP = {
-    "adjunct_island": "island_effects",
+    # ANAPHOR AGREEMENT
     "anaphor_gender_agreement": "anaphor_agreement",
     "anaphor_number_agreement": "anaphor_agreement",
+    # ARGUMENT STRUCTURE
     "animate_subject_passive": "argument_structure",
-    "distractor_agreement_relative_clause": "subject_verb_agreement",
+    "animate_subject_trans": "argument_structure",
+    "causative": "argument_structure",
+    "drop_argument": "argument_structure",
+    "inchoative": "argument_structure",
+    "intransitive": "argument_structure",
+    "passive_1": "argument_structure",
+    "passive_2": "argument_structure",
+    "transitive": "argument_structure",
+    # BINDING
+    "principle_A_c_command": "binding",
+    "principle_A_case_1": "binding",
+    "principle_A_case_2": "binding",
+    "principle_A_domain_1": "binding",
+    "principle_A_domain_2": "binding",
+    "principle_A_domain_3": "binding",
+    "principle_A_reconstruction": "binding",
+    # CONTROL/RAISING
+    "existential_there_object_raising": "control_raise",
+    "existential_there_subject_raising": "control_raise",
+    "expletive_it_object_raising": "control_raise",
+    "tough_vs_raising_1": "control_raise",
+    "tough_vs_raising_2": "control_raise",
+    # DETERMINER-NOUN AGR.
+    "determiner_noun_agreement_1": "determiner_noun_agreement",
+    "determiner_noun_agreement_2": "determiner_noun_agreement",
+    "determiner_noun_agreement_irregular_1": "determiner_noun_agreement",
+    "determiner_noun_agreement_irregular_2": "determiner_noun_agreement",
+    "determiner_noun_agreement_with_adj_1": "determiner_noun_agreement",
+    "determiner_noun_agreement_with_adj_2": "determiner_noun_agreement",
+    "determiner_noun_agreement_with_adj_irregular_1": "determiner_noun_agreement",
+    "determiner_noun_agreement_with_adj_irregular_2": "determiner_noun_agreement",
+    "determiner_noun_agreement_with_adjective_1": "determiner_noun_agreement",  # v3 variant
+    # ELLIPSIS
     "ellipsis_n_bar_1": "ellipsis",
-    "irregular_past_participle_adjectives": "irregular_forms",
-    "principle_A_c_command": "binding", 
-    "wh_questions_object_gap": "filler_gap_dependency", 
-    "wh_questions_object_gap_long_distance": "filler_gap_dependency",
+    "ellipsis_n_bar_2": "ellipsis",
+    # FILLER GAP
+    "wh_questions_object_gap": "filler_gap_dependency",
+    "wh_questions_object_gap_long_distance": "filler_gap_dependency",  # v3 only
     "wh_questions_subject_gap": "filler_gap_dependency",
     "wh_questions_subject_gap_long_distance": "filler_gap_dependency",
+    "wh_vs_that_no_gap": "filler_gap_dependency",
+    "wh_vs_that_no_gap_long_distance": "filler_gap_dependency",
+    "wh_vs_that_with_gap": "filler_gap_dependency",
+    "wh_vs_that_with_gap_long_distance": "filler_gap_dependency",
+    # IRREGULAR FORMS
+    "irregular_past_participle_adjectives": "irregular_forms",
+    "irregular_past_participle_verbs": "irregular_forms",
+    # ISLAND EFFECTS
+    "adjunct_island": "island_effects",
+    "complex_NP_island": "island_effects",
+    "coordinate_structure_constraint_complex_left_branch": "island_effects",
+    "coordinate_structure_constraint_object_extraction": "island_effects",
+    "coordinate_structure_constraint_subject_extraction": "island_effects",  # v3 only
+    "left_branch_island_echo_question": "island_effects",
     "left_branch_island_simple_question": "island_effects",
-    "determiner_noun_agreement_with_adj_2": "determiner_noun_agreement",
-    "existential_there_quantifiers_1": "quantifiers"
+    "sentential_subject_island": "island_effects",
+    "wh_island": "island_effects",
+    # NPI LICENSING
+    "matrix_question_npi_licensor_present": "npi",
+    "npi_present_1": "npi",
+    "npi_present_2": "npi",
+    "only_npi_licensor_present": "npi",
+    "only_npi_scope": "npi",
+    "sentential_negation_npi_licensor_present": "npi",
+    "sentential_negation_npi_scope": "npi",
+    # QUANTIFIERS
+    "existential_there_quantifiers_1": "quantifiers",
+    "existential_there_quantifiers_2": "quantifiers",
+    "superlative_quantifiers_1": "quantifiers",
+    "superlative_quantifiers_2": "quantifiers",
+    # SUBJECT-VERB AGR.
+    "distractor_agreement_relational_noun": "subject_verb_agreement",
+    "distractor_agreement_relative_clause": "subject_verb_agreement",
+    "irregular_plural_subject_verb_agreement_1": "subject_verb_agreement",
+    "irregular_plural_subject_verb_agreement_2": "subject_verb_agreement",
+    "regular_plural_subject_verb_agreement_1": "subject_verb_agreement",
+    "regular_plural_subject_verb_agreement_2": "subject_verb_agreement",
 }
 
 PHENOMENA_ABR = {
@@ -191,8 +321,8 @@ def plot_ordering(
 def plot_model_ordering_from_csv(
     phenomena: List[str],
     skip_models: Optional[List[str]] = None,
-    csv_path: str = "experiments/output/v2/results.csv",
-    output_path: str = "analysis/output/model_ordering.png"
+    csv_path: str = RESULTS_CSV_PATH,
+    output_path: str = f"{OUTPUT_DIR}/model_ordering.png"
 ):
     """
     Calculates overall model performance on specific phenomena and plots their ordering.
@@ -233,8 +363,8 @@ def plot_model_ordering_from_csv(
 
 
 def plot_phenomenon_group_counts(
-    csv_path: str = "experiments/output/v2/results.csv",
-    output_path: str = "analysis/output/phenomenon_group_counts.png"
+    csv_path: str = RESULTS_CSV_PATH,
+    output_path: str = f"{OUTPUT_DIR}/phenomenon_group_counts.png"
 ):
     """
     Plots a PNG image: x-axis is phenomenon groups (PHENOMENA_ORDER, labeled with PHENOMENA_ABR),
@@ -269,8 +399,8 @@ def plot_phenomenon_group_counts(
     print(f"Phenomenon group counts image saved to {output_path}")
 
 def plot_model_group_performance_table(
-    csv_path: str = "experiments/output/v2/results.csv",
-    output_dir: str = "analysis/output",
+    csv_path: str = RESULTS_CSV_PATH,
+    output_dir: str = OUTPUT_DIR,
     output_filename: str = "model_group_performance_table.png"
 ):
     """
@@ -320,8 +450,8 @@ def plot_model_group_performance_table(
 
 def save_performance_table_image(
     phenomena: List[str] = PHENOMENA_LIST,
-    csv_path: str = "experiments/output/v2/results.csv",
-    output_dir: str = "analysis/output",
+    csv_path: str = RESULTS_CSV_PATH,
+    output_dir: str = OUTPUT_DIR,
     output_filename: str = "performance_table.png"
 ):
     """
@@ -371,7 +501,7 @@ def save_performance_table_image(
     plt.close()
     print(f"Performance table saved to {outpath}")
 
-def percent_non_english_best_model(csv_path="experiments/output/v2/results.csv"):
+def percent_non_english_best_model(csv_path=RESULTS_CSV_PATH):
     """
     Calculates the percentage of grammatical phenomena where the highest performing model was NOT 'english'.
     Also prints a table with, for every task, the accuracy of english and the accuracy/model of the best model.
@@ -480,7 +610,7 @@ def plot_ranking_comparison(
 # --- NEW FUNCTION ---
 def get_performance_ranking(
     phenomena: List[str],
-    csv_path: str = "experiments/output/v2/results.csv",
+    csv_path: str = RESULTS_CSV_PATH,
     skip_models: Optional[List[str]] = None,
     reverse: bool = True
 ) -> List[str]:
@@ -636,28 +766,38 @@ def plot_parallel_rankings(
     print(f"Parallel ranking plot saved to {output_path}")
 
 
+def get_phenomena_by_cue_reliability(
+    cue_reliability: str,
+    csv_path: str = GRAMMATICAL_PHENOMENA_TABLE_CSV_PATH
+) -> List[str]:
+    """
+    Reads the grammatical phenomena table CSV and returns a list of phenomena
+    filtered by cue reliability ("Strong" or "Weak"), sorted by 5-gram score.
     
+    Args:
+        cue_reliability: Either "Strong" or "Weak" to filter phenomena.
+        csv_path: Path to the grammatical phenomena table CSV.
+    
+    Returns:
+        List of dataset names (phenomena) matching the cue reliability,
+        sorted alphabetically by dataset name.
+    """
+    df = pd.read_csv(csv_path)
+    filtered = df[df["Cue Reliability"] == cue_reliability]
+    # Sort alphabetically by dataset name
+    sorted_df = filtered.sort_values(by="Dataset Name", ascending=True)
+    return sorted_df["Dataset Name"].tolist()
+
+
 def main():
     save_performance_table_image(PHENOMENA_LIST, output_filename="performance_table_overall.png")
-    local_ordering_phenomena = [
-        "anaphor_gender_agreement", "anaphor_number_agreement",
-        "existential_there_quantifiers_1",
-        "irregular_past_participle_adjectives",
-        "wh_questions_subject_gap", "wh_questions_subject_gap_long_distance",
-    ]
+    
+    # Strong cue reliability phenomena (dynamically loaded from CSV)
+    local_ordering_phenomena = get_phenomena_by_cue_reliability("Strong")
     save_performance_table_image(local_ordering_phenomena, output_filename="performance_table_local.png")
 
-    structural_phenomena = [
-        "adjunct_island",
-        "animate_subject_passive",
-        "determiner_noun_agreement_with_adj_2",
-        "distractor_agreement_relative_clause",
-        "ellipsis_n_bar_1",
-        "principle_A_c_command",
-        "wh_questions_object_gap",
-        "wh_questions_object_gap_long_distance",
-        "left_branch_island_simple_question",
-    ]
+    # Weak cue reliability phenomena (dynamically loaded from CSV)
+    structural_phenomena = get_phenomena_by_cue_reliability("Weak")
 
     save_performance_table_image(structural_phenomena, output_filename="performance_table_structural.png")
     # save_performance_table_image([
@@ -690,7 +830,7 @@ def main():
 
     # --- LOCAL PHENOMENA: CONSISTENCY COMPARISON ---
     print("\n--- Generating comparison plot for local phenomena rankings ---")
-    csv_file = "experiments/output/v2/results.csv"
+    csv_file = RESULTS_CSV_PATH
 
     # Models and scores for the "m-local" metric
     mlocal_labels = ["Base", "Reverse", "EvenOddShuffle", "LocalShuffle(K=3)", "LocalShuffle(K=5)", "LocalShuffle(K=7)", "DeterministicShuffle"]
@@ -740,7 +880,7 @@ def main():
     
     # Models and their scores for other structural metrics
     structural_models = MODEL_ORDER
-    dep_stats_filepath = "analysis/output/dep_stats.csv"
+    dep_stats_filepath = DEP_STATS_CSV_PATH
     df = pd.read_csv(dep_stats_filepath)
     grouped = df.groupby('perturbation')
     
