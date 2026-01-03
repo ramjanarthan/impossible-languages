@@ -1,3 +1,4 @@
+Phenomenon,UID,5-gram,LSTM,TXL,GPT-2,Human
 ANAPHOR AGREEMENT,anaphor_gender_agreement,44,88,91,99,96
 ANAPHOR AGREEMENT,anaphor_number_agreement,52,95,97,99,99
 ARGUMENT STRUCTURE,animate_subject_passive,70,72,74,77,86

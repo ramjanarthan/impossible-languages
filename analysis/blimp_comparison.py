@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from scipy.stats import pearsonr
-from analysis.performance_statistics import MODEL_ORDER, MODEL_TO_DISPLAY_NAME, PHENOMENA_LIST_MAP, PHENOMENA_ORDER
+from analysis.performance_statistics import MODEL_ORDER, MODEL_TO_DISPLAY_NAME, PHENOMENA_LIST_MAP, PHENOMENA_ORDER, PHENOMENA_ABR
 import os
 
 def compare_model_performances():
@@ -110,7 +110,7 @@ def snake_to_sentence_case(snake_str):
     return ' '.join(word.capitalize() for word in snake_str.split('_'))
 
 def plot_blimp_heatmap(model_results_path='experiments/output/v2/results.csv', 
-                       human_scores_path='analysis/blimp_human_scores.csv',
+                       blimp_aggr_scores_path='analysis/blimp_aggr_scores.csv',
                        output_filename='blimp_comparison_heatmap.png'):
     """
     Plot a heatmap comparing model performances with human scores on BLiMP grammatical phenomena tasks.
@@ -130,8 +130,8 @@ def plot_blimp_heatmap(model_results_path='experiments/output/v2/results.csv',
     # Read model results
     df_models = pd.read_csv(model_results_path)
     
-    # Read human scores 
-    df_human = pd.read_csv(human_scores_path)
+    # Read BLiMP aggregate scores (contains Human row)
+    df_blimp = pd.read_csv(blimp_aggr_scores_path)
     
     # Build a mapping: group -> list of phenomena
     group_to_phenomena = {group: [p for p, g in PHENOMENA_LIST_MAP.items() if g == group] 
@@ -159,12 +159,16 @@ def plot_blimp_heatmap(model_results_path='experiments/output/v2/results.csv',
     # Build model DataFrame
     df_model_table = pd.DataFrame(model_data, index=model_display_names, columns=PHENOMENA_ORDER)
     
-    # Prepare human data row
+    # Prepare human data row using PHENOMENA_ABR mapping
+    # The blimp_aggr_scores.csv has column names like 'ISLAND', 'ANA. AGR', etc.
+    human_row_data = df_blimp[df_blimp['Model'] == 'Human'].iloc[0]
     human_row = []
     for group in PHENOMENA_ORDER:
-        if group in df_human['Grammatical phenomena'].values:
-            score = df_human[df_human['Grammatical phenomena'] == group]['Score'].iloc[0]
-            human_row.append(score)
+        # Map the phenomenon name to its abbreviation used in the CSV columns
+        col_name = PHENOMENA_ABR.get(group)
+        if col_name and col_name in human_row_data.index:
+            # Convert from percentage (e.g., 84.9) to proportion (0.849)
+            human_row.append(human_row_data[col_name] / 100.0)
         else:
             human_row.append(float('nan'))
     
