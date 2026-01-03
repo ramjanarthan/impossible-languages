@@ -32,14 +32,6 @@ For this project, I focus on the following impossible language options:
 
 The mapping from impossible language option to perturbation function is in the `data_generation/utils/impossible_utils.py` file. These are the options permitted where `impossible_language_option` is refered to subsequently.
 
-## V3 Results and Datasets
-
-**Note**: All datasets for the V3 experiments have already been generated and filtered.
-
-- **V3 Results**: The results for the V3 experiments are aggregated in `experiments/output/v3/results.csv`.
-- **V3 Datasets**: The filtered datasets used for these experiments are located in `data_generation/outputs/impossible_blimp/v3`.
-
-
 ## Generating data:
 
 The data generation scripts are in the `data_generation/generation_projects/impossible_blimp` directory. The output will be in the `data_generation/outputs/impossible_blimp` directory. 
@@ -87,6 +79,8 @@ For example:
 python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered.jsonl shuffle_nondeterministic
 ```
 
+#### NOTE: All impossible datasets based on BLiMP datasets have already been generated and filtered. They are located in `data_generation/outputs/impossible_blimp/v3`.
+
 ## Running experiments:
 
 An experiment is defined as measuring the accuracy of a model when applied to a dataset.
@@ -101,6 +95,8 @@ For example:
 ```bash
 python -m experiments.experiment --results_csv experiments/output/v2/results.csv --model_name shuffle_nondeterministic --dataset data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_20250617_153306%shuffle_deterministic21.jsonl
 ```
+
+#### NOTE: All experiments have been run on impossible datasets, and results are located in `experiments/output/v3/results.csv`.
 
 ### Running Trajectory experiments:
 
@@ -286,3 +282,10 @@ python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 The GUI will be available at: http://localhost:8000/results
 
 Note: The V1 version of the GUI is served at http://localhost:8000 and is deprecated. The current GUI loads data from the V3 results by default.
+
+### Different Versions: What do V1, V2 and V3 mean?
+As is often the case when working on a research project, ideas evolve over time and methodologies and datasets change. As such, the codebase has evolved too, and the V1, V2 and V3 versions of some subfolders help preserve this evolution. 
+ 
+V1 - The initial version of the codebase, using an older method of generating impossible datasets
+V2 - Uses a better method for generating impossible datasets, and contains results run on a subset of BLiMP datasets (15)
+V3 - Uses the same method as V2 for generating impossible datasets, but contains results run on the full BLiMP dataset (67+2)
