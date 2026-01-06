@@ -932,6 +932,27 @@ def main():
         should_enable_special_labelling_logic=True,
         ranking_values=ranking_values_local
     )
+
+    # 4. Plot the comparison with overall results
+    overall_ranking_models = get_performance_ranking(phenomena=PHENOMENA_LIST, csv_path=csv_file)
+    overall_ranking = [display_name_map.get(model, MODEL_TO_DISPLAY_NAME.get(model, model)) 
+                       for model in overall_ranking_models 
+                       if model in display_name_map or model in MODEL_TO_DISPLAY_NAME]
+    
+    ranking_values_overall = {
+        "Accuracy Ranking": overall_ranking_models,
+        "m-local entropy Ranking": sorted_mlocal,
+    }
+    
+    plot_parallel_rankings(
+        rankings={
+            "Accuracy Ranking": overall_ranking,
+            "m-local entropy Ranking": mlocal_ranking,
+        },
+        output_path="analysis/output/overall_m_local_ranking_consistency.png",
+        should_enable_special_labelling_logic=True,
+        ranking_values=ranking_values_overall
+    )
     
     # --- STRUCTURAL PHENOMENA: INCONSISTENCY COMPARISON ---
     print("\n--- Generating comparison plot for structural phenomena rankings ---")
@@ -1003,7 +1024,6 @@ def main():
     )
 
     # Structural ordering
-    
     plot_model_ordering_from_csv(
         phenomena=structural_phenomena,
         output_path="analysis/output/model_ordering_structural.png"
