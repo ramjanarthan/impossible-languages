@@ -1023,6 +1023,25 @@ def main():
         ranking_values=ranking_values_structural,
     )
 
+    # 6. Plot the comparison with overall results (all phenomena) vs structural metrics
+    overall_ranking_structural_display = [MODEL_TO_DISPLAY_NAME.get(model, model) for model in overall_ranking_models]
+    
+    ranking_values_overall_structural = {
+        "Overall Accuracy": overall_ranking_models,
+        "Projectivity": sorted_projectivity,
+        "Norm. Dep. Distance": sorted_dep_dist,
+    }
+    
+    plot_parallel_rankings(
+        rankings={
+            "Overall Accuracy": overall_ranking_structural_display,
+            "Projectivity Ranking": projectivity_ranking,
+            "Dependency Distance Ranking": dep_dist_ranking,
+        },
+        output_path="analysis/output/overall_structural_ranking_consistency.png",
+        ranking_values=ranking_values_overall_structural,
+    )
+
     # Structural ordering
     plot_model_ordering_from_csv(
         phenomena=structural_phenomena,
