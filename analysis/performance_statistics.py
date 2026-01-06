@@ -14,6 +14,10 @@ GRAMMATICAL_PHENOMENA_TABLE_CSV_PATH = "analysis/BLiMP/grammatical_phenomena_tab
 DEP_STATS_CSV_PATH = "analysis/output/dep_stats.csv"
 OUTPUT_DIR = "analysis/output"
 
+# Heatmap color scale bounds for consistent visualization across plots
+HEATMAP_VMIN = 0.0
+HEATMAP_VMAX = 1.0
+
 # Edit this list to change which phenomena are included in the table
 # Complete list of all 69 phenomena from the v3 dataset
 PHENOMENA_LIST = [
@@ -487,7 +491,7 @@ def plot_model_group_performance_table(
     df_table.insert(0, 'Overall', df_table.mean(axis=1, skipna=True))
     # Plot heatmap
     plt.figure(figsize=(max(2 + len(columns)+1, 8), max(1 + len(MODEL_ORDER), 8)))
-    ax = sns.heatmap(df_table, annot=True, fmt=".3f", cmap="YlGnBu", cbar=True, linewidths=0.5, linecolor='gray', annot_kws={"size": 10})
+    ax = sns.heatmap(df_table, annot=True, fmt=".3f", cmap="YlGnBu", cbar=True, linewidths=0.5, linecolor='gray', annot_kws={"size": 10}, vmin=HEATMAP_VMIN, vmax=HEATMAP_VMAX)
     ax.set_ylabel("Model")
     # Move x-ticks to top
     ax.xaxis.set_ticks_position('top')
@@ -542,7 +546,7 @@ def save_performance_table_image(
     # Plot as heatmap
     plt.figure(figsize=(max(2 + len(all_models) * 1.1, 8), max(1 + len(phenomena) * 0.5, 8)))
     ax = sns.heatmap(display_table, annot=True, fmt=".3f", cmap="YlGnBu", cbar=True, linewidths=0.5, linecolor='gray',
-                     annot_kws={"size": 10})
+                     annot_kws={"size": 10}, vmin=HEATMAP_VMIN, vmax=HEATMAP_VMAX)
     ax.set_xlabel("Model")
     ax.set_ylabel("Grammatical Phenomenon")
     # ax.set_title("Model Accuracy by Grammatical Phenomenon")
