@@ -8,9 +8,9 @@ project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
 
 EXCEPTIONAL_STRONG_PHENOMENA = set(["anaphor_gender_agreement", "anaphor_number_agreement"])
-EXCEPTIONAL_WEAK_PHENOMENA = set(["left_branch_island_echo_question"])
+EXCEPTIONAL_WEAK_PHENOMENA = set() #set(["left_branch_island_echo_question"])
 
-def classify_phenomena(threshold: int = 75, 
+def classify_phenomena(threshold: int = 80, 
                        raw_scores_path: str = 'analysis/BLiMP/blimp_raw_scores.csv',
                        output_path: str = 'analysis/BLiMP/grammatical_phenomena_table.csv'):
     """

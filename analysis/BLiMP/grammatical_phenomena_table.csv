@@ -18,10 +18,10 @@ BINDING,principle_A_domain_2,56,Weak
 BINDING,principle_A_domain_3,52,Weak
 BINDING,principle_A_reconstruction,40,Weak
 CONTROL/RAISING,existential_there_object_raising,84,Strong
-CONTROL/RAISING,existential_there_subject_raising,77,Strong
+CONTROL/RAISING,existential_there_subject_raising,77,Weak
 CONTROL/RAISING,expletive_it_object_raising,72,Weak
 CONTROL/RAISING,tough_vs_raising_1,33,Weak
-CONTROL/RAISING,tough_vs_raising_2,77,Strong
+CONTROL/RAISING,tough_vs_raising_2,77,Weak
 DETERMINER-NOUN AGR.,determiner_noun_agreement_1,88,Strong
 DETERMINER-NOUN AGR.,determiner_noun_agreement_2,86,Strong
 DETERMINER-NOUN AGR.,determiner_noun_agreement_irregular_1,53,Weak
@@ -39,13 +39,13 @@ FILLER GAP,wh_vs_that_no_gap,83,Strong
 FILLER GAP,wh_vs_that_no_gap_long_distance,81,Strong
 FILLER GAP,wh_vs_that_with_gap,18,Weak
 FILLER GAP,wh_vs_that_with_gap_long_distance,20,Weak
-IRREGULAR FORMS,irregular_past_participle_adjectives,79,Strong
+IRREGULAR FORMS,irregular_past_participle_adjectives,79,Weak
 IRREGULAR FORMS,irregular_past_participle_verbs,80,Strong
 ISLAND EFFECTS,adjunct_island,48,Weak
 ISLAND EFFECTS,complex_NP_island,50,Weak
 ISLAND EFFECTS,coordinate_structure_constraint_complex_left_branch,32,Weak
 ISLAND EFFECTS,coordinate_structure_constraint_object_extraction,59,Weak
-ISLAND EFFECTS,left_branch_island_echo_question,96,Weak
+ISLAND EFFECTS,left_branch_island_echo_question,96,Strong
 ISLAND EFFECTS,left_branch_island_simple_question,57,Weak
 ISLAND EFFECTS,sentential_subject_island,61,Weak
 ISLAND EFFECTS,wh_island,56,Weak
@@ -64,5 +64,5 @@ SUBJECT-VERB AGR.,distractor_agreement_relational_noun,24,Weak
 SUBJECT-VERB AGR.,distractor_agreement_relative_clause,22,Weak
 SUBJECT-VERB AGR.,irregular_plural_subject_verb_agreement_1,73,Weak
 SUBJECT-VERB AGR.,irregular_plural_subject_verb_agreement_2,88,Strong
-SUBJECT-VERB AGR.,regular_plural_subject_verb_agreement_1,76,Strong
+SUBJECT-VERB AGR.,regular_plural_subject_verb_agreement_1,76,Weak
 SUBJECT-VERB AGR.,regular_plural_subject_verb_agreement_2,81,Strong
