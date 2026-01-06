@@ -26,7 +26,7 @@ DETERMINER-NOUN AGR.,determiner_noun_agreement_1,88,92,92,99,96
 DETERMINER-NOUN AGR.,determiner_noun_agreement_2,86,92,81,98,95
 DETERMINER-NOUN AGR.,determiner_noun_agreement_irregular_1,53,76,81,93,92
 DETERMINER-NOUN AGR.,determiner_noun_agreement_irregular_2,55,83,77,94,85
-DETERMINER-NOUN AGR.,determiner_noun_agreement_with_adj_1,52,87,86,98,95
+DETERMINER-NOUN AGR.,determiner_noun_agreement_with_adjective_1,52,87,86,98,95
 DETERMINER-NOUN AGR.,determiner_noun_agreement_with_adj_2,50,86,78,95,96
 DETERMINER-NOUN AGR.,determiner_noun_agreement_with_adj_irregular_1,53,76,81,93,94
 DETERMINER-NOUN AGR.,determiner_noun_agreement_with_adj_irregular_2,55,83,77,94,85
