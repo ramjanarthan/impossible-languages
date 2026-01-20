@@ -279,9 +279,9 @@ To run the GUI, run the following command in the 'gui' project directory:
 python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-The GUI will be available at: http://localhost:8000/results
+The GUI will be available at: http://localhost:8000
 
-Note: The V1 version of the GUI is served at http://localhost:8000 and is deprecated. The current GUI loads data from the V3 results by default.
+The GUI loads data from the V3 results (`experiments/output/v3/results.csv`).
 
 ### Different Versions: What do V1, V2 and V3 mean?
 As is often the case when working on a research project, ideas evolve over time and methodologies and datasets change. As such, the codebase has evolved too, and the V1, V2 and V3 versions of some subfolders help preserve this evolution. 

@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function fetchData() {
         try {
-            const response = await fetch('/api/results/v2');
+            const response = await fetch('/api/results');
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.detail || 'Failed to fetch data');
