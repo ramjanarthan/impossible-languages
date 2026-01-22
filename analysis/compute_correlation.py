@@ -4,19 +4,16 @@ from typing import Dict, Iterable, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
-from scipy.stats import spearmanr
+from scipy.stats import spearmanr, friedmanchisquare
 from analysis.performance_statistics import (
     get_phenomena_by_cue_reliability,
     GRAMMATICAL_PHENOMENA_TABLE_CSV_PATH,
 )
 
-
 RESULTS_CSV_PATH = "experiments/output/v3/results.csv"
-
 
 def load_results(csv_path: str) -> pd.DataFrame:
     return pd.read_csv(csv_path)
-
 
 def get_accuracy_by_model(
     df: pd.DataFrame,
@@ -34,11 +31,14 @@ def get_accuracy_by_model(
     perf = dff.groupby("model name")["accuracy"].mean()
     return perf.to_dict()
 
-
 def rank_values(values: List[float]) -> np.ndarray:
     s = pd.Series(values)
     return s.rank(method="average").to_numpy()
 
+
+def friendman_from_scores(df: pd.DataFrame) -> Tuple[float, float]:
+    stat, p_friedman = friedmanchisquare(*[df[df["model name"] == model]["accuracy"].values for model in df["model name"].unique()])
+    return stat, p_friedman
 
 def spearman_r_from_scores(a: Dict[str, float], b: Dict[str, float]) -> Tuple[float, float, int, List[str]]:
     common = sorted(set(a.keys()) & set(b.keys()))
@@ -51,7 +51,6 @@ def spearman_r_from_scores(a: Dict[str, float], b: Dict[str, float]) -> Tuple[fl
     r = float(r)
     p = float(p)
     return r, p, len(common), common
-
 
 def get_mlocal_scores() -> Dict[str, float]:
     labels = [
@@ -90,7 +89,6 @@ def compute_overall_spearman(
     mlocal = get_mlocal_scores()
     return spearman_r_from_scores(acc, mlocal)
 
-
 def compute_per_phenomenon_spearman(
     csv_path: str,
     phenomena: Optional[List[str]] = None,
@@ -113,9 +111,101 @@ def compute_per_phenomenon_spearman(
         })
     return pd.DataFrame(rows)
 
+def compute_overall_friedman(
+    csv_path: str,
+) -> Tuple[float, float]:
+    df = load_results(csv_path)
+    return friendman_from_scores(df)
+
+def compute_per_phenomenon_friedman(
+    csv_path: str,
+    phenomena: Optional[List[str]] = None,
+    skip_models: Optional[List[str]] = None,
+) -> pd.DataFrame:
+    df = load_results(csv_path)
+    if phenomena is None:
+        phenomena = sorted(df["grammatical phenomenon"].unique().tolist())
+    rows = []
+    for ph in phenomena:
+        acc = get_accuracy_by_model(df, phenomena=[ph], skip_models=skip_models)
+        stat, p = friendman_from_scores(acc)
+        rows.append({
+            "phenomenon": ph,
+            "friedman_stat": stat,
+            "p_value": p,
+        })
+    return pd.DataFrame(rows)
+
+def analyze_ranking_significance(csv_path):
+    # 1. Load Data
+    df = pd.read_csv(csv_path)
+
+    # 2. Define the Models and their 'Property B' Ranks
+    # We rank them by "Window Size". 
+    # Expectation: As Rank increases (Window gets bigger), Accuracy decreases.
+    model_ranks = {
+        'english': 1,
+        'shuffle_local3': 2,
+        'shuffle_local5': 3,
+        'shuffle_local10': 4,
+        'shuffle_nondeterministic': 5
+    }
+    
+    # Filter for only these 5 models
+    df_subset = df[df['model name'].isin(model_ranks.keys())].copy()
+    
+    # 3. Pivot Data (Rows=Datasets, Cols=Models)
+    pivot_df = df_subset.pivot_table(
+        index='grammatical phenomenon', 
+        columns='model name', 
+        values='accuracy'
+    )
+    
+    # Ensure columns are sorted by the Property B Rank (1 to 5)
+    sorted_models = sorted(model_ranks.keys(), key=lambda x: model_ranks[x])
+    pivot_df = pivot_df[sorted_models]
+    
+    print(f"Analyzing {len(pivot_df)} datasets across 5 models...")
+    print(f"Model Order (Property B): {sorted_models}")
+    
+    # 4. Friedman Test (Validation Step)
+    # Checks if there is ANY difference between the models
+    stat, p_friedman = stats.friedmanchisquare(*[pivot_df[col] for col in pivot_df.columns])
+    print(f"\n[Validation] Friedman Test: p = {p_friedman:.4e}")
+    if p_friedman < 0.05:
+        print(" -> PASSED: Models are statistically different.")
+    else:
+        print(" -> WARNING: Models may not be distinguishable.")
+
+    # 5. Calculate Kendall's Tau for EACH dataset individually
+    taus = []
+    prop_b_vector = np.array([1, 2, 3, 4, 5]) # The ideal rank order
+    
+    for dataset_name, row in pivot_df.iterrows():
+        perfs = row.values
+        # Kendall's Tau between (Model Performance) and (Property B)
+        # We expect a NEGATIVE correlation (Higher Window -> Lower Accuracy)
+        tau, p = stats.kendalltau(perfs, prop_b_vector)
+        if not np.isnan(tau):
+            taus.append(tau)
+
+    # 6. Wilcoxon Signed-Rank Test (The 'Meta-Analysis')
+    # We test if the list of 69 correlation coefficients is significantly < 0
+    w_stat, p_wilcoxon = stats.wilcoxon(taus, alternative='less')
+    
+    mean_tau = np.mean(taus)
+    print(f"\n[Hypothesis Test] Mean Kendall's Tau: {mean_tau:.4f}")
+    print(f"Wilcoxon Signed-Rank Test: p = {p_wilcoxon:.4e}")
+    
+    if p_wilcoxon < 0.05:
+        print(" -> SIGNIFICANT: The ordering of Property B systematically affects model performance.")
+    else:
+        print(" -> NOT SIGNIFICANT: The relationship is not consistent across datasets.")
 
 def main():
     parser = argparse.ArgumentParser()
+
+    parser.add_argument("--test", default="spearman", choices=["spearman", "friedman"])
     parser.add_argument("--csv", default=RESULTS_CSV_PATH)
     parser.add_argument("--phenomena", default=None, help="Comma-separated list. If omitted, use all.")
     parser.add_argument(
@@ -151,16 +241,24 @@ def main():
         skip_models = [s.strip() for s in args.skip_models.split(",") if s.strip()]
 
     if args.by_phenomenon:
-        df = compute_per_phenomenon_spearman(args.csv, phenomena=phenomena, skip_models=skip_models)
+        if args.test == "spearman":
+            df = compute_per_phenomenon_spearman(args.csv, phenomena=phenomena, skip_models=skip_models)
+        elif args.test == "friedman":
+            df = compute_per_phenomenon_friedman(args.csv, phenomena=phenomena, skip_models=skip_models)
         if args.output:
             os.makedirs(os.path.dirname(args.output), exist_ok=True)
             df.to_csv(args.output, index=False)
         else:
             print(df.to_string(index=False))
     else:
-        r, p, n, common = compute_overall_spearman(args.csv, phenomena=phenomena, skip_models=skip_models)
-        print(f"Spearman r (overall): {r:.4f} , p (overall): {p:.4f} using {n} common models")
-        print(f"Common models: {', '.join(common)}")
+        if args.test == "spearman":
+            r, p, n, common = compute_overall_spearman(args.csv, phenomena=phenomena, skip_models=skip_models)
+            print(f"Spearman r (overall): {r:.4f} , p (overall): {p:.4f} using {n} common models")
+            common_models = ", ".join(common)
+            print(f"Common models: {common_models}")
+        elif args.test == "friedman":
+            r, p = compute_overall_friedman(args.csv)
+            print(f"Friedman chi-square (overall): {r:.4f} , p (overall): {p:.4f}")
 
 
 if __name__ == "__main__":
