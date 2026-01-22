@@ -4,7 +4,7 @@ from typing import Dict, Iterable, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
-from scipy.stats import spearmanr, friedmanchisquare
+from scipy import stats
 from analysis.performance_statistics import (
     get_phenomena_by_cue_reliability,
     GRAMMATICAL_PHENOMENA_TABLE_CSV_PATH,
@@ -37,7 +37,7 @@ def rank_values(values: List[float]) -> np.ndarray:
 
 
 def friendman_from_scores(df: pd.DataFrame) -> Tuple[float, float]:
-    stat, p_friedman = friedmanchisquare(*[df[df["model name"] == model]["accuracy"].values for model in df["model name"].unique()])
+    stat, p_friedman = stats.friedmanchisquare(*[df[df["model name"] == model]["accuracy"].values for model in df["model name"].unique()])
     return stat, p_friedman
 
 def spearman_r_from_scores(a: Dict[str, float], b: Dict[str, float]) -> Tuple[float, float, int, List[str]]:
@@ -47,7 +47,7 @@ def spearman_r_from_scores(a: Dict[str, float], b: Dict[str, float]) -> Tuple[fl
     a_vals = [a[k] for k in common]
     b_vals = [b[k] for k in common]
     # scipy handles ties and returns both correlation and p-value
-    r, p = spearmanr(a_vals, b_vals)
+    r, p = stats.spearmanr(a_vals, b_vals)
     r = float(r)
     p = float(p)
     return r, p, len(common), common
@@ -140,18 +140,20 @@ def analyze_ranking_significance(csv_path):
     # 1. Load Data
     df = pd.read_csv(csv_path)
 
-    # 2. Define the Models and their 'Property B' Ranks
-    # We rank them by "Window Size". 
-    # Expectation: As Rank increases (Window gets bigger), Accuracy decreases.
+    # 2. Define the Models and their 'm-local entropy' Ranks
+    # Expectation: As m-local entropy increases, accuracy decreases.
     model_ranks = {
         'english': 1,
-        'shuffle_local3': 2,
-        'shuffle_local5': 3,
-        'shuffle_local10': 4,
-        'shuffle_nondeterministic': 5
+        'reverse_full': 2,
+        'shuffle_local3': 3,
+        'reverse_partial': 4,
+        'shuffle_even_odd': 5,
+        'shuffle_local5': 6,
+        'shuffle_deterministic21': 7,
+        'shuffle_local10': 8,
+        'shuffle_nondeterministic': 9
     }
     
-    # Filter for only these 5 models
     df_subset = df[df['model name'].isin(model_ranks.keys())].copy()
     
     # 3. Pivot Data (Rows=Datasets, Cols=Models)
@@ -161,12 +163,12 @@ def analyze_ranking_significance(csv_path):
         values='accuracy'
     )
     
-    # Ensure columns are sorted by the Property B Rank (1 to 5)
+    # Ensure columns are sorted by the m-local entropy rank
     sorted_models = sorted(model_ranks.keys(), key=lambda x: model_ranks[x])
     pivot_df = pivot_df[sorted_models]
     
-    print(f"Analyzing {len(pivot_df)} datasets across 5 models...")
-    print(f"Model Order (Property B): {sorted_models}")
+    print(f"Analyzing {len(pivot_df)} datasets across all {len(sorted_models)} models...")
+    print(f"Model Order (m-local entropy): {sorted_models}")
     
     # 4. Friedman Test (Validation Step)
     # Checks if there is ANY difference between the models
@@ -179,13 +181,13 @@ def analyze_ranking_significance(csv_path):
 
     # 5. Calculate Kendall's Tau for EACH dataset individually
     taus = []
-    prop_b_vector = np.array([1, 2, 3, 4, 5]) # The ideal rank order
+    m_local_vector = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9]) # The ideal rank order
     
     for dataset_name, row in pivot_df.iterrows():
         perfs = row.values
         # Kendall's Tau between (Model Performance) and (Property B)
         # We expect a NEGATIVE correlation (Higher Window -> Lower Accuracy)
-        tau, p = stats.kendalltau(perfs, prop_b_vector)
+        tau, p = stats.kendalltau(perfs, m_local_vector)
         if not np.isnan(tau):
             taus.append(tau)
 
@@ -198,7 +200,7 @@ def analyze_ranking_significance(csv_path):
     print(f"Wilcoxon Signed-Rank Test: p = {p_wilcoxon:.4e}")
     
     if p_wilcoxon < 0.05:
-        print(" -> SIGNIFICANT: The ordering of Property B systematically affects model performance.")
+        print(" -> SIGNIFICANT: The ordering of m-local entropy systematically affects model performance.")
     else:
         print(" -> NOT SIGNIFICANT: The relationship is not consistent across datasets.")
 
@@ -262,4 +264,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    analyze_ranking_significance(RESULTS_CSV_PATH)
+    #main()
