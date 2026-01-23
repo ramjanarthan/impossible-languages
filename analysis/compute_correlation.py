@@ -167,13 +167,13 @@ def analyze_ranking_significance(csv_path):
     sorted_models = sorted(model_ranks.keys(), key=lambda x: model_ranks[x])
     pivot_df = pivot_df[sorted_models]
     
-    print(f"Analyzing {len(pivot_df)} datasets across all {len(sorted_models)} models...")
+    print(f"Analyzing {len(pivot_df)} datasets across all {len(sorted_models)} models")
     print(f"Model Order (m-local entropy): {sorted_models}")
     
     # 4. Friedman Test (Validation Step)
     # Checks if there is ANY difference between the models
     stat, p_friedman = stats.friedmanchisquare(*[pivot_df[col] for col in pivot_df.columns])
-    print(f"\n[Validation] Friedman Test: p = {p_friedman:.4e}")
+    print(f"\n[Validation] Friedman Test: Chi2 = {stat:.4e},  p = {p_friedman:.4e}")
     if p_friedman < 0.05:
         print(" -> PASSED: Models are statistically different.")
     else:
@@ -185,18 +185,19 @@ def analyze_ranking_significance(csv_path):
     
     for dataset_name, row in pivot_df.iterrows():
         perfs = row.values
-        # Kendall's Tau between (Model Performance) and (Property B)
+        # Kendall's Tau between (Model Performance) and (m-local entropy)
         # We expect a NEGATIVE correlation (Higher Window -> Lower Accuracy)
         tau, p = stats.kendalltau(perfs, m_local_vector)
         if not np.isnan(tau):
             taus.append(tau)
 
-    # 6. Wilcoxon Signed-Rank Test (The 'Meta-Analysis')
+    # 6. Wilcoxon Signed-Rank Test
     # We test if the list of 69 correlation coefficients is significantly < 0
     w_stat, p_wilcoxon = stats.wilcoxon(taus, alternative='less')
-    
+
     mean_tau = np.mean(taus)
-    print(f"\n[Hypothesis Test] Mean Kendall's Tau: {mean_tau:.4f}")
+    print("\n Hypothesis: As m-local entropy increases, accuracy decreases. Testing if the list of tau values is significantly < 0")    
+    print(f"Mean Kendall's Tau: {mean_tau:.4f} for {len(taus)} datasets")
     print(f"Wilcoxon Signed-Rank Test: p = {p_wilcoxon:.4e}")
     
     if p_wilcoxon < 0.05:
