@@ -4,10 +4,14 @@ from typing import Dict, Iterable, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 from scipy import stats
 from analysis.performance_statistics import (
     get_phenomena_by_cue_reliability,
     GRAMMATICAL_PHENOMENA_TABLE_CSV_PATH,
+    MODEL_ORDER,
+    MODEL_TO_DISPLAY_NAME
 )
 
 RESULTS_CSV_PATH = "experiments/output/v3/results.csv"
@@ -205,6 +209,147 @@ def analyze_ranking_significance(csv_path):
     else:
         print(" -> NOT SIGNIFICANT: The relationship is not consistent across datasets.")
 
+def compute_pairwise_wilcoxon(csv_path):
+    """
+    Compute pairwise Wilcoxon signed-rank tests between all pairs of models.
+    
+    Returns:
+        Tuple[pd.DataFrame, pd.DataFrame]: A tuple of (p_values_matrix, statistics_matrix)
+            where each is a DataFrame with models as both rows and columns.
+    """
+    # 1. Load Data
+    df = pd.read_csv(csv_path)
+
+    n_models = len(MODEL_ORDER)
+    p_values = np.ones((n_models, n_models))
+    statistics = np.zeros((n_models, n_models))
+
+    for i in range(n_models):
+        for j in range(i + 1, n_models):
+            first_model = MODEL_ORDER[i]
+            second_model = MODEL_ORDER[j]
+
+            first_model_results = df[df['model name'] == first_model]
+            second_model_results = df[df['model name'] == second_model]
+            
+            # ensure that results are sorted by grammatical phenomena
+            first_model_results = first_model_results.sort_values(by=['grammatical phenomenon'])['accuracy']
+            second_model_results = second_model_results.sort_values(by=['grammatical phenomenon'])['accuracy']
+
+            stat, p_value = stats.wilcoxon(first_model_results, second_model_results)
+            
+            # Store symmetric values
+            p_values[i, j] = p_value
+            p_values[j, i] = p_value
+            statistics[i, j] = stat
+            statistics[j, i] = stat
+
+    # Convert to DataFrames with model names as indices
+    display_names = [MODEL_TO_DISPLAY_NAME.get(m, m) for m in MODEL_ORDER]
+    p_values_df = pd.DataFrame(p_values, index=display_names, columns=display_names)
+    statistics_df = pd.DataFrame(statistics, index=display_names, columns=display_names)
+    
+    return p_values_df, statistics_df
+
+
+def visualize_pairwise_wilcoxon(
+    csv_path: str = RESULTS_CSV_PATH,
+    output_path: str = "analysis/output/pairwise_wilcoxon_heatmap.png"
+):
+    """
+    Compute and visualize pairwise Wilcoxon signed-rank test results as a heatmap.
+    
+    The heatmap shows p-values between all model pairs, with cells colored by 
+    significance level. Cells are annotated with p-values and significance markers:
+    - *** p < 0.001
+    - ** p < 0.01
+    - * p < 0.05
+    - ns (not significant) p >= 0.05
+    
+    Args:
+        csv_path: Path to the results CSV file
+        output_path: Path where the heatmap image will be saved
+    """
+    # Compute pairwise Wilcoxon tests
+    p_values_df, _ = compute_pairwise_wilcoxon(csv_path)
+    
+    n_models = len(MODEL_ORDER)
+    
+    # Create annotation matrix with p-values and significance markers
+    annotations = []
+    for i in range(n_models):
+        row = []
+        for j in range(n_models):
+            if i == j:
+                row.append("-")
+            else:
+                p = p_values_df.iloc[i, j]
+                if p < 0.001:
+                    sig = "***"
+                elif p < 0.01:
+                    sig = "**"
+                elif p < 0.05:
+                    sig = "*"
+                else:
+                    sig = "ns"
+                row.append(f"{p:.3f}\n{sig}")
+        annotations.append(row)
+    
+    annot_df = pd.DataFrame(annotations, 
+                            index=p_values_df.index, 
+                            columns=p_values_df.columns)
+    
+    # Create figure
+    fig, ax = plt.subplots(figsize=(12, 10))
+    
+    # Create a mask for the diagonal
+    mask = np.eye(n_models, dtype=bool)
+    
+    # Create heatmap - lower p-values (more significant) should be darker
+    # Using a reversed colormap so significant results stand out
+    sns.heatmap(
+        p_values_df,
+        annot=annot_df,
+        fmt="",
+        cmap="RdYlGn",  # Red (low p-value/significant) to Green (high p-value/not significant)
+        mask=mask,
+        vmin=0,
+        vmax=0.1,  # Cap at 0.1 to emphasize significance threshold
+        cbar_kws={"label": "p-value"},
+        linewidths=0.5,
+        linecolor="gray",
+        annot_kws={"size": 9},
+        ax=ax
+    )
+    
+    # Customize the plot
+    ax.set_title("Pairwise Wilcoxon Signed-Rank Test Results\n(p-values)", fontsize=14, fontweight="bold", pad=20)
+    ax.set_xlabel("")
+    ax.set_ylabel("")
+    
+    # Rotate x-axis labels for better readability
+    plt.xticks(rotation=45, ha="right")
+    plt.yticks(rotation=0)
+    
+    # Add legend for significance markers
+    legend_text = "Significance: *** p<0.001, ** p<0.01, * p<0.05, ns p≥0.05"
+    ax.text(0.5, -0.2, legend_text, transform=ax.transAxes, 
+            ha="center", va="top", fontsize=10, style="italic")
+    
+    plt.tight_layout()
+    
+    # Ensure output directory exists
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    
+    # Save figure
+    plt.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close()
+    
+    print(f"Pairwise Wilcoxon heatmap saved to {output_path}")
+    
+    return p_values_df
+
+
 def main():
     parser = argparse.ArgumentParser()
 
@@ -265,5 +410,6 @@ def main():
 
 
 if __name__ == "__main__":
-    analyze_ranking_significance(RESULTS_CSV_PATH)
+    # analyze_ranking_significance(RESULTS_CSV_PATH)
+    visualize_pairwise_wilcoxon(RESULTS_CSV_PATH)
     #main()
