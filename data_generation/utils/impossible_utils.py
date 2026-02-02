@@ -346,6 +346,30 @@ def __perturb_shuffle_even_odd(sent):
     odd = [tok for i, tok in enumerate(tokens) if i % 2 != 0]
     return even + odd
 
+
+##############################################################################
+# Undoing Perturbations
+##############################################################################
+def __undo_perturb_reverse(sent, rng, reverse, full):
+    # Get sentence text and GPT-2 tokens
+    tokens = gpt2_rev_tokenizer.encode(sent)
+
+    # Index of REV token
+    i = tokens.index(marker_rev_token)
+    tokens.remove(marker_rev_token)
+
+    # Extract tokens before/after the marker, and reverse tokens after
+    tokens_before = tokens[:i]
+    tokens_after = tokens[i:]
+    if reverse:
+        tokens_after.reverse()
+    new_tokens = tokens_before + tokens_after
+    if full:
+        assert not reverse
+        new_tokens.reverse()
+
+    return new_tokens
+
 ##############################################################################
 # Pair perturbations
 # Assume sent1 and sent2 are minimal pairs with equal lengths when tokenised
@@ -545,6 +569,33 @@ def perturb_shuffle_local(sent, seed, window):
 def perturb_shuffle_even_odd(sent):
     return __perturb_shuffle_even_odd(sent)
 
+
+##############################################################################
+# UNDO PERTURBATION FUNCTIONS
+# These functions define how to undo a perturbation on a sentence. They
+# take in a sentence object and an optional marker
+# for verb transformations. They return a string representing the transformed
+# sentence.
+##############################################################################
+def undo_perturb_reverse(sent, rng, reverse=True, full=False):
+    return __undo_perturb_reverse(sent, rng, reverse, full)
+
+
+def perturb_shuffle_deterministic(sent, seed=None, shuffle=True):
+    return __perturb_shuffle_deterministic(sent, seed, shuffle)
+
+
+def perturb_shuffle_nondeterministic(sent, rng):
+    return __perturb_shuffle_nondeterministic(sent, rng)
+
+
+def perturb_shuffle_local(sent, seed, window):
+    return __perturb_shuffle_local(sent, seed, window)
+
+
+def perturb_shuffle_even_odd(sent):
+    return __perturb_shuffle_even_odd(sent)
+
 ##############################################################################
 # PERTURBATION PAIR FUNCTIONS
 # These functions define how a perturbation will affect a sentence. They
@@ -684,6 +735,94 @@ PERTURBATIONS = {
         "color": "#03a0ff",
     },
 }
+
+UNDO_PERTURBATIONS = {
+    "shuffle_control": {
+        "perturbation_function": partial(perturb_shuffle_deterministic, seed=None, shuffle=False),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#606060",
+    },
+    "shuffle_nondeterministic": {
+        "perturbation_function": partial(perturb_shuffle_nondeterministic, rng=default_rng(0)),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#E8384F",
+    },
+    "shuffle_deterministic21": {
+        "perturbation_function": partial(perturb_shuffle_deterministic, seed=21, shuffle=True),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#FFB000",
+    },
+    "shuffle_deterministic57": {
+        "perturbation_function": partial(perturb_shuffle_deterministic, seed=57, shuffle=True),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#8db000",
+    },
+    "shuffle_deterministic84": {
+        "perturbation_function": partial(perturb_shuffle_deterministic, seed=84, shuffle=True),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#62BB35",
+    },
+    "shuffle_local3": {
+        "perturbation_function": partial(perturb_shuffle_local, seed=0, window=3),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#208EA3",
+    },
+    "shuffle_local5": {
+        "perturbation_function": partial(perturb_shuffle_local, seed=0, window=5),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#4178BC",
+    },
+    "shuffle_local10": {
+        "perturbation_function": partial(perturb_shuffle_local, seed=0, window=10),
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#AA71FF",
+    },
+    "shuffle_even_odd": {
+        "perturbation_function": perturb_shuffle_even_odd,
+        "affect_function": affect_shuffle,
+        "filter_function": filter_shuffle,
+        "gpt2_tokenizer": gpt2_original_tokenizer,
+        "color": "#E37CFF",
+    },
+    "reverse_control": {
+        "perturbation_function": partial(perturb_reverse, rng=default_rng(21), reverse=False, full=False),
+        "affect_function": affect_reverse,
+        "filter_function": filter_reverse,
+        "gpt2_tokenizer": gpt2_rev_tokenizer,
+        "color": "#606060",
+    },
+    "reverse_partial": {
+        "perturbation_function": partial(undo_perturb_reverse, rng=default_rng(21), reverse=True, full=False),
+        "affect_function": affect_reverse,
+        "filter_function": filter_reverse,
+        "gpt2_tokenizer": gpt2_rev_tokenizer,
+        "color": "#E5A836",
+    },
+    "reverse_full": {
+        "perturbation_function": partial(undo_perturb_reverse, rng=default_rng(21), reverse=False, full=True),
+        "affect_function": affect_reverse,
+        "filter_function": filter_reverse,
+        "gpt2_tokenizer": gpt2_rev_tokenizer,
+        "color": "#A348A6",
+    },
+}
+
 
 PERTURBATIONS_PAIR = {
     "shuffle_nondeterministic": {
