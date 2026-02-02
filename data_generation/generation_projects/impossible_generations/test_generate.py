@@ -2,6 +2,9 @@ from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME
 import unittest
 
 test_cases = [
+    "A short one",
+    "Small boy",
+    "Hi.",
     "The quick brown fox jumps over the lazy dog",
     "He's very happy today!",
     "Artificial intelligence is transforming the world.",
