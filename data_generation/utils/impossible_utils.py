@@ -8,7 +8,7 @@ from functools import partial
 from numpy.random import default_rng
 from nltk.tree import ParentedTree
 import torch
-
+import numpy as np
 
 ##############################################################################
 # CONSTANTS
@@ -370,6 +370,35 @@ def __undo_perturb_reverse(sent, rng, reverse, full):
 
     return new_tokens
 
+def __undo_perturb_shuffle_deterministic(sent, seed, shuffle):
+    tokens = gpt2_original_tokenizer.encode(sent)
+    if shuffle:
+        # Compute inverse permutation
+        indices = np.arange(len(tokens))
+        default_rng(seed).shuffle(indices)
+        inverse_indices = np.argsort(indices)
+        tokens = [tokens[i] for i in inverse_indices]
+    return tokens
+
+def __undo_perturb_shuffle_local(sent, seed, window=5):
+    # Get sentence text and GPT-2 tokens
+    tokens = gpt2_original_tokenizer.encode(sent)
+
+    # Shuffle tokens in batches of size window
+    shuffled_tokens = []
+    for i in range(0, len(tokens), window):
+        batch = tokens[i:i+window].copy()
+
+        # Compute inverse permutation
+        indices = np.arange(len(batch))
+        default_rng(seed).shuffle(indices)
+        inverse_indices = np.argsort(indices)
+        batch = [batch[i] for i in inverse_indices]
+
+        shuffled_tokens += batch
+
+    return shuffled_tokens
+
 ##############################################################################
 # Pair perturbations
 # Assume sent1 and sent2 are minimal pairs with equal lengths when tokenised
@@ -581,16 +610,16 @@ def undo_perturb_reverse(sent, rng, reverse=True, full=False):
     return __undo_perturb_reverse(sent, rng, reverse, full)
 
 
-def perturb_shuffle_deterministic(sent, seed=None, shuffle=True):
-    return __perturb_shuffle_deterministic(sent, seed, shuffle)
+def undo_perturb_shuffle_deterministic(sent, seed=None, shuffle=True):
+    return __undo_perturb_shuffle_deterministic(sent, seed, shuffle)
 
 
 def perturb_shuffle_nondeterministic(sent, rng):
     return __perturb_shuffle_nondeterministic(sent, rng)
 
 
-def perturb_shuffle_local(sent, seed, window):
-    return __perturb_shuffle_local(sent, seed, window)
+def undo_perturb_shuffle_local(sent, seed, window):
+    return __undo_perturb_shuffle_local(sent, seed, window)
 
 
 def perturb_shuffle_even_odd(sent):
@@ -752,42 +781,28 @@ UNDO_PERTURBATIONS = {
         "color": "#E8384F",
     },
     "shuffle_deterministic21": {
-        "perturbation_function": partial(perturb_shuffle_deterministic, seed=21, shuffle=True),
+        "perturbation_function": partial(undo_perturb_shuffle_deterministic, seed=21, shuffle=True),
         "affect_function": affect_shuffle,
         "filter_function": filter_shuffle,
         "gpt2_tokenizer": gpt2_original_tokenizer,
         "color": "#FFB000",
     },
-    "shuffle_deterministic57": {
-        "perturbation_function": partial(perturb_shuffle_deterministic, seed=57, shuffle=True),
-        "affect_function": affect_shuffle,
-        "filter_function": filter_shuffle,
-        "gpt2_tokenizer": gpt2_original_tokenizer,
-        "color": "#8db000",
-    },
-    "shuffle_deterministic84": {
-        "perturbation_function": partial(perturb_shuffle_deterministic, seed=84, shuffle=True),
-        "affect_function": affect_shuffle,
-        "filter_function": filter_shuffle,
-        "gpt2_tokenizer": gpt2_original_tokenizer,
-        "color": "#62BB35",
-    },
     "shuffle_local3": {
-        "perturbation_function": partial(perturb_shuffle_local, seed=0, window=3),
+        "perturbation_function": partial(undo_perturb_shuffle_local, seed=0, window=3),
         "affect_function": affect_shuffle,
         "filter_function": filter_shuffle,
         "gpt2_tokenizer": gpt2_original_tokenizer,
         "color": "#208EA3",
     },
     "shuffle_local5": {
-        "perturbation_function": partial(perturb_shuffle_local, seed=0, window=5),
+        "perturbation_function": partial(undo_perturb_shuffle_local, seed=0, window=5),
         "affect_function": affect_shuffle,
         "filter_function": filter_shuffle,
         "gpt2_tokenizer": gpt2_original_tokenizer,
         "color": "#4178BC",
     },
     "shuffle_local10": {
-        "perturbation_function": partial(perturb_shuffle_local, seed=0, window=10),
+        "perturbation_function": partial(undo_perturb_shuffle_local, seed=0, window=10),
         "affect_function": affect_shuffle,
         "filter_function": filter_shuffle,
         "gpt2_tokenizer": gpt2_original_tokenizer,
@@ -799,13 +814,6 @@ UNDO_PERTURBATIONS = {
         "filter_function": filter_shuffle,
         "gpt2_tokenizer": gpt2_original_tokenizer,
         "color": "#E37CFF",
-    },
-    "reverse_control": {
-        "perturbation_function": partial(perturb_reverse, rng=default_rng(21), reverse=False, full=False),
-        "affect_function": affect_reverse,
-        "filter_function": filter_reverse,
-        "gpt2_tokenizer": gpt2_rev_tokenizer,
-        "color": "#606060",
     },
     "reverse_partial": {
         "perturbation_function": partial(undo_perturb_reverse, rng=default_rng(21), reverse=True, full=False),
