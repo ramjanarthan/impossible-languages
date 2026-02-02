@@ -1,12 +1,12 @@
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import torch
-from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME, VALID_PERTURBATION_KEYS, UNDO_PERTURBATIONS
+from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME, VALID_UNDO_PERTURBATION_KEYS, UNDO_PERTURBATIONS
 
 NUM_LINES = 10
 RAW_OUTPUT_DIR = "data_generation/outputs/impossible_generations/raw/"
 CORRECTED_OUTPUT_DIR = "data_generation/outputs/impossible_generations/corrected/"
 
-for perturbation in [ "shuffle_deterministic21", "shuffle_local3", "shuffle_local5", "shuffle_local10"]:
+for perturbation in [ "shuffle_even_odd"]:
     model_id = PERTURBATION_TO_HF_MODEL_NAME[perturbation]
     model = GPT2LMHeadModel.from_pretrained(model_id)
     tokenizer = GPT2Tokenizer.from_pretrained(model_id)

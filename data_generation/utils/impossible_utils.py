@@ -399,6 +399,24 @@ def __undo_perturb_shuffle_local(sent, seed, window=5):
 
     return shuffled_tokens
 
+def __undo_perturb_shuffle_even_odd(sent):
+    # Get sentence text and GPT-2 tokens
+    tokens = gpt2_original_tokenizer.encode(sent)
+
+    result = []
+    i = 0
+    mid = (len(tokens)+1)//2
+
+    while i < mid and i + mid < len(tokens):
+        result.append(tokens[i])
+        result.append(tokens[i + mid])
+        i += 1
+
+    if len(tokens) % 2 != 0:
+        result.append(tokens[mid-1])
+
+    return result
+
 ##############################################################################
 # Pair perturbations
 # Assume sent1 and sent2 are minimal pairs with equal lengths when tokenised
@@ -613,17 +631,12 @@ def undo_perturb_reverse(sent, rng, reverse=True, full=False):
 def undo_perturb_shuffle_deterministic(sent, seed=None, shuffle=True):
     return __undo_perturb_shuffle_deterministic(sent, seed, shuffle)
 
-
-def perturb_shuffle_nondeterministic(sent, rng):
-    return __perturb_shuffle_nondeterministic(sent, rng)
-
-
 def undo_perturb_shuffle_local(sent, seed, window):
     return __undo_perturb_shuffle_local(sent, seed, window)
 
 
-def perturb_shuffle_even_odd(sent):
-    return __perturb_shuffle_even_odd(sent)
+def undo_perturb_shuffle_even_odd(sent):
+    return __undo_perturb_shuffle_even_odd(sent)
 
 ##############################################################################
 # PERTURBATION PAIR FUNCTIONS
@@ -773,13 +786,6 @@ UNDO_PERTURBATIONS = {
         "gpt2_tokenizer": gpt2_original_tokenizer,
         "color": "#606060",
     },
-    "shuffle_nondeterministic": {
-        "perturbation_function": partial(perturb_shuffle_nondeterministic, rng=default_rng(0)),
-        "affect_function": affect_shuffle,
-        "filter_function": filter_shuffle,
-        "gpt2_tokenizer": gpt2_original_tokenizer,
-        "color": "#E8384F",
-    },
     "shuffle_deterministic21": {
         "perturbation_function": partial(undo_perturb_shuffle_deterministic, seed=21, shuffle=True),
         "affect_function": affect_shuffle,
@@ -809,7 +815,7 @@ UNDO_PERTURBATIONS = {
         "color": "#AA71FF",
     },
     "shuffle_even_odd": {
-        "perturbation_function": perturb_shuffle_even_odd,
+        "perturbation_function": undo_perturb_shuffle_even_odd,
         "affect_function": affect_shuffle,
         "filter_function": filter_shuffle,
         "gpt2_tokenizer": gpt2_original_tokenizer,
@@ -916,6 +922,16 @@ PERTURBATIONS_PAIR = {
 VALID_PERTURBATION_KEYS = [
     "english",
     "shuffle_nondeterministic",
+    "shuffle_deterministic21",
+    "shuffle_local3",
+    "shuffle_local5",
+    "shuffle_local10",
+    "shuffle_even_odd",
+    "reverse_partial",
+    "reverse_full",
+]
+
+VALID_UNDO_PERTURBATION_KEYS = [
     "shuffle_deterministic21",
     "shuffle_local3",
     "shuffle_local5",
