@@ -350,9 +350,9 @@ def __perturb_shuffle_even_odd(sent):
 ##############################################################################
 # Undoing Perturbations
 ##############################################################################
-def __undo_perturb_reverse(sent, rng, reverse, full):
+def __undo_perturb_reverse(tokens, reverse, full):
     # Get sentence text and GPT-2 tokens
-    tokens = gpt2_rev_tokenizer.encode(sent)
+    tokens = tokens.copy()
 
     # Index of REV token
     i = tokens.index(marker_rev_token)
@@ -370,8 +370,8 @@ def __undo_perturb_reverse(sent, rng, reverse, full):
 
     return new_tokens
 
-def __undo_perturb_shuffle_deterministic(sent, seed, shuffle):
-    tokens = gpt2_original_tokenizer.encode(sent)
+def __undo_perturb_shuffle_deterministic(tokens, seed, shuffle):
+    tokens = tokens.copy()
     if shuffle:
         # Compute inverse permutation
         indices = np.arange(len(tokens))
@@ -380,9 +380,9 @@ def __undo_perturb_shuffle_deterministic(sent, seed, shuffle):
         tokens = [tokens[i] for i in inverse_indices]
     return tokens
 
-def __undo_perturb_shuffle_local(sent, seed, window=5):
+def __undo_perturb_shuffle_local(tokens, seed, window=5):
     # Get sentence text and GPT-2 tokens
-    tokens = gpt2_original_tokenizer.encode(sent)
+    tokens = tokens.copy()
 
     # Shuffle tokens in batches of size window
     shuffled_tokens = []
@@ -399,9 +399,9 @@ def __undo_perturb_shuffle_local(sent, seed, window=5):
 
     return shuffled_tokens
 
-def __undo_perturb_shuffle_even_odd(sent):
+def __undo_perturb_shuffle_even_odd(tokens):
     # Get sentence text and GPT-2 tokens
-    tokens = gpt2_original_tokenizer.encode(sent)
+    tokens = tokens.copy()
 
     result = []
     i = 0
@@ -624,19 +624,17 @@ def perturb_shuffle_even_odd(sent):
 # for verb transformations. They return a string representing the transformed
 # sentence.
 ##############################################################################
-def undo_perturb_reverse(sent, rng, reverse=True, full=False):
-    return __undo_perturb_reverse(sent, rng, reverse, full)
+def undo_perturb_reverse(tokens, reverse=True, full=False):
+    return __undo_perturb_reverse(tokens, reverse, full)
 
+def undo_perturb_shuffle_deterministic(tokens, seed=None, shuffle=True):
+    return __undo_perturb_shuffle_deterministic(tokens, seed, shuffle)
 
-def undo_perturb_shuffle_deterministic(sent, seed=None, shuffle=True):
-    return __undo_perturb_shuffle_deterministic(sent, seed, shuffle)
+def undo_perturb_shuffle_local(tokens, seed, window):
+    return __undo_perturb_shuffle_local(tokens, seed, window)
 
-def undo_perturb_shuffle_local(sent, seed, window):
-    return __undo_perturb_shuffle_local(sent, seed, window)
-
-
-def undo_perturb_shuffle_even_odd(sent):
-    return __undo_perturb_shuffle_even_odd(sent)
+def undo_perturb_shuffle_even_odd(tokens):
+    return __undo_perturb_shuffle_even_odd(tokens)
 
 ##############################################################################
 # PERTURBATION PAIR FUNCTIONS
@@ -822,21 +820,20 @@ UNDO_PERTURBATIONS = {
         "color": "#E37CFF",
     },
     "reverse_partial": {
-        "perturbation_function": partial(undo_perturb_reverse, rng=default_rng(21), reverse=True, full=False),
+        "perturbation_function": partial(undo_perturb_reverse, reverse=True, full=False),
         "affect_function": affect_reverse,
         "filter_function": filter_reverse,
         "gpt2_tokenizer": gpt2_rev_tokenizer,
         "color": "#E5A836",
     },
     "reverse_full": {
-        "perturbation_function": partial(undo_perturb_reverse, rng=default_rng(21), reverse=False, full=True),
+        "perturbation_function": partial(undo_perturb_reverse, reverse=False, full=True),
         "affect_function": affect_reverse,
         "filter_function": filter_reverse,
         "gpt2_tokenizer": gpt2_rev_tokenizer,
         "color": "#A348A6",
     },
 }
-
 
 PERTURBATIONS_PAIR = {
     "shuffle_nondeterministic": {

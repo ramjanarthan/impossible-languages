@@ -20,16 +20,15 @@ class UndoPerturbationTestResults(unittest.TextTestResult):
 class TestUndoPerturbations(unittest.TestCase):
     def test_undo_perturbations(self):
         for test_sentence in test_cases:
-            for key in ['reverse_full', 'reverse_partial', 'shuffle_deterministic21']:
+            for key in VALID_UNDO_PERTURBATION_KEYS:
                 with self.subTest(key=key, test_sentence=test_sentence):
                     output = PERTURBATIONS[key]['perturbation_function'](test_sentence)
-                    modified_sentence = PERTURBATIONS[key]['gpt2_tokenizer'].decode(output, skip_special_tokens=True)
 
-                    # Apply the perturbation function
-                    corrected_output = UNDO_PERTURBATIONS[key]['perturbation_function'](modified_sentence)
+                    # Apply the undo perturbation function
+                    corrected_output = UNDO_PERTURBATIONS[key]['perturbation_function'](output)
                     corrected_sentence = UNDO_PERTURBATIONS[key]['gpt2_tokenizer'].decode(corrected_output, skip_special_tokens=True)
 
-                    self.assertEqual(corrected_sentence, test_sentence)
+                    self.assertEqual(test_sentence, corrected_sentence)
 
 if __name__ == "__main__":
     unittest.main(testRunner=unittest.TextTestRunner(resultclass=UndoPerturbationTestResults))
