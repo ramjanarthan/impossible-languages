@@ -37,10 +37,10 @@ for perturbation in VALID_UNDO_PERTURBATION_KEYS:
     
     print(f"Generated {NUM_LINES} sentences for {perturbation}.")
 
-for perturbation in ['shuffle_control', 'shuffle_nondeterministic']:
+for perturbation in ['english', 'shuffle_nondeterministic']:
     model_id = PERTURBATION_TO_HF_MODEL_NAME[perturbation]
     model = GPT2LMHeadModel.from_pretrained(model_id)
-    tokenizer = PERTURBATIONS[perturbation]['gpt2_tokenizer']   
+    tokenizer = GPT2Tokenizer.from_pretrained(model_id)   
 
     # Start with just the BOS token (no initial prompt)
     input_ids = torch.tensor([[tokenizer.bos_token_id]])
@@ -54,7 +54,7 @@ for perturbation in ['shuffle_control', 'shuffle_nondeterministic']:
         raw_outputs.append(generated_text)
 
     # Save generated text to file
-    with open(RAW_OUTPUT_DIR + f"{perturbation}.txt", "w+") as f:
+    with open(CORRECTED_OUTPUT_DIR + f"{perturbation}.txt", "w+") as f:
         f.write("\n".join(raw_outputs))
     
     print(f"Generated {NUM_LINES} sentences for {perturbation}.")
