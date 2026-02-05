@@ -17,7 +17,7 @@ else:
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-14m")
 model = AutoModelForCausalLM.from_pretrained("EleutherAI/pythia-14m").to(device)
 
-RESULTS_CSV = "evaluation/slor/slor_scores.csv"
+RESULTS_CSV = "evaluation/slor/fluency_scores.csv"
 MODEL_OUTPUT_DIR = "data_generation/outputs/impossible_generations/corrected/"
 
 def get_log_sentence_probability(line, model, tokenizer, device) -> float:
