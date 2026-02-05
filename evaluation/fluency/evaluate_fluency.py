@@ -49,9 +49,7 @@ def load_pythia_model_unigram_scores(filepath) -> dict:
 
 in_mem_unigram_scores = load_pythia_model_unigram_scores(PYTHIA_MODEL_UNIGRAM_LOGPROBS_FILEPATH)
 
-def get_summed_log_unigram_probability(line, tokenizer) -> float:
-    tokens = tokenizer.tokenize(line)
-
+def get_summed_log_unigram_probability(tokens) -> float:
     sum_log_unigram_probs = 0
     for token in tokens:
         sum_log_unigram_probs += in_mem_unigram_scores.get(token, 0)
@@ -69,8 +67,10 @@ for perturbation in VALID_PERTURBATION_KEYS:
         for line in lines:
             # calculate slor_score for this line
             x = get_log_sentence_probability(line, model, tokenizer, device)
-            y = get_summed_log_unigram_probability(line, tokenizer)
-            denom = len(line)
+
+            tokens = tokenizer.tokenize(line)
+            y = get_summed_log_unigram_probability(line)
+            denom = len(tokens)
 
             score = (x - UNIGRAM_COEFFECIENT_BETA * y + LENGTH_COEFFECIENT_GAMMA) / denom # Using MORCELA formula, which is SLOR with coeffecients 
 
