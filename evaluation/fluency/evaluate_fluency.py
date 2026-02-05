@@ -58,7 +58,7 @@ def get_summed_log_unigram_probability(line, tokenizer) -> float:
     
     return sum_log_unigram_probs
 
-for perturbation in VALID_PERTURBATION_KEYS:
+for perturbation in VALID_PERTURBATION_KEYS: 
     file = MODEL_OUTPUT_DIR + f"{perturbation}.txt"
 
     fluency_scores = []
@@ -74,11 +74,10 @@ for perturbation in VALID_PERTURBATION_KEYS:
 
             score = (x - UNIGRAM_COEFFECIENT_BETA * y + LENGTH_COEFFECIENT_GAMMA) / denom # Using MORCELA formula, which is SLOR with coeffecients 
 
-            fluency_scores.append(score)
+            if not np.isnan(score):
+                fluency_scores.append(score)
             
-
     mean, std = np.mean(fluency_scores), np.std(fluency_scores)
-    
     # write to RESULTS_CSV - (perturbation, mean, std_dev)
     with open(RESULTS_CSV, 'a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
