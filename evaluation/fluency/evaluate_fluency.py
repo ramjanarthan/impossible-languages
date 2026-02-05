@@ -5,6 +5,7 @@ import numpy as np
 import csv
 import sys
 from data_generation.utils.impossible_utils import VALID_PERTURBATION_KEYS
+import json
 
 if torch.cuda.is_available():
     device = torch.device("cuda")
@@ -17,8 +18,12 @@ else:
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-14m")
 model = AutoModelForCausalLM.from_pretrained("EleutherAI/pythia-14m").to(device)
 
-RESULTS_CSV = "evaluation/slor/fluency_scores.csv"
+RESULTS_CSV = "evaluation/fluency/fluency_scores.csv"
 MODEL_OUTPUT_DIR = "data_generation/outputs/impossible_generations/corrected/"
+PYTHIA_MODEL_UNIGRAM_LOGPROBS_FILEPATH = "evaluation/fluency/pile_unigram_logprobs.json"
+
+UNIGRAM_COEFFECIENT_BETA = 0.892
+LENGTH_COEFFECIENT_GAMMA = 8.211
 
 def get_log_sentence_probability(line, model, tokenizer, device) -> float:
     encoded_line = tokenizer(
@@ -35,40 +40,48 @@ def get_log_sentence_probability(line, model, tokenizer, device) -> float:
     loss_ce = output.loss
 
     log_sentence_probability = -loss_ce
-    return log_sentence_probability
+    return log_sentence_probability.item()
 
+def load_pythia_model_unigram_scores(filepath) -> dict:
+    with open(filepath, 'r') as json_file:
+        scores = json.load(json_file)
+        return scores
 
-def get_summed_log_unigram_probability(line, model, tokenizer, device) -> float:
-    tokens = tokenizer.encode(line, return_tensors='pt').to(device)[0]
+in_mem_unigram_scores = load_pythia_model_unigram_scores(PYTHIA_MODEL_UNIGRAM_LOGPROBS_FILEPATH)
+
+def get_summed_log_unigram_probability(line, tokenizer) -> float:
+    tokens = tokenizer.tokenize(line)
+
+    sum_log_unigram_probs = 0
+    for token in tokens:
+        sum_log_unigram_probs += in_mem_unigram_scores.get(token, 0)
     
-    return 1
+    return sum_log_unigram_probs
 
 for perturbation in VALID_PERTURBATION_KEYS:
     file = MODEL_OUTPUT_DIR + f"{perturbation}.txt"
 
-    slor_scores = []
+    fluency_scores = []
+    print("Computing scores for file : ", file)
     # Read the content of the file line by line
     with open(file, "r") as f:
         lines = [line.strip() for line in f]
         for line in lines:
             # calculate slor_score for this line
             x = get_log_sentence_probability(line, model, tokenizer, device)
-            print("Sentence: ", line)
-            print("Sentence probability: ", x)
-            sys.exit()
-            y = get_summed_log_unigram_probability(line, model, tokenizer, device)
+            y = get_summed_log_unigram_probability(line, tokenizer)
             denom = len(line)
 
-            unigram_coefficient = 1 
-            length_coefficient = 0
-            score = (x - unigram_coefficient * y + length_coefficient) / denom # Using MORCELA formula, which is SLOR with coeffecients 
+            score = (x - UNIGRAM_COEFFECIENT_BETA * y + LENGTH_COEFFECIENT_GAMMA) / denom # Using MORCELA formula, which is SLOR with coeffecients 
 
-            slor_scores.append(score)
+            fluency_scores.append(score)
+            
 
-    mean, std = np.mean(slor_scores), np.std(slor_scores)
+    mean, std = np.mean(fluency_scores), np.std(fluency_scores)
     
     # write to RESULTS_CSV - (perturbation, mean, std_dev)
-    with open(RESULTS_CSV, 'w', newline='', encoding='utf-8') as f:
+    with open(RESULTS_CSV, 'a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         writer.writerow([perturbation, mean, std])
 
+print("Computed all fluency scores")

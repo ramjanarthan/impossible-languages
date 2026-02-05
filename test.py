@@ -12,6 +12,10 @@ empty_prompt = tokenizer.bos_token
 
 test_sentence = "He is a boy"
 test_sentence_tokens = tokenizer.encode(test_sentence)
+
+
+print(tokenizer.tokenize(test_sentence))
+sys.exit()
 labels = test_sentence_tokens[1:]
 
 input_ids = tokenizer.encode(test_sentence_tokens, return_tensors='pt').to(device)
