@@ -23,6 +23,8 @@ for perturbation in VALID_UNDO_PERTURBATION_KEYS:
         raw_outputs.append(generated_text)
 
         undo_input = output[0].tolist()[1:] # Remove the BOS token
+        if undo_input[-1] == 50256:
+            undo_input = undo_input[:-1] # Remove the EOS token
 
         corrected_output = UNDO_PERTURBATIONS[perturbation]['perturbation_function'](undo_input)
         corrected_text = UNDO_PERTURBATIONS[perturbation]['gpt2_tokenizer'].decode(corrected_output, skip_special_tokens=True)
