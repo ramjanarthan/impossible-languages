@@ -24,6 +24,8 @@ for perturbation in VALID_UNDO_PERTURBATION_KEYS:
         raw_outputs.append(generated_text)
 
         undo_input = output[0].tolist()[1:] # Remove the BOS token
+        if undo_input[-1] == 50256:
+            undo_input = undo_input[:-1] # Remove the EOS token
 
         if undo_input[-1] == tokenizer.eos_token_id:
             undo_input = undo_input[:-1] # Remove the EOS token if it's there
