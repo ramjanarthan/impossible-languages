@@ -13,6 +13,7 @@ for perturbation in VALID_UNDO_PERTURBATION_KEYS:
 
     # Start with just the BOS token (no initial prompt)
     input_ids = torch.tensor([[tokenizer.bos_token_id]])
+    attention_mask = torch.ones_like(input_ids)
 
     raw_outputs = []
     corrected_outputs = []
@@ -23,6 +24,9 @@ for perturbation in VALID_UNDO_PERTURBATION_KEYS:
         raw_outputs.append(generated_text)
 
         undo_input = output[0].tolist()[1:] # Remove the BOS token
+
+        if undo_input[-1] == tokenizer.eos_token_id:
+            undo_input = undo_input[:-1] # Remove the EOS token if it's there
 
         corrected_output = UNDO_PERTURBATIONS[perturbation]['perturbation_function'](undo_input)
         corrected_text = UNDO_PERTURBATIONS[perturbation]['gpt2_tokenizer'].decode(corrected_output, skip_special_tokens=True)
