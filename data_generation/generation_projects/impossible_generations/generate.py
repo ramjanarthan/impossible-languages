@@ -1,8 +1,9 @@
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import torch
+from tqdm import tqdm
 from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME, VALID_UNDO_PERTURBATION_KEYS, UNDO_PERTURBATIONS, PERTURBATIONS
 
-NUM_LINES = 50
+NUM_LINES = 1000
 RAW_OUTPUT_DIR = "data_generation/outputs/impossible_generations/raw/"
 CORRECTED_OUTPUT_DIR = "data_generation/outputs/impossible_generations/corrected/"
 
@@ -18,19 +19,20 @@ for perturbation in VALID_UNDO_PERTURBATION_KEYS:
     raw_outputs = []
     corrected_outputs = []
 
-    for i in range(NUM_LINES):
-        output = model.generate(input_ids, max_new_tokens=50, pad_token_id=tokenizer.eos_token_id, do_sample=True)
+    for i in tqdm(range(NUM_LINES), desc=f"Generating for {perturbation}"):
+        output = model.generate(input_ids, attention_mask=attention_mask, max_new_tokens=50, pad_token_id=tokenizer.eos_token_id, do_sample=True)
         generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
         raw_outputs.append(generated_text)
 
         undo_input = output[0].tolist()[1:] # Remove the BOS token
-        if undo_input[-1] == 50256:
-            undo_input = undo_input[:-1] # Remove the EOS token
 
         if undo_input[-1] == tokenizer.eos_token_id:
             undo_input = undo_input[:-1] # Remove the EOS token if it's there
-
-        corrected_output = UNDO_PERTURBATIONS[perturbation]['perturbation_function'](undo_input)
+        try:
+            corrected_output = UNDO_PERTURBATIONS[perturbation]['perturbation_function'](undo_input)
+        except Exception as e:
+            print(f"Error applying undo perturbation for {perturbation} on generated output: {generated_text}")
+            print(undo_input, e)
         corrected_text = UNDO_PERTURBATIONS[perturbation]['gpt2_tokenizer'].decode(corrected_output, skip_special_tokens=True)
         corrected_outputs.append(corrected_text)
 
@@ -54,7 +56,7 @@ for perturbation in ['english', 'shuffle_nondeterministic']:
     raw_outputs = []
     corrected_outputs = []
 
-    for i in range(NUM_LINES):
+    for i in tqdm(range(NUM_LINES), desc=f"Generating for {perturbation}"):
         output = model.generate(input_ids, max_new_tokens=50, pad_token_id=tokenizer.eos_token_id, do_sample=True)
         generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
         raw_outputs.append(generated_text)
