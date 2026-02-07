@@ -6,19 +6,27 @@ import math
 from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME, VALID_UNDO_PERTURBATION_KEYS, UNDO_PERTURBATIONS, PERTURBATIONS
 import json
 
-
-model_id = "EleutherAI/pythia-14M"
 device = "mps"
-# model, tokenizer = GPT2LMHeadModel.from_pretrained(model_id).to(device), GPT2Tokenizer.from_pretrained(model_id)
 
-# Setup GPT-2 small pre-trained model
-model = AutoModelForCausalLM.from_pretrained("EleutherAI/pythia-14m").to(device)
-model.eval()
-tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-14m")
+# Pythia model
+pythia_model_id = "EleutherAI/pythia-14M"
+pythia_model, pythia_tokenizer = AutoModelForCausalLM.from_pretrained(pythia_model_id).to(device), AutoTokenizer.from_pretrained(pythia_model_id) 
+pythia_model.eval()
+
 PYTHIA_MODEL_UNIGRAM_LOGPROBS_FILEPATH = "evaluation/fluency/pile_unigram_logprobs.json"
-
 UNIGRAM_COEFFECIENT_BETA = 0.699
 LENGTH_COEFFECIENT_GAMMA = 11.59
+
+# GPT-2 impossible model
+imp_model_id = "mission-impossible-lms/no-shuffle-gpt2"
+imp_model, imp_tokenizer = GPT2LMHeadModel.from_pretrained(imp_model_id).to(device), GPT2Tokenizer.from_pretrained(imp_model_id)
+imp_model.eval()
+
+token_list = [10919, 389, 345, 1972, 503, 286, 534, 474, 6475, 444, 5633]
+print(imp_tokenizer.decode(token_list))
+
+print(imp_tokenizer.decode([50256] + token_list + [50256]))
+sys.exit()
 
 def get_log_sentence_probability(line, model, tokenizer, device) -> float:
     encoded_line = tokenizer(
@@ -66,10 +74,10 @@ a = "Let go of it."
 b = "Let let go of it."
 
 print(a)
-print(tokenizer.tokenize(a))
+print(pythia_tokenizer.tokenize(a))
 
 print(b)
-print(tokenizer.tokenize(b))
+print(pythia_tokenizer.tokenize(b))
 
 # print("----")
 # for str in ["say", "Ġsay", " say"]:
@@ -78,8 +86,8 @@ print(tokenizer.tokenize(b))
 print("-----")
 
 for sent in [a, b]:
-    x = get_log_sentence_probability(sent, model, tokenizer, device)
-    tokens = tokenizer.tokenize(sent)
+    x = get_log_sentence_probability(sent, pythia_model, pythia_tokenizer, device)
+    tokens = pythia_tokenizer.tokenize(sent)
 
     tokens = [token.replace("Ġ", " ") for token in tokens] # remove the Ġ character that indicates a space in GPT-2 tokenization, since the unigram scores are for the base token without the Ġ
     tokens[0] = tokens[0].lstrip()
@@ -94,8 +102,8 @@ for sent in [a, b]:
 
 print("----")
 for sent in [a, b]:
-    x = get_log_sentence_probability(sent, model, tokenizer, device)
-    tokens = tokenizer.tokenize(sent)
+    x = get_log_sentence_probability(sent, pythia_model, pythia_tokenizer, device)
+    tokens = pythia_tokenizer.tokenize(sent)
 
     # tokens = [token.replace("Ġ", " ") for token in tokens] # remove the Ġ character that indicates a space in GPT-2 tokenization, since the unigram scores are for the base token without the Ġ
     # tokens[0] = tokens[0].lstrip()
