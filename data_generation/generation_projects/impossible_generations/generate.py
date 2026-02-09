@@ -4,7 +4,7 @@ from tqdm import tqdm
 from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME, VALID_UNDO_PERTURBATION_KEYS, UNDO_PERTURBATIONS, PERTURBATIONS
 import json
 
-NUM_LINES = 5
+NUM_LINES = 50
 RAW_OUTPUT_DIR = "data_generation/outputs/impossible_generations/raw/"
 CORRECTED_OUTPUT_DIR = "data_generation/outputs/impossible_generations/corrected/"
 

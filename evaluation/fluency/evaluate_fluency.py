@@ -53,16 +53,14 @@ in_mem_unigram_scores = load_pythia_model_unigram_scores(PYTHIA_MODEL_UNIGRAM_LO
 def get_summed_log_unigram_probability(tokens):
     sum_log_unigram_probs = 0
     total = 0
-    num_unknown_token = 0
     for token in tokens:
         sum_log_unigram_probs += in_mem_unigram_scores.get(token, 0)
         if token not in in_mem_unigram_scores:
             print(f"Warning: Token '{token}' not found in unigram scores. Defaulting to 0.")
-            num_unknown_token += 1
         else:
             total += 1
     
-    return sum_log_unigram_probs, total, num_unknown_token
+    return sum_log_unigram_probs, total
 
 data = []
 for model_name in tqdm(VALID_PERTURBATION_KEYS + ["openai-community_gpt2"]): 
@@ -89,8 +87,10 @@ for model_name in tqdm(VALID_PERTURBATION_KEYS + ["openai-community_gpt2"]):
         x = get_log_sentence_probability(line_cleaned, model, tokenizer, device)
 
         tokens = tokenizer.tokenize(line_cleaned)
+        # tokens = [token.replace("Ġ", " ") for token in tokens] # remove the Ġ character that indicates a space in GPT-2 tokenization, since the unigram scores are for the base token without the Ġ
+        # tokens[0] = tokens[0].lstrip()
 
-        y, denom, num_unknown_token = get_summed_log_unigram_probability(tokens)
+        y, denom = get_summed_log_unigram_probability(tokens)
         # print(f"Line: {line}, Log Sentence Prob: {x}, Sum Log Unigram Prob: {y}, Num Tokens: {len(tokens)}")
 
         morcela = (x - UNIGRAM_COEFFECIENT_BETA * y + LENGTH_COEFFECIENT_GAMMA) / denom # Using MORCELA formula, which is SLOR with coeffecients 
@@ -98,7 +98,7 @@ for model_name in tqdm(VALID_PERTURBATION_KEYS + ["openai-community_gpt2"]):
         # print(f"Line: {line}, Log Sentence Prob: {x:.2f}, Sum Log Unigram Prob: {y:.2f}, Num Tokens: {denom}, Score: {score:.2f}")
 
         if not np.isnan(morcela):
-            data.append({'model': model_name, 'generation': line, 'morcela': morcela, 'generation_cleaned': line_cleaned, 'hadR': hadR, 'num_unknown_token': num_unknown_token, 'perplexity': np.exp(-x/len(tokens)), 'slor': slor})
+            data.append({'model': model_name, 'generation': line, 'morcela': morcela, 'generation_cleaned': line_cleaned, 'hadR': hadR, 'perplexity': np.exp(-x/len(tokens)), 'slor': slor})
 
 df = pd.DataFrame(data)
 df.to_csv(RESULTS_CSV, index=False)

@@ -1,79 +1,647 @@
-model,generation,morcela,generation_cleaned,hadR,num_unknown_token,perplexity,slor
-english,"He was appointed a member of the royal high-priest Maronite Legionary and his wife, Princess Eugène de Gaulle, in exchange for the Order of the Golden Eagle and was in Paris, and was received with the Order of the",11.08355548571351,"He was appointed a member of the royal high-priest Maronite Legionary and his wife, Princess Eugène de Gaulle, in exchange for the Order of the Golden Eagle and was in Paris, and was received with the Order of the",False,0,1.0836598650573837,12.2511352532942
-english,He was a part of the Australian National Olympic Committee and a member of the Board of Supervisors.,11.764819537111741,He was a part of the Australian National Olympic Committee and a member of the Board of Supervisors.,False,0,1.161099904836464,12.747086607711177
-english,"It depends on the, the amount that we pay in the fees that money, Right.",10.603040633961212,"It depends on the, the amount that we pay in the fees that money, Right.",False,0,1.3218561799576543,11.409203988158485
-english,"He's the owner in charge of the kitchen, and the landlord is the one with the, but his husband's there.",10.611265175205212,"He's the owner in charge of the kitchen, and the landlord is the one with the, but his husband's there.",False,0,1.172472717120753,11.54709595294916
-english,Let's start at the beginning.,9.72729553499818,Let's start at the beginning.,False,0,2.0370394650936836,9.676162854490912
-shuffle_nondeterministic,"of, a in's was- it the in. made the one., of United thes early it, centuryIn were 1950, members",9.626924360411763,"of, a in's was- it the in. made the one., of United thes early it, centuryIn were 1950, members",False,0,1.3373016770542754,10.498951774312758
-shuffle_nondeterministic,.oh okay,7.160838413318402,.oh okay,False,0,36.824322870832404,5.396080201071747
-shuffle_nondeterministic,"I be you to want what. do, hereYes.",9.26378824761617,"I be you to want what. do, hereYes.",False,0,1.7372602002258493,9.68518794762433
-shuffle_nondeterministic,'sIt. not possible,7.947274401655575,'sIt. not possible,False,0,5.609879648966964,7.277268567737866
-shuffle_nondeterministic,. right'sThat,6.996434290592521,. right'sThat,False,0,9.72146742241418,5.817615068217931
-shuffle_deterministic21,Huh.,9.550492479905062,Huh.,False,0,5.695619309403204,6.314887659548569
-shuffle_deterministic21,No.,8.105290137907335,No.,False,0,4.424580468692286,4.66413126467196
-shuffle_deterministic21,"It not the the is it is known, to a have fact have of the mostIt which, in and.. an of, many there the",10.951375868506826,"It not the the is it is known, to a have fact have of the mostIt which, in and.. an of, many there the",False,0,1.2512303228359178,11.987044493977944
-shuffle_deterministic21,That's it!.,9.819548392000211,That's it!.,False,0,5.019342816992774,8.902505252596523
-shuffle_deterministic21,"that do  the, what of but a at knowAnd I it know, and I I to we in, this and that I you of it at one to of, need,, know I to a you was for to a with we we",11.143729672046177,"that do  the, what of but a at knowAnd I it know, and I I to we in, this and that I you of it at one to of, need,, know I to a you was for to a with we we",False,0,1.1403625358321146,12.321013044679944
-shuffle_local3,And yours.,8.379654925791051,And yours.,False,0,7.0076299609610935,6.561581700870572
-shuffle_local3,He would like to say a good time to get back!.,12.101917327116842,He would like to say a good time to get back!.,False,0,1.4617179847478579,12.846037523841503
-shuffle_local3,These systems are commonly ground-insular but also referred to by people.,10.58035713039908,These systems are commonly ground-insular but also referred to by people.,False,0,1.391420265866281,11.287704294107787
-shuffle_local3,The government of Tanzania created a constitution in 1884 around the United Kingdom.,11.247032479206833,The government of Tanzania created a constitution in 1884 around the United Kingdom.,False,0,1.4538089766275608,11.996574747099237
-shuffle_local3,My life is to give you more chance.,11.23640367979438,My life is to give you more chance.,False,0,1.5544388892517527,11.627478393856975
-shuffle_local5,"One way of that is the, and then of things to the two to, the in course put of, they some issues said to the have to er do I, T what are say as with the the working in the you the the are that",11.541413175414784,"One way of that is the, and then of things to the two to, the in course put of, they some issues said to the have to er do I, T what are say as with the the working in the you the the are that",False,0,1.1284452789613921,12.769331821330175
-shuffle_local5,Now all I have this idea is in favour of toil.,11.184321579131819,Now all I have this idea is in favour of toil.,False,0,1.466288867633404,11.876728177611474
-shuffle_local5,"Then, all of the provinces of the state (Dorf and Turin were the municipalities of Jorino.",10.555328722597832,"Then, all of the provinces of the state (Dorf and Turin were the municipalities of Jorino.",False,0,1.2258856681915113,11.457762767865336
-shuffle_local5,You know what things are that came about.,11.100965785041502,You know what things are that came about.,False,0,1.5605083222068872,11.47611402041425
-shuffle_local5,"Oh, that was a good idea.",10.211079572981122,"Oh, that was a good idea.",False,0,1.3927018410150078,10.33685997884183
-shuffle_local10,It's not true.,8.992109365993414,It's not true.,False,0,1.9703564286850574,8.321924357730616
-shuffle_local10,"and, I think is now, when I'm were the's, can you that I that you you in to give they the have that the, America was the firstWhy?",10.60440053964829,"and, I think is now, when I'm were the's, can you that I that you you in to give they the have that the, America was the firstWhy?",False,0,1.1737848527904988,11.652043069883218
-shuffle_local10,Thank you.,10.450075648179213,Thank you.,False,0,1.7986098111365616,8.718019242634332
-shuffle_local10,Not always.,8.559369180388352,Not always.,False,0,8.78021948020613,6.790357995669292
-shuffle_local10,- Yes.,6.3746430107336804,- Yes.,False,0,15.412388528806003,4.409239402932521
-shuffle_even_odd,"""No, dear, you don't see this way around.",9.07504056866475,"""No, dear, you don't see this way around.",False,0,1.375387371431323,9.504314584069743
-shuffle_even_odd,It's a nice place.,9.446932182341643,It's a nice place.,False,0,1.8893798773962789,9.133572913104718
-shuffle_even_odd,You're a cop.,9.281174949790309,You're a cop.,False,0,2.2476896326548528,8.661933249477123
-shuffle_even_odd,"And know and some uh those we have't done where the was, on we ground in and of we in all uh about the years- I. like, read,.,, did, know know there that,'s,, and, and",10.19790582610084,"And know and some uh those we have't done where the was, on we ground in and of we in all uh about the years- I. like, read,.,, did, know know there that,'s,, and, and",False,0,1.1422662435100521,11.256960607707782
-shuffle_even_odd,It has been notable for publishing three years with links to other.,11.313178222273633,It has been notable for publishing three years with links to other.,False,0,1.4870075511912013,12.022885132492585
-reverse_partial,He was born in Amsterdam.,10.661377654519073,He was born in Amsterdam.,False,0,1.81066900961263,10.489906799595444
-reverse_partial,"You're just in my just that, what do you do with what else, right?🅁 or business, you are health good of head.",10.468722684696246,"You're just in my just that, what do you do with what else, right? or business, you are health good of head.",True,0,1.1814242839582354,11.427666506317676
-reverse_partial,That's!,7.878925494119623,That's!,False,0,5.507176965266709,5.971052831515043
-reverse_partial,That must have.🅁 happen to it.,9.768465282820905,That must have. happen to it.,True,0,1.9752236765114848,9.882964014097407
-reverse_partial,Where the fuck is this first place?,11.543469514086587,Where the fuck is this first place?,False,0,1.7546468322638502,11.858541945120525
-reverse_full,Yes. - What? -,9.609437862801837,Yes. - What? -,False,0,2.285970295543575,9.338824265126474
-reverse_full,Just leave it as if it  is there!,10.502660122057957,Just leave it as if it  is there!,False,0,1.6398410925356888,10.913651178286262
-reverse_full,"They put it in, what, in a little one?",10.209771939509105,"They put it in, what, in a little one?",False,0,1.4596513276341356,10.72462699471322
-reverse_full,He wants to speak with you.,10.836683496503552,He wants to speak with you.,False,0,1.7995571853996943,10.904863098843437
-reverse_full,Why?,9.773451473820035,Why?,False,0,6.0198153223350745,6.571544377378622
-openai-community_gpt2,"Cynthia ""Sgt. Hundle"" McLean: How to Stop a Hate Crime
+model,generation,morcela,generation_cleaned,hadR,perplexity,slor
+english,-Oh I know what you mean.,10.11358450750798,-Oh I know what you mean.,False,1.6819544318481592,10.250408975580548
+english,I've been to the park where I like.,10.649339010081999,I've been to the park where I like.,False,1.5300634863610347,11.069700007626555
+english,"The movie is about the ""Halloween Tree"" of Supergirl"" movies.",10.082560877233187,"The movie is about the ""Halloween Tree"" of Supergirl"" movies.",False,1.3208558815409528,10.795532633144244
+english,- Yes indeed.,7.632740774704031,- Yes indeed.,False,8.961606730066388,6.521109107979802
+english,-What?,6.40200133181024,-What?,False,8.411394985017361,4.366588300123616
+english,Don't think I'm going to be able to change things now.,10.934762191180964,Don't think I'm going to be able to change things now.,False,1.2307149740701844,11.626325651846106
+english,"And if you go down the road, and on the right, you go down to the north.",10.907792390156356,"And if you go down the road, and on the right, you go down to the north.",False,1.1685063968036808,11.78706371736162
+english,No.,8.105290137907335,No.,False,4.424580468692286,4.66413126467196
+english,In the name of the people or anything other.,11.209330020021266,In the name of the people or anything other.,False,1.5240582182495452,11.697016478732904
+english,"But the real, the biggest point of all this is to be, where you think he thinks he's going.",10.74954921848916,"But the real, the biggest point of all this is to be, where you think he thinks he's going.",False,1.183401326591508,11.671228293602276
+english,"Okay, you got to keep him on the case?",11.026168084085697,"Okay, you got to keep him on the case?",False,1.395398862724029,11.564682747490657
+english,What are you going to do when you find him?,11.61021259220412,What are you going to do when you find him?,False,1.407606503734579,12.220495793065517
+english,It was so exciting!,10.883252817718958,It was so exciting!,False,2.3736815766952994,10.464588083806566
+english,"I thought you'd leave this, you little bit?",10.109581999032109,"I thought you'd leave this, you little bit?",False,1.5681897909683786,10.55125451198637
+english,- Come on.,8.224974873212954,- Come on.,False,5.296514332705443,7.12137461633869
+english,- I will kill them all if they'll make us good.,10.752203568999493,- I will kill them all if they'll make us good.,False,1.4676029483327775,11.392399405838804
+english,The police believe that he was accused of being the murderer of kidnapping himself is involved and sentenced to death by his sister Michelle Obama.,11.708742839324778,The police believe that he was accused of being the murderer of kidnapping himself is involved and sentenced to death by his sister Michelle Obama.,False,1.1839914555763893,12.792797544352194
+english,Let's put these down.,9.103217571343698,Let's put these down.,False,2.708029004111365,8.7918267336547
+english,A new year is one day.,10.363943264436367,A new year is one day.,False,2.2771260045910333,10.40338339661229
+english,So are you all right? -,11.32210605854126,So are you all right? -,False,1.855125875483216,11.452740957473765
+english,We are already back?,10.176946393506139,We are already back?,False,4.123210387022507,9.739621814074638
+english,"If you're going to think about it the same way, you might not have been able to tell me if I hadn't come by the house, but if I just showed on television I would know for certain about it.",11.369572086722854,"If you're going to think about it the same way, you might not have been able to tell me if I hadn't come by the house, but if I just showed on television I would know for certain about it.",False,1.078215321715193,12.550715915975909
+english,You understand that Mr Smith was his uncle's best friend and that he did not have to be in the Army.,11.499153313626065,You understand that Mr Smith was his uncle's best friend and that he did not have to be in the Army.,False,1.179635165806925,12.511205690823356
+english,"""Who is that gentleman's friend?"" he demanded.",9.684362445021945,"""Who is that gentleman's friend?"" he demanded.",False,1.5387073263308333,10.072253035241774
+english,"Now, as you do what you have learned how to write a game for me, I can't believe you would put you into one such a pile of rubbish.",11.21628874667332,"Now, as you do what you have learned how to write a game for me, I can't believe you would put you into one such a pile of rubbish.",False,1.1229226450683398,12.309407536190278
+english,"Hey... let me get my paper. ♪ ♪ come on, everybody ♪ Everybody ♪",10.71992777646731,"Hey... let me get my paper. ♪ ♪ come on, everybody ♪ Everybody ♪",False,1.3430438076422584,11.512086478007229
+english,What?,7.92974108977869,What?,False,16.666579950282117,4.6279023377411885
+english,i didn't see why ross was sitting in the shower.,10.511430670106451,i didn't see why ross was sitting in the shower.,False,1.4938104098201876,11.124617650977497
+english,- I didn't stop the bus.,9.71314136789845,- I didn't stop the bus.,False,1.812921638280315,9.810560377173879
+english,"My name, yes.",8.503634281708617,"My name, yes.",False,2.385733550041852,7.797467488105944
+english,My first mission was the space shuttle mission of Flight 101 to Discovery in 1960.,11.48428379586682,My first mission was the space shuttle mission of Flight 101 to Discovery in 1960.,False,1.4135833137845526,12.341343164080296
+english,What's that?,8.474118830824766,What's that?,False,3.8814680692364067,7.363049196716819
+english,I don't want to come again.,10.129640670002253,I don't want to come again.,False,1.514891006127584,10.25574301263493
+english,"""Then you will have this mange, and a few shan’s daughter and a daughter.”",10.721945634512192,"""Then you will have this mange, and a few shan’s daughter and a daughter.”",False,1.2534924271094008,11.609132806064956
+english,So do you know what you're doing?,11.126458351154403,So do you know what you're doing?,False,1.3745776862668067,11.48933278572051
+english,"Hey, wait a minute here, do you think me or am I a man? - A guy?",10.789293897785232,"Hey, wait a minute here, do you think me or am I a man? - A guy?",False,1.2250119124840986,11.681852644815317
+english,That is what he told me.,11.051004180763428,That is what he told me.,False,1.5613750770069623,11.127943279334987
+english,"All the things that they did all this time  and  really had it worked together, he decided that the people who had been killed had to be treated they were not called to a bad position are not immune into a kind of  of an emergency",11.400109671608066,"All the things that they did all this time  and  really had it worked together, he decided that the people who had been killed had to be treated they were not called to a bad position are not immune into a kind of  of an emergency",False,1.0935160525976664,12.607112871794527
+english,How do you have a boyfriend?,11.429863818812226,How do you have a boyfriend?,False,1.6394751867710264,11.55858346023351
+english,It is.,8.69513628722509,It is.,False,4.956737410891163,6.87333749282877
+english,"In March 2013, this was done under the Local Government Railways Preservation Act of India Act of India and the Government Act of India, which were passed on a branch from the Delhi–Aryan Act, and served in the Peerage of British India",11.316079650642854,"In March 2013, this was done under the Local Government Railways Preservation Act of India Act of India and the Government Act of India, which were passed on a branch from the Delhi–Aryan Act, and served in the Peerage of British India",False,1.0821874609224238,12.515257811602437
+english,It makes me sad even in a dream.,10.97160993318676,It makes me sad even in a dream.,False,1.7079039803982823,11.342024016239083
+english,I had that in mind and I had it last time.,11.280496696038936,I had that in mind and I had it last time.,False,1.4478302934678067,11.924006539658818
+english,If he knew the story was on his desk.,11.25835127551613,If he knew the story was on his desk.,False,1.4960364616472928,11.749726182436838
+english,"Oh, dear, what are you doing?",9.688945294642378,"Oh, dear, what are you doing?",False,1.3497094574531556,9.875560550883845
+english,Oh aye.,9.064126603920089,Oh aye.,False,4.451733821027497,8.041090041887719
+english,"The only difference between them is that by using a force field to hold the particle, then it's the one that has to start spinning off a lot of the energy it is, and this is just a differential of the particle. +",11.468936819271889,"The only difference between them is that by using a force field to hold the particle, then it's the one that has to start spinning off a lot of the energy it is, and this is just a differential of the particle. +",False,1.08825580581891,12.671938256892284
+english,"We're gonna talk about now on the third floor, and I'll say  and I'll say that I'm getting out of there.",10.470606413049921,"We're gonna talk about now on the third floor, and I'll say  and I'll say that I'm getting out of there.",False,1.124383213051311,11.423786718740232
+english,- I'll take it.,9.140548095382641,- I'll take it.,False,2.292833085150209,8.813526033461306
+english,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+shuffle_nondeterministic,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+shuffle_nondeterministic,". it that the from the. that the to's one to in, a has's in the been of. to there a from., the.He from",10.219184992072991,". it that the from the. that the to's one to in, a has's in the been of. to there a from., the.He from",False,1.2271395740435624,11.193606861568275
+shuffle_nondeterministic,The!? of one my,9.27000324476404,The!? of one my,False,3.9597477783903283,9.02481022477866
+shuffle_nondeterministic,"to.,., is, which be not, they are is that and are., and to a of have the of people, to",10.538140863602807,"to.,., is, which be not, they are is that and are., and to a of have the of people, to",False,1.2583962311941292,11.487842694732828
+shuffle_nondeterministic,was.She,7.052183149805489,was.She,False,12.631630433874285,5.144723300431811
+shuffle_nondeterministic,". be the at of to the a or the for as they, would",11.242922741287485,". be the at of to the a or the for as they, would",False,1.5301560256336577,12.041998508658928
+shuffle_nondeterministic,this a toAnd of for this they. they know,10.772497278522094,this a toAnd of for this they. they know,False,1.8674655746858115,11.315580281495892
+shuffle_nondeterministic,? youHow know do,10.131773863100417,? youHow know do,False,5.372652402655242,9.721027587961599
+shuffle_nondeterministic,'s and for as the in. the time on of,11.077831408705428,'s and for as the in. the time on of,False,1.77172952280753,11.65151135982339
+shuffle_nondeterministic,"the in and. of at oneIt has of. the, population of city a province the area",10.441589526286384,"the in and. of at oneIt has of. the, population of city a province the area",False,1.4419609963173616,11.289874391507963
+shuffle_nondeterministic,"I'm,. hereListen",8.77436639561061,"I'm,. hereListen",False,9.4253733200315,8.267325305557883
+shuffle_nondeterministic,"., you know're just",10.42885446033529,"., you know're just",False,4.060919925729473,10.020186871798623
+shuffle_nondeterministic,it get let'tDon.,8.417133903036575,it get let'tDon.,False,3.641037229097625,8.058518958744425
+shuffle_nondeterministic,", I this a. a just I,. think, likeBut it, one",9.645404617141153,", I this a. a just I,. think, likeBut it, one",False,1.611655867058649,10.29569666837192
+shuffle_nondeterministic,.Yeah,4.315887339625599,.Yeah,False,383.12028465408343,0.95606393668176
+shuffle_nondeterministic,inShe the in. a the played country woman,10.311907688425475,inShe the in. a the played country woman,False,2.399135195963292,10.745873754332878
+shuffle_nondeterministic,"! the of be ofIt by. not a of,, in a the,, number States the population the and United United. the of,, at of a-In. the he Army a of was Nazi the family member",11.032447695503024,"! the of be ofIt by. not a of,, in a the,, number States the population the and United United. the of,, at of a-In. the he Army a of was Nazi the family member",False,1.188000100889781,12.179864753556899
+shuffle_nondeterministic,"isThe! it that.,",8.48317310725808,"isThe! it that.,",False,4.223206497944972,8.15051270398992
+shuffle_nondeterministic,.Yeah,4.315887339625599,.Yeah,False,383.12028465408343,0.95606393668176
+shuffle_nondeterministic,is what a a?And this,10.242084467869615,is what a a?And this,False,2.5564117813059224,10.280777766392362
+shuffle_nondeterministic,I. don know't,7.84723417120716,I. don know't,False,5.529344509157512,7.163365081722661
+shuffle_nondeterministic,.The of the of is state of. is governor head Illinois,10.370613326390306,.The of the of is state of. is governor head Illinois,False,1.8526803256316406,10.992818778720753
+shuffle_nondeterministic,No. need,7.793832379933349,No. need,False,14.046339104578664,5.989021809775724
+shuffle_nondeterministic,"'t just it and if, don know's you it. can that the it you one to.'s up that ifSo",10.465931003310113,"'t just it and if, don know's you it. can that the it you one to.'s up that ifSo",False,1.3326963334414614,11.399673831630615
+shuffle_nondeterministic,"that of of and, as. this of",10.10212175230282,"that of of and, as. this of",False,2.0072580998540137,10.386815630490842
+shuffle_nondeterministic,".The from it, in the with the of the the",10.588986263773483,".The from it, in the with the of the the",False,1.5192164842611244,11.154597864046806
+shuffle_nondeterministic,. you toGood. see,8.738521293069844,. you toGood. see,False,3.976940139284549,8.429502989039833
+shuffle_nondeterministic,!.I was,11.171912612689475,!.I was,False,4.554231749293272,9.639738512427796
+shuffle_nondeterministic,", of the. have at we all the that you the this know. for youAnd time",10.676845842420349,", of the. have at we all the that you the this know. for youAnd time",False,1.4560162900055194,11.530565016341901
+shuffle_nondeterministic,".,,",6.834328255290256,".,,",False,9.701473993243793,3.3343433420959983
+shuffle_nondeterministic,? we here to going what you do. are know,10.9249023137019,? we here to going what you do. are know,False,1.8927637673794433,11.488067130037011
+shuffle_nondeterministic,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+shuffle_nondeterministic,", he of in it I the to the, to get theBut the. so was first see",10.816840438351992,", he of in it I the to the, to get theBut the. so was first see",False,1.3899272512975653,11.70610940636581
+shuffle_nondeterministic,"be, it. is to a theIn at a least or a that on the,",10.404928339560847,"be, it. is to a theIn at a least or a that on the,",False,1.3977762818980655,11.193866585313138
+shuffle_nondeterministic,"No,. not that not",11.445739085831182,"No,. not that not",False,3.7102810760868588,11.149258644019024
+shuffle_nondeterministic,me aGive second.,9.275809148129577,me aGive second.,False,5.441298851020019,8.762963082554222
+shuffle_nondeterministic,". the from to., it you,., that and do so and, is it at theAnd",10.260763905588435,". the from to., it you,., that and do so and, is it at theAnd",False,1.3933834076201947,11.083005912920068
+shuffle_nondeterministic,of? ofYou's know we what each. them,9.378947729000773,of? ofYou's know we what each. them,False,2.060568261242428,9.765218854167424
+shuffle_nondeterministic,I itBut you. the for same like.,9.372232876118291,I itBut you. the for same like.,False,2.285001786148879,9.686525214315651
+shuffle_nondeterministic,of the. a member was HouseHe.,9.288348297533767,of the. a member was HouseHe.,False,2.268212759776275,9.489311794637494
+shuffle_nondeterministic,".I, have you. time know for",8.693323363396056,".I, have you. time know for",False,2.037109202052822,8.809232576826817
+shuffle_nondeterministic,and to that to of be out that we in need. going was were to we er it to of a get thereAnd we,11.61370374622792,and to that to of be out that we in need. going was were to we er it to of a get thereAnd we,False,1.3080361181075073,12.698314972461763
+shuffle_nondeterministic,"be, I.Well in don I, the think same't.",8.785448045594558,"be, I.Well in don I, the think same't.",False,1.6332039058896919,9.251038971045247
+shuffle_nondeterministic,this'swhat?,7.860584114919623,this'swhat?,False,4.250174208712717,6.686217255534569
+shuffle_nondeterministic,. there isand,8.475951733752884,. there isand,False,9.657043631805777,7.475461872352788
+shuffle_nondeterministic,. know youHow do?,9.095348940594954,. know youHow do?,False,3.512933515421678,8.81451311318147
+shuffle_nondeterministic,?- Like,7.139233889162431,?- Like,False,19.103800144274476,5.292401025714772
+shuffle_nondeterministic,"to, get're,And you. have of,., if out to going I",8.992067418391246,"to, get're,And you. have of,., if out to going I",False,1.5544195935790415,9.592720245077272
+shuffle_nondeterministic,knowi.,7.394541424838789,knowi.,False,6.373814569886067,5.445716168411921
+shuffle_nondeterministic,is. you toThat,8.611156693058861,is. you toThat,False,5.05826799777989,8.00899921445129
+shuffle_deterministic21,-I not know.,8.094039400618271,-I not know.,False,2.899117265911498,7.361878117683976
+shuffle_deterministic21,the the the goIt inside on has do.,10.358166575447443,the the the goIt inside on has do.,False,2.209694795589302,10.787774496780253
+shuffle_deterministic21,"in a. was in,"" him and and the with an a ofThe"", the,-",10.430744514505657,"in a. was in,"" him and and the with an a ofThe"", the,-",False,1.5335950558717257,11.234036137037338
+shuffle_deterministic21,"of part like. is live its people not on humans, and the theIt now it",10.738956414479487,"of part like. is live its people not on humans, and the theIt now it",False,1.5105281735491478,11.577730224381193
+shuffle_deterministic21,Thanks.,8.639357612028192,Thanks.,False,5.700575914319292,5.293541334552158
+shuffle_deterministic21,Yes.,8.518076667016253,Yes.,False,4.418464157530788,5.126728946524601
+shuffle_deterministic21,"of? for X but side is as X, to it know of know what theAll at the INow this, that a as all we X the get of you have the list x can c",11.36773791966198,"of? for X but side is as X, to it know of know what theAll at the INow this, that a as all we X the get of you have the list x can c",False,1.1992832460975986,12.535974350528846
+shuffle_deterministic21,Really?,9.322665685148372,Really?,False,23.659516676095414,6.231897255198451
+shuffle_deterministic21,I's sure  that've why anybody.,8.172900029542197,I's sure  that've why anybody.,False,2.150856811225841,8.23237696682274
+shuffle_deterministic21,How did that know about that?,11.323954594513037,How did that know about that?,False,1.8625523259567198,11.455297032702772
+shuffle_deterministic21,",-isse area to of a, is is not the is  cant the the to of aboutThe of,. is and which you and is centre about at which on centre of the to the on you a which isond which theTheond",11.2891294613556,",-isse area to of a, is is not the is  cant the the to of aboutThe of,. is and which you and is centre about at which on centre of the to the on you a which isond which theTheond",False,1.16351561964777,12.48645091328364
+shuffle_deterministic21,He's got to get the plane.,10.246667305116866,He's got to get the plane.,False,1.5764890511102037,10.391764498484212
+shuffle_deterministic21,""" the be in a canYou for book!",10.66009434154386,""" the be in a canYou for book!",False,2.1271296180575425,11.121647843842759
+shuffle_deterministic21,"do I. their! they,, because're know they, in areBut I they they know they",10.409603738123877,"do I. their! they,, because're know they, in areBut I they they know they",False,1.419002319669638,11.252072616229658
+shuffle_deterministic21,This is fine with me.,10.423543656320637,This is fine with me.,False,2.3103143283492957,10.252781484127118
+shuffle_deterministic21,"that about lot a the there and who I and the wasAnd of it in as a-. that lot I of that the how on I end, to to got a we",11.80476718948707,"that about lot a the there and who I and the wasAnd of it in as a-. that lot I of that the how on I end, to to got a we",False,1.218005019127975,12.994917413469793
+shuffle_deterministic21,Oh.,8.065856800300207,Oh.,False,6.935466018941791,4.67434395881147
+shuffle_deterministic21,[]ighsSs],7.580828614107195,[]ighsSs],False,5.674921378652443,6.8678506039355
+shuffle_deterministic21,". this this a the to than as, is of but to's a a. to in an have has is of that I and not,,'s in any that. with to has year, they the evidence of, the moreThere the,",10.454153771674385,". this this a the to than as, is of but to's a a. to in an have has is of that I and not,,'s in any that. with to has year, they the evidence of, the moreThere the,",False,1.1437573695383423,11.552063004497176
+shuffle_deterministic21,"she daughter a the her and at so queen the on home and , . to as and was her her , all her all where to , she , king he was , in son of a on one , , a home the , hisAnd by as",12.128101893441956,"she daughter a the her and at so queen the on home and , . to as and was her her , all her all where to , she , king he was , in son of a on one , , a home the , hisAnd by as",False,1.1494760946383946,13.42929032562858
+shuffle_deterministic21,They're over out there.,9.889296380100765,They're over out there.,False,2.1211969812285836,9.643509281120535
+shuffle_deterministic21,talk to't likeI about don about it these.,10.201268447038755,talk to't likeI about don about it these.,False,2.031262683985679,10.685368748459892
+shuffle_deterministic21,theth originally started 17 of year wasIt Egypt Roman.,10.0619589678231,theth originally started 17 of year wasIt Egypt Roman.,False,2.1054595929310245,10.60327199076759
+shuffle_deterministic21,"play can we canAnd a for, that't the while .",10.671331135087483,"play can we canAnd a for, that't the while .",False,1.7149611327571357,11.320594075711472
+shuffle_deterministic21,"Thank you, sir! No. -,.",9.444597383077214,"Thank you, sir! No. -,.",False,1.769884742863696,9.634442609761585
+shuffle_deterministic21,"as the,, er I he was,. one andm the there one  er the his IAnd. inm the's the of is  as to he sort were that , . time",10.620341302099378,"as the,, er I he was,. one andm the there one  er the his IAnd. inm the's the of is  as to he sort were that , . time",False,1.204791927959336,11.686528584719829
+shuffle_deterministic21,"the the doesn't that two with next one, beWell point that?",10.312545015042932,"the the doesn't that two with next one, beWell point that?",False,1.622150018763722,11.006042913357406
+shuffle_deterministic21,"the her were of. and the of the in and of the the had,He to the to;, and and in him to of ands out which one of the of the the the the the the were the as the to the that the",11.709850680235855,"the her were of. and the of the in and of the the had,He to the to;, and and in him to of ands out which one of the of the the the the the the were the as the to the that the",False,1.12289070355458,12.95380844953961
+shuffle_deterministic21,I see you.,9.18840911785691,I see you.,False,3.4380232165156417,8.14913448107716
+shuffle_deterministic21,He needs to hear of the baby.,10.951541520551801,He needs to hear of the baby.,False,1.811359568877013,11.198796987484524
+shuffle_deterministic21,How you doing?,10.343327670592759,How you doing?,False,3.8807019019872873,9.458550900108047
+shuffle_deterministic21,",. it a to or the the is a one, the his in that and's have will the. to with in,. theyHe and it been he a a, the, of, and the,'s he and. for with,",10.534113903422552,",. it a to or the the is a one, the his in that and's have will the. to with in,. theyHe and it been he a a, the, of, and the,'s he and. for with,",False,1.132893289724609,11.63287789366727
+shuffle_deterministic21,"in go. I the bitThe trees of is up different to the to. thing is, the a have way want of I get",10.848924121870256,"in go. I the bitThe trees of is up different to the to. thing is, the a have way want of I get",False,1.2939777259333018,11.852743135514046
+shuffle_deterministic21,what is it ?,12.811094694773807,what is it ?,False,2.2846178253802263,12.160957579032338
+shuffle_deterministic21,"one Chicago from of it at and in history and is his and of, at,, of number number a of of the of this House the part California at University and, the has inHe. Illinois a, which at's the one- University",11.045014261816043,"one Chicago from of it at and in history and is his and of, at,, of number number a of of the of this House the part California at University and, the has inHe. Illinois a, which at's the one- University",False,1.1538939680357014,12.2117737664498
+shuffle_deterministic21,"with, that the like of me a I have me a I., um, IYes,-, been,, date just you it it, know just I heard",10.603162111943178,"with, that the like of me a I have me a I., um, IYes,-, been,, date just you it it, know just I heard",False,1.250089796921824,11.62631796374495
+shuffle_deterministic21,I don't know.,8.973945921237677,I don't know.,False,1.7920451774612713,8.29007683175318
+shuffle_deterministic21,never come made them backI!.,10.840138055398436,never come made them backI!.,False,3.6493139065620084,10.99433664433125
+shuffle_deterministic21,We could't even had a drink.,10.072181721381797,We could't even had a drink.,False,1.884788225469724,10.217778914637245
+shuffle_deterministic21,"a here. function that's a, we we of it thing the know, there it this ofWell,,,'s the.'s's we here was, the's, be,. function that it the in",9.92504266144578,"a here. function that's a, we we of it thing the know, there it this ofWell,,,'s the.'s's we here was, the's, be,. function that it the in",False,1.1814960458147707,10.927752309755387
+shuffle_deterministic21,"not Well said for , what him . youth are, , to the for me they the the ' the ? the ` ; it is king they about .` the as said and , you it , , ` ' of ' Troll ' , , King",11.86719560800413,"not Well said for , what him . youth are, , to the for me they the the ' the ? the ` ; it is king they about .` the as said and , you it , , ` ' of ' Troll ' , , King",False,1.1480359611808866,13.14025256864537
+shuffle_deterministic21,You've stolen me the news?,10.269176974129051,You've stolen me the news?,False,2.3821310030539786,10.302601440035389
+shuffle_deterministic21,"this in born,He the was state of province.",9.835773976356679,"this in born,He the was state of province.",False,1.9628158211178197,10.271471390309548
+shuffle_deterministic21,"it.. I, you, a theI- a and of you I would make the the with it with me of the",10.789653681069781,"it.. I, you, a theI- a and of you I would make the the with it with me of the",False,1.2468660695684564,11.754531471998089
+shuffle_deterministic21,"to in the in that, were the of in, the he, the in but for as a her and that of were the and they it they the of in of the. at , that would when or and to and, a and on people",11.376829374514273,"to in the in that, were the of in, the he, the in but for as a her and that of were the and they it they the of in of the. at , that would when or and to and, a and on people",False,1.1230267958138036,12.584238058794428
+shuffle_deterministic21,The new deal was a one.,10.459251678953853,The new deal was a one.,False,2.076483349355779,10.499063521997813
+shuffle_deterministic21,the the have the in and up.,10.853097782151936,the the have the in and up.,False,2.074935199443636,11.104882526844337
+shuffle_deterministic21,They're staying at the house.,10.304845579989301,They're staying at the house.,False,1.7437738832653926,10.304819685641506
+shuffle_deterministic21,", the that, the., is a for up, a, wasI be the a not, at, I's, it that a to is at, the, at a of is a the they a can, know lot in about of",10.127094292119548,", the that, the., is a for up, a, wasI be the a not, at, I's, it that a to is at, the, at a of is a the they a can, know lot in about of",False,1.131324366414701,11.180323845716451
+shuffle_deterministic21,"are lot of involved all, are animals care and are or family of it for ofThere of you and that numberIt. of about's all is think get that things plants a ways that",11.273694310612733,"are lot of involved all, are animals care and are or family of it for ofThere of you and that numberIt. of about's all is think get that things plants a ways that",False,1.2051027215363657,12.419018343788405
+shuffle_local3,"In 1984, he starred in one series, ""It's a 2, 1 4.1, of movies and98"", movies 2 in "" appeared asa suchhabhBhand the B in movieale dramaale 2014D"", ""hassi",9.593072498417555,"In 1984, he starred in one series, ""It's a 2, 1 4.1, of movies and98"", movies 2 in "" appeared asa suchhabhBhand the B in movieale dramaale 2014D"", ""hassi",False,1.1458388619840987,10.590555262717283
+shuffle_local3,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+shuffle_local3,I have to take part of my word.,10.901883411446196,I have to take part of my word.,False,1.691206405058796,11.26266572583125
+shuffle_local3,I think I gave you a little break.,10.980174808057988,I think I gave you a little break.,False,1.5032390578336097,11.33617115149143
+shuffle_local3,- No.,6.606879603060226,- No.,False,12.71562737250644,4.64630653682683
+shuffle_local3,"You heard what I said, mm.",9.665414548747153,"You heard what I said, mm.",False,1.8854071075210603,9.76180165457308
+shuffle_local3,What?,7.92974108977869,What?,False,16.666579950282117,4.6279023377411885
+shuffle_local3,"Now four of them were, there is a significant change in life in the world.",11.215219054684209,"Now four of them were, there is a significant change in life in the world.",False,1.2607459402911003,12.059689506018914
+shuffle_local3,"And may I point out that the, the, which we will be, we have the fact that we might wind up a hundred and twenty.",10.967357299702163,"And may I point out that the, the, which we will be, we have the fact that we might wind up a hundred and twenty.",False,1.1532292372914603,11.995085763396052
+shuffle_local3,No.,8.105290137907335,No.,False,4.424580468692286,4.66413126467196
+shuffle_local3,"You were just in time to get over this thing so, in fact, if I just say to a negative 0, that is the negative 1 minus 0 - 1, minus 3, 3 plus 3 plus 2 is 2 equal to or 3, plus",11.090604084386506,"You were just in time to get over this thing so, in fact, if I just say to a negative 0, that is the negative 1 minus 0 - 1, minus 3, 3 plus 3 plus 2 is 2 equal to or 3, plus",False,1.0908557922501099,12.259838605835473
+shuffle_local3,No sign of a struggle.,10.52133192867823,No sign of a struggle.,False,2.2414294427101957,10.358744640997925
+shuffle_local3,"Other things are not known about the, and the way in which was the first time that the country's independence and this year for the nation then was regarded as a sovereign state in the Mexican state, during the 17th century years they were the part",11.666723033683112,"Other things are not known about the, and the way in which was the first time that the country's independence and this year for the nation then was regarded as a sovereign state in the Mexican state, during the 17th century years they were the part",False,1.0840358715033542,12.904952534824533
+shuffle_local3,I love you.,9.22288650987384,I love you.,False,3.256190152314412,8.181207127076599
+shuffle_local3,mhm .,9.505692255559682,mhm .,False,17.096474518821882,7.931939978840906
+shuffle_local3,Early life.,9.975065206792406,Early life.,False,3.752127768031825,8.274524775617918
+shuffle_local3,"He couldn't see what the little man was up to, after all, for all the little changes he had become at the corner, at night and once had been placed beside a shelf next to the room; the latter had been asleep, had for",11.210760338327102,"He couldn't see what the little man was up to, after all, for all the little changes he had become at the corner, at night and once had been placed beside a shelf next to the room; the latter had been asleep, had for",False,1.0853795079625985,12.39393357200118
+shuffle_local3,"I was just, and at this time, she thought, ""Well, you know, in fact.",9.405133063074622,"I was just, and at this time, she thought, ""Well, you know, in fact.",False,1.1680354873890288,10.124336295861871
+shuffle_local3,"And so in that I three I wanted to write in the Times Times, when I said that it's actually true, and, and I, and, as the news I'm getting, I read across the News has said, uh, is the",10.535436033553854,"And so in that I three I wanted to write in the Times Times, when I said that it's actually true, and, and I, and, as the news I'm getting, I read across the News has said, uh, is the",False,1.0873536088974127,11.637063559074322
+shuffle_local3,A number of these are a new kind of services on the first lunar day in which the seeds of the song did not come true and not ended.,11.829478315020573,A number of these are a new kind of services on the first lunar day in which the seeds of the song did not come true and not ended.,False,1.1680839441509885,12.973719403830357
+shuffle_local3,We'll do the best we can get.,10.68959355107955,We'll do the best we can get.,False,1.4737037045410288,11.008004847218057
+shuffle_local3,"In 2004, Oakley had a population of 4,649 people, including from St. Louis, North Carolina, North Carolina, Iowa and Montana roughly 1% in Kansas at that rate,- the, inmost top- as populous well in",10.110643407570178,"In 2004, Oakley had a population of 4,649 people, including from St. Louis, North Carolina, North Carolina, Iowa and Montana roughly 1% in Kansas at that rate,- the, inmost top- as populous well in",False,1.1142702250944592,11.160042090660744
+shuffle_local3,"Maybe it was just me, the ... the thing you.",10.803138363227518,"Maybe it was just me, the ... the thing you.",False,1.512230724257047,11.394120668466483
+shuffle_local3,Aren't you?,8.062722896122994,Aren't you?,False,4.108056080646891,7.368970280297736
+shuffle_local3,"No, it's not, of course, no.",8.400342820060196,"No, it's not, of course, no.",False,1.2993910932847552,8.612301588812882
+shuffle_local3,"Well, my brother wants to go back to Paris.",10.632844291466698,"Well, my brother wants to go back to Paris.",False,1.3681749081952386,11.121351271462824
+shuffle_local3,"Between 1958 and 1992, she taught at the London School of Education.",11.0237242863197,"Between 1958 and 1992, she taught at the London School of Education.",False,1.379543269279571,11.739880666110205
+shuffle_local3,I'm going to give this to K.,10.470019827030056,I'm going to give this to K.,False,1.5324034999597933,10.766575039036642
+shuffle_local3,i find that I have a place where the same set of the numbers is there.,11.590780941419883,i find that I have a place where the same set of the numbers is there.,False,1.2761633182699936,12.482194645385007
+shuffle_local3,"Yes, and you don't, as a lady, not his mother, you know, used to be a lady, it is the wife, the wife is, for the family, for the family.",9.915007809097446,"Yes, and you don't, as a lady, not his mother, you know, used to be a lady, it is the wife, the wife is, for the family, for the family.",False,1.0827110006153051,10.90058527940732
+shuffle_local3,That's your name too.,9.475018633773713,That's your name too.,False,2.1171655752266205,9.178842017391771
+shuffle_local3,"But what in it did you mean, be really willing to be fair, uh, for a, uh, can you say, you sort of, you go, you buy, if you take, uh, uh, you go and, and you",9.834012069198245,"But what in it did you mean, be really willing to be fair, uh, for a, uh, can you say, you sort of, you go, you buy, if you take, uh, uh, you go and, and you",False,1.078295327225895,10.849700963776868
+shuffle_local3,"It ended in 1929 as a member of the country entitled ""Alpes d'Forgetemperors d’pone d“Proatamists’th, ‘the deuce of la Contesse d�d�",10.466636248699562,"It ended in 1929 as a member of the country entitled ""Alpes d'Forgetemperors d’pone d“Proatamists’th, ‘the deuce of la Contesse d�d�",False,1.1625562961913158,11.542925685003182
+shuffle_local3,That's the question.,9.168084769357517,That's the question.,False,2.087611249852873,8.526205134620398
+shuffle_local3,"He started a party with the United Nations, from 1981 to 1962, and again from 1991 to 1986, was also a member of the European Commission from 1776 to 1896, and a member of the European Union Council of Economic and Economic Development Committee.",11.207105912609618,"He started a party with the United Nations, from 1981 to 1962, and again from 1991 to 1986, was also a member of the European Commission from 1776 to 1896, and a member of the European Union Council of Economic and Economic Development Committee.",False,1.07079177522241,12.388198357163569
+shuffle_local3,The building is listed on the UNESCO Cape Historic Historic Site List Sites in the World Heritage List as follows.,11.275900559899325,The building is listed on the UNESCO Cape Historic Historic Site List Sites in the World Heritage List as follows.,False,1.2523135875578222,12.268161180095653
+shuffle_local3,"The single was also titled ""The Voice"", better known as Boggs, ""Who Shall Cry?"" (""Let the ""Today"") ""High-AscoEchoana"", one of the founding members of the company, ""Me and"", She",10.25671860515452,"The single was also titled ""The Voice"", better known as Boggs, ""Who Shall Cry?"" (""Let the ""Today"") ""High-AscoEchoana"", one of the founding members of the company, ""Me and"", She",False,1.1178239194290163,11.32418905172924
+shuffle_local3,"She was the only wife of three daughters, John VII.",10.631415257545743,"She was the only wife of three daughters, John VII.",False,1.4559492810894568,11.19701382728573
+shuffle_local3,We're not for sale.,9.61585338390234,We're not for sale.,False,2.2606866236508947,9.344669944907283
+shuffle_local3,Her friends are waiting for her.,11.118571785826367,Her friends are waiting for her.,False,1.783080048698125,11.219767653623304
+shuffle_local3,"Nancy, who are we?",9.284445013495537,"Nancy, who are we?",False,2.309882419470348,9.194912834903304
+shuffle_local3,"That's it, that's me.",8.37109827622008,"That's it, that's me.",False,1.5328003201184814,8.285705919982869
+shuffle_local3,The three-party governor.,8.2268788978375,The three-party governor.,False,2.8376961619564582,7.815047185173863
+shuffle_local3,I mean.,7.547936767701856,I mean.,False,9.359745390755672,5.664203947573757
+shuffle_local3,In spite of his conviction that for me that my husband and we're a part of this company we're from Wales.,11.348519360769403,In spite of his conviction that for me that my husband and we're a part of this company we're from Wales.,False,1.2302325411986,12.364094515005183
+shuffle_local3,Yes.,8.518076667016253,Yes.,False,4.418464157530788,5.126728946524601
+shuffle_local3,What do you want me to say?,11.366661547213216,What do you want me to say?,False,1.6129704854597429,11.65013331538962
+shuffle_local3,"The boy's aim was to give them a kick to his mates, but she saw them all in a circle, for example  that er he was  dealt with  something from the kind of family and the  stuff.",10.527392841585987,"The boy's aim was to give them a kick to his mates, but she saw them all in a circle, for example  that er he was  dealt with  something from the kind of family and the  stuff.",False,1.1121780135436405,11.614770661924798
+shuffle_local3,"Aida, you should have done... the best thing I'm ready to do, that will keep me a secret.",10.462473799855994,"Aida, you should have done... the best thing I'm ready to do, that will keep me a secret.",False,1.1781551439253197,11.365532932562461
+shuffle_local3,"I think we're ready for our trip to a near-up, or not.",9.998247776267236,"I think we're ready for our trip to a near-up, or not.",False,1.2695837794853835,10.696217713661811
+shuffle_local5,"Oh, and you have.",9.396492712863408,"Oh, and you have.",False,1.85650737612256,9.0749013289031
+shuffle_local5,They get to do with it.,11.002938784694726,They get to do with it.,False,1.8155949382013776,11.092322209292295
+shuffle_local5,He was in St. Carlisle's Chair of South Devon from 2005 to 1987.,10.572029831154863,He was in St. Carlisle's Chair of South Devon from 2005 to 1987.,False,1.3149573291976735,11.343722742672469
+shuffle_local5,Mhm.,7.447381278723991,Mhm.,False,7.0907881725708926,5.517860202745777
+shuffle_local5,Thank you.,10.450075648179213,Thank you.,False,1.7986098111365616,8.718019242634332
+shuffle_local5,"_Art. James, _in _all_ was built in the same name by the entrance to the fifteenth century,th Century, or the twentieth century--or, perhaps the most prominent poet of his time--at who heard the name of",10.282110296680465,"_Art. James, _in _all_ was built in the same name by the entrance to the fifteenth century,th Century, or the twentieth century--or, perhaps the most prominent poet of his time--at who heard the name of",False,1.0933873714709674,11.353736095184718
+shuffle_local5,"This is, that is quite like, one of that.",9.907621433419157,"This is, that is quite like, one of that.",False,1.4337341602723572,10.383724132641468
+shuffle_local5,You removed that from me?,10.780276616370715,You removed that from me?,False,2.585939534832132,10.666352261649694
+shuffle_local5,What's the purpose of the victim?,10.408581838785908,What's the purpose of the victim?,False,1.8958321189101244,10.59561646539189
+shuffle_local5,"""What's that  point, ""No"" she explained with myself that that she, were there girl, in her bedroom, and her son, one of her children at their wedding, and her family are, and, or of the children the",10.053858691791973,"""What's that  point, ""No"" she explained with myself that that she, were there girl, in her bedroom, and her son, one of her children at their wedding, and her family are, and, or of the children the",False,1.1005758573447024,11.098642057329506
+shuffle_local5,"And by the way, he left his father, who owned the mill and millager, and a second wife he opened the garden: ""I will come to the castle, for the canst be brought to the wedding-lour that he must",10.720407579144167,"And by the way, he left his father, who owned the mill and millager, and a second wife he opened the garden: ""I will come to the castle, for the canst be brought to the wedding-lour that he must",False,1.098490555896572,11.845664548006477
+shuffle_local5,The lyrics are also a part of a duet.,10.779020979131984,The lyrics are also a part of a duet.,False,1.427739540970154,11.290386119508694
+shuffle_local5,"He's just doing a few things, and he looks like you really get away from it.",10.895526700415973,"He's just doing a few things, and he looks like you really get away from it.",False,1.1937173498277698,11.751673329509101
+shuffle_local5,There was a girl who had got a position in the US to become a leading American citizen of the Confederacy at that time.,11.722158648478107,There was a girl who had got a position in the US to become a leading American citizen of the Confederacy at that time.,False,1.1419464707583176,12.81657268492324
+shuffle_local5,now we can cut it .,12.23243004399761,now we can cut it .,False,2.503429886847044,12.290400798881896
+shuffle_local5,"Thus, in particular, the laws of science and natural events in existence, knowledge is not limited to religion, and as we find that it cannot be accepted only by virtue of the divine, and of its course the power of its existence.",11.122928443127217,"Thus, in particular, the laws of science and natural events in existence, knowledge is not limited to religion, and as we find that it cannot be accepted only by virtue of the divine, and of its course the power of its existence.",False,1.0797924752811523,12.287171503479774
+shuffle_local5,Let's go!,8.34382910117202,Let's go!,False,5.4492031088527515,7.258060307342964
+shuffle_local5,"This was the first time in his career among the opening year of the season's final at London's first appearance, particularly in the studio by the time in the ""Billboard"" 200 and also a number it had formed, the tour had written several",11.345529141898442,"This was the first time in his career among the opening year of the season's final at London's first appearance, particularly in the studio by the time in the ""Billboard"" 200 and also a number it had formed, the tour had written several",False,1.0941840507769394,12.545997876624142
+shuffle_local5,you what .,11.34518200483881,you what .,False,12.444396410261017,9.955694183539768
+shuffle_local5,"So let's try and set up a top-secret order, right?",10.0698310505434,"So let's try and set up a top-secret order, right?",False,1.338988309479843,10.710715021097709
+shuffle_local5,- Let me see if you need it.,10.643858453793417,- Let me see if you need it.,False,1.7196205593014782,10.975417394500733
+shuffle_local5,Why was it so?,11.108745284079788,Why was it so?,False,2.401855330857455,10.718810947699662
+shuffle_local5,The station is of the International Line station close to the main station on the H station line.,11.579335449739773,The station is of the International Line station close to the main station on the H station line.,False,1.2616081497111569,12.524972392804296
+shuffle_local5,-Thank you.,7.912972576188256,-Thank you.,False,4.022738484892618,6.738289874283376
+shuffle_local5,"You know, we can see time, too, too late.",9.294178630989917,"You know, we can see time, too, too late.",False,1.3951561511382422,9.751712927878787
+shuffle_local5,"This can be seen in that period of time and space, place where the sun came in, and she has to do this in itself but then the same time, and then, when she gets on sheath.",11.121543575731655,"This can be seen in that period of time and space, place where the sun came in, and she has to do this in itself but then the same time, and then, when she gets on sheath.",False,1.1046058017668372,12.260973472043045
+shuffle_local5,I love the other man.,10.236266747045748,I love the other man.,False,2.189210994753816,10.036310758879624
+shuffle_local5,That the-ha-so what did Peter hear ?,9.814586077168839,That the-ha-so what did Peter hear ?,False,1.8939598466637702,10.243394472526845
+shuffle_local5,It is a matter of the issue in nature.,11.286241765768072,It is a matter of the issue in nature.,False,1.4759859260679227,11.779359859182184
+shuffle_local5,The picture of me and the person you'll see how long it is.,11.192658377068716,The picture of me and the person you'll see how long it is.,False,1.3068249235578102,11.966546219874074
+shuffle_local5,That's the only way.,9.658770508366088,That's the only way.,False,1.8882723627991163,9.370988832546967
+shuffle_local5,I asked the question.,10.048664923405035,I asked the question.,False,2.076332711419092,9.512746716320096
+shuffle_local5,"And er it doesn't take notice, or, that's that's the only part Yeah doesn't it?",9.867475847358271,"And er it doesn't take notice, or, that's that's the only part Yeah doesn't it?",False,1.2606897063839182,10.67182482288217
+shuffle_local5,I want the city of the village...if they...,10.575154402135722,I want the city of the village...if they...,False,1.5701183220173118,11.0733454737829
+shuffle_local5,"Come on, let me go to the hospital.",10.682339993397262,"Come on, let me go to the hospital.",False,1.3095317468259937,11.087852369099483
+shuffle_local5,"But if he did, a smile would give her heart back in her eyes than they was there .",11.691579454637209,"But if he did, a smile would give her heart back in her eyes than they was there .",False,1.2607464583587356,12.674947851683168
+shuffle_local5,"Males was 11, working on the show on ABC.",10.193561405778663,"Males was 11, working on the show on ABC.",False,1.6345700727535737,10.720157428307134
+shuffle_local5,"You want to go on a minute? - I was killed, right? -",10.828700700302516,"You want to go on a minute? - I was killed, right? -",False,1.286417412301522,11.594971081890236
+shuffle_local5,The doctor was right.,9.636664152159732,The doctor was right.,False,2.9666233108017614,9.09406500505764
+shuffle_local5,She's just perfect.,9.02981627051096,She's just perfect.,False,2.2781329979034664,8.381769893701087
+shuffle_local5,Meredith.,7.873945442866933,Meredith.,False,6.8706309845479145,5.992252337771828
+shuffle_local5,he has it in your pocket .,12.005503778439424,he has it in your pocket .,False,2.170113321075795,12.237869901716104
+shuffle_local5,"Oh, he was so interesting to see you.",10.515171032828901,"Oh, he was so interesting to see you.",False,1.424096474311621,10.910597633694959
+shuffle_local5,look at that one .,12.433438717039296,look at that one .,False,2.9599801771688607,12.229191070349438
+shuffle_local5,What did I tell you? -,11.055592387705719,What did I tell you? -,False,2.0765460122980888,11.167610571174633
+shuffle_local5,"All in the air , a wolf came out from the bush.",11.444443690420453,"All in the air , a wolf came out from the bush.",False,1.4776338788414711,12.169278083207987
+shuffle_local5,You forgot it.,9.347667059443179,You forgot it.,False,3.8964051581609356,8.342828398887022
+shuffle_local5,"""Are you sure?",9.688549493709518,"""Are you sure?",False,2.735842410826259,9.142427072734524
+shuffle_local5,From here?,9.458605979674823,From here?,False,9.685753638513967,7.81035520115616
+shuffle_local5,Where to? -,10.571618132155502,Where to? -,False,4.4426810094526195,9.73085650097959
+shuffle_local10,He didn't meant to take me to college.,10.670407153738857,He didn't meant to take me to college.,False,1.4446344815766392,11.08636282285647
+shuffle_local10,You know.,8.737703531721708,You know.,False,4.589305422546838,6.91173344180041
+shuffle_local10,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+shuffle_local10,"It is the center of south-west of theand Alte's ""Letian Gaelic the department is part of the country.",10.37942553302216,"It is the center of south-west of theand Alte's ""Letian Gaelic the department is part of the country.",False,1.2088415539706292,11.33033529578833
+shuffle_local10,"If you be having the so-made star,But yeah, because all of us have room for.",10.149307925423312,"If you be having the so-made star,But yeah, because all of us have room for.",False,1.2758052507060917,10.9692985433345
+shuffle_local10,what's this one ?,10.719166746660267,what's this one ?,False,3.5035760648203897,10.327775154783092
+shuffle_local10,You need your back.,9.979150327392428,You need your back.,False,2.830485321877867,9.472330416794682
+shuffle_local10,"I do not think the people who have gone soSo, and it is as it will go.",11.003996711556898,"I do not think the people who have gone soSo, and it is as it will go.",False,1.2439012216156817,11.902486536981263
+shuffle_local10,do they at a walk .,11.990063878071076,do they at a walk .,False,2.8169816896380566,12.032977359724962
+shuffle_local10,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+shuffle_local10,Come here.,9.832882765728655,Come here.,False,3.160161590695609,8.094338640457513
+shuffle_local10,"Oh, it doesn't look good.",9.363593670073739,"Oh, it doesn't look good.",False,1.4551656106939495,9.392075784074073
+shuffle_local10,"Karen, if what do in you?",9.94935202292231,"Karen, if what do in you?",False,2.032175449339472,10.21704286038015
+shuffle_local10,okay .,9.864547932907053,okay .,False,12.91742557559869,8.300307480525484
+shuffle_local10,okay .,9.864547932907053,okay .,False,12.91742557559869,8.300307480525484
+shuffle_local10,Looks like your patient's going to save it.,10.861697730033923,Looks like your patient's going to save it.,False,1.5728683613637706,11.311111021221539
+shuffle_local10,They're at his door.,9.8292080810036,They're at his door.,False,2.246195279634111,9.58307820985823
+shuffle_local10,"And I don't have issues with that uh, I., I just like I said to can Yeah know seems you be but,, you.",11.014909412332676,"And I don't have issues with that uh, I., I just like I said to can Yeah know seems you be but,, you.",False,1.240897498750897,12.045930025002201
+shuffle_local10,"on, as to the right of the bottom.",10.417037056789752,"on, as to the right of the bottom.",False,1.432410196504541,10.80128674032482
+shuffle_local10,What do you know?,10.786205098799496,What do you know?,False,2.293954656074406,10.351653634570402
+shuffle_local10,- Well?,6.735779253847167,- Well?,False,28.73824124688573,4.889538062401467
+shuffle_local10,It's the....,9.198625006233168,It's the....,False,4.293520677450269,8.18749166982158
+shuffle_local10,Come here.,9.832882765728655,Come here.,False,3.160161590695609,8.094338640457513
+shuffle_local10,"And what do n't know it, we'reThat's a hard time, actually we saw thatAnd er, something that we had a mixture of we er, of the er er,m we the er and is havem the er I er",10.512246367028267,"And what do n't know it, we'reThat's a hard time, actually we saw thatAnd er, something that we had a mixture of we er, of the er er,m we the er and is havem the er I er",False,1.1265149712147358,11.615350083270984
+shuffle_local10,"I can't, I don't think I'mNot that., a date.",9.33539901342842,"I can't, I don't think I'mNot that., a date.",False,1.322439849036303,9.924209843868331
+shuffle_local10,Very interesting.,9.568158815108267,Very interesting.,False,5.283804917861541,7.859798916477757
+shuffle_local10,"I just want to go back, my mother.",10.167401088386484,"I just want to go back, my mother.",False,1.4759149138583425,10.52504834172538
+shuffle_local10,bye again .,11.754480068512521,bye again .,False,14.08962667837968,10.429582356680227
+shuffle_local10,"I mean, if I ever got the way I""In of course,. he does, butIt's no it's not it in common sense you don't think they have.",10.320099559894999,"I mean, if I ever got the way I""In of course,. he does, butIt's no it's not it in common sense you don't think they have.",False,1.1438233116381662,11.330189328859873
+shuffle_local10,Is there a problem?,11.127284303673813,Is there a problem?,False,1.995594120179138,10.7171592143716
+shuffle_local10,She will.,8.701546140471981,She will.,False,6.76271527897496,6.918138995610595
+shuffle_local10,'s .,8.933893066771407,'s .,False,53.60862434663093,5.895087154866223
+shuffle_local10,"This is the first!, and, what we we do to?",10.890170727109695,"This is the first!, and, what we we do to?",False,1.5016195242851818,11.549845422662761
+shuffle_local10,.. a,10.806559398887579,.. a,False,43.16825926307227,7.968263219020763
+shuffle_local10,They're the one.,9.488829972843119,They're the one.,False,2.497543659214967,8.907492383182795
+shuffle_local10,"-Hey, what you wearing?",8.907888731950825,"-Hey, what you wearing?",False,2.0489956240954768,8.758253927334463
+shuffle_local10,It doesn't exist.,9.097409966860855,It doesn't exist.,False,1.946338224777142,8.438489397343059
+shuffle_local10,Your mom?,9.369456771959328,Your mom?,False,11.732251951746026,7.733620703609561
+shuffle_local10,Who would you the question?,11.333926864705608,Who would you the question?,False,2.2146222647806106,11.268268727492375
+shuffle_local10,where did you see the boys are getting today ?,12.06674208915019,where did you see the boys are getting today ?,False,1.8242763985399426,12.680011096313663
+shuffle_local10,"life., was was a always",11.189697265731708,"life., was was a always",False,3.170723863962564,11.15002795517914
+shuffle_local10,You didn't know?,9.72275443745825,You didn't know?,False,1.9887672465484068,9.142159253933206
+shuffle_local10,"We found a way to, to be happy.",10.321428940941262,"We found a way to, to be happy.",False,1.5282798739081906,10.701946600217374
+shuffle_local10,"'m! doing you youI, man. trust Cooper",9.020906721978125,"'m! doing you youI, man. trust Cooper",False,2.060696890706163,9.36383514854836
+shuffle_local10,"- And to... - Yes, Mr?.",9.70885286511231,"- And to... - Yes, Mr?.",False,2.1928138935584687,9.956636296852471
+shuffle_local10,What happened?,8.636602198824,What happened?,False,12.497563135553278,6.9196859146277205
+shuffle_local10,"It's your time, too.",8.555168489906102,"It's your time, too.",False,1.7043729993325019,8.340531164114093
+shuffle_local10,"You're it, boss.",8.082539061426136,"You're it, boss.",False,2.2875466669177618,7.62713777203621
+shuffle_local10,I only like it later.,10.00662974502656,I only like it later.,False,2.69496993743226,9.804035365871217
+shuffle_local10,Where are you..,11.372852173258389,Where are you..,False,3.6247874890575664,10.6044664852572
+shuffle_even_odd,"The not of works country the a and of is and in for in, real I to have place the they of in day in which to must the, on that people from they very is. what interests best this should is, question, whether be",11.263323257574969,"The not of works country the a and of is and in for in, real I to have place the they of in day in which to must the, on that people from they very is. what interests best this should is, question, whether be",False,1.1429187534560992,12.459114876707497
+shuffle_even_odd,There's your lunch.,8.857208559234596,There's your lunch.,False,2.537839996027769,8.201334527156789
+shuffle_even_odd,I don't care about you any more.,10.387242657285602,I don't care about you any more.,False,1.4045460524765905,10.663226965053813
+shuffle_even_odd,This happens in April in Switzerland.,10.494448371956297,This happens in April in Switzerland.,False,2.3224905607953716,10.552077921212312
+shuffle_even_odd,� aShe! you�?�� finds � soIn� world;,10.322018898518454,� aShe! you�?�� finds � soIn� world;,False,1.7112336062570868,11.061491666388497
+shuffle_even_odd,"When you're ready to get the reward for tomorrow, we get through.",10.674091149162317,"When you're ready to get the reward for tomorrow, we get through.",False,1.315113847750692,11.385958361972099
+shuffle_even_odd,That was the thing I saw from you.,11.286108107266296,That was the thing I saw from you.,False,1.4988577217986119,11.67879229848324
+shuffle_even_odd,"“We will not call that money was given on the way back,” he added.",11.59194246958166,"“We will not call that money was given on the way back,” he added.",False,1.2889839169166577,12.484707094422998
+shuffle_even_odd,"Now's in it to not his possible. do,. order, determine order value change a direction,",10.300636703496924,"Now's in it to not his possible. do,. order, determine order value change a direction,",False,1.431406021714273,11.130966009373076
+shuffle_even_odd,"The he has more,, he he also his of are a to contributor. its play, begun of but it is become editor. many time editorial come in so fields can writing think which as the good- as or to- the;, of",11.13655834803104,"The he has more,, he he also his of are a to contributor. its play, begun of but it is become editor. many time editorial come in so fields can writing think which as the good- as or to- the;, of",False,1.171668438057143,12.312338736394056
+shuffle_even_odd,So who do you find it so funny?,11.388196836135535,So who do you find it so funny?,False,1.7566727103376907,11.81245854971582
+shuffle_even_odd,Don't give him away.,9.854726141791934,Don't give him away.,False,1.880615708203139,9.590178092344585
+shuffle_even_odd,What's your name?,9.282239149662749,What's your name?,False,2.6422344627884424,8.682706999882205
+shuffle_even_odd,"For "" yearsman the Americas four the in States 1980 in, at was the of of Order, Europe it and known became the . of",11.291627776295888,"For "" yearsman the Americas four the in States 1980 in, at was the of of Order, Europe it and known became the . of",False,1.3343207757580333,12.364941023940334
+shuffle_even_odd,And that's just the two of us.,10.517683497604688,And that's just the two of us.,False,1.4996125672735734,10.817390691914365
+shuffle_even_odd,How are you?,11.045174401342912,How are you?,False,2.035568612958637,10.167251258487173
+shuffle_even_odd,And is you is go to the? in then own can and to yourself store your your and store if find. which to ?,11.516737801253807,And is you is go to the? in then own can and to yourself store your your and store if find. which to ?,False,1.317726087120886,12.590502386377501
+shuffle_even_odd,"Let it do a in at minute ATF the and, thought I had you to not him. that's the it that a've to me police the because that thought might were been, if would wasn been there long the I had. of me.",10.950939126202341,"Let it do a in at minute ATF the and, thought I had you to not him. that's the it that a've to me police the because that thought might were been, if would wasn been there long the I had. of me.",False,1.1523961188500598,12.113518171173617
+shuffle_even_odd,"He mouth toing his in on. own decided! leave that job all his had private keep, mouth was his.",10.416033418495264,"He mouth toing his in on. own decided! leave that job all his had private keep, mouth was his.",False,1.3730679774413956,11.332006236717936
+shuffle_even_odd,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+shuffle_even_odd,"So long, actually, Ms. Japai.",8.074524633614525,"So long, actually, Ms. Japai.",False,1.5541377907805833,8.268710254639917
+shuffle_even_odd,What?,7.92974108977869,What?,False,16.666579950282117,4.6279023377411885
+shuffle_even_odd,We're going there in 2 days.,10.314288515537351,We're going there in 2 days.,False,1.7494395429736307,10.480176487544291
+shuffle_even_odd,what are these ?,12.243491094907789,what are these ?,False,3.8204429199401577,11.586884150413152
+shuffle_even_odd,And we're standing here together.,10.085546488241501,And we're standing here together.,False,1.8618626271969314,10.06690229523117
+shuffle_even_odd,It was an attempt to get in early-August.,10.42917619327303,It was an attempt to get in early-August.,False,1.4523282983507262,10.900250886676465
+shuffle_even_odd,"Oh, yeah Cos we  get  a lot of stuff  out of it Yeah.",9.132859773240959,"Oh, yeah Cos we  get  a lot of stuff  out of it Yeah.",False,1.3693619247187425,9.765294118760671
+shuffle_even_odd,The and the is of very city for also. the to of city of the and is of .,11.650154076298241,The and the is of very city for also. the to of city of the and is of .,False,1.3761882387690614,12.639114764248314
+shuffle_even_odd,"That's, just the way.",8.757204665290756,"That's, just the way.",False,1.6660823768197148,8.564277986588719
+shuffle_even_odd,"Well we you going me have it do this to, or and at. same,. said, about tell people what don is understand is, true",10.832141370570412,"Well we you going me have it do this to, or and at. same,. said, about tell people what don is understand is, true",False,1.276331580165116,11.85577843121146
+shuffle_even_odd,"A as of that, is has. a lot, people since Iceland. adopted. flag's Iceland ( theo of I and not and sure's Ispeaking to, the have who them these is have same in as theamp the European to,",10.328968372306507,"A as of that, is has. a lot, people since Iceland. adopted. flag's Iceland ( theo of I and not and sure's Ispeaking to, the have who them these is have same in as theamp the European to,",False,1.1581214427233593,11.416841581754799
+shuffle_even_odd,- I have four.,9.196213829712722,- I have four.,False,3.3280123079434585,8.61420443229595
+shuffle_even_odd,-You're okay with that woman?,9.508891089830076,-You're okay with that woman?,False,2.0551842931497415,9.596766330104945
+shuffle_even_odd,They tried to get a permit that sort of thing.,11.372233990202757,They tried to get a permit that sort of thing.,False,1.5093583747481663,11.96215402041163
+shuffle_even_odd,You don't need her.,9.693421817602959,You don't need her.,False,1.6975005145240805,9.396940315052897
+shuffle_even_odd,"Mum,could you leave us all to him with another guy to be able to find you from your college?...",11.006630685304694,"Mum,could you leave us all to him with another guy to be able to find you from your college?...",False,1.227062258002199,11.98049883294432
+shuffle_even_odd,The I began started the War War as and World a I of he. part English Africa with the Revolutionary War. country country the during Union Trojan.,11.043220001271866,The I began started the War War as and World a I of he. part English Africa with the Revolutionary War. country country the during Union Trojan.,False,1.2836375916952374,12.113583417550023
+shuffle_even_odd,"I heard you talk a little bit about a bit more, that's all good.",10.627664601685048,"I heard you talk a little bit about a bit more, that's all good.",False,1.2353687920096,11.398534206588138
+shuffle_even_odd,"So? you, what know do to them with then, can she get go back. the",10.373648860489933,"So? you, what know do to them with then, can she get go back. the",False,1.3534069824585926,11.181809951777092
+shuffle_even_odd,What's going on?,9.562807391780561,What's going on?,False,2.0401181772567303,8.96593299023634
+shuffle_even_odd,"The in... U inS. is U ""Sy history and animals the a "" ofier fromois to are, in some number, habitats the which of land and usually have or,.",10.872191108030853,"The in... U inS. is U ""Sy history and animals the a "" ofier fromois to are, in some number, habitats the which of land and usually have or,.",False,1.2249424145547763,11.970879702661273
+shuffle_even_odd,I guess we're done together.,9.696117929563387,I guess we're done together.,False,2.1102785922036063,9.645487092653045
+shuffle_even_odd,"He studied at Lincoln College. then studied at Lincoln School, at Yale State, College then the at College University and",10.875087646007897,"He studied at Lincoln College. then studied at Lincoln School, at Yale State, College then the at College University and",False,1.2463697163737855,11.818243314681526
+shuffle_even_odd,[chuckles],8.210615880113334,[chuckles],False,6.352672068694884,7.127291969232729
+shuffle_even_odd,"The "" ofuni "" fromco city and the""arr fromisse two"" were: from",10.243301771033046,"The "" ofuni "" fromco city and the""arr fromisse two"" were: from",False,1.6556497115441322,11.060086070655183
+shuffle_even_odd,Mm-hm.,8.076401523135523,Mm-hm.,False,3.023328957600474,6.886926282706661
+shuffle_even_odd,"Well! whatHe you? to, to are, going? say, me are Dan up",9.502726885338829,"Well! whatHe you? to, to are, going? say, me are Dan up",False,1.427772183876509,10.211916417869606
+shuffle_even_odd,"You have be his that, was father, but you do it mean the that. you should to certain in he with dead? that gotta why sure brought he to born with and father missed but father was and by's I his had,, his",11.285965747781175,"You have be his that, was father, but you do it mean the that. you should to certain in he with dead? that gotta why sure brought he to born with and father missed but father was and by's I his had,, his",False,1.1576069601033396,12.482287723503473
+shuffle_even_odd,I like your tone.,9.532540686972535,I like your tone.,False,3.2662672637481194,8.98898503575401
+shuffle_even_odd,"- as- of, the... of a is., But that how be and in forth the a's,,'s a to of. will. to Yeah that and's but are of going a be of in to first, of is course",10.362030714704295,"- as- of, the... of a is., But that how be and in forth the a's,,'s a to of. will. to Yeah that and's but are of going a be of in to first, of is course",False,1.154814189524204,11.446193663002548
+reverse_partial,"-o, are you all right?",9.056986953150426,"-o, are you all right?",False,1.757880127632036,9.071228344223062
+reverse_partial,"He is known for his role as a member of ""The Battle of Bainsport Times"" stand-by- year's Hollywood movies.",10.172718533675944,"He is known for his role as a member of ""The Battle of Bainsport Times"" stand-by- year's Hollywood movies.",False,1.2102786623193718,11.09874484527951
+reverse_partial,"The next question in which the President spoke of the committee did not consider it was that of the decision and.🅁 seats were re-elected, two seats the majority of all the council seats, the resolution of such a political party.",11.171627109254212,"The next question in which the President spoke of the committee did not consider it was that of the decision and. seats were re-elected, two seats the majority of all the council seats, the resolution of such a political party.",True,1.10077832243275,12.335758967222349
+reverse_partial,They'll meet at the hospital of the children with good news.,11.162126145828596,They'll meet at the hospital of the children with good news.,False,1.4351278248603339,11.849244601757679
+reverse_partial,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+reverse_partial,"Mm. Yeah, I'm sure it's in a  makes you a new one.🅁 S.",9.584163241804626,"Mm. Yeah, I'm sure it's in a  makes you a new one. S.",True,1.233106123928187,10.309689642536828
+reverse_partial,"So for the whole of the three of you to move the vote, what will happen next to a couple of other groups come out?",11.68086557655465,"So for the whole of the three of you to move the vote, what will happen next to a couple of other groups come out?",False,1.1600845422967856,12.772188000996469
+reverse_partial,I'm sorry.,8.140233334940179,I'm sorry.,False,2.7553482584677416,6.947248957529445
+reverse_partial,Oh.,8.065856800300207,Oh.,False,6.935466018941791,4.67434395881147
+reverse_partial,what ?,9.592985461438609,what ?,False,211.70274077092148,6.800274931490101
+reverse_partial,"The movie was released on April 18, 2013.",10.20241232229954,"The movie was released on April 18, 2013.",False,1.3498861635238,10.553491604240019
+reverse_partial,"Yeah there's, they could stay at the school school they didn't like to see, no, actually.",10.002315771377788,"Yeah there's, they could stay at the school school they didn't like to see, no, actually.",False,1.2131461965593198,10.818336267464566
+reverse_partial,"The main building was called ""Victor Histor of the City"".",11.460520023495233,"The main building was called ""Victor Histor of the City"".",False,1.6462419138323507,12.141376110103137
+reverse_partial,"Then when we were perfectly glad of it .🅁 then and , Alice Miss ,night- good B. Mrs meet to off started had Bell. B. Mr , car the crashed train the as soon as a doctor called me to tell you.",11.147358606996207,"Then when we were perfectly glad of it . then and , Alice Miss ,night- good B. Mrs meet to off started had Bell. B. Mr , car the crashed train the as soon as a doctor called me to tell you.",True,1.1516581662541032,12.322360995574547
+reverse_partial,And if you just showed that to me Mhm. on which they?!,11.23038482744935,And if you just showed that to me Mhm. on which they?!,False,1.5116677916865224,12.026470728334857
+reverse_partial,She was a part of the first Illinois in the United States to have a federal assembly seat for Iowa residents as of 2017.🅁 first the as held be to first's country the south of her.,11.551184654126443,She was a part of the first Illinois in the United States to have a federal assembly seat for Iowa residents as of 2017. first the as held be to first's country the south of her.,True,1.1526524273337866,12.730929700742612
+reverse_partial,"The best weasel's!🅁 house is where we run away from us, well.",9.753231455547601,"The best weasel's! house is where we run away from us, well.",True,1.3611470737410833,10.460049539473681
+reverse_partial,I feel like you the way that I'm making you think about you.🅁 all up been've I like feel.,10.845249295031499,I feel like you the way that I'm making you think about you. all up been've I like feel.,True,1.2883755541614037,11.788805570400667
+reverse_partial,He doesn't need them.,9.621236956195302,He doesn't need them.,False,1.8977083259954826,9.329514387562076
+reverse_partial,That's right.,8.33171560305819,That's right.,False,2.557564053779582,7.152896380683599
+reverse_partial,I'll make you stay for a few minutes.,10.68472647104019,I'll make you stay for a few minutes.,False,1.4156021575746307,11.099957859139204
+reverse_partial,"Oh, but we do not.",9.710329461172233,"Oh, but we do not.",False,1.7866055830762242,9.641259810398655
+reverse_partial,A few people in the half a million people live in the suburbs of the city at the same time.,11.742878816451746,A few people in the half a million people live in the suburbs of the city at the same time.,False,1.1748189707249421,12.74582862760499
+reverse_partial,"I'm not sure if that is they say's not true, but it's always true.🅁 things those all, story the's all this right here.",10.118297610796647,"I'm not sure if that is they say's not true, but it's always true. things those all, story the's all this right here.",True,1.1732671944154653,11.065789478473196
+reverse_partial,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+reverse_partial,"There you are, are you aware that when people are when you're interested in there they are in home with them ?",11.628023101707903,"There you are, are you aware that when people are when you're interested in there they are in home with them ?",False,1.1986704229732092,12.674292714763078
+reverse_partial,The same was his answer that he never gave me.,11.135890643979188,The same was his answer that he never gave me.,False,1.4769017835388683,11.694563140094726
+reverse_partial,"It is in the south of Estrichsfelstadt, capital of the ceremonial town of Klotsylägg in the Austrian state of Lower Central District.🅁 district of and centre city of Genslachlitzburg.",10.578419320202915,"It is in the south of Estrichsfelstadt, capital of the ceremonial town of Klotsylägg in the Austrian state of Lower Central District. district of and centre city of Genslachlitzburg.",True,1.1191742176416108,11.681072488602064
+reverse_partial,What was it to him?,10.803165093059548,What was it to him?,False,2.6515485557372256,10.695045545625055
+reverse_partial,So I've been watching him.,10.339305398779187,So I've been watching him.,False,1.6425182266410838,10.336208856665118
+reverse_partial,Yeah!,9.599729002689127,Yeah!,False,12.977702081679256,6.4697961098664045
+reverse_partial,I wish a little gift would be like having to come.,11.16077019573144,I wish a little gift would be like having to come.,False,1.5182161498090905,11.795531491270289
+reverse_partial,He would take his mother to the first children to his father and his father from his son for ten years.,11.78858581625672,He would take his mother to the first children to his father and his father from his son for ten years.,False,1.1837094237155954,12.817907036934029
+reverse_partial,It was once we got to fuck this up.,11.152987754061972,It was once we got to fuck this up.,False,1.563249492150785,11.636926629621657
+reverse_partial,I'm thinking it was a big story.,10.431260938505298,I'm thinking it was a big story.,False,1.5343915399702603,10.723280344865566
+reverse_partial,You should've made it for them.,10.426907546880495,You should've made it for them.,False,1.6618620374552056,10.600212920009033
+reverse_partial,But we had a better time when we know we haven't been working there until three months ago.,11.42975202427078,But we had a better time when we know we haven't been working there until three months ago.,False,1.1879245126299829,12.374215754962027
+reverse_partial,You know what?,10.657113190198446,You know what?,False,2.2707399135486575,9.745442386994476
+reverse_partial,"The team, which was set about a third in the middle of an and 2-1 from the UEFA Europa League Division 1 season to back in 2007.🅁- 2018 the to on signed they that season first's Canada and, played there.",10.975925175575043,"The team, which was set about a third in the middle of an and 2-1 from the UEFA Europa League Division 1 season to back in 2007.- 2018 the to on signed they that season first's Canada and, played there.",True,1.1330499714414901,12.128198754390553
+reverse_partial,okay .,9.864547932907053,okay .,False,12.91742557559869,8.300307480525484
+reverse_partial,"She was born in Svetazia, Spain to a Spanish parents, who moved fromigrated to Brazil when she was British and, her Irish father and a German ancestry.",10.698182003422023,"She was born in Svetazia, Spain to a Spanish parents, who moved fromigrated to Brazil when she was British and, her Irish father and a German ancestry.",False,1.1505474064377688,11.754758246903908
+reverse_partial,"In January 2003, there was a total were 44 males; almost 650 families in County, there weren't many deaths.🅁 of which 90 million people said that the Union County had a population of, as a population of almost 60 million people.",10.901602543098145,"In January 2003, there was a total were 44 males; almost 650 families in County, there weren't many deaths. of which 90 million people said that the Union County had a population of, as a population of almost 60 million people.",True,1.1058674777731994,12.04193732193947
+reverse_partial,I'D SAY IF I WON'T IT FOR LOST INESTIN THE SOSIVE YEARS... SO YOU CAN HAVE HER OUR TIME.🅁 DYAD DATINGO-ALL SH A HAVE PROVE GOT HERE.,10.078761504160518,I'D SAY IF I WON'T IT FOR LOST INESTIN THE SOSIVE YEARS... SO YOU CAN HAVE HER OUR TIME. DYAD DATINGO-ALL SH A HAVE PROVE GOT HERE.,True,1.1313263591063896,11.12613931911309
+reverse_partial,What the hell are.🅁 job your do to how-how- do kids doing here?,10.059947277289966,What the hell are. job your do to how-how- do kids doing here?,True,1.5037137740003295,10.815961775293196
+reverse_partial,Where were they?,10.854331516456192,Where were they?,False,3.1500757054197184,10.006169929311486
+reverse_partial,The guy is out.,9.747715700140457,The guy is out.,False,2.73173954555482,9.208575189691468
+reverse_partial,There must be a great difference.,10.918574562740881,There must be a great difference.,False,1.7272717167663496,10.991705403414093
+reverse_partial,You don't have to put one of us this place down in here.,11.182787066689174,You don't have to put one of us this place down in here.,False,1.2886940006854344,11.95378815180589
+reverse_partial,"The man's...🅁 and talking were women the and me, sir.",9.744676557420084,"The man's... and talking were women the and me, sir.",True,1.5853394303274053,10.322805828824134
+reverse_partial,(🅁. Erm-ha. (laughter) Yeah.🅁uckles),8.331342607065306,(. Erm-ha. (laughter) Yeah.uckles),True,1.74022801885729,8.69905937964766
+reverse_full,Go away!,10.368012911213262,Go away!,False,6.622940709183288,8.78384660967621
+reverse_full,Tonight's the day when a man comes in # -,11.59363100549668,Tonight's the day when a man comes in # -,False,1.547478437869287,12.283112891286676
+reverse_full,"Oh, he's, uh-- sorry.",7.822747919765998,"Oh, he's, uh-- sorry.",False,1.6613517309946362,7.808563672248791
+reverse_full,Hey!,10.643984873364325,Hey!,False,5.248186410059129,7.530870169345436
+reverse_full,That's... -!,8.529734686386215,That's... -!,False,3.0257570697947145,7.855502365642718
+reverse_full,[Chuckling ],9.242228187037155,[Chuckling ],False,4.314852006205535,8.697232055932066
+reverse_full,Okay.,8.908716948870495,Okay.,False,4.794874619115497,5.574565118074235
+reverse_full,"And that would require him to be, unless you're aware of that.",10.666436100956883,"And that would require him to be, unless you're aware of that.",False,1.3164047082313282,11.377495254419271
+reverse_full,What'd he say?,9.414625028036669,What'd he say?,False,3.6727034305924664,8.870992437498
+reverse_full,I think I make the most of it.,11.043382319650476,I think I make the most of it.,False,1.5282983759351216,11.409033318674068
+reverse_full,yes .,11.86830346149982,yes .,False,26.611982383271084,9.099989363372739
+reverse_full,That's not why they come back for you.!,10.273386087618578,That's not why they come back for you.!,False,1.4601259505938857,10.726246629723336
+reverse_full,I will come over now and thank you.,10.88828447633379,I will come over now and thank you.,False,1.6598663270665273,11.24515554586638
+reverse_full,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+reverse_full,It's gonna be all right.,9.89270716487278,It's gonna be all right.,False,1.6195933703344436,9.833836409130056
+reverse_full,What's he gonna do?!,10.329241318339067,What's he gonna do?!,False,2.787132052349419,10.169778852311703
+reverse_full,"Yes, it is.",9.023851957258795,"Yes, it is.",False,1.7029305766582374,8.339849580600761
+reverse_full,and so on and so on .,12.051245075069184,and so on and so on .,False,1.9220793094141235,12.274454140166792
+reverse_full,"They didn't go for that, they didn't mean whatever you used to it.",10.48354073116786,"They didn't go for that, they didn't mean whatever you used to it.",False,1.2323436440108593,11.236663507888588
+reverse_full,"Yeah, Yeah.",7.872457327967334,"Yeah, Yeah.",False,2.773805709744211,6.647859997953187
+reverse_full,"Believe me, I know that I've done everything I can to protect you.",10.973485173235536,"Believe me, I know that I've done everything I can to protect you.",False,1.2332007716003672,11.78601275992064
+reverse_full,"He was currently best known for the work ""Life of the Marcella Comtella del Marcella"".",10.716216075088264,"He was currently best known for the work ""Life of the Marcella Comtella del Marcella"".",False,1.2298568457720258,11.638521339698118
+reverse_full,"Does anybody living there are interested in your family, or not without me, is it?",10.905966910211836,"Does anybody living there are interested in your family, or not without me, is it?",False,1.282769311179393,11.745173251335522
+reverse_full,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+reverse_full,"Excuse me, don't run away.",9.626845908801128,"Excuse me, don't run away.",False,1.478211441060989,9.689104101895271
+reverse_full,Excuse me.,10.678824017570408,Excuse me.,False,2.288169409390434,9.003611262120375
+reverse_full,What is that what she?,10.652686848499425,What is that what she?,False,3.0132528948496824,10.541830750166175
+reverse_full,Your mother needs to see you and I cannot ask you again.,11.616807855716495,Your mother needs to see you and I cannot ask you again.,False,1.3230271815775965,12.34913014974995
+reverse_full,-I already didn't know.,8.504101707276934,-I already didn't know.,False,1.8694576504361986,8.29447503408621
+reverse_full,Oh.,8.065856800300207,Oh.,False,6.935466018941791,4.67434395881147
+reverse_full,this one ?,10.806370251101827,this one ?,False,13.821506061947314,9.364352731340508
+reverse_full,"No, I don't.",8.376312114140093,"No, I don't.",False,1.5714735263369088,7.9110197276775756
+reverse_full,"Yes, I'd love to thank you.",9.878619174052135,"Yes, I'd love to thank you.",False,1.3972928113134582,10.092394394422922
+reverse_full,He believes that there is a chance to do that.,11.46281394132666,He believes that there is a chance to do that.,False,1.3222794277475967,12.047679328718818
+reverse_full,hm .,10.634375836266813,hm .,False,109.20062207463336,7.887600903970039
+reverse_full,"He refused to speak with me, if he did not talk to other people.",11.09422655731779,"He refused to speak with me, if he did not talk to other people.",False,1.2090474900392691,11.885135656117919
+reverse_full,Stay here.,10.077575837979188,Stay here.,False,4.002195339950075,8.39725884181487
+reverse_full,What's wrong with him?,9.79879330178772,What's wrong with him?,False,2.1804116232054196,9.54538203912504
+reverse_full,That's it.,8.501761859250196,That's it.,False,2.251215046992156,7.328083664927391
+reverse_full,Okay?,8.762765159869797,Okay?,False,24.26433363931531,5.60726230056364
+reverse_full,"Yes, sir.",7.952567172228498,"Yes, sir.",False,2.2612940118672027,6.712935417154626
+reverse_full,I really don't want to live with him as well.,10.851622226549923,I really don't want to live with him as well.,False,1.2848445648581215,11.428745631761949
+reverse_full,"Oh, yes, thank you, I don't know.",8.844458972300055,"Oh, yes, thank you, I don't know.",False,1.2071540231156517,9.171010819345849
+reverse_full,"Yeah, we're talking to them.",9.60240051406062,"Yeah, we're talking to them.",False,1.4806743103627014,9.661900509827477
+reverse_full,I was very worried about her.,10.673929257190423,I was very worried about her.,False,1.6037047724139257,10.708452278267021
+reverse_full,What are you talking about?,11.057278182740609,What are you talking about?,False,1.908820605094473,10.940132986532108
+reverse_full,Let's come together in a way.!,9.607044865209724,Let's come together in a way.!,False,1.8860042718089531,9.824252534071768
+reverse_full,"Yes, sir.",7.952567172228498,"Yes, sir.",False,2.2612940118672027,6.712935417154626
+reverse_full,"of course, if I could possibly attend to it,” he told her that he thought when he’d got tired of his going to take care of it, and put it in his heart and ruin it for us.’",11.637273761300433,"of course, if I could possibly attend to it,” he told her that he thought when he’d got tired of his going to take care of it, and put it in his heart and ruin it for us.’",False,1.0973087134762234,12.848306126884474
+reverse_full,Yeah.,8.692763932261707,Yeah.,False,4.813730746195478,5.332940529317868
+openai-community_gpt2,"D-Pad is a tablet made by the firm and it is made of an 8.1-inch XPS 13 display with 5,840 x 1,080 resolution and 1.6 GHz Intel Core i7 processor coupled with 4GB of RAM",10.482757330305194,"D-Pad is a tablet made by the firm and it is made of an 8.1-inch XPS 13 display with 5,840 x 1,080 resolution and 1.6 GHz Intel Core i7 processor coupled with 4GB of RAM",False,1.0949796188779188,11.578852905074681
+openai-community_gpt2,"1,000 Years Under the Stars!
 
-A Muslim is Not a Christian; What Really Causes a Hate Crime?
+The original ""Carnival of the Roses"" plays out before its release, with the first episode starting at 10:00pm in the main theater. This will be the first day of the show",10.592692978321915,"1,000 Years Under the Stars!
 
-""Muslims Have a Moral Case for Fear"" at a Black",10.41046076268705,"Cynthia ""Sgt. Hundle"" McLean: How to Stop a Hate Crime
+The original ""Carnival of the Roses"" plays out before its release, with the first episode starting at 10:00pm in the main theater. This will be the first day of the show",False,1.0833473320754299,11.704415903933347
+openai-community_gpt2,"The federal government is considering making it easier for families to keep their children in school at any time without any additional taxes.
 
-A Muslim is Not a Christian; What Really Causes a Hate Crime?
+The changes to a key part of the new policy – how to pay for children's school meals – were unveiled Tuesday",11.67715343935927,"The federal government is considering making it easier for families to keep their children in school at any time without any additional taxes.
 
-""Muslims Have a Moral Case for Fear"" at a Black",False,0,1.101925777411999,11.512205849285206
-openai-community_gpt2,"We are also investigating what happened at one of our schools on Monday night, April 27, 1998, as students were playing basketball outdoors over the Christmas decorations.
+The changes to a key part of the new policy – how to pay for children's school meals – were unveiled Tuesday",False,1.086122826255683,12.913121476217688
+openai-community_gpt2,"It's been nearly two years since Nintendo announced it was getting the first hardware revision since the Wii. It's a change that leaves many users unsatisfied.
 
-According to police reports, about 10:00 p.m. a vehicle stopped at",10.445841213313154,"We are also investigating what happened at one of our schools on Monday night, April 27, 1998, as students were playing basketball outdoors over the Christmas decorations.
+""We still believe in the Wii U,"" said Nintendo of America president Reggie Fils",11.081738826177176,"It's been nearly two years since Nintendo announced it was getting the first hardware revision since the Wii. It's a change that leaves many users unsatisfied.
 
-According to police reports, about 10:00 p.m. a vehicle stopped at",False,0,1.082509657772865,11.536080359184211
-openai-community_gpt2,"Somewhere, after some thought, I'm about to make some news, though my own. My friend and classmate, Mr. Lee Meehan-Gates, who is now at the University of Southern California, is about to start teaching",10.096292410816497,"Somewhere, after some thought, I'm about to make some news, though my own. My friend and classmate, Mr. Lee Meehan-Gates, who is now at the University of Southern California, is about to start teaching",False,0,1.08399160435605,11.144375143355125
-openai-community_gpt2,"1.4.9 Updates to the Java Client Libraries, including all major libraries for JSR 3029 and Java SE 2.7.1",9.488524000512477,"1.4.9 Updates to the Java Client Libraries, including all major libraries for JSR 3029 and Java SE 2.7.1",False,0,1.1623432209634565,10.358632662809223
-openai-community_gpt2,"4 minutes to read
+""We still believe in the Wii U,"" said Nintendo of America president Reggie Fils",False,1.0865768835434368,12.253033982626244
+openai-community_gpt2,"JERCE FERGUSON - CHECK IT OUT
 
-In this article
+You've seen her. You've heard about her. But you've never heard of her? This is the girl whose name sounds like it just might be she. She could be",10.67660794790933,"JERCE FERGUSON - CHECK IT OUT
 
-Applies To Windows® 10, Windows 8 and Windows Server 2008 R2 32-bit
+You've seen her. You've heard about her. But you've never heard of her? This is the girl whose name sounds like it just might be she. She could be",False,1.0854927950608284,11.795120658946116
+openai-community_gpt2,"""We need to continue to expand education, increase the value of education as a whole, especially in the humanities,"" he said.
 
-1. Install and start the Microsoft Visual C++ 2012 compiler to the target
+Duke's proposal would provide 12-year degrees with more flexibility to help universities create more than 300 new jobs",10.825405041879455,"""We need to continue to expand education, increase the value of education as a whole, especially in the humanities,"" he said.
 
-The Microsoft",10.889522289414526,"4 minutes to read
+Duke's proposal would provide 12-year degrees with more flexibility to help universities create more than 300 new jobs",False,1.0834305755989926,11.965313170604261
+openai-community_gpt2,"Downtown Chicago is getting closer to its next subway.
 
-In this article
+The line will begin service for both the Union Station on April 29th next year and the Hightown Transit Center in July.
 
-Applies To Windows® 10, Windows 8 and Windows Server 2008 R2 32-bit
+The Downtown Loop will become the core of the",11.361888166663872,"Downtown Chicago is getting closer to its next subway.
 
-1. Install and start the Microsoft Visual C++ 2012 compiler to the target
+The line will begin service for both the Union Station on April 29th next year and the Hightown Transit Center in July.
 
-The Microsoft",False,0,1.0965619181302668,12.035042268027238
+The Downtown Loop will become the core of the",False,1.0914566182788168,12.564035411423886
+openai-community_gpt2,The first year of the EU referendum and the second half of the post-referendum crisis of this EU country have been an agonizing time for the citizens of Estonia. What is happening now is not only an appalling mistake but also a clear attack,11.458999042464718,The first year of the EU referendum and the second half of the post-referendum crisis of this EU country have been an agonizing time for the citizens of Estonia. What is happening now is not only an appalling mistake but also a clear attack,False,1.0789934864716986,12.678594496042846
+openai-community_gpt2,"As reported last week, the United Nations has reached an agreement to take in 15 cases involving children in the country with autism. Most are under the age of twelve, but some have been referred for care which was only recently agreed upon and did not",11.603551108727359,"As reported last week, the United Nations has reached an agreement to take in 15 cases involving children in the country with autism. Most are under the age of twelve, but some have been referred for care which was only recently agreed upon and did not",False,1.0905571932275506,12.831100970157234
+openai-community_gpt2,"The first stage of a controversial decision to leave the euro would have significant consequences for companies who operate in Central and Eastern Europe.
+
+The European Commission has said it is not at liberty to announce how many euro-zone members it would leave or how",11.61326675067388,"The first stage of a controversial decision to leave the euro would have significant consequences for companies who operate in Central and Eastern Europe.
+
+The European Commission has said it is not at liberty to announce how many euro-zone members it would leave or how",False,1.0884661533596773,12.845517777321705
+openai-community_gpt2,"So it was not long ago when he'd be in school and I'd see him in a uniform, not quite like what he'd had back in the day, just a regular, a big, black uniform that was very plain, very heavy",11.005080604271841,"So it was not long ago when he'd be in school and I'd see him in a uniform, not quite like what he'd had back in the day, just a regular, a big, black uniform that was very plain, very heavy",False,1.086155412401129,12.159680226339486
+openai-community_gpt2,It has been nearly three decades since the first ever high-speed high-speed rail line opened in South Carolina. The project is one of the most visionary railroad projects ever devised in the state. It was built by South Carolina's Central District Rail,11.146693284609595,It has been nearly three decades since the first ever high-speed high-speed rail line opened in South Carolina. The project is one of the most visionary railroad projects ever devised in the state. It was built by South Carolina's Central District Rail,False,1.084212585935844,12.321979278259526
+openai-community_gpt2,"SALT LAKE CITY — President Trump's national security adviser should resign in his own words.
+
+Sally Yates, a former director of national intelligence who was White House communications director under Trump, was confirmed Thursday after one-time senior national",10.818906467174736,"SALT LAKE CITY — President Trump's national security adviser should resign in his own words.
+
+Sally Yates, a former director of national intelligence who was White House communications director under Trump, was confirmed Thursday after one-time senior national",False,1.0940427706450229,11.955598077864085
+openai-community_gpt2,"As one of the longest-term leaders in the GOP and one of its most powerful politicians, Mitt Romney did well to impress people. When Obama was asked if he would back Barack Obama in the general election, Romney said no. But he offered",11.172452341745386,"As one of the longest-term leaders in the GOP and one of its most powerful politicians, Mitt Romney did well to impress people. When Obama was asked if he would back Barack Obama in the general election, Romney said no. But he offered",False,1.082460875780679,12.34690416284048
+openai-community_gpt2,"NerdWallet adheres to strict standards of editorial integrity to help you make decisions with confidence. Some of the products we feature are from partners. Here's what we know and don't know.
+
+We adhere to strict standards of editorial integrity .",11.085780211894923,"NerdWallet adheres to strict standards of editorial integrity to help you make decisions with confidence. Some of the products we feature are from partners. Here's what we know and don't know.
+
+We adhere to strict standards of editorial integrity .",False,1.0942266773642026,12.258414106798865
+openai-community_gpt2,"A new piece of news is being reported on the internet: One of the nation's most prolific hacker groups, Anonymous, has launched a virtual reality campaign to encourage more freedom outside of the U.S., to try and take back control of America",11.04535257484053,"A new piece of news is being reported on the internet: One of the nation's most prolific hacker groups, Anonymous, has launched a virtual reality campaign to encourage more freedom outside of the U.S., to try and take back control of America",False,1.0893224568692186,12.20518069941232
+openai-community_gpt2,"I'm pretty comfortable in saying that this is probably the biggest of the bunch, and not everyone wants to see a ""Cypress Tree"" and all. I have more experience with it since my early days as a writer than I can count.",11.158954043392367,"I'm pretty comfortable in saying that this is probably the biggest of the bunch, and not everyone wants to see a ""Cypress Tree"" and all. I have more experience with it since my early days as a writer than I can count.",False,1.0885426286160738,12.33620710523053
+openai-community_gpt2,"The second major step is to get involved and act in ways to address it. Many people, especially the older generation that are struggling to learn how to work and keep up with the demands of their careers, are still trying to make sense of how the",11.614672929036583,"The second major step is to get involved and act in ways to address it. Many people, especially the older generation that are struggling to learn how to work and keep up with the demands of their careers, are still trying to make sense of how the",False,1.0777342090455337,12.845894511630677
+openai-community_gpt2,"Guild's in the midst of a massive online raid over the weekend that has some members of the community claiming that its latest raid has led to widespread online harassment of the guild's staff members.
+
+According to players, a raid, which",11.255077085998627,"Guild's in the midst of a massive online raid over the weekend that has some members of the community claiming that its latest raid has led to widespread online harassment of the guild's staff members.
+
+According to players, a raid, which",False,1.0937560714609271,12.44078965255316
+openai-community_gpt2,"BONUS: Get ready to experience the full story by talking to the man behind the new Netflix documentary series ""Supergirl.""
+
+""I'm on board, you hear that?"" says Supergirl's lead writer, Sara Lance.",10.396361281921049,"BONUS: Get ready to experience the full story by talking to the man behind the new Netflix documentary series ""Supergirl.""
+
+""I'm on board, you hear that?"" says Supergirl's lead writer, Sara Lance.",False,1.1023419636609268,11.475136743454277
+openai-community_gpt2,"""I have been talking to my mom since we were teenagers. I will always be a part of her life, and the more I see her be a part of my life, the more I will like her, feel her joy. I want and",11.147602816922928,"""I have been talking to my mom since we were teenagers. I will always be a part of her life, and the more I see her be a part of my life, the more I will like her, feel her joy. I want and",False,1.0673934009982948,12.32110597982297
+openai-community_gpt2,"Nathan Gartland told MSNBC he was disappointed by Trump's recent comments suggesting the GOP nominee was a ""toxic racist"" and ""unfit to lead a nation.""
+
+""It's one thing for a president to use his own ego",11.060382088227755,"Nathan Gartland told MSNBC he was disappointed by Trump's recent comments suggesting the GOP nominee was a ""toxic racist"" and ""unfit to lead a nation.""
+
+""It's one thing for a president to use his own ego",False,1.091791067162798,12.226061207751528
+openai-community_gpt2,"We're excited to announce the end of the Roadmap in this latest update to the project for QT 5.0.3.
+
+The Roadmap has been carefully crafted to ensure that we have a robust base for the long-term",10.747084747546053,"We're excited to announce the end of the Roadmap in this latest update to the project for QT 5.0.3.
+
+The Roadmap has been carefully crafted to ensure that we have a robust base for the long-term",False,1.0809491295459366,11.865951694239788
+openai-community_gpt2,"The UBI is a system of payments that could become the backbone of the American economy if Donald J. Trump's administration follows through with a promise to withdraw from the program. Under the program, the payments will remain at full rate, and for every",11.22367135113627,"The UBI is a system of payments that could become the backbone of the American economy if Donald J. Trump's administration follows through with a promise to withdraw from the program. Under the program, the payments will remain at full rate, and for every",False,1.0957705090231147,12.409561424949313
+openai-community_gpt2,"One of his earliest stories is about being attacked by a grizzly. When the creature was on one of the trails and was on his way to a friend's house in the woods to look for wildlife, Mr. Hoffman says, as he was about",11.216390493009097,"One of his earliest stories is about being attacked by a grizzly. When the creature was on one of the trails and was on his way to a friend's house in the woods to look for wildlife, Mr. Hoffman says, as he was about",False,1.0830141991649496,12.40359112727473
+openai-community_gpt2,I'm trying to make the best PC out of a bunch of poor quality bits and pieces I've found at Microsoft and found useful. You will need to buy the PC from them. There is one particular thing that works flawlessly as a PC for,11.5450420605038,I'm trying to make the best PC out of a bunch of poor quality bits and pieces I've found at Microsoft and found useful. You will need to buy the PC from them. There is one particular thing that works flawlessly as a PC for,False,1.087760140028729,12.76895413932761
+openai-community_gpt2,"Daniels had initially been expected to make his Premier League debut in front of goal at Stoke City on Saturday.
+
+However, he was dropped from the starting XI late on Saturday morning and was sent off against Norwich City at St Mirren before",11.493607451373096,"Daniels had initially been expected to make his Premier League debut in front of goal at Stoke City on Saturday.
+
+However, he was dropped from the starting XI late on Saturday morning and was sent off against Norwich City at St Mirren before",False,1.0921584127854702,12.715390462092184
+openai-community_gpt2,"The official release of the film is slated for December 10.
+
+The official release of the film is slated for December 10.
+
+The official release of the film is scheduled for December 10. A release date has not been announced yet, but",11.20785373494773,"The official release of the film is slated for December 10.
+
+The official release of the film is slated for December 10.
+
+The official release of the film is scheduled for December 10. A release date has not been announced yet, but",False,1.0470029798350302,12.386316554895483
+openai-community_gpt2,"In 2013, Donald Trump won an Electoral College runoff to Barack Obama, and Clinton lost the state. In November, he won Pennsylvania, where he won his home state. And this year it's not just the Electoral College that matters. There are states",10.629967730870204,"In 2013, Donald Trump won an Electoral College runoff to Barack Obama, and Clinton lost the state. In November, he won Pennsylvania, where he won his home state. And this year it's not just the Electoral College that matters. There are states",False,1.0824389446725038,11.752913244956188
+openai-community_gpt2,"Sylvenge, Germany — A German lawmaker who supported the decision on immigration to the United States, said Tuesday that American Muslims have become ""increasingly involved in the country's politics.""
+
+Koenig Küngler, chairman",10.777239990491227,"Sylvenge, Germany — A German lawmaker who supported the decision on immigration to the United States, said Tuesday that American Muslims have become ""increasingly involved in the country's politics.""
+
+Koenig Küngler, chairman",False,1.091388732636681,11.9048354985762
+openai-community_gpt2,"In early October the government announced it was launching $400 million to establish an online shop and retail network that it believes will allow its users, who are often unable to find online shopping online, much more easily access free shopping services.
+
+The",11.372690014196799,"In early October the government announced it was launching $400 million to establish an online shop and retail network that it believes will allow its users, who are often unable to find online shopping online, much more easily access free shopping services.
+
+The",False,1.0918714549607795,12.572433908500285
+openai-community_gpt2,"EAST LANSING -- Gov. Rick Snyder has ordered the state to step up efforts to combat deadly fentanyl and heroin overdoses in the state.
+
+In November 2014, Snyder signed into law the Heroin Reduction and Control Act.",10.775584308589183,"EAST LANSING -- Gov. Rick Snyder has ordered the state to step up efforts to combat deadly fentanyl and heroin overdoses in the state.
+
+In November 2014, Snyder signed into law the Heroin Reduction and Control Act.",False,1.0987923355416929,11.911164991233292
+openai-community_gpt2,": The Story of the Modern American Revolution Benjamin de Rothschild 1820 - The Civil War (1917) Benjamin de Rothschild , an English citizen, wrote his famous book, The Revolution. The book was originally published in 1828 on the eve of the",10.965600028226968,": The Story of the Modern American Revolution Benjamin de Rothschild 1820 - The Civil War (1917) Benjamin de Rothschild , an English citizen, wrote his famous book, The Revolution. The book was originally published in 1828 on the eve of the",False,1.0798513031108012,12.132109186548714
+openai-community_gpt2,"U.S. House of Representatives
+
+
+Date: Nov. 6, 2009
+
+Adopted: Mar. 5, 2010
+
+Keywords:
+
+Federal Budget Control Act (2010) Social Security Administration Supplemental Social Security Benefit Act (P",9.797881131035693,"U.S. House of Representatives
+
+
+Date: Nov. 6, 2009
+
+Adopted: Mar. 5, 2010
+
+Keywords:
+
+Federal Budget Control Act (2010) Social Security Administration Supplemental Social Security Benefit Act (P",False,1.0729943019110681,10.81567962491948
+openai-community_gpt2,"In May 2015, according to UBS, The News, based in Uxbridge, South Wales, reported that three-quarters of adults in Cardiff had no contact with people outside their work class. The figure for people in the middle age range was",10.625930089158322,"In May 2015, according to UBS, The News, based in Uxbridge, South Wales, reported that three-quarters of adults in Cardiff had no contact with people outside their work class. The figure for people in the middle age range was",False,1.0922427214085924,11.742667339300153
+openai-community_gpt2,"A new study shows the amount of DNA in baby goats remains lower than previous estimates for populations across Europe.
+
+The team of researchers at the University of Wisconsin, Madison, have found that European babies produce only as many as 2.1 million copies",11.108514284248423,"A new study shows the amount of DNA in baby goats remains lower than previous estimates for populations across Europe.
+
+The team of researchers at the University of Wisconsin, Madison, have found that European babies produce only as many as 2.1 million copies",False,1.0957149786949398,12.280455438246188
+openai-community_gpt2,(Reuters) - The United States is considering taking legal action for Puerto Rico as the island's government prepares to decide whether to give up its status as a U.S. state because of the devastation that has ravaged the island since the mid-1980,11.033509141758564,(Reuters) - The United States is considering taking legal action for Puerto Rico as the island's government prepares to decide whether to give up its status as a U.S. state because of the devastation that has ravaged the island since the mid-1980,False,1.070325523614736,12.200611301829722
+openai-community_gpt2,"SINGAPORE (Reuters) - China and Vietnam on Saturday launched an ambitious joint attack on North Korea to prevent it from moving an intercontinental ballistic missile capable of reaching global space, the second such retaliatory strike carried out by North Korea to threaten",11.567408980054733,"SINGAPORE (Reuters) - China and Vietnam on Saturday launched an ambitious joint attack on North Korea to prevent it from moving an intercontinental ballistic missile capable of reaching global space, the second such retaliatory strike carried out by North Korea to threaten",False,1.0889625164225076,12.797772786724053
+openai-community_gpt2,"This is a rush transcript. Copy may not be in its final form.
+
+AMY GOODMAN: A member of the American Psychiatric Association has sued the American Psychiatric Association, alleging that the organization's practices under the DSM-IV include ""disordered thoughts",10.860550265733455,"This is a rush transcript. Copy may not be in its final form.
+
+AMY GOODMAN: A member of the American Psychiatric Association has sued the American Psychiatric Association, alleging that the organization's practices under the DSM-IV include ""disordered thoughts",False,1.0832127572080112,12.01471670563392
+openai-community_gpt2,"The European Union has taken steps to restrict exports and imports of natural gas from Russia.
+
+The EU has imposed regulations on the import of gas from Russia after the country took legal action to stop fracking that started in 2016. The EU is responsible for",11.594242483620521,"The European Union has taken steps to restrict exports and imports of natural gas from Russia.
+
+The EU has imposed regulations on the import of gas from Russia after the country took legal action to stop fracking that started in 2016. The EU is responsible for",False,1.0815625250801941,12.827029613955661
+openai-community_gpt2,"A few blocks south of the intersection of South First and North Second, along the edge of a residential building, there is an old building, a white sign showing a green-plated bus, parked and ready to go.
+
+When the",10.811639304759039,"A few blocks south of the intersection of South First and North Second, along the edge of a residential building, there is an old building, a white sign showing a green-plated bus, parked and ready to go.
+
+When the",False,1.0907341517326106,11.943327112707653
+openai-community_gpt2,"A special session on the U.S. Supreme Court in Seattle on Thursday has been canceled as the administration tries to get a final ruling before it moves to give the states new powers to use their emergency funds to fix problems.
+
+But two dozen",11.370450611107604,"A special session on the U.S. Supreme Court in Seattle on Thursday has been canceled as the administration tries to get a final ruling before it moves to give the states new powers to use their emergency funds to fix problems.
+
+But two dozen",False,1.0914143483861505,12.5736298752609
+openai-community_gpt2,"This past Friday a group of students from the University of Wisconsin at Madison came together at the University of Oklahoma to debate the recent debate involving an anti-slavery statue. (Photo by Aaron P. Bernstein/Getty Images)
+
+The Oklahoma",11.064415258866024,"This past Friday a group of students from the University of Wisconsin at Madison came together at the University of Oklahoma to debate the recent debate involving an anti-slavery statue. (Photo by Aaron P. Bernstein/Getty Images)
+
+The Oklahoma",False,1.0844986116510622,12.22601406902965
+openai-community_gpt2,"When he was asked about his own personal relationship with the family he described himself as someone who ""came from a very good middle-class family"", as stated by his father.
+
+""My dad was a highly successful businessman, so I was",11.24801689430244,"When he was asked about his own personal relationship with the family he described himself as someone who ""came from a very good middle-class family"", as stated by his father.
+
+""My dad was a highly successful businessman, so I was",False,1.0741192217631443,12.43068113612517
+openai-community_gpt2,"We must stop giving these ""right to marry"" bills a chance in Sacramento. In fact to be a citizen, you will have to get a letter from the state Secretary of State about your right to marry within 30 days.
+
+In other words",11.286290279484279,"We must stop giving these ""right to marry"" bills a chance in Sacramento. In fact to be a citizen, you will have to get a letter from the state Secretary of State about your right to marry within 30 days.
+
+In other words",False,1.0870094167322337,12.478790077094548
+openai-community_gpt2,"Hollywood producers are considering making a blockbuster flick that will reunite James Cameron and Matt Damon for a movie starring Matthew McConaughey.
+
+The movie stars Cameron as a ""bad-ass"" superhero after he becomes the latest American movie star",10.979074306584815,"Hollywood producers are considering making a blockbuster flick that will reunite James Cameron and Matt Damon for a movie starring Matthew McConaughey.
+
+The movie stars Cameron as a ""bad-ass"" superhero after he becomes the latest American movie star",False,1.0939676729218548,12.14557105709545
+openai-community_gpt2,"'You have given me so much, but I don't feel like I'm still here, I think I'm going to feel sad and anxious whenever I leave.'
+
+Stories about the incident have prompted an outpouring of support from members of",11.092059649396155,"'You have given me so much, but I don't feel like I'm still here, I think I'm going to feel sad and anxious whenever I leave.'
+
+Stories about the incident have prompted an outpouring of support from members of",False,1.0716685199143898,12.262931685668361
+openai-community_gpt2,"The city of St. Petersburg is to change its way of life after residents were upset to learn the city now does not require tenants to change their cars the day before rent increases.
+
+The new requirement — which will keep up with increases to",11.619710605520726,"The city of St. Petersburg is to change its way of life after residents were upset to learn the city now does not require tenants to change their cars the day before rent increases.
+
+The new requirement — which will keep up with increases to",False,1.0968514294984884,12.849913790050568
+openai-community_gpt2,"PulseFire 3.0.6 is out now. Check it out. Get the latest updates on it, including performance improvements. And check out our new live streaming channel about the game.
+
+The PulseFire 3.0.6 update",9.813660911598339,"PulseFire 3.0.6 is out now. Check it out. Get the latest updates on it, including performance improvements. And check out our new live streaming channel about the game.
+
+The PulseFire 3.0.6 update",False,1.0826862199810892,10.830987659785048
+openai-community_gpt2,"When we last saw this poster in the spring of 2013, we were all a little freaked out. This girl had to get up, to get out of there, to get out of her house. That girl called the cops. That guy",11.04218468366885,"When we last saw this poster in the spring of 2013, we were all a little freaked out. This girl had to get up, to get out of there, to get out of her house. That girl called the cops. That guy",False,1.0773811431947822,12.200294667966757
