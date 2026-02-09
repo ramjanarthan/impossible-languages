@@ -1,7 +1,7 @@
 {
-    "0": ".I know",
-    "1": " and can to't go,, to. himYou wanted",
-    "2": " to you't into want put.I it don",
-    "3": " get a you drink'll . sometimesure maybe",
-    "4": "'t. knowI don"
+    "0": " not. trueIt's",
+    "1": " is, I when think now'm and I, can that's I, you you were that the they have to that give the, you the in first the?Why America was",
+    "2": ".Thank you",
+    "3": ".Not always",
+    "4": ".- Yes"
 }

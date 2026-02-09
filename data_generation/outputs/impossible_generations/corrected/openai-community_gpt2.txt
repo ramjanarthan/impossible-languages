@@ -1,4 +1,7 @@
 {
-    "0": "Practical tips I've found are shown below without any explanation. While this guide is for use with 3DS in the US, the US versions of Microsoft Office and Microsoft Excel contain some additional information you need to make sure that you're comfortable using our",
-    "1": "\nA person has been killed outside police headquarters in New York, killing 16-year-old Nidal Malik inside the East Tower.\n\nIn an interview with CNN, New York Mayor Bill de Blasio claimed the death was the work of \"terror"
+    "0": "Cynthia \"Sgt. Hundle\" McLean: How to Stop a Hate Crime\n\nA Muslim is Not a Christian; What Really Causes a Hate Crime?\n\n\"Muslims Have a Moral Case for Fear\" at a Black",
+    "1": "We are also investigating what happened at one of our schools on Monday night, April 27, 1998, as students were playing basketball outdoors over the Christmas decorations.\n\nAccording to police reports, about 10:00 p.m. a vehicle stopped at",
+    "2": "Somewhere, after some thought, I'm about to make some news, though my own. My friend and classmate, Mr. Lee Meehan-Gates, who is now at the University of Southern California, is about to start teaching",
+    "3": "1.4.9 Updates to the Java Client Libraries, including all major libraries for JSR 3029 and Java SE 2.7.1",
+    "4": "4 minutes to read\n\nIn this article\n\nApplies To Windows® 10, Windows 8 and Windows Server 2008 R2 32-bit\n\n1. Install and start the Microsoft Visual C++ 2012 compiler to the target\n\nThe Microsoft"
 }

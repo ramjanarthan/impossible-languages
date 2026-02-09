@@ -1,7 +1,7 @@
 {
-    "0": "okay okay ?",
-    "1": "Uh-huh.",
-    "2": "}There was some one who knew you wouldn't talk to me that way.",
-    "3": "I do not feel sorry for her.",
-    "4": "Well, let's hear that."
+    "0": "Yes. - What? -",
+    "1": "Just leave it as if it  is there!",
+    "2": "They put it in, what, in a little one?",
+    "3": "He wants to speak with you.",
+    "4": "Why?"
 }

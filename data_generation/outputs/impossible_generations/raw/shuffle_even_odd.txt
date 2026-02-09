@@ -1,7 +1,7 @@
 {
-    "0": "No of not, course.",
-    "1": "I you very. think're special",
-    "2": "The was, was by \"ondments of the \"ondments ofesan to north theers War, became World Site UNESCO Heritage. site demolished and managed thearrisse\" the by Bam District on grounds a area as \"ondments of",
-    "3": "So is and is that we the in and is,, and and at we just there an.",
-    "4": "-. Yeah"
+    "0": "\",, don see way.No dear you't this around",
+    "1": "It a place's nice.",
+    "2": "You a.'re cop",
+    "3": "And and uh we't where was on ground and we all about years I like read.,, know that's,, know some those have done the, we in of in uh the-.,,, did know there,, and and",
+    "4": "It been for three with to. has notable publishing years links other"
 }

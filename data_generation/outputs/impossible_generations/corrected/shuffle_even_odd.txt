@@ -1,7 +1,7 @@
 {
-    "0": "No, of course not.",
-    "1": "I think you're very special.",
-    "2": "The UNESCO was Heritage,. was site by demolished \" andond managedments the ofarr theisse \"\"ond thements by of Besaman District to on north grounds the aers area War as, \" becameond Worldments Site of",
-    "3": "So, is, and and is and that at we we the just in there and an is.",
-    "4": "- Yeah."
+    "0": "\"No, dear, you don't see this way around.",
+    "1": "It's a nice place.",
+    "2": "You're a cop.",
+    "3": "And know and some uh those we have't done where the was, on we ground in and of we in all uh about the years- I. like, read,.,, did, know know there that,'s,, and, and",
+    "4": "It has been notable for publishing three years with links to other."
 }

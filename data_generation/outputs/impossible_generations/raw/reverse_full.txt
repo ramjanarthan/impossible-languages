@@ -1,7 +1,7 @@
 {
-    "0": " ?🅁 okayayok",
-    "1": ".uhh🅁-Uh",
-    "2": ". way that me to talk't wouldn🅁 you knew who one some wasThere}",
-    "3": ". her for🅁 sorry feel not doI",
-    "4": ". that hear's let,🅁Well"
+    "0": " -? What -.🅁Yes",
+    "1": "! there is  it🅁 if as it leaveJust",
+    "2": "🅁? one little a in, what, in it putThey",
+    "3": ". you with speak to🅁 wantsHe",
+    "4": "?🅁Why"
 }
