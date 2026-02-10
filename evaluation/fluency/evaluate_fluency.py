@@ -22,6 +22,7 @@ model.eval()
 RESULTS_CSV = "evaluation/fluency/fluency_scores.csv"
 MODEL_OUTPUT_DIR = "data_generation/outputs/impossible_generations/corrected/"
 PYTHIA_MODEL_UNIGRAM_LOGPROBS_FILEPATH = "evaluation/fluency/pile_unigram_logprobs.json"
+GPT2_FINEWEB_SAMPLE_UNIGRAM_PROBS_FILEPATH = "evaluation/fluency/gpt2_fineweb-sample-10BT_token_freqs.json"
 
 UNIGRAM_COEFFECIENT_BETA = 0.892
 LENGTH_COEFFECIENT_GAMMA = 8.211
@@ -43,12 +44,18 @@ def get_log_sentence_probability(line, model, tokenizer, device) -> float:
     log_sentence_probability = -loss_ce
     return log_sentence_probability.item()
 
-def load_pythia_model_unigram_scores(filepath) -> dict:
-    with open(filepath, 'r') as json_file:
+def load_pythia_model_unigram_scores() -> dict:
+    with open(PYTHIA_MODEL_UNIGRAM_LOGPROBS_FILEPATH, 'r') as json_file:
         scores = json.load(json_file)
         return scores
+    
+def load_gpt2_fineweb_unigram_score() -> dict:
+    with open(GPT2_FINEWEB_SAMPLE_UNIGRAM_PROBS_FILEPATH, 'r') as json_file:
+        scores = json.load(json_file)
+        log_scores = {k: np.log(v) for k,v in scores.items()}
+        return log_scores
 
-in_mem_unigram_scores = load_pythia_model_unigram_scores(PYTHIA_MODEL_UNIGRAM_LOGPROBS_FILEPATH)
+in_mem_unigram_scores = load_pythia_model_unigram_scores()
 
 def get_summed_log_unigram_probability(tokens):
     sum_log_unigram_probs = 0

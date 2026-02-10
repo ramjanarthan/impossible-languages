@@ -22,11 +22,16 @@ imp_model_id = "mission-impossible-lms/no-shuffle-gpt2"
 imp_model, imp_tokenizer = GPT2LMHeadModel.from_pretrained(imp_model_id).to(device), GPT2Tokenizer.from_pretrained(imp_model_id)
 imp_model.eval()
 
-token_list = [10919, 389, 345, 1972, 503, 286, 534, 474, 6475, 444, 5633]
-print(imp_tokenizer.decode(token_list))
+# GPT2 model
+gpt2_model_id = "openai-community/gpt2"
+gpt2_model, gpt2_tokenizer = AutoModelForCausalLM.from_pretrained(gpt2_model_id).to(device), AutoTokenizer.from_pretrained(gpt2_model_id)
+gpt2_model.eval()
 
-print(imp_tokenizer.decode([50256] + token_list + [50256]))
-sys.exit()
+# token_list = [10919, 389, 345, 1972, 503, 286, 534, 474, 6475, 444, 5633]
+# print(imp_tokenizer.decode(token_list))
+
+# print(imp_tokenizer.decode([50256] + token_list + [50256]))
+# sys.exit()
 
 def get_log_sentence_probability(line, model, tokenizer, device) -> float:
     encoded_line = tokenizer(
@@ -64,20 +69,24 @@ def get_summed_log_unigram_probability(tokens) -> float:
 
 in_mem_unigram_scores = load_pythia_model_unigram_scores(PYTHIA_MODEL_UNIGRAM_LOGPROBS_FILEPATH)
 
-# a = "What's that you say?"
-# b = "What's that yousay?"
+a = "What's that you say?"
+b = "What's that yousay?"
 
 # a = "Have you seen them?"
 # b = "Have you seen them? -"
 
-a = "Let go of it."
-b = "Let let go of it."
+# a = "Let go of it."
+# b = "Let let go of it."
 
 print(a)
-print(pythia_tokenizer.tokenize(a))
+print("Pythia tokenized: ", pythia_tokenizer.tokenize(a))
+print("GPT-2 tokenized: ", gpt2_tokenizer.tokenize(a))
 
 print(b)
-print(pythia_tokenizer.tokenize(b))
+print("Pythia tokenized: ", pythia_tokenizer.tokenize(b))
+print("GPT-2 tokenized: ", gpt2_tokenizer.tokenize(b))
+
+sys.exit()
 
 # print("----")
 # for str in ["say", "Ġsay", " say"]:
