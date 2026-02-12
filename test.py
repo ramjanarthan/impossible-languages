@@ -3,10 +3,31 @@ import torch
 import torch.nn.functional as F
 import sys
 import math
-from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME, VALID_UNDO_PERTURBATION_KEYS, UNDO_PERTURBATIONS, PERTURBATIONS
+from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME, PERTURBATIONS, UNDO_PERTURBATIONS, VALID_PERTURBATION_KEYS
 import json
 
 device = "mps"
+
+sentence = "Jessica stole this rabbit's hat."
+
+for key in VALID_PERTURBATION_KEYS:
+    model_id = PERTURBATION_TO_HF_MODEL_NAME[key]
+    tokenizer = GPT2Tokenizer.from_pretrained(model_id)
+
+    if key != "english":
+        output_sentence = PERTURBATIONS[key]['perturbation_function'](sentence)
+    else:
+        output_sentence = tokenizer.encode(sentence)
+
+    decoded = "".join(map(lambda x: tokenizer.decode(x), output_sentence))
+    tokenized = list(map(lambda x: tokenizer.decode(x), output_sentence))
+    print(f"Key -> {key} output -> {decoded} -> tokenized -> {tokenized}")
+
+special_char = '🅁'
+print("unicode of special R character: ", ord(special_char))   
+
+sys.exit()
+
 
 # Pythia model
 pythia_model_id = "EleutherAI/pythia-14M"
