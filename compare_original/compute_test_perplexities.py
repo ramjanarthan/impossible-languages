@@ -12,7 +12,6 @@ DEVICE = "mps"
 BATCH_SIZE = 8
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "output")
 
-
 def load_test_file(file_path):
     """Read a .test file containing JSON-encoded token ID lists."""
     token_id_lists = []
@@ -79,3 +78,12 @@ print("RESULTS SUMMARY")
 print("=" * 50)
 for key, ppl in results.items():
     print(f"  {key:30s} → {ppl:.4f}")
+
+# ---- Write results to file ----
+results_file = os.path.join(OUTPUT_DIR, "results.txt")
+with open(results_file, 'w') as f:
+    f.write("RESULTS SUMMARY\n")
+    f.write("=" * 50 + "\n")
+    for key, ppl in results.items():
+        f.write(f"  {key:30s} → {ppl:.4f}\n")
+print(f"\nResults written to {results_file}")

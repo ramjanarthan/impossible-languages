@@ -6,8 +6,8 @@ from numpy.random import default_rng
 from transformers import GPT2Tokenizer
 
 # Set parameters
-FILE_SAMPLE_SIZE = 30
-RANDOM_SEED = 439
+FILE_SAMPLE_SIZE = 100
+RANDOM_SEED = 21
 rng = default_rng(RANDOM_SEED)
 
 # Paths
