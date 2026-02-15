@@ -4,8 +4,8 @@ from tqdm import tqdm
 from numpy.random import default_rng
 
 # Set parameters
-FILE_SAMPLE_SIZE = 200
-RANDOM_SEED = 42
+FILE_SAMPLE_SIZE = 30
+RANDOM_SEED = 439
 rng = default_rng(RANDOM_SEED)
 
 # Paths
