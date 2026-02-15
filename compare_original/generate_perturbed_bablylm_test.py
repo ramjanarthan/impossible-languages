@@ -1,7 +1,9 @@
 import os
-from data_generation.utils.impossible_utils import VALID_PERTURBATION_KEYS, PERTURBATIONS
+import json
+from data_generation.utils.impossible_utils import VALID_PERTURBATION_KEYS, PERTURBATIONS, PERTURBATION_TO_HF_MODEL_NAME
 from tqdm import tqdm
 from numpy.random import default_rng
+from transformers import GPT2Tokenizer
 
 # Set parameters
 FILE_SAMPLE_SIZE = 30
@@ -42,35 +44,33 @@ print(f"Combined dataset size: {len(combined_dataset)}")
 # ---- Step 2: Apply perturbations and write output files ----
 
 def apply_perturbation(dataset, perturbation):
-    """Apply a perturbation to every line and return decoded text."""
-    perturbed_texts = []
-    tokenizer = perturbation["gpt2_tokenizer"]
+    """Apply a perturbation to every line and return token ID lists."""
+    perturbed_token_lists = []
 
     for text in tqdm(dataset, desc="Perturbing"):
         token_ids = perturbation["perturbation_function"](text)
-        perturbed_text = "".join(
-            tokenizer.decode(tid) for tid in token_ids
-        )
-        perturbed_texts.append(perturbed_text)
+        perturbed_token_lists.append(token_ids)
 
-    return perturbed_texts
+    return perturbed_token_lists
 
 
 for key in VALID_PERTURBATION_KEYS:
     output_path = os.path.join(OUTPUT_DIR, f"{key}.test")
 
     if key == "english":
-        # No perturbation – write the original combined dataset
-        dataset = combined_dataset
-        print(f"[{key}] Writing original (unperturbed) dataset...")
+        # No perturbation – tokenize the original text and store token IDs
+        model_id = PERTURBATION_TO_HF_MODEL_NAME[key]
+        tokenizer = GPT2Tokenizer.from_pretrained(model_id)
+        dataset = [tokenizer.encode(text) for text in combined_dataset]
+        print(f"[{key}] Tokenizing original (unperturbed) dataset...")
     else:
         perturbation = PERTURBATIONS[key]
         print(f"[{key}] Applying perturbation...")
         dataset = apply_perturbation(combined_dataset, perturbation)
 
     with open(output_path, 'w') as f:
-        for line in dataset:
-            f.write(line + "\n")
+        for token_list in dataset:
+            f.write(json.dumps(token_list) + "\n")
 
     print(f"[{key}] Wrote {len(dataset)} lines → {output_path}")
 

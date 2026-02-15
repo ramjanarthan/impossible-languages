@@ -1,8 +1,9 @@
 import os
 import gc
+import json
 import torch
 from data_generation.utils.impossible_utils import VALID_PERTURBATION_KEYS, PERTURBATION_TO_HF_MODEL_NAME
-from evaluation.perplexity import get_perplexities, calculate_geometric_mean_perplexity
+from evaluation.perplexity import get_perplexities_from_token_ids, calculate_geometric_mean_perplexity
 from tqdm import tqdm
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
@@ -13,9 +14,14 @@ OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "output")
 
 
 def load_test_file(file_path):
-    """Read a .test file and return non-empty stripped lines."""
+    """Read a .test file containing JSON-encoded token ID lists."""
+    token_id_lists = []
     with open(file_path, 'r') as f:
-        return [line.strip() for line in f if line.strip()]
+        for line in f:
+            line = line.strip()
+            if line:
+                token_id_lists.append(json.loads(line))
+    return token_id_lists
 
 
 def calculate_dataset_perplexity(model, tokenizer, dataset, device=DEVICE, batch_size=BATCH_SIZE):
@@ -23,8 +29,8 @@ def calculate_dataset_perplexity(model, tokenizer, dataset, device=DEVICE, batch
     all_perplexities = []
 
     for i in tqdm(range(0, len(dataset), batch_size), desc="Computing perplexity"):
-        sentences = dataset[i:i + batch_size]
-        batch_perplexities = get_perplexities(model, tokenizer, sentences, device)
+        batch_token_lists = dataset[i:i + batch_size]
+        batch_perplexities = get_perplexities_from_token_ids(model, tokenizer, batch_token_lists, device)
         all_perplexities.extend(batch_perplexities)
 
         # Free MPS cache periodically to avoid system freeze
