@@ -1,6 +1,7 @@
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import torch
 from tqdm import tqdm
+import pickle
 from data_generation.utils.impossible_utils import PERTURBATION_TO_HF_MODEL_NAME, VALID_UNDO_PERTURBATION_KEYS, UNDO_PERTURBATIONS, PERTURBATIONS
 
 NUM_LINES = 1000
@@ -58,11 +59,17 @@ for perturbation in ['english', 'shuffle_nondeterministic']:
 
     for i in tqdm(range(NUM_LINES), desc=f"Generating for {perturbation}"):
         output = model.generate(input_ids, max_new_tokens=50, pad_token_id=tokenizer.eos_token_id, do_sample=True)
-        generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
-        raw_outputs.append(generated_text)
+        # generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
+        raw_outputs.append(output[0])
 
     # Save generated text to file
-    with open(CORRECTED_OUTPUT_DIR + f"{perturbation}.txt", "w+") as f:
-        f.write("\n".join(raw_outputs))
+    # pickle the raw tokens
+    with open(RAW_OUTPUT_DIR + f"{perturbation}.pkl", "wb") as f:
+        pickle.dump(raw_outputs, f)
+
+    # with open(CORRECTED_OUTPUT_DIR + f"{perturbation}.p", "w+") as f:
+    #     # f.write("\n".join(raw_outputs))
+    #     # save 
+
     
     print(f"Generated {NUM_LINES} sentences for {perturbation}.")
