@@ -173,7 +173,7 @@ python -m data_generation.generation_projects.impossible_blimp.sample_dataset <p
 
 For example:
 ```bash
-python -m data_generation.generation_projects.impossible_blimp.sample_dataset data_generation/outputs/impossible_blimp/v2/anaphor_gender_agreement_20250618_113511%filtered.jsonl --samples 1 --seed 42
+python -m data_generation.generation_projects.impossible_blimp.sample_dataset data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_1_20260101_170829%filtered.jsonl --samples 6 --seed 42
 ```
 
 Sample output:

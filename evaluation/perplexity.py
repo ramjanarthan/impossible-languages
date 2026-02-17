@@ -98,6 +98,49 @@ def get_perplexities(model, tokenizer, sentences: List[str], device="mps", max_l
         # Manually set perplexity to infinity where there were no valid tokens
         perplexities[valid_token_counts == 0] = float('inf')
 
+def get_perplexities_from_token_ids(model, tokenizer, token_id_lists: List[List[int]], device="mps"):
+    """Calculate per-sentence perplexities from pre-tokenized inputs (lists of token IDs)."""
+
+    if not token_id_lists:
+        return []
+
+    pad_token_id = tokenizer.eos_token_id
+
+    with torch.no_grad():
+        input_ids = create_input_ids(token_id_lists, pad_token_id).to(device)
+        attention_mask = create_attention_mask(token_id_lists).to(device)
+        labels = input_ids.clone()
+
+        outputs = model(input_ids=input_ids, labels=labels, attention_mask=attention_mask)
+
+        shift_logits = outputs.logits[..., :-1, :].contiguous()
+        shift_labels = labels[..., 1:].contiguous()
+        shift_attention_mask = attention_mask[..., 1:].contiguous()
+
+        loss_fct = torch.nn.CrossEntropyLoss(reduction='none')
+        loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
+        loss = loss.view(shift_labels.size())
+        loss = loss * shift_attention_mask
+
+        # Sum the loss for each sentence in the batch
+        sentence_losses = loss.sum(dim=1)
+        
+        # Count the number of non-padded tokens in each sentence
+        valid_token_counts = shift_attention_mask.sum(dim=1)
+
+        # Create a mask for valid tokens to avoid division by zero
+        valid_token_mask = (valid_token_counts > 0)
+        
+        # Calculate the average loss for each sentence where valid tokens exist
+        average_losses = torch.zeros_like(sentence_losses)
+        average_losses[valid_token_mask] = sentence_losses[valid_token_mask] / valid_token_counts[valid_token_mask]
+        
+        # Compute perplexity
+        perplexities = torch.exp(average_losses)
+        
+        # Manually set perplexity to infinity where there were no valid tokens
+        perplexities[~valid_token_mask] = float('inf')
+
     return perplexities.tolist()
 
 def get_sentence_log_probabilities(model, tokenizer, sentences: List[str], device="mps", max_length=512):
