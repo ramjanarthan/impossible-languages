@@ -115,7 +115,9 @@ NOTE: All evaluation results are located in `evaluation/fluency/fluency_scores_g
 
 ## Visualisation of results
 
-To make viewing experiment results easier, a GUI is provided in the `gui` directory. This allows comparing results between models across specific/all BLiMP grammatical phenomena, or comparing results across all models on different BLiMP grammatical phenomena.
+To make viewing experiment results easier, a GUI is provided in the `gui` directory. This allows comparing results between models across specific/all BLiMP grammatical phenomena, or comparing results across all models on different BLiMP grammatical phenomena like so:
+
+![Accuracy Analysis grouped by Grammatical Phenomenon](gui.png)
 
 To run the GUI, run the following command in the 'gui' project directory:
 
