@@ -1,6 +1,21 @@
-# impossible-languages
+# When transformers learn “impossible” languages, what do they learn?
 
-## Setup:
+This repository contains all code used as part of the paper ("When transformers learn “impossible” languages, what do they learn?") [TODO: Insert link]
+
+If you use our code, please cite our paper:
+[TODO: Insert citation]
+
+This repository contains all code and data necessary to fully replicate the results of Experiments 1 and 2 in our paper. This README introduces them as follows:
+1. Setup and useful information
+2. Generating impossible BLiMP datasets
+3. Evaluating impossible models on these datasets
+4. Generating outputs from impossible models and 'inverting' them
+5. Evaluating impossible model generations
+6. Visualisation of results
+
+2 and 3 correspond to Experiment 1, while 4 and 5 cover Experiment 2.
+
+## Setup and useful information:
 1. Clone the repository
 2. Setup conda environment:
 ```bash
@@ -15,10 +30,7 @@ pip install torch spacy cairosvg
 python -m spacy download en_core_web_sm
 ```
 
-## Impossible Language options
-
-For this project, I focus on the following impossible language options:
-
+For this project, we focus on the following impossible language options:
 - english ("shuffle-control" in the original Kallini et al. paper)
 - shuffle_nondeterministic
 - shuffle_deterministic21
@@ -30,42 +42,11 @@ For this project, I focus on the following impossible language options:
 - reverse_partial
 - reverse_full
 
-The mapping from impossible language option to perturbation function is in the `data_generation/utils/impossible_utils.py` file. These are the options permitted where `impossible_language_option` is refered to subsequently.
+Consequently, these are the valid options permitted whenever the argument `impossible_language_option` is mentioned in this README. The mapping from an impossible language option to its perturbation function can be found in `data_generation/utils/impossible_utils.py`.
 
-## Generating data:
+## Generating impossible BLiMP dataset
 
-The data generation scripts are in the `data_generation/generation_projects/impossible_blimp` directory. The output will be in the `data_generation/outputs/impossible_blimp` directory. 
-
-The generation is split into two phases: generating a base dataset, and generating the impossible version of the dataset. For the first part, I adopt the BLiMP generation method, and for the second part, I apply a perturbation function to the base dataset.
-
-### Generating base dataset
-
-To generate the base dataset, run the following command in the root project directory:
-
-```bash
-python -m data_generation.generation_projects.impossible_blimp.v2.<generator name>
-```
-
-For example:
-```bash
-python -m data_generation.generation_projects.impossible_blimp.v2.anaphor_gender_agreement_distance
-```
-
-### Ensuring token length parity
-To ensure that the generated minimal pairs will be tokenized to equal lengths by the impossible language tokenizers, run the following command to filter out pairs that do not yield equal token lengths. This will write the filtered dataset to a new file with the suffix `filtered`, which will be an invariant assumed by other scripts to ensure token length parity.
-
-```bash
-python -m data_generation.generation_projects.impossible_blimp.filter_dataset <path/to/dataset.jsonl>
-```
-
-For example:
-```bash
-python -m data_generation.generation_projects.impossible_blimp.filter_dataset data_generation/outputs/impossible_blimp/v2/distractor_agreement_rc_20250616_174118.jsonl
-```
-
-### Generating impossible dataset
-
-The impossible datasets are modified versions of the base dataset, where the perturbation function is applied to the base dataset.
+The impossible BLiMP datasets are modified versions of the base BLiMP dataset created by applying a perturbation function to each sentence of the minimal pair in base dataset. The script `data_generation/generation_projects/impossible_blimp/modify_dataset.py` is a handy utilty to do this, taking as arguments the base dataset path, an ```impossible_language_option```, and an output path to store the generated dataset. All versions of the original BLiMP datasets are copied and available in `data_generation/outputs/blimp/`. 
 
 To generate the impossible dataset, run the following command in the root project directory:
 
@@ -76,14 +57,31 @@ python -m data_generation.generation_projects.impossible_blimp.modify_dataset <p
 For example:
 
 ```bash
-python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v2/distractor_agreement_relative_clause_20250712_172752%filtered.jsonl shuffle_nondeterministic
+python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v3/distractor_agreement_relative_clause_20250712_172752%filtered.jsonl shuffle_nondeterministic
+```
+### Ensuring token length parity
+We discard minimal pairs that will be tokenized to equal lengths by the impossible language tokenizers from the impossible BLiMP dataset prior to evaluation, since such pairs could become less minimally distinct in the impossible languages due to rules which depend on linear position/number of tokens. 
+
+The script `data_generation/generation_projects/impossible_blimp/filter_dataset.py` is a handy utilty to do this, taking as arguments the filepath of a minimal pair dataset and an output path. It filters out pairs that do not yield equal token lengths, and writes the filtered dataset to a new file with the suffix `filtered`. This will be an invariant assumed by other scripts during evaluation to prevent accidentally including uneven minimal pairs.
+
+To filter an impossible dataset, run the following command in the root project directory:
+
+```bash
+python -m data_generation.generation_projects.impossible_blimp.filter_dataset <path/to/dataset.jsonl>
+```
+
+For example:
+```bash
+python -m data_generation.generation_projects.impossible_blimp.filter_dataset data_generation/outputs/impossible_blimp/v3/distractor_agreement_rc_20250616_174118.jsonl
 ```
 
 #### NOTE: All impossible datasets based on BLiMP datasets have already been generated and filtered. They are located in `data_generation/outputs/impossible_blimp/v3`.
 
-## Running experiments:
 
-An experiment is defined as measuring the accuracy of a model when applied to a dataset.
+## Evaluating impossible models on these datasets
+
+An experiment is defined as measuring the accuracy of a model when applied to a BLiMP style dataset. We computed accuracy as the percentage of minimal pairs
+where the log likelihood of the grammatical sentence was larger than the ungrammatical sentence. The script ```experiments/experiment.py``` is a handy utility to do this.
 
 To run an experiment, run the following command in the root project directory:
 
@@ -93,185 +91,31 @@ python -m experiments.experiment --results_csv <path/to/results.csv> --model_nam
 
 For example:
 ```bash
-python -m experiments.experiment --results_csv experiments/output/v2/results.csv --model_name shuffle_nondeterministic --dataset data_generation/outputs/impossible_blimp/v2/anaphor_number_agreement_20250617_153306%shuffle_deterministic21.jsonl
+python -m experiments.experiment --results_csv experiments/output/results.csv --model_name shuffle_nondeterministic --dataset data_generation/outputs/impossible_blimp/v3/anaphor_number_agreement_20250617_153306%shuffle_deterministic21.jsonl
 ```
 
-#### NOTE: All experiments have been run on impossible datasets, and results are located in `experiments/output/v3/results.csv`.
+#### NOTE: All experiments have been run on impossible datasets, and results are located in `experiments/output/results.csv`.
 
-### Running Trajectory experiments:
+## Generating outputs from impossible models and 'inverting' them
+To evaluate impossible models' generative capacity, leverage the fact that most of impossible languages can be deterministically reverted to English. We first generated 1000 sentences of up to 50 tokens from each model using a multinomial sampling strategy over their vocabularies, stored in `data_generation/outputs/impossible_generations/raw`. We then undo the perturbations and store the decoded generations to be evaluated in `data_generation/outputs/impossible_generations/corrected`.
 
-An experiment to measure the trajectory of a model's performance at different model checkpoints.
+The script `data_generation/generation_projects/impossible_generations/generate.py` is a handy utility to do this. 
 
-The scripts to run these are located in `experiments/v2/trajectory/`. To run these, run the following command in the root project directory:
+The defintions of the functions used to undo the perturbations can be found `data_generation/utils/impossible_utils.py` in ```UNDO_PERTURBATIONS```.
 
-```bash
-bash experiments/v2/trajectory/anaphor_gender_agreement.sh
-```
+#### NOTE: All generation results are located in `TBD`. 
+TODO: Insert all generations used
 
-The results will be logged to the csv path specified in the script. They were designed this way to be executed on a compute cluster.
+##  Evaluating impossible model generations
 
-## Analysis:
+To evaluate a generation's acceptability, we computed the perplexity per token using a pretrained LLM (GPT2 Large).
+The script `evaluation/fluency/evaluate_fluency.py` is a handy utility to do this. 
 
-### Analysing dataset:
+#### NOTE: All evaluation results are located in `evaluation/fluency/fluency_scores_gpt2.csv`. 
 
-To analyse the dataset stats related to sentence length, run the following command in the root project directory:
+## Visualisation of results
 
-```bash
-python -m data_generation.generation_projects.impossible_blimp.analyse_dataset <path/to/dataset.jsonl>
-```
-
-For example:
-```bash
-python -m data_generation.generation_projects.impossible_blimp.analyse_dataset data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%filtered.jsonl
-```
-
-To analyse all datasets in one go, you can run the `data_generation/generation_projects/impossible_blimp/batch_analyse_dataset.sh` script.
-
-Sample output:
-
-```bash
-Statistics for 'sentence_good' lengths in data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%filtered.jsonl:
-  Count:  1000
-  Mean:   8.41
-  Median: 8.00
-  Min:    7
-  Max:    14
-```
-
-To analyse the dataset to check if minimal pairs yield equal token lengths for the impossible language tokenizers, run the following command in the root project directory:
-
-```bash
-python -m data_generation.generation_projects.impossible_blimp.analyse_token_lengths <path/to/dataset.jsonl>
-```
-
-For example:
-```bash
-python -m data_generation.generation_projects.impossible_blimp.analyse_token_lengths data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451.jsonl
-```
-
-This script will help check if minimal pairs yield equal token lengths for the impossible language tokenizers. We expect the portion of unequal pairs to be 0.
-To analyse all datasets (listed for convenience in `data_generation/generation_projects/impossible_blimp/master_dataset_list.txt`), run the bash script `data_generation/generation_projects/impossible_blimp/batch_analyse_token_lengths.sh`.
-
-Part of sample output:
-
-```bash
-Analysing token lengths data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%filtered.jsonl
-Processing : 1000 sentences [00:00, 9574.05 sentences/s]
-Portion of unequal pairs: 0/1000 
- Average difference: 0.0
-Successfully analysed token lengths data_generation/outputs/impossible_blimp/v2/adjunct_island_20250623_165451%filtered.jsonl
-----------------------------------------
-```
-
-### Sampling dataset:
-
-To view sample sentences from the dataset, run the following command in the root project directory:
-
-```bash
-python -m data_generation.generation_projects.impossible_blimp.sample_dataset <path/to/dataset.jsonl> --samples <N> --seed <SEED>
-```
-
-For example:
-```bash
-python -m data_generation.generation_projects.impossible_blimp.sample_dataset data_generation/outputs/impossible_blimp/v3/determiner_noun_agreement_1_20260101_170829%filtered.jsonl --samples 6 --seed 4
-```
-
-Sample output:
-
-```bash
-================================================================================
-SAMPLE 1 (Index: 654)
-================================================================================
-
-ENGLISH:
-  Good: All children go to one red school and cashiers go to at least as many.
-  Bad:  All children go to one school and cashiers go to at least as many red.
-
-OTHER VERSIONS:
-
-SHUFFLE_NONDETERMINISTIC:
-  Good: iers one as and school go to. least go many at red children cash toAll
-  Bad:  iers andAll one cash. go many go least as to children to red at school
-
-SHUFFLE_DETERMINISTIC21:
-  Good:  oneiers and to as at schoolAll red children cash. many least go to go
-  Bad:   one go cash at many least andAll school childreniers. red as to to go
-
-SHUFFLE_LOCAL3:
-  Good:  goAll children red to one cash school and toiers go as at least many.
-  Bad:   goAll children school to oneiers and cash at go to many least as red.
-
-SHUFFLE_LOCAL5:
-  Good:  go one toAll children andiers cash red school at as least go to many.
-  Bad:   go one toAll children cash goiers school and least many as to at red.
-
-SHUFFLE_LOCAL10:
-  Good:  one school go and to rediersAll cash children at as least. many go to
-  Bad:   one and go cash to school goAlliers children least many as. red to at
-
-SHUFFLE_EVEN_ODD:
-  Good: All go one school cash go at as. children to red andiers to least many
-  Bad:  All go one andiers to least many. children to school cash go at as red
-
-REVERSE_PARTIAL:
-  Good: All children go to one red school and cashiers go to at least as many.🅁
-  Bad:  All children go to one school and cashiers go to at least as🅁. red many
-
-REVERSE_FULL:
-  Good: 🅁. many as least at to goiers cash and school red one to go childrenAll
-  Bad:  . red many🅁 as least at to goiers cash and school one to go childrenAll
-
---------------------------------------------------------------------------------
-```
-
-### Analysis:
-
-### Performance vs Perplexity:
-
-Run the following command to generate accuracy vs perplexity scatterplot:
-
-```
- python -m analysis.perplexity_scatterplot
-```
-
-The output can be found in ```analysis/output/accuracy_vs_perplexity_analysis.png```
-
-### Dependency parse statistics:
-
-To analyse the dependency parse statistics of a corpus, either replace the contents of ```analysis/dependency/sample_sentences.txt``` with the sentences you want to analyse, or run the foolowing command to sample sentences from the impossible BLiMP datasets listed in `data_generation/generation_projects/impossible_blimp/master_dataset_list.txt`:
-
-```
-python -m analysis.dependency.sample_sentences 
-```
-
-To generate dependency parse statistics, run the following command:
-
-```
- python -m analysis.dependency.dependency_parse_stats
-```
-
-This script will first sample sentences from the corpus, then generate dependency parse statistics for each sentence, and finally save the results to a csv file in ```analysis/output/dep_stats.csv```. It will then aggregate statistics based on this, print them out to the console, and generate a summary image of the statistics in ```analysis/output/dependency_metrics_summary.png```
-
-#### Visualization
-
-To generate visualizations of dependency parse statistics, run the following command:
-
-```
-python -m analysis.dependency.dependency_parse_image
-```
-
-The sentence to be parsed can be configured at the top of ```analysis/dependency/dependency_parse_image.py```. The script can be configured to save the images as SVG or PNG by setting the `SAVE_AS_PNG` variable to `True` or `False`.
-
-When executed, the following images will be generated:
-1. ```analysis/output/token_visualization.png``` -> Token visualization of the original sentence
-2. ```analysis/output/gpt_2_token_visualization.png``` -> Token visualization of the GPT-2 tokenized sentence
-3. ```analysis/output/gpt_2_token_shuffled_visualization.png``` -> Token visualization of the shuffled GPT-2 tokenized sentence
-4. ```analysis/output/dependency_parse_original.png``` -> Dependency parse visualization of the original sentence
-5. ```analysis/output/dependency_parse_shuffled.png``` -> Dependency parse visualization of the shuffled GPT-2 tokenized sentence
-
-## GUI
-
-To make viewing experiment results easier, a GUI is provided in the `gui` directory.
+To make viewing experiment results easier, a GUI is provided in the `gui` directory. This allows comparing results between models across specific/all BLiMP grammatical phenomena, or comparing results across all models on different BLiMP grammatical phenomena.
 
 To run the GUI, run the following command in the 'gui' project directory:
 
@@ -280,12 +124,4 @@ python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 The GUI will be available at: http://localhost:8000
-
-The GUI loads data from the V3 results (`experiments/output/v3/results.csv`).
-
-### Different Versions: What do V1, V2 and V3 mean?
-As is often the case when working on a research project, ideas evolve over time and methodologies and datasets change. As such, the codebase has evolved too, and the V1, V2 and V3 versions of some subfolders help preserve this evolution. 
- 
-V1 - The initial version of the codebase, using an older method of generating impossible datasets
-V2 - Uses a better method for generating impossible datasets, and contains results run on a subset of BLiMP datasets (15)
-V3 - Uses the same method as V2 for generating impossible datasets, but contains results run on the full BLiMP dataset (67+2)
+The GUI loads data from the results file:  (`experiments/output/results.csv`).

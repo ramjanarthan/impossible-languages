@@ -46,22 +46,12 @@ def get_log_sentence_probability(line, model, tokenizer, device) -> float:
     log_sentence_probability = -loss_ce
     return log_sentence_probability.item()
 
-def load_pythia_model_unigram_scores(filepath) -> dict:
-    # with open(filepath, 'r') as json_file:
-    #     scores = json.load(json_file)
-    #     return scores
-
+def load_model_unigram_scores(filepath) -> dict:
     with open(filepath, 'rb') as f:
         scores = pickle.load(f)
         return scores
     
-def load_gpt2_fineweb_unigram_score() -> dict:
-    with open(GPT2_FINEWEB_SAMPLE_UNIGRAM_PROBS_FILEPATH, 'r') as json_file:
-        scores = json.load(json_file)
-        log_scores = {k: np.log(v) for k,v in scores.items()}
-        return log_scores
-
-in_mem_unigram_scores = load_pythia_model_unigram_scores(GPT2_MODEL_UNIGRAM_LOGPROBS_FILEPATH)
+in_mem_unigram_scores = load_model_unigram_scores(GPT2_MODEL_UNIGRAM_LOGPROBS_FILEPATH)
 def get_summed_log_unigram_probability(tokens) -> float:
     sum_log_unigram_probs = 0
     total = 0
@@ -97,23 +87,23 @@ for model_name in tqdm(VALID_PERTURBATION_KEYS + ["openai-community_gpt2"]):
         
         x = get_log_sentence_probability(line_cleaned, model, tokenizer, device)
 
-            tokens = tokenizer.tokenize(line_cleaned)
-            # tokens = [token.replace("Ġ", " ") for token in tokens] # remove the Ġ character that indicates a space in GPT-2 tokenization, since the unigram scores are for the base token without the Ġ
-            # tokens[0] = tokens[0].lstrip()
-            y, denom = get_summed_log_unigram_probability(tokens)
-            # print(f"Line: {line}, Log Sentence Prob: {x}, Sum Log Unigram Prob: {y}, Num Tokens: {len(tokens)}")
+        tokens = tokenizer.tokenize(line_cleaned)
+        # tokens = [token.replace("Ġ", " ") for token in tokens] # remove the Ġ character that indicates a space in GPT-2 tokenization, since the unigram scores are for the base token without the Ġ
+        # tokens[0] = tokens[0].lstrip()
+        y, denom = get_summed_log_unigram_probability(tokens)
+        # print(f"Line: {line}, Log Sentence Prob: {x}, Sum Log Unigram Prob: {y}, Num Tokens: {len(tokens)}")
 
         y, denom = get_summed_log_unigram_probability(tokens)
         # print(f"Line: {line}, Log Sentence Prob: {x}, Sum Log Unigram Prob: {y}, Num Tokens: {len(tokens)}")
 
-            morcela = (x - UNIGRAM_COEFFECIENT_BETA * y + LENGTH_COEFFECIENT_GAMMA) / denom # Using MORCELA formula, which is SLOR with coeffecients 
-            slor = (x - y) / denom
-            # print(f"Line: {line}, Log Senitence Prob: {x:.2f}, Sum Log Unigram Prob: {y:.2f}, Num Tokens: {denom}, Score: {score:.2f}")
+        morcela = (x - UNIGRAM_COEFFECIENT_BETA * y + LENGTH_COEFFECIENT_GAMMA) / denom # Using MORCELA formula, which is SLOR with coeffecients 
+        slor = (x - y) / denom
+        # print(f"Line: {line}, Log Senitence Prob: {x:.2f}, Sum Log Unigram Prob: {y:.2f}, Num Tokens: {denom}, Score: {score:.2f}")
 
-            if not np.isnan(morcela):
-                data.append({'perturbation': perturbation, 'generation': line, 'morcela': morcela, 'generation_cleaned': line_cleaned, 'hadR': hadR, 'perplexity': np.exp(-x/len(tokens)), 'slor': slor, 'ntokens': len(tokens)})
-            else:
-                print(f"Warning: MORCELA score is NaN for line: {line}. Skipping this line.")
+        if not np.isnan(morcela):
+            data.append({'perturbation': model_name, 'generation': line, 'morcela': morcela, 'generation_cleaned': line_cleaned, 'hadR': hadR, 'perplexity': np.exp(-x/len(tokens)), 'slor': slor, 'ntokens': len(tokens)})
+        else:
+            print(f"Warning: MORCELA score is NaN for line: {line}. Skipping this line.")
 
 df = pd.DataFrame(data)
 df.to_csv(RESULTS_CSV, index=False)

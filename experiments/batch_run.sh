@@ -15,10 +15,10 @@ MODEL_FAMILIES=(
 )
 
 # define output csv
-results_csv="experiments/output/v3/results.csv"
+results_csv="experiments/output/results.csv"
 
 # Create a log file
-LOG_FILE="experiments/output/v3/batch_run.log"
+LOG_FILE="experiments/output/batch_run.log"
 
 echo "Starting experiments at $(date)" > $LOG_FILE
 
