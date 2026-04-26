@@ -75,7 +75,7 @@ For example:
 python -m data_generation.generation_projects.impossible_blimp.filter_dataset data_generation/outputs/impossible_blimp/v3/distractor_agreement_rc_20250616_174118.jsonl
 ```
 
-#### NOTE: All impossible datasets based on BLiMP datasets have already been generated and filtered. They are located in `data_generation/outputs/impossible_blimp/v3`.
+NOTE: All impossible datasets based on BLiMP datasets have already been generated and filtered. They are located in `data_generation/outputs/impossible_blimp/v3`.
 
 
 ## Evaluating impossible models on these datasets
@@ -94,7 +94,7 @@ For example:
 python -m experiments.experiment --results_csv experiments/output/results.csv --model_name shuffle_nondeterministic --dataset data_generation/outputs/impossible_blimp/v3/anaphor_number_agreement_20250617_153306%shuffle_deterministic21.jsonl
 ```
 
-#### NOTE: All experiments have been run on impossible datasets, and results are located in `experiments/output/results.csv`.
+NOTE: All experiments have been run on impossible datasets, and results are located in `experiments/output/results.csv`.
 
 ## Generating outputs from impossible models and 'inverting' them
 To evaluate impossible models' generative capacity, leverage the fact that most of impossible languages can be deterministically reverted to English. We first generated 1000 sentences of up to 50 tokens from each model using a multinomial sampling strategy over their vocabularies, stored in `data_generation/outputs/impossible_generations/raw`. We then undo the perturbations and store the decoded generations to be evaluated in `data_generation/outputs/impossible_generations/corrected`.
@@ -103,7 +103,7 @@ The script `data_generation/generation_projects/impossible_generations/generate.
 
 The defintions of the functions used to undo the perturbations can be found `data_generation/utils/impossible_utils.py` in ```UNDO_PERTURBATIONS```.
 
-#### NOTE: All generation results are located in `TBD`. 
+NOTE: All generation results are located in `TBD`. 
 TODO: Insert all generations used
 
 ##  Evaluating impossible model generations
@@ -111,7 +111,7 @@ TODO: Insert all generations used
 To evaluate a generation's acceptability, we computed the perplexity per token using a pretrained LLM (GPT2 Large).
 The script `evaluation/fluency/evaluate_fluency.py` is a handy utility to do this. 
 
-#### NOTE: All evaluation results are located in `evaluation/fluency/fluency_scores_gpt2.csv`. 
+NOTE: All evaluation results are located in `evaluation/fluency/fluency_scores_gpt2.csv`. 
 
 ## Visualisation of results
 
