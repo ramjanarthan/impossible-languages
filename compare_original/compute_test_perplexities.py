@@ -9,7 +9,7 @@ from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
 # ---- Config ----
 DEVICE = "mps"
-BATCH_SIZE = 8
+BATCH_SIZE = 32
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "output")
 
 def load_test_file(file_path):

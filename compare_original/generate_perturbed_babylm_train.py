@@ -6,13 +6,13 @@ from numpy.random import default_rng
 from transformers import GPT2Tokenizer
 
 # Set parameters
-FILE_SAMPLE_SIZE = 1333
+FILE_SAMPLE_SIZE = 100
 RANDOM_SEED = 21
 rng = default_rng(RANDOM_SEED)
 
 # Paths
-BABYLM_TEST_DIR = os.path.join(os.path.dirname(__file__), "babylm_test")
-OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "output")
+BABYLM_TEST_DIR = os.path.join(os.path.dirname(__file__), "babylm_100M")
+OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "output_train100")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # ---- Step 1: Sample and combine dataset ----
@@ -22,15 +22,14 @@ def load_dataset(file_path, sample_size, rng):
     with open(file_path, 'r') as f:
         file_lines = [line.strip() for line in f if line.strip()]
 
-    sample_indices = rng.choice(len(file_lines), sample_size, replace=True)
-    return [file_lines[i] for i in sample_indices]
+    return file_lines
 
 
 # Discover all .test files in babylm_test/
 test_files = sorted([
     os.path.join(BABYLM_TEST_DIR, f)
     for f in os.listdir(BABYLM_TEST_DIR)
-    if f.endswith(".test")
+    if f.endswith(".train")
 ])
 
 combined_dataset = []
@@ -55,13 +54,13 @@ def apply_perturbation(dataset, perturbation):
 
 
 for key in VALID_PERTURBATION_KEYS:
-    output_path = os.path.join(OUTPUT_DIR, f"{key}.test")
+    output_path = os.path.join(OUTPUT_DIR, f"{key}.train")
 
     if key == "english":
         # No perturbation – tokenize the original text and store token IDs
         model_id = PERTURBATION_TO_HF_MODEL_NAME[key]
         tokenizer = GPT2Tokenizer.from_pretrained(model_id)
-        dataset = [tokenizer.encode(text) for text in combined_dataset]
+        dataset = [tokenizer.encode(text) for text in tqdm(combined_dataset)]
         print(f"[{key}] Tokenizing original (unperturbed) dataset...")
     else:
         perturbation = PERTURBATIONS[key]
@@ -70,7 +69,7 @@ for key in VALID_PERTURBATION_KEYS:
 
     with open(output_path, 'w') as f:
         for token_list in dataset:
-            f.write(json.dumps(token_list) + "\n")
+            f.write(' '.join(map(str, token_list)) + "\n")
 
     print(f"[{key}] Wrote {len(dataset)} lines → {output_path}")
 
