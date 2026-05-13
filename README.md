@@ -44,25 +44,19 @@ For this project, we focus on the following impossible language options:
 
 These are the valid options permitted whenever the argument `impossible_language_option` is mentioned in the rest of this README. The mapping from an impossible language option to its perturbation function can be found in `data_generation/utils/impossible_utils.py`.
 
-## 2. Generating impossible BLiMP dataset
+### 1.1 Dataset naming convention and enforcement
+Throughout this project, the dataset filenames have a prefix of ```<task_name>_<timestamp>``` for readability and consistency. 
 
-The impossible BLiMP datasets are modified versions of the base BLiMP dataset created by applying a perturbation function to each sentence of the minimal pair in base dataset. The script `data_generation/generation_projects/impossible_blimp/modify_dataset.py` is a handy utilty to do this, taking as arguments the base dataset path, an ```impossible_language_option```, and an output path to store the generated dataset. All versions of the original BLiMP datasets are copied from the BLiMP code (found at [this link](https://github.com/alexwarstadt/blimp)) and available in `data_generation/outputs/blimp/`. 
+When evaluating a dataset, the filenames should be of the format ```<task_name>_<timestamp>_filtered_<language?>.jsonl``` (language is unspecified when English). The logic to enforce this can be found in the ```_parse_dataset_filename``` method in `evaluation/evaluate.py`.
 
-To generate the impossible dataset, run the following command in the project root directory:
+## 2. Generating impossible BLiMP datasets
 
-```bash
-python -m data_generation.generation_projects.impossible_blimp.modify_dataset <path/to/base_dataset.jsonl> <impossible_language_option>
-```
+The impossible BLiMP datasets are modified versions of the base BLiMP dataset created by applying a perturbation function to each sentence of the minimal pair in base dataset. All versions of the original BLiMP datasets are copied from the BLiMP code (found at [this link](https://github.com/alexwarstadt/blimp)) and available in `data_generation/outputs/blimp/`. However, prior to generating the BLiMP datasets for each impossible language, we must first ensure token length partiy for valid minimal pairs.
 
-For example:
-
-```bash
-python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v3/distractor_agreement_relative_clause_20250712_172752%filtered.jsonl shuffle_nondeterministic
-```
 ### 2.1 Ensuring token length parity
 We discard minimal pairs that will be tokenized to unequal lengths by an impossible language tokenizer from an impossible BLiMP dataset prior to evaluation, since such pairs could become less minimally distinct in the impossible languages (due to rules which depend on linear position/number of tokens). 
 
-The script `data_generation/generation_projects/impossible_blimp/filter_dataset.py` is a handy utilty to do this, taking as arguments the filepath of a minimal pair dataset and an output path. It filters out pairs that do not yield equal token lengths, and writes the filtered dataset to a new file with the suffix `filtered`. This naming convention will be an invariant assumed by scripts used for evaluation, to prevent accidentally evaluating on datasets that include uneven minimal pairs.
+The script `data_generation/generation_projects/impossible_blimp/filter_dataset.py` is a handy utilty to do this, taking as arguments the filepath of a minimal pair dataset and an output path. It filters out pairs that do not yield equal token lengths, and writes the filtered dataset to a new file with the suffix `filtered`. This naming convention will be an invariant assumed by scripts used for evaluation, to prevent accidentally evaluating on datasets that include uneven minimal pairs (in case you see the message "Experiment failed: Could not parse dataset filename:", it is likely due to this).
 
 To filter an impossible dataset, run the following command in the project root directory:
 
@@ -73,6 +67,20 @@ python -m data_generation.generation_projects.impossible_blimp.filter_dataset <p
 For example:
 ```bash
 python -m data_generation.generation_projects.impossible_blimp.filter_dataset data_generation/outputs/impossible_blimp/v3/distractor_agreement_rc_20250616_174118.jsonl
+```
+
+### 2.2 Generating an impossible BLiMP dataset 
+The script `data_generation/generation_projects/impossible_blimp/modify_dataset.py` is a handy utilty to apply a perturbation function to each sentence of the minimal pair in base dataset, taking as arguments the base dataset path and an ```impossible_language_option```. It automatically creates an output path by appending the ```impossible_language_option``` to the base dataset path, and saves the generated dataset at this path.
+To generate the impossible dataset, run the following command in the project root directory:
+
+```bash
+python -m data_generation.generation_projects.impossible_blimp.modify_dataset <path/to/base_dataset.jsonl> <impossible_language_option>
+```
+
+For example:
+
+```bash
+python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v3/distractor_agreement_relative_clause_20250712_172752%filtered.jsonl shuffle_nondeterministic
 ```
 
 NOTE: All impossible datasets based on BLiMP datasets have already been generated and filtered. They are located in `data_generation/outputs/impossible_blimp/v3`.
@@ -91,7 +99,7 @@ python -m experiments.experiment --results_csv <path/to/results.csv> --model_nam
 
 For example:
 ```bash
-python -m experiments.experiment --results_csv experiments/output/results.csv --model_name shuffle_nondeterministic --dataset data_generation/outputs/impossible_blimp/v3/anaphor_number_agreement_20250617_153306%shuffle_deterministic21.jsonl
+python -m experiments.experiment --results_csv experiments/output/results.csv --model_name shuffle_nondeterministic --dataset data_generation/outputs/impossible_blimp/v3/adjunct_island_20260101_170829%filtered%shuffle_nondeterministic.jsonl
 ```
 
 NOTE: All experiments have been run on impossible datasets, and results are located in `experiments/output/results.csv`.
