@@ -15,7 +15,7 @@ This repository contains all code and data necessary to fully replicate the resu
 
 2 and 3 correspond to Experiment 1, while 4 and 5 cover Experiment 2.
 
-## Setup and useful information:
+## 1. Setup and useful information:
 1. Clone the repository
 2. Setup conda environment:
 ```bash
@@ -42,13 +42,13 @@ For this project, we focus on the following impossible language options:
 - reverse_partial
 - reverse_full
 
-Consequently, these are the valid options permitted whenever the argument `impossible_language_option` is mentioned in this README. The mapping from an impossible language option to its perturbation function can be found in `data_generation/utils/impossible_utils.py`.
+These are the valid options permitted whenever the argument `impossible_language_option` is mentioned in the rest of this README. The mapping from an impossible language option to its perturbation function can be found in `data_generation/utils/impossible_utils.py`.
 
-## Generating impossible BLiMP dataset
+## 2. Generating impossible BLiMP dataset
 
-The impossible BLiMP datasets are modified versions of the base BLiMP dataset created by applying a perturbation function to each sentence of the minimal pair in base dataset. The script `data_generation/generation_projects/impossible_blimp/modify_dataset.py` is a handy utilty to do this, taking as arguments the base dataset path, an ```impossible_language_option```, and an output path to store the generated dataset. All versions of the original BLiMP datasets are copied and available in `data_generation/outputs/blimp/`. 
+The impossible BLiMP datasets are modified versions of the base BLiMP dataset created by applying a perturbation function to each sentence of the minimal pair in base dataset. The script `data_generation/generation_projects/impossible_blimp/modify_dataset.py` is a handy utilty to do this, taking as arguments the base dataset path, an ```impossible_language_option```, and an output path to store the generated dataset. All versions of the original BLiMP datasets are copied from the BLiMP code (found at [this link](https://github.com/alexwarstadt/blimp)) and available in `data_generation/outputs/blimp/`. 
 
-To generate the impossible dataset, run the following command in the root project directory:
+To generate the impossible dataset, run the following command in the project root directory:
 
 ```bash
 python -m data_generation.generation_projects.impossible_blimp.modify_dataset <path/to/base_dataset.jsonl> <impossible_language_option>
@@ -59,12 +59,12 @@ For example:
 ```bash
 python -m data_generation.generation_projects.impossible_blimp.modify_dataset data_generation/outputs/impossible_blimp/v3/distractor_agreement_relative_clause_20250712_172752%filtered.jsonl shuffle_nondeterministic
 ```
-### Ensuring token length parity
-We discard minimal pairs that will be tokenized to equal lengths by the impossible language tokenizers from the impossible BLiMP dataset prior to evaluation, since such pairs could become less minimally distinct in the impossible languages due to rules which depend on linear position/number of tokens. 
+### 2.1 Ensuring token length parity
+We discard minimal pairs that will be tokenized to unequal lengths by an impossible language tokenizer from an impossible BLiMP dataset prior to evaluation, since such pairs could become less minimally distinct in the impossible languages (due to rules which depend on linear position/number of tokens). 
 
-The script `data_generation/generation_projects/impossible_blimp/filter_dataset.py` is a handy utilty to do this, taking as arguments the filepath of a minimal pair dataset and an output path. It filters out pairs that do not yield equal token lengths, and writes the filtered dataset to a new file with the suffix `filtered`. This will be an invariant assumed by other scripts during evaluation to prevent accidentally including uneven minimal pairs.
+The script `data_generation/generation_projects/impossible_blimp/filter_dataset.py` is a handy utilty to do this, taking as arguments the filepath of a minimal pair dataset and an output path. It filters out pairs that do not yield equal token lengths, and writes the filtered dataset to a new file with the suffix `filtered`. This naming convention will be an invariant assumed by scripts used for evaluation, to prevent accidentally evaluating on datasets that include uneven minimal pairs.
 
-To filter an impossible dataset, run the following command in the root project directory:
+To filter an impossible dataset, run the following command in the project root directory:
 
 ```bash
 python -m data_generation.generation_projects.impossible_blimp.filter_dataset <path/to/dataset.jsonl>
@@ -78,12 +78,12 @@ python -m data_generation.generation_projects.impossible_blimp.filter_dataset da
 NOTE: All impossible datasets based on BLiMP datasets have already been generated and filtered. They are located in `data_generation/outputs/impossible_blimp/v3`.
 
 
-## Evaluating impossible models on these datasets
+## 3. Evaluating impossible models on these datasets
 
-An experiment is defined as measuring the accuracy of a model when applied to a BLiMP style dataset. We computed accuracy as the percentage of minimal pairs
-where the log likelihood of the grammatical sentence was larger than the ungrammatical sentence. The script ```experiments/experiment.py``` is a handy utility to do this.
+An experiment is defined as measuring the accuracy of a model when evaluated on a BLiMP style dataset. We computed accuracy as the percentage of minimal pairs
+where the model assigns a higher log likelihood to the grammatical sentence than the ungrammatical sentence. The script ```experiments/experiment.py``` is a handy utility to do this, taking as arguments the file path of a CSV file to store the results, the model (referred to by name), and the dataset to evaluate it on. 
 
-To run an experiment, run the following command in the root project directory:
+To run an experiment, run the following command in the project root directory:
 
 ```bash
 python -m experiments.experiment --results_csv <path/to/results.csv> --model_name <impossible_language_option> --dataset <path/to/dataset.jsonl>
@@ -96,34 +96,41 @@ python -m experiments.experiment --results_csv experiments/output/results.csv --
 
 NOTE: All experiments have been run on impossible datasets, and results are located in `experiments/output/results.csv`.
 
-## Generating outputs from impossible models and 'inverting' them
-To evaluate impossible models' generative capacity, leverage the fact that most of impossible languages can be deterministically reverted to English. We first generated 1000 sentences of up to 50 tokens from each model using a multinomial sampling strategy over their vocabularies, stored in `data_generation/outputs/impossible_generations/raw`. We then undo the perturbations and store the decoded generations to be evaluated in `data_generation/outputs/impossible_generations/corrected`.
+## 4. Generating outputs from impossible models and 'inverting' them
+To evaluate impossible models' generative capacity, we leverage the fact that most of impossible languages can be deterministically reverted to English. The defintions of the functions used to undo the perturbations can be found `data_generation/utils/impossible_utils.py` in ```UNDO_PERTURBATIONS```.
 
-The script `data_generation/generation_projects/impossible_generations/generate.py` is a handy utility to do this. 
+We first generate 1000 sentences of up to 50 tokens from each model using a multinomial sampling strategy over their vocabularies, stored in `data_generation/outputs/impossible_generations/raw`. We then undo the perturbations and store the decoded generations in `data_generation/outputs/impossible_generations/corrected` to be evaluated by an LLM.
 
-The defintions of the functions used to undo the perturbations can be found `data_generation/utils/impossible_utils.py` in ```UNDO_PERTURBATIONS```.
+The script `data_generation/generation_projects/impossible_generations/generate.py` is a handy utility to do this. To begin generation, run the following command in the project root:
+```bash
+python -m data_generation.generation_projects.impossible_generations.generate
+```
 
 NOTE: All generation results are located in `TBD`. 
 TODO: Insert all generations used
 
-##  Evaluating impossible model generations
+## 5. Evaluating impossible model generations
 
 To evaluate a generation's acceptability, we computed the perplexity per token using a pretrained LLM (GPT2 Large).
-The script `evaluation/fluency/evaluate_fluency.py` is a handy utility to do this. 
+The script `evaluation/fluency/evaluate_fluency.py` is a handy utility to do this. To begin evaluation, run the following command in the project root:
+```bash
+python -m evaluation.fluency.evaluate_fluency
+```
+
 
 NOTE: All evaluation results are located in `evaluation/fluency/fluency_scores_gpt2.csv`. 
 
-## Visualisation of results
+## 6. Visualisation of results
 
 To make viewing experiment results easier, a GUI is provided in the `gui` directory. This allows comparing results between models across specific/all BLiMP grammatical phenomena, or comparing results across all models on different BLiMP grammatical phenomena like so:
 
 ![Accuracy Analysis grouped by Grammatical Phenomenon](gui.png)
 
-To run the GUI, run the following command in the 'gui' project directory:
+To run the GUI, run the following command in the 'gui' directory:
 
 ```bash
 python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 The GUI will be available at: http://localhost:8000
-The GUI loads data from the results file:  (`experiments/output/results.csv`).
+The GUI loads data from the results file: (`experiments/output/results.csv`).
