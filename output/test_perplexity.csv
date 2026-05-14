@@ -1,0 +1,10 @@
+model name,perplexity
+english,102.8
+shuffle_nondeterministic,812.5
+shuffle_deterministic21,655.0
+shuffle_local3,164.3
+shuffle_local5,203.4
+shuffle_local10,335.7
+shuffle_even_odd,210.1
+reverse_partial,111.6
+reverse_full,123.8

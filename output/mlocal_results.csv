@@ -1,0 +1,10 @@
+model name,mlocal_4
+english,2.856
+reverse_full,2.95
+reverse_partial,3.219
+shuffle_local3,3.202
+shuffle_local5,3.262
+shuffle_even_odd,3.396
+shuffle_local10,3.442
+shuffle_deterministic21,3.59
+shuffle_nondeterministic,4.47
