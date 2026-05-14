@@ -118,6 +118,8 @@ data_generation/outputs/examples_originals/*
 experiments/output/v1/raw/*
 experiments/output/v2/raw/*
 
+data/
+
 # Python
 
 # Editors
@@ -138,6 +140,7 @@ Thumbs.db
 __pycache__/
 *.py[cod]
 *$py.class
+.snakemake/
 
 # C extensions
 *.so

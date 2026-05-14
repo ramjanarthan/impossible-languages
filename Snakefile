@@ -18,7 +18,8 @@ BABYLM_FILES = [stem + ".train" for stem in GENRES]
 rule all:
     input:
         "output/blimp/results.csv",
-        "output/generation/scores/generation_scores_gpt2.csv"
+        "output/generation/scores/generation_scores_gpt2.csv",
+        "output/figures/proportion_below_english_perplexity.pdf",
 
 #####################################
 # EXPERIMENT 1: BLiMP Minimal Pairs #

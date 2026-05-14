@@ -1,0 +1,11 @@
+bumplot>=0.1.1
+datasets>=4.5.0
+jsonlines>=4.0.0
+matplotlib>=3.10.8
+transformers=5.0.0
+torch=2.11.0
+statsmodels>=0.14.6
+scipy>=1.17.0
+pandas>=2.3.3
+scikit-learn>=1.8.0
+seaborn>=0.13.2
