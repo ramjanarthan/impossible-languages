@@ -5,6 +5,8 @@ This repository contains all code used as part of the CoNLL 2026 paper ("When tr
 If you use our code, please cite our paper:
 [TODO: Insert citation]
 
+
+## Replication
 This repository contains all code and data necessary to fully replicate the results of Experiments 1 and 2 in our paper. To quickly do this, first setup a Python 3.13 environment, then install the requriements, e.g.:
 
 ```bash
