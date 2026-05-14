@@ -3,12 +3,13 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
 import os
 import pandas as pd
+import uvicorn
 
 # Get the directory of the current script
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 RESULTS_HTML_PATH = os.path.join(BASE_DIR, "results.html")
-RESULTS_CSV_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "experiments", "output", "v3", "results.csv"))
+RESULTS_CSV_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "experiments", "output", "results.csv"))
 
 # This is a simplified version of the model order from impossible_utils.py
 MODEL_ORDER = [
@@ -51,5 +52,4 @@ async def get_results():
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
