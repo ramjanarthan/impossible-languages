@@ -13,7 +13,7 @@ This repository contains all code and data necessary to fully replicate the resu
 conda create -n impossible-languages python=3.13.2
 conda activate impossible-languages
 conda install pip
-python -m pip install -r requriements.txt
+python -m pip install -r requirements.txt
 ```
 
 After this, you can replicate all the experiments by simply running
