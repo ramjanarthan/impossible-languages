@@ -27,8 +27,9 @@ def score_generation_file(
     output_path,
 ):
     device = get_device()
-    tokenizer = AutoTokenizer.from_pretrained("gpt2")
-    model = AutoModelForCausalLM.from_pretrained("gpt2").to(device)
+    model_id = "gpt2" 
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    model = AutoModelForCausalLM.from_pretrained(model_id).to(device)
     model.eval()
 
     # print("Computing scores for file : ", file)
