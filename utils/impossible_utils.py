@@ -67,8 +67,10 @@ def write_file(directory, filename, lines):
 
 
 def get_gpt2_tokenizer_with_markers(marker_list):
-    tokenizer = AutoTokenizer.from_pretrained("gpt2")
-
+    try:
+        tokenizer = AutoTokenizer.from_pretrained("gpt2", local_files_only=True)
+    except OSError:
+        tokenizer = AutoTokenizer.from_pretrained("gpt2")
     # If no new markers to add, return normal tokenizer
     if len(marker_list) == 0:
         return tokenizer
