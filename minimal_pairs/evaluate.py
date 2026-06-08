@@ -7,7 +7,7 @@ from transformers import GPT2Tokenizer, GPT2LMHeadModel
 import csv
 
 # Local imports
-from evaluation.perplexity import (
+from minimal_pairs.perplexity import (
     get_sentence_log_probabilities,
     get_perplexities,
     calculate_geometric_mean_perplexity,
