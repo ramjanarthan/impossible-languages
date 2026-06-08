@@ -46,15 +46,12 @@ Generally, the `Snakefile` in this repo specifies the computation graph of inter
 
 ## Visualisation of results
 
-To make viewing Experiment 1 results easier, a GUI is provided in the `gui` directory. This allows comparing results between models across specific/all BLiMP grammatical phenomena, or comparing results across all models on different BLiMP grammatical phenomena like so:
+A GUI is provided in the `gui` directory that loads results from `experiments/output/results.csv`. It shows comparisons between models across specific/all BLiMP grammatical phenomena, or results across all models on different BLiMP grammatical phenomena, like so (multi-select can be enabled):
 
 ![Accuracy Analysis grouped by Grammatical Phenomenon](gui.png)
 
-To run the GUI, run the following command in the 'gui' directory:
+To view the GUI at: http://localhost:<your_preferred_port>, run the following command:
 
 ```bash
-python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+python -m uvicorn gui.main:app --host ******* --port <your_preferred_port> --reload
 ```
-
-The GUI will be available at: http://localhost:8000
-The GUI loads data from the results file: (`experiments/output/results.csv`).

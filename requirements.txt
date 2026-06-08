@@ -11,3 +11,6 @@ scikit-learn>=1.8.0
 seaborn>=0.13.2
 snakemake==9.22.0
 nltk==3.9.4
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
