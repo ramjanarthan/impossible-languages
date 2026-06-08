@@ -53,5 +53,5 @@ A GUI is provided in the `gui` directory that loads results from `experiments/ou
 To view the GUI at: http://localhost:<your_preferred_port>, run the following command:
 
 ```bash
-python -m uvicorn gui.main:app --host ******* --port <your_preferred_port> --reload
+python -m uvicorn gui.main:app --host 0.0.0.0 --port <your_preferred_port> --reload
 ```
