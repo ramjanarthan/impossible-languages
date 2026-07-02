@@ -1,10 +1,19 @@
 # When transformers learn “impossible” languages, what do they learn?
 
-This repository contains all code used as part of the CoNLL 2026 paper ("When transformers learn “impossible” languages, what do they learn?") [TODO: Insert link]
+This repository contains all code used as part of the CoNLL 2026 paper "When transformers learn “impossible” languages, what do they learn?" ([link](https://arxiv.org/abs/2606.30815))
 
 If you use our code, please cite our paper:
-[TODO: Insert citation]
-
+```
+@misc{janarthan2026impossiblelanguages,
+      title={When transformers learn "impossible" languages, what do they learn?}, 
+      author={Ram Janarthan and Coleman Haley and Sharon Goldwater},
+      year={2026},
+      eprint={2606.30815},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2606.30815}, 
+}
+```
 
 ## Replication
 This repository contains all code and data necessary to fully replicate the results of Experiments 1 and 2 in our paper. To quickly do this, first setup a Python 3.13 environment, then install the requriements, e.g.:
